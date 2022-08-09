@@ -1,0 +1,38 @@
+{
+	"name": "mvccore/ext-controller-datagrid-ag",
+	"type": "library",
+	"description": "MvcCore controller datagrid extension for administration environments with AgGrid JS/TS front-end.",
+	"keywords": [
+		"mvc",
+		"mvccore",
+		"framework",
+		"extension",
+		"plugin",
+		"plug-in",
+		"ext",
+		"grid",
+		"datagrid",
+		"model",
+		"aggrid",
+		"ag-grid",
+		"admin",
+	],
+	"license": [ "BSD-3-Clause" ],
+	"authors": [{
+		"name": "Tom Flidr",
+		"homepage": "https://github.com/tomFlidr"
+	}],
+	"require": {
+		"php": ">=5.4.0",
+		"mvccore/mvccore": "^5.1.34",
+		"mvccore/ext-controller-datagrid": "^5.1.14"
+	},
+	"suggest": {
+		"mvccore/ext-model-db-*": "MvcCore model extension to work with database SQL queries in more comfortable API.",
+		"mvccore/ext-cache-*": "MvcCore cache extensions to speed up operations driven by class anotations."
+	},
+	"autoload": {
+		"classmap": [ "src/" ]
+	},
+	"minimum-stability": "dev"
+}

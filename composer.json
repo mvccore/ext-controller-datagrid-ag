@@ -15,7 +15,7 @@
 		"model",
 		"aggrid",
 		"ag-grid",
-		"admin",
+		"admin"
 	],
 	"license": [ "BSD-3-Clause" ],
 	"authors": [{

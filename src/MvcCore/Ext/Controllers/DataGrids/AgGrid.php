@@ -26,14 +26,34 @@ class AgGrid extends \MvcCore\Ext\Controllers\DataGrid {
 	const VERSION = '5.1.0';
 
 	/**
+	 * Client row selection mode.
+	 * @var int
+	 */
+	const 
+		ROW_SELECTION_NONE			= 1,
+		ROW_SELECTION_SINGLE		= 2,
+		ROW_SELECTION_MULTIPLE		= 4,
+		ROW_SELECTION_NOT_DESELECT	= 8;
+
+	/**
+	 * @var string
+	 */
+	protected static $jsClassFullName = 'MvcCore.Ext.Controllers.DataGrids.AgGrid';
+
+	/**
 	 * @var string|NULL
 	 */
 	protected $id = NULL;
 
 	/**
-	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL
+	 * @var string|NULL
 	 */
-	protected $assetsHandler = NULL;
+	protected $dataUrl = NULL;
+
+	/**
+	 * @var int|NULL
+	 */
+	protected $rowSelection = self::ROW_SELECTION_NONE;
 	
 	/**
 	 * @param  string $id 
@@ -50,21 +70,37 @@ class AgGrid extends \MvcCore\Ext\Controllers\DataGrid {
 	public function GetId () {
 		return $this->id;
 	}
-
+	
 	/**
-	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL $assetsHandler 
+	 * @param  string $dataUrl 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
-	public function SetAssetsHandler ($assetsHandler) {
-		$this->assetsHandler = $assetsHandler;
+	public function SetDataUrl ($dataUrl) {
+		$this->dataUrl = $dataUrl;
 		return $this;
 	}
 
 	/**
-	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL
+	 * @return string|NULL
 	 */
-	public function GetAssetsHandler () {
-		return $this->assetsHandler;
+	public function GetDataUrl () {
+		return $this->dataUrl;
+	}
+	
+	/**
+	 * @param  int $rowSelection 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
+	public function SetRowSelection ($rowSelection) {
+		$this->rowSelection = $rowSelection;
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function GetRowSelection () {
+		return $this->rowSelection;
 	}
 
 
@@ -124,6 +160,7 @@ class AgGrid extends \MvcCore\Ext\Controllers\DataGrid {
 			if ($this->view === NULL)
 				$this->view = $this->createView(TRUE);
 			$this->view->grid = $this;
+			$this->view->jsClassFullName = static::$jsClassFullName;
 		}
 
 		//parent::PreDispatch();
@@ -137,5 +174,44 @@ class AgGrid extends \MvcCore\Ext\Controllers\DataGrid {
 		$this->preDispatchCountScales();
 		$this->preDispatchRenderConfig();
 		$this->preDispatchColumnsConfigs();
+
+		$this->preDispatchAssets();
+	}
+
+	protected function preDispatchAssets () {
+		$gridView = $this->view;
+		$assetsGroupsCss = $gridView->GetGridAssetsGroupsCss();
+		$assetsGroupsJs = $gridView->GetGridAssetsGroupsJs();
+		$args = [$assetsGroupsCss, $assetsGroupsJs, $this->parentController, $this];
+		$assetsHandler = $this->configRendering->GetAssetsHandler();
+		if (
+			is_callable($assetsHandler) || 
+			$assetsHandler instanceof \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler
+		) {
+			call_user_func_array($assetsHandler, $args);
+		} else {
+			$ctrlView = $this->parentController->GetView();
+			$cssVarHead = $ctrlView->Css($gridView::ASSETS_BUNDLE_DEFAULT_NAME_CSS);
+			$jsVarHead = $ctrlView->Js($gridView::ASSETS_BUNDLE_DEFAULT_NAME_JS);
+			foreach ($assetsGroupsCss as $assetsGroupCss) {
+				if (count($assetsGroupCss->paths) === 0) continue;
+				foreach ($assetsGroupCss->paths as $assetsGroupCssPath)
+					$cssVarHead->VendorAppend(
+						$assetsGroupCssPath,
+						$assetsGroupCss->media,
+						$assetsGroupCss->notMin
+					);
+			}
+			foreach ($assetsGroupsJs as $assetsGroupJs) {
+				if (count($assetsGroupJs->paths) === 0) continue;
+				foreach ($assetsGroupJs->paths as $assetsGroupJsPath)
+					$jsVarHead->VendorAppend(
+						$assetsGroupJsPath,
+						$assetsGroupJs->async,
+						$assetsGroupJs->defer,
+						$assetsGroupJs->notMin
+					);
+			}
+		}
 	}
 }

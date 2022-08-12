@@ -46,14 +46,21 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+
 # Mercurial versioning system
 .hg
 .hgignore
 .hgtags
 
+composer.dev.json
+composer.dev.lock
+
+# Project files
 *.phpproj
 .vs
 *.phpproj.user
-*.user
-composer.dev.json
-composer.dev.lock
+/tests/vendor
+/tests/composer.lock
+package-lock.json
+node_modules
+*.js.map

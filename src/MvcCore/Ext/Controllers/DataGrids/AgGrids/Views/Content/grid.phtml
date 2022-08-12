@@ -10,11 +10,18 @@
 	if (count($gridCssClasses) > 0) 
 		echo ' class="'.implode(' ', $gridCssClasses) . '"';
 ?>></div>
-<script<?php echo $nonceAttr; ?>>var MvcCore=MvcCore||{};(function(MvcCore){var AgGrid;(function(AgGrid){var Data;(function(Data){
-Data['<?php echo $gridId; ?>']={
+<script<?php echo $nonceAttr; ?>>new <?php echo $jsClassFullName; ?>({
+ElementSelector:'#<?php echo $gridId; ?>',
 RenderConfig:<?php echo \MvcCore\Tool::JsonEncode($grid->GetConfigRendering()); ?>,
 Columns:<?php echo \MvcCore\Tool::JsonEncode($grid->GetConfigColumns(FALSE)); ?>,
 UrlSegments:<?php echo \MvcCore\Tool::JsonEncode($grid->GetConfigUrlSegments()); ?>,
-Rows:<?php echo \MvcCore\Tool::JsonEncode($grid->GetPageData()); ?>
-};
-})(Data=MvcCore.AgGrid.Data||(MvcCore.AgGrid.Data={}));})(AgGrid=MvcCore.AgGrid||(MvcCore.AgGrid={}));})(MvcCore);</script>
+DataUrl:'<?php echo $grid->GetDataUrl(); ?>',
+RowSelection:<?php echo $grid->GetRowSelection(); ?>,
+ItemsPerPage:<?php echo $grid->GetItemsPerPage(); ?>
+},{
+Data:<?php echo \MvcCore\Tool::JsonEncode($grid->GetPageData()); ?>,
+TotalCount:<?php echo $grid->GetTotalCount(); ?>,
+RowCount:<?php $rowCount = count($grid->GetPageData()); echo $rowCount; ?>,
+StartRow:<?php echo $grid->GetOffset(); ?>,
+EndRow:<?php echo $grid->GetOffset() + $rowCount; ?>
+});</script>

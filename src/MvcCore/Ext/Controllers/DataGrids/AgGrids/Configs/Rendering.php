@@ -16,10 +16,73 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs;
 class Rendering extends \MvcCore\Ext\Controllers\DataGrids\Configs\Rendering {
 	
 	/**
+	 * AgGrid css theme.
+	 * @var string
+	 */
+	const 
+		THEME_ALPINE		= 'ag-theme-alpine',
+		THEME_ALPINE_DARK	= 'ag-theme-alpine-dark',
+		THEME_BALHAM		= 'ag-theme-balham',
+		THEME_BALHAM_DARK	= 'ag-theme-balham-dark',
+		THEME_BASE			= 'ag-theme-base',
+		THEME_BLUE			= 'ag-theme-blue',
+		THEME_BOOTSTRAP		= 'ag-theme-bootstrap',
+		THEME_CLASSIC		= 'ag-theme-classic',
+		THEME_DARK			= 'ag-theme-dark',
+		THEME_FRESH			= 'ag-theme-fresh',
+		THEME_MATERIAL		= 'ag-theme-material';
+
+	/**
+	 * @var string|NULL
+	 * @jsonSerialize
+	 */
+	#[JsonSerialize]
+	protected $theme = self::THEME_CLASSIC;
+	
+	/**
+	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL
+	 */
+	protected $assetsHandler = NULL;
+
+	/**
 	 * Datagrid view full class name.
 	 * @var string|\MvcCore\Ext\Controllers\DataGrids\View|\MvcCore\View
 	 */
 	protected $viewClass = '\\MvcCore\\Ext\\Controllers\\DataGrids\\AgGrids\\View';
+
+	
+	/**
+	 * @param  string $theme
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
+	 */
+	public function SetTheme ($theme) {
+		$this->theme = $theme;
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function GetTheme () {
+		return $this->theme;
+	}
+	
+	/**
+	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL $assetsHandler 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
+	 */
+	public function SetAssetsHandler ($assetsHandler) {
+		$this->assetsHandler = $assetsHandler;
+		return $this;
+	}
+
+	/**
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL
+	 */
+	public function GetAssetsHandler () {
+		return $this->assetsHandler;
+	}
+
 
 	/**
 	 * @inheritDocs

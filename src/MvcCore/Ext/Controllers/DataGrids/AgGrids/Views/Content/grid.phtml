@@ -1,6 +1,6 @@
 <?php
 	/** @var \MvcCore\Ext\Controllers\DataGrids\View $this */
-	/** @var \MvcCore\Ext\Controllers\DataGrid $grid */
+	/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $grid */
 	$gridCssClasses = $grid->GetCssClasses();
 	$gridId = $grid->GetId();
 	$nonceAttr = $this->nonce !== NULL 
@@ -10,18 +10,31 @@
 	if (count($gridCssClasses) > 0) 
 		echo ' class="'.implode(' ', $gridCssClasses) . '"';
 ?>></div>
-<script<?php echo $nonceAttr; ?>>new <?php echo $jsClassFullName; ?>({
-ElementSelector:'#<?php echo $gridId; ?>',
-RenderConfig:<?php echo \MvcCore\Tool::JsonEncode($grid->GetConfigRendering()); ?>,
-Columns:<?php echo \MvcCore\Tool::JsonEncode($grid->GetConfigColumns(FALSE)); ?>,
-UrlSegments:<?php echo \MvcCore\Tool::JsonEncode($grid->GetConfigUrlSegments()); ?>,
-DataUrl:'<?php echo $grid->GetDataUrl(); ?>',
-RowSelection:<?php echo $grid->GetRowSelection(); ?>,
-ItemsPerPage:<?php echo $grid->GetItemsPerPage(); ?>
-},{
-Data:<?php echo \MvcCore\Tool::JsonEncode($grid->GetPageData()); ?>,
-TotalCount:<?php echo $grid->GetTotalCount(); ?>,
-RowCount:<?php $rowCount = count($grid->GetPageData()); echo $rowCount; ?>,
-StartRow:<?php echo $grid->GetOffset(); ?>,
-EndRow:<?php echo $grid->GetOffset() + $rowCount; ?>
-});</script>
+<script<?php echo $nonceAttr; ?>>new <?php echo $grid::GetJsClassFullName(); ?>(<?php
+	echo \MvcCore\Tool::JsonEncode([
+		'elementSelector'	=> '#' . $gridId,
+		'renderConfig'		=> $grid->GetConfigRendering(),
+		'columns'			=> $grid->GetConfigColumns(FALSE),
+		'urlSegments'		=> $grid->GetConfigUrlSegments(),
+		'ajaxParamsNames'	=> $grid->GetAjaxParamsNames(),
+		'id'				=> $gridId,
+		'clientPageMode'	=> $grid->GetClientPageMode(),
+		'dataUrl'			=> $grid->GetDataUrl(),
+		'dataRequestMethod'	=> $grid->GetDataRequestMethod(),
+		'rowSelection'		=> $grid->GetRowSelection(),
+		'itemsPerPage'		=> $grid->GetItemsPerPage(),
+		'page'				=> $grid->GetPage(),
+		'clientRowBuffer'	=> $grid->GetClientRowBuffer(),
+		'controlsTexts'		=> $grid->GetControlsTexts(),
+	]);
+?>,<?php
+	echo \MvcCore\Tool::JsonEncode([
+		'totalCount'		=> $grid->GetTotalCount(),
+		'offset'			=> $grid->GetOffset(),
+		'limit'				=> $grid->GetLimit(),
+		'sorting'			=> $grid->GetAjaxSorting(),
+		'filtering'			=> $grid->GetAjaxFiltering(),
+		'dataCount'			=> count($grid->GetPageData()),
+		'data'				=> $grid->GetPageData()
+	]);
+?>);</script>

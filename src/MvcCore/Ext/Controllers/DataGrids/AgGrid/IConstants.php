@@ -17,81 +17,108 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
  */
 interface IConstants {
-	
+
 	/**
 	 * Grid action name for ajax data.
 	 * @var string
 	 */
-	const GRID_ACTION_DATA = 'data';
+	const GRID_ACTION_DATA					= 'data';
 
 
 	/**
 	 * Client side rendered with only data for current page.
 	 * @var int
 	 */
-	const CLIENT_PAGE_MODE_MULTI	= 0;
+	const CLIENT_PAGE_MODE_MULTI			= 1;
 
 	/**
 	 * Client side rendered with continuous data loading by user scrolling.
 	 * @var int 
 	 */
-	const CLIENT_PAGE_MODE_SINGLE	= 1;
+	const CLIENT_PAGE_MODE_SINGLE			= 2;
 
+
+	/**
+	 * Default size for JS buffer if client displays more 
+	 * rows than `self::CLIENT_JS_BUFFER_MAX_SIZE`.
+	 * @var int
+	 */
+	const CLIENT_JS_BUFFER_PAGE_MODE_MULTI	= 50;
+
+	/**
+	 * Default size for JS buffer if client displays more 
+	 * rows than `self::CLIENT_JS_BUFFER_MAX_SIZE`.
+	 * @var int
+	 */
+	const CLIENT_JS_BUFFER_PAGE_MODE_SINGLE	= 100;
+	
+	/**
+	 * Maximum rows to render in client JS buffer at once.
+	 * @var int
+	 */
+	const CLIENT_JS_BUFFER_MAX_SIZE			= 500;
+
+	/**
+	 * Maximum rows in items per page to choose multiple pages mode.
+	 * @var int
+	 */
+	const CLIENT_PAGE_MODE_MULTI_MAX_ROWS	= 5000;
+	
 
 	/**
 	 * Client row selection mode - no row is possible to select.
 	 * @var int
 	 */
-	const ROW_SELECTION_NONE			= 1;
+	const ROW_SELECTION_NONE				= 1;
 	
 	/**
 	 * Client row selection mode - only single row is possible to select.
 	 * @var int
 	 */
-	const ROW_SELECTION_SINGLE			= 2;
+	const ROW_SELECTION_SINGLE				= 2;
 	
 	/**
 	 * Client row selection mode - multiple rows is possible to select.
 	 * @var int
 	 */
-	const ROW_SELECTION_MULTIPLE		= 4;
+	const ROW_SELECTION_MULTIPLE			= 4;
 	
 	/**
 	 * Client row selection mode - last selected row is not possible to deselect.
 	 * @var int
 	 */
-	const ROW_SELECTION_NOT_DESELECT	= 8;
+	const ROW_SELECTION_NOT_DESELECT		= 8;
 
 	
 	/**
 	 * Ajax param name key for offset.
 	 * @var int
 	 */
-	const AJAX_PARAM_OFFSET			= 'offset';
+	const AJAX_PARAM_OFFSET					= 'offset';
 	
 	/**
 	 * Ajax param name key for limit.
 	 * @var int
 	 */
-	const AJAX_PARAM_LIMIT			= 'limit';
+	const AJAX_PARAM_LIMIT					= 'limit';
 	
 	/**
 	 * Ajax param name key for sorting.
 	 * @var int
 	 */
-	const AJAX_PARAM_SORTING		= 'sorting';
+	const AJAX_PARAM_SORTING				= 'sorting';
 	
 	/**
 	 * Ajax param name key for filtering.
 	 * @var int
 	 */
-	const AJAX_PARAM_FILTERING		= 'filtering';
+	const AJAX_PARAM_FILTERING				= 'filtering';
 	
 	/**
 	 * Ajax param name key for JSONP callback.
 	 * @var int
 	 */
-	const AJAX_PARAM_CALLBACK		= 'callback';
+	const AJAX_PARAM_CALLBACK				= 'callback';
 
 	
 	/**

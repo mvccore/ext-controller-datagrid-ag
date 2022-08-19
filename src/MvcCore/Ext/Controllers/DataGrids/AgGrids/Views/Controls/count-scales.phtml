@@ -1,0 +1,48 @@
+<?php
+	/** @var \MvcCore\Ext\Controllers\DataGrids\View $this */
+	/** @var \MvcCore\Ext\Controllers\DataGrid $grid */
+
+	$renderConf = $this->GetConfigRendering();
+	$countScalesCssClasses = $renderConf->GetCssClassesControlCountScales();
+	$countScales = $grid->GetCountScales();
+	$itemsPerPage = $grid->GetItemsPerPage();
+	$totalCount = $grid->GetTotalCount();
+	$countScales2Render = [];
+	foreach ($countScales as $countScale):
+		if ($countScale !== 0 && $countScale > $totalCount) continue;
+		$countScales2Render[$countScale] = $countScale === $itemsPerPage;
+	endforeach;
+	$countScales2RenderCount = count($countScales2Render);
+	$firstIsCurrent = $countScales2RenderCount === 1 && $grid->GetPagesCount() === 1;
+	$countScalesCssClasses[] = 'grid-control-items-count-' . $countScales2RenderCount;
+
+?><table<?php
+	if (count($countScalesCssClasses) > 0)
+		echo ' class="' . implode(' ', $countScalesCssClasses) . '"';
+?>><tbody><tr><?php
+	foreach ($countScales2Render as $countScale => $current):
+		$current = $current || $firstIsCurrent;
+		?><td class="grid-count<?php
+			if ($current) echo ' grid-count-current';
+		?>"><?php
+
+			$text = ($countScale === 0)
+				? $this->EscapeHtml($grid->GetControlText('all'))
+				: (string) $countScale;
+
+			if ($current):
+				?><span class="grid-count-current"><?php
+					echo $text;
+				?></span><?php
+			else:
+				?><a class="grid-count-link" href="<?php
+					echo $grid->GridCountUrl($countScale);
+				?>"><?php
+					echo $text;
+				?></a><?php
+			endif;
+
+		?></td><?php
+		
+	endforeach;
+?></tr></tbody></table>

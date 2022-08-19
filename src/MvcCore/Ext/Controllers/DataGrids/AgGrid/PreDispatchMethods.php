@@ -27,26 +27,23 @@ trait PreDispatchMethods {
 	 * @return void
 	 */
 	public function PreDispatch () {
-		if ($this->ajaxDataRequest) return;
-		if ($this->dispatchState >= \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
-		parent::PreDispatch();
-		if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
-		$this->preDispatchAssets();
-	}
-
-	/**
-	 * Switch necessary rendering config booleans to `FALSE`
-	 * if sorting or filtering is completely disabled.
-	 * @return void
-	 */
-	protected function preDispatchRenderConfig () {
-		parent::preDispatchRenderConfig();
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-			$this->configRendering
-				->SetRenderControlCountScales(IDataGrid::CONTROL_DISPLAY_NEVER)
-				->SetRenderControlPaging(IDataGrid::CONTROL_DISPLAY_NEVER)
-				->SetRenderControlStatus(IDataGrid::CONTROL_DISPLAY_NEVER)
-				->SetRenderControlSorting(IDataGrid::CONTROL_DISPLAY_NEVER);
+		if ($this->ajaxDataRequest) {
+			if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+				$this->LoadModel();
+				return;
+			} else {
+				parent::PreDispatch();
+				$this->LoadModel();
+				if (!$this->preDispatchTotalCount()) return;
+				$this->preDispatchTranslations();
+				$this->preDispatchPaging();
+				$this->preDispatchCountScales();
+			}
+		} else {
+			if ($this->dispatchState >= \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
+			parent::PreDispatch();
+			if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
+			$this->preDispatchAssets();
 		}
 	}
 
@@ -55,7 +52,13 @@ trait PreDispatchMethods {
 	 * @return bool
 	 */
 	protected function preDispatchTotalCount () {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+		if ($this->ajaxDataRequest) {
+			// Do not process redirections for ajax requests, 
+			// because page param is not used to define result data.
+			// If offset is to high, there is returned empty result and it OK.
+			return TRUE;
+		} else if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+
 			$pagesCountByTotalCount = ($this->clientRowBuffer > 0) 
 				? intval(ceil(floatval($this->totalCount) / floatval($this->clientRowBuffer))) 
 				: 0 ;
@@ -78,8 +81,37 @@ trait PreDispatchMethods {
 			return parent::preDispatchTotalCount();
 		}
 	}
+	
+	/**
+	 * Translate if necessary:
+	 * - controls texts
+	 * @return void
+	 */
+	protected function preDispatchTranslations () {
+		if (!$this->translate) return;
+		foreach ($this->controlsTexts as $key => $controlText)
+			$this->controlsTexts[$key] = call_user_func_array(
+				$this->translator, [$controlText, ['{0}', '{1}']]
+			);
+	}
+	
+	/**
+	 * Switch rendering config boolean to render count scales control to 
+	 * never render, if datagrid renders only single page and items per page value
+	 * is greater than zero (items per page value is not set to unlimited value).
+	 * Because than - the count scales control is completely useless.
+	 * @return void
+	 */
+	protected function preDispatchCountScales () {
+		$renderCountScales = $this->configRendering->GetRenderControlCountScales();
+		if (!$renderCountScales) return;
+		$multiplePages = $this->totalCount > $this->itemsPerPage && $this->itemsPerPage !== 0;
+		if (!$multiplePages && ($renderCountScales & static::CONTROL_DISPLAY_IF_NECESSARY) != 0) 
+			$this->configRendering->SetRenderControlCountScales(static::CONTROL_DISPLAY_NEVER);
+	}
 
 	/**
+	 * 
 	 * @return void
 	 */
 	protected function preDispatchAssets () {

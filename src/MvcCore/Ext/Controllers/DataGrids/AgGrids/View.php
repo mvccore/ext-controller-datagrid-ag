@@ -65,11 +65,18 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 					$mvcCoreAgGridAssetsDir . "/AgGrids/Enums/RowSelection.js",
 					$mvcCoreAgGridAssetsDir . "/AgGrids/Enums/RowSelection.js",
 					$mvcCoreAgGridAssetsDir . "/AgGrids/Enums/SortingMode.js",
+
 					$mvcCoreAgGridAssetsDir . "/AgGrids/Types/GridColumn.js",
+
+					$mvcCoreAgGridAssetsDir . "/AgGrids/SubOptions/Bases.js",
+					$mvcCoreAgGridAssetsDir . "/AgGrids/SubOptions/Columns.js",
+					$mvcCoreAgGridAssetsDir . "/AgGrids/SubOptions/DataSource.js",
+					$mvcCoreAgGridAssetsDir . "/AgGrids/Options.js",
+
 					$mvcCoreAgGridAssetsDir . "/AgGrids/Helpers.js",
 					$mvcCoreAgGridAssetsDir . "/AgGrids/ToolTip.js",
 					$mvcCoreAgGridAssetsDir . "/AgGrids/Events.js",
-					$mvcCoreAgGridAssetsDir . "/AgGrids/Initializations.js",
+
 					$mvcCoreAgGridAssetsDir . "/AgGrid.js",
 				],
 			],

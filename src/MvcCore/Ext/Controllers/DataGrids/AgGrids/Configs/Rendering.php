@@ -156,32 +156,6 @@ class Rendering extends \MvcCore\Ext\Controllers\DataGrids\Configs\Rendering {
 	/**
 	 * @inheritDocs
 	 * @throws \Exception
-	 * @param  string|\string[] $cssClasses
-	 */
-	public function SetCssClassesControlsWrapper ($cssClasses) {
-		$this->notImplementedException('cssClassesControlsWrapper');
-	}
-
-	/**
-	 * @inheritDocs
-	 * @throws \Exception
-	 * @param  string|\string[] $cssClasses
-	 */
-	public function AddCssClassesControlsWrapper ($cssClasses) {
-		$this->notImplementedException('cssClassesControlsWrapper');
-	}
-
-	/**
-	 * @inheritDocs
-	 * @throws \Exception
-	 */
-	public function GetCssClassesControlsWrapper () {
-		$this->notImplementedException('cssClassesControlsWrapper');
-	}
-
-	/**
-	 * @inheritDocs
-	 * @throws \Exception
 	 * @param  string $templateTableHead
 	 */
 	public function SetTemplateTableHead ($templateTableHead) {
@@ -233,23 +207,6 @@ class Rendering extends \MvcCore\Ext\Controllers\DataGrids\Configs\Rendering {
 	/**
 	 * @inheritDocs
 	 * @throws \Exception
-	 * @param  string $templateControlPaging
-	 */
-	public function SetTemplateControlPaging ($templateControlPaging) {
-		$this->notImplementedException('templateControlPaging');
-	}
-
-	/**
-	 * @inheritDocs
-	 * @throws \Exception
-	 */
-	public function GetTemplateControlPaging () {
-		$this->notImplementedException('templateControlPaging');
-	}
-
-	/**
-	 * @inheritDocs
-	 * @throws \Exception
 	 * @param  string $templateControlSorting
 	 */
 	public function SetTemplateControlSorting ($templateControlSorting) {
@@ -262,40 +219,6 @@ class Rendering extends \MvcCore\Ext\Controllers\DataGrids\Configs\Rendering {
 	 */
 	public function GetTemplateControlSorting () {
 		$this->notImplementedException('templateControlSorting');
-	}
-
-	/**
-	 * @inheritDocs
-	 * @throws \Exception
-	 * @param  string $templateControlCountScales
-	 */
-	public function SetTemplateControlCountScales ($templateControlCountScales) {
-		$this->notImplementedException('templateControlCountScales');
-	}
-
-	/**
-	 * @inheritDocs
-	 * @throws \Exception
-	 */
-	public function GetTemplateControlCountScales () {
-		$this->notImplementedException('templateControlCountScales');
-	}
-
-	/**
-	 * @inheritDocs
-	 * @throws \Exception
-	 * @param  string $templateControlStatus
-	 */
-	public function SetTemplateControlStatus ($templateControlStatus) {
-		$this->notImplementedException('templateControlStatus');
-	}
-
-	/**
-	 * @inheritDocs
-	 * @throws \Exception
-	 */
-	public function GetTemplateControlStatus () {
-		$this->notImplementedException('templateControlStatus');
 	}
 
 	/**

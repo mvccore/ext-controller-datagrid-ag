@@ -53,7 +53,9 @@ trait InitMethods {
 	public function Init () {
 		if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_CREATED) return;
 		
+		$this->initCountScales();
 		$this->initClientPageMode();
+		$this->initClientRowBuffer();
 
 		$this->GetConfigRendering();
 		
@@ -81,6 +83,39 @@ trait InitMethods {
 		
 		call_user_func([$this, $this->gridAction]);
 	}
+	
+	/**
+	 * If client row model is single page:
+	 *    clear count scales array to `[0]` or thrown 
+	 *    an exception if count scales has been customized.
+	 * If client row model is for multiple pages:
+	 *    set up items per page configured from script 
+	 *    into count scales if it is not there.
+	 * @return void
+	 */
+	protected function initCountScales () {
+		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+			// if client page mode is configured forcelly:
+			if (
+				!$this->countScalesCustomized || (
+					$this->countScalesCustomized &&
+					count($this->countScales) === 1 && 
+					$this->countScales[0] === 0
+				)
+			) {
+				// count scales has not been customized or
+				// count scales has been optimized only to `[0]`:
+				$this->countScales = [0];
+			} else {
+				throw new \Exception(
+					"[".get_class($this)."] Datagrid with client row model for "
+					."single page data loading needs count scales configuration with `[0]` value.", 
+				);
+			}
+		} else {
+			parent::initCountScales();
+		}
+	}
 
 	/**
 	 * Initialize client row model if not specified.
@@ -88,11 +123,30 @@ trait InitMethods {
 	 */
 	protected function initClientPageMode () {
 		if ($this->clientPageMode !== NULL) return;
-		$this->clientPageMode = $this->itemsPerPage === 0
-			? IConstants::CLIENT_PAGE_MODE_SINGLE
-			: IConstants::CLIENT_PAGE_MODE_MULTI;
+		// automatically initialize client page mode:
+		if (
+			(
+				$this->itemsPerPage === 0 && 
+				count($this->countScales) === 1 && 
+				$this->countScales[0] === 0
+			) || 
+			$this->itemsPerPage > IConstants::CLIENT_PAGE_MODE_MULTI_MAX_ROWS	
+		) {
+			$this->clientPageMode = IConstants::CLIENT_PAGE_MODE_SINGLE;
+		} else {
+			$this->clientPageMode = IConstants::CLIENT_PAGE_MODE_MULTI;
+		}
 	}
 	
+	/**
+	 * @return void
+	 */
+	protected function initClientRowBuffer () {
+		$this->clientRowBuffer = $this->clientPageMode === IConstants::CLIENT_PAGE_MODE_MULTI
+			? IConstants::CLIENT_JS_BUFFER_PAGE_MODE_MULTI
+			: IConstants::CLIENT_JS_BUFFER_PAGE_MODE_SINGLE;
+	}
+
 	/**
 	 * Complete internal action method name.
 	 * @return void
@@ -109,7 +163,6 @@ trait InitMethods {
 	 * @return void
 	 */
 	protected function initDataUrlAndAjaxDataRequest ($gridActionParam) {
-		if ($this->clientPageMode !== IConstants::CLIENT_PAGE_MODE_SINGLE) return;
 		// absolutize data url if any:
 		if ($this->dataUrl === NULL) {
 			$this->ajaxDataRequest = $gridActionParam === static::GRID_ACTION_DATA;
@@ -163,69 +216,6 @@ trait InitMethods {
 
 	/**
 	 * If client row model is single page:
-	 *    check if page is 1 or redirect.
-	 * If client row model is multiple pages:
-	 *    set up default page if `NULL` 
-	 *    or redirect if page is zero.
-	 * @return bool
-	 */
-	/*protected function initUrlParamsPage () {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-			if (
-				isset($this->urlParams[static::URL_PARAM_PAGE]) &&
-				$this->urlParams[static::URL_PARAM_PAGE] !== 1
-			) {
-				// redirect to proper page number:
-				$redirectUrl = $this->GridUrl([
-					static::URL_PARAM_PAGE	=> 1,
-				]);
-				// ** @var \MvcCore\Controller $this * /
-				$this::Redirect(
-					$redirectUrl, 
-					\MvcCore\IResponse::SEE_OTHER, 
-					'Grid page is not 1.'
-				);
-				return FALSE;
-			}
-			$this->urlParams[static::URL_PARAM_PAGE] = 1;
-			return TRUE;
-		} else {
-			return parent::initUrlParamsPage();
-		}
-	}*/
-	
-	/**
-	 * If client row model is single page:
-	 *    clear count scales array to `[0]` or thrown 
-	 *    an exception if count scales has been customized.
-	 * If client row model is for multiple pages:
-	 *    set up items per page configured from script 
-	 *    into count scales if it is not there.
-	 * @return void
-	 */
-	protected function initUrlParamsCountScales () {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-			if (
-				!$this->countScalesCustomized || (
-					$this->countScalesCustomized &&
-					count($this->countScales) === 1 && 
-					$this->countScales[0] === 0
-				)
-			) {
-				$this->countScales = [0];
-			} else {
-				throw new \Exception(
-					"[".get_class($this)."] Datagrid with client row model for "
-					."single page data loading needs count scales configuration with `[0]` value.", 
-				);
-			}
-		} else {
-			parent::initUrlParamsCountScales();
-		}
-	}
-
-	/**
-	 * If client row model is single page:
 	 *    set up zero count if null or 
 	 *    check if count has zero.
 	 * If client row model is for multiple pages:
@@ -234,9 +224,10 @@ trait InitMethods {
 	 * @return bool
 	 */
 	protected function initUrlParamsCount () {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-			if ($this->ajaxDataRequest)
-				return TRUE;
+		if ($this->ajaxDataRequest) {
+			// do not modify count param for ajax requests:
+			return TRUE;
+		} else if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
 			if (
 				isset($this->urlParams[static::URL_PARAM_COUNT]) &&
 				$this->urlParams[static::URL_PARAM_COUNT] !== 0
@@ -271,9 +262,10 @@ trait InitMethods {
 	 * @return bool
 	 */
 	protected function initUrlParamsItemsPerPage () {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-			if ($this->ajaxDataRequest)
-				return TRUE;
+		if ($this->ajaxDataRequest) {
+			// do not modify items per page for ajax requests:
+			return TRUE;
+		} else if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
 			if (
 				!$this->itemsPerPageCustomized || (
 					$this->itemsPerPageCustomized &&
@@ -301,7 +293,11 @@ trait InitMethods {
 	 * @return bool
 	 */
 	protected function initUrlParamsPageAndCount () {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+		if ($this->ajaxDataRequest) {
+			// page param is not used for ajax requests:
+			return TRUE;
+		} else if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+			// init page by url, there could be initial scroll in client single page mode:
 			$this->page = $this->urlParams[static::URL_PARAM_PAGE];
 			return TRUE;
 		} else {
@@ -318,14 +314,16 @@ trait InitMethods {
 	 * @return void
 	 */
 	protected function initOffsetLimit() {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-			if ($this->ajaxDataRequest) {
-				$this->offset = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_OFFSET], '0-9', 0, 'int');
-				$this->limit = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_LIMIT], '0-9', NULL, 'int');
-			} else {
-				$this->offset = 0;
-				$this->limit = $this->clientRowBuffer * 2;
+		if ($this->ajaxDataRequest) {
+			$this->offset = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_OFFSET], '0-9', 0, 'int');
+			$this->limit = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_LIMIT], '0-9', NULL, 'int');
+			$lastCountsScale = $this->countScales[count($this->countScales) - 1];
+			if ($lastCountsScale !== 0 && ($this->limit === 0 || $this->limit > $lastCountsScale)) {
+				$this->limit = $lastCountsScale;
 			}
+		} else if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+			$this->offset = 0;
+			$this->limit = $this->clientRowBuffer * 2;
 		} else {
 			parent::initOffsetLimit();
 		}

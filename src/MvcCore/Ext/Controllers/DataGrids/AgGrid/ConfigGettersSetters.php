@@ -200,13 +200,6 @@ trait ConfigGettersSetters {
 	public function SetConfigRendering (/*\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering*/ $configRendering) {
 		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering $configRendering */
 		$this->configRendering = $configRendering;
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-			$this->configRendering
-				->SetRenderControlCountScales(IDataGrid::CONTROL_DISPLAY_NEVER)
-				->SetRenderControlPaging(IDataGrid::CONTROL_DISPLAY_NEVER)
-				->SetRenderControlStatus(IDataGrid::CONTROL_DISPLAY_NEVER)
-				->SetRenderControlSorting(IDataGrid::CONTROL_DISPLAY_NEVER);
-		}
 		return $this;
 	}
 
@@ -218,13 +211,6 @@ trait ConfigGettersSetters {
 	public function GetConfigRendering () {
 		if ($this->configRendering === NULL) {
 			$this->configRendering = new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering;
-			if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-				$this->configRendering
-					->SetRenderControlCountScales(IDataGrid::CONTROL_DISPLAY_NEVER)
-					->SetRenderControlPaging(IDataGrid::CONTROL_DISPLAY_NEVER)
-					->SetRenderControlStatus(IDataGrid::CONTROL_DISPLAY_NEVER)
-					->SetRenderControlSorting(IDataGrid::CONTROL_DISPLAY_NEVER);
-			}
 		}
 		return $this->configRendering;
 	}

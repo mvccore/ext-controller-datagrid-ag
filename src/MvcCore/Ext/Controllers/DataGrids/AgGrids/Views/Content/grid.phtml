@@ -1,31 +1,56 @@
 <?php
 	/** @var \MvcCore\Ext\Controllers\DataGrids\View $this */
 	/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $grid */
+	$renderConf = $grid->GetConfigRendering();
+	$themeCssClass = $renderConf->GetTheme();
 	$gridCssClasses = $grid->GetCssClasses();
+	$gridCssClasses[] = $themeCssClass;
+	$renderBottomControls = (
+		$renderConf->GetRenderControlStatus() || 
+		$renderConf->GetRenderControlPaging() || 
+		$renderConf->GetRenderControlCountScales()
+	);
 	$gridId = $grid->GetId();
 	$nonceAttr = $this->nonce !== NULL 
 		? ' nonce="' . $this->nonce . '"' 
 		: '' ;
-?><div id="<?php echo $gridId; ?>"<?php
-	if (count($gridCssClasses) > 0) 
-		echo ' class="'.implode(' ', $gridCssClasses) . '"';
-?>></div>
+	if ($renderBottomControls)
+		$gridCssClasses[] = 'grid-with-bottom-controls';
+	$gridContClassAttr = count($gridCssClasses) > 0
+		? ' class="'.implode(' ', $gridCssClasses) . '"'
+		: '';
+	$controlsWrapperCssClasses = $renderConf->GetCssClassesControlsWrapper();
+	$controlsWrapperCssClass = count($controlsWrapperCssClasses) > 0
+		? implode(' ', $controlsWrapperCssClasses)
+		: '';
+?><div id="<?php echo $gridId; ?>"<?php echo $gridContClassAttr; ?>>
+	<div class="grid-table-component <?php echo $themeCssClass; ?>"></div>
+	<?php if ($renderBottomControls): ?>
+		<div class="<?php echo $controlsWrapperCssClass; ?> grid-controls-bottom"><?php 
+			echo $this->RenderGridControlCountScales();
+			echo $this->RenderGridControlStatus();
+			echo $this->RenderGridControlPaging();
+		?></div>
+	<?php endif; ?>
+</div>
 <script<?php echo $nonceAttr; ?>>new <?php echo $grid::GetJsClassFullName(); ?>(<?php
 	echo \MvcCore\Tool::JsonEncode([
-		'elementSelector'	=> '#' . $gridId,
-		'renderConfig'		=> $grid->GetConfigRendering(),
-		'columns'			=> $grid->GetConfigColumns(FALSE),
-		'urlSegments'		=> $grid->GetConfigUrlSegments(),
-		'ajaxParamsNames'	=> $grid->GetAjaxParamsNames(),
-		'id'				=> $gridId,
-		'clientPageMode'	=> $grid->GetClientPageMode(),
-		'dataUrl'			=> $grid->GetDataUrl(),
-		'dataRequestMethod'	=> $grid->GetDataRequestMethod(),
-		'rowSelection'		=> $grid->GetRowSelection(),
-		'itemsPerPage'		=> $grid->GetItemsPerPage(),
-		'page'				=> $grid->GetPage(),
-		'clientRowBuffer'	=> $grid->GetClientRowBuffer(),
-		'controlsTexts'		=> $grid->GetControlsTexts(),
+		'contElementSelector'	=> '#' . $gridId,
+		'renderConfig'			=> $renderConf,
+		'columns'				=> $grid->GetConfigColumns(FALSE),
+		'urlSegments'			=> $grid->GetConfigUrlSegments(),
+		'ajaxParamsNames'		=> $grid->GetAjaxParamsNames(),
+		'id'					=> $gridId,
+		'clientPageMode'		=> $grid->GetClientPageMode(),
+		'dataUrl'				=> $grid->GetDataUrl(),
+		'dataRequestMethod'		=> $grid->GetDataRequestMethod(),
+		'rowSelection'			=> $grid->GetRowSelection(),
+		'itemsPerPage'			=> $grid->GetItemsPerPage(),
+		'page'					=> $grid->GetPage(),
+		'controlsTexts'			=> $grid->GetControlsTexts(),
+		'clientRowBuffer'		=> $grid->GetClientRowBuffer(),
+		'clientRowBufferMax'	=> $grid::CLIENT_JS_BUFFER_MAX_SIZE,
+
 	]);
 ?>,<?php
 	echo \MvcCore\Tool::JsonEncode([

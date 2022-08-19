@@ -45,9 +45,9 @@ trait ConfigProps {
 	protected $clientPageMode = NULL;
 	
 	/**
-	 * @var int
+	 * @var int|NULL
 	 */
-	protected $clientRowBuffer = 100;
+	protected $clientRowBuffer = NULL;
 
 	/**
 	 * @var string|NULL

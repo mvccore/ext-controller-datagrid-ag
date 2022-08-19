@@ -22,12 +22,12 @@ trait ActionMethods {
 	 * @return void
 	 */
 	public function ActionData () {
-		if ($this->dispatchState <= \MvcCore\IController::DISPATCH_STATE_INITIALIZED) 
-			$this->Init();
-		if ($this->dispatchState >= \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 		if (!$this->ajaxDataRequest) return;
-		$this->LoadModel();
-		$this->pageData = $this->model->GetPageData();
+		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_INITIALIZED) 
+			$this->Init();
+		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) 
+			$this->PreDispatch();
+		if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 		$response = [
 			'totalCount'	=> $this->totalCount,
 			'offset'		=> $this->offset,
@@ -37,6 +37,12 @@ trait ActionMethods {
 			'dataCount'		=> count($this->pageData),
 			'data'			=> $this->pageData,
 		];
+		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_MULTI) {	
+			// TODO: zde posílat v $response i paginaci, count scales a status:
+
+
+			
+		}
 		$callbackParamName = $this->ajaxParamsNames[self::AJAX_PARAM_CALLBACK];
 		if ($this->request->HasParam($callbackParamName)) {
 			$this->JsonpResponse($response, );

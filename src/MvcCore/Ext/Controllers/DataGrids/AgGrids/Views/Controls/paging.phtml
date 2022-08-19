@@ -1,0 +1,38 @@
+<?php
+	/** @var \MvcCore\Ext\Controllers\DataGrids\View $this */
+	/** @var \MvcCore\Ext\Controllers\DataGrid $grid */
+	/** @var \MvcCore\Ext\Controllers\DataGrids\Paging\Page[] $pagingItems */
+
+	$pagingItems = $grid->GetPaging();
+	$renderConf = $this->GetConfigRendering();
+	$pagingCssClasses = $renderConf->GetCssClassesControlPaging();
+	$pagingCssClasses[] = 'grid-control-items-count-' . count($pagingItems);
+
+?><table<?php
+	if (count($pagingCssClasses) > 0)
+		echo ' class="' . implode(' ', $pagingCssClasses) . '"';
+?>><tbody><?php
+	foreach ($pagingItems as $pagingItem):
+		
+		?><td class="grid-page <?php
+			echo $pagingItem->GetCssClass();
+		?>"><?php
+
+		if ($pagingItem instanceof \MvcCore\Ext\Controllers\DataGrids\Paging\Dot):
+			?><span><?php echo $this->EscapeHtml($pagingItem->GetText()); ?></span><?php
+		elseif ($pagingItem->IsCurrent()):
+			?><span><?php
+				echo $this->EscapeHtml($pagingItem->GetText());
+			?></span><?php
+		else:
+			?><a href="<?php
+				echo $pagingItem->GetUrl();
+			?>" data-offset="<?php echo $pagingItem->GetOffset() ?>"><span><?php
+				echo $this->EscapeHtml($pagingItem->GetText());
+			?></span></a><?php
+		endif;
+
+		?></td><?php
+		
+	endforeach;
+?></tr></table>

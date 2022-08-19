@@ -8,10 +8,15 @@ var MvcCore;
             (function (DataGrids) {
                 var AgGrid = /** @class */ (function () {
                     function AgGrid(serverConfig, initialData) {
-                        this.serverConfig = serverConfig;
-                        this.initialData = initialData;
+                        this.totalCount = null;
+                        this.helpers = new DataGrids.AgGrids.Helpers(this);
+                        this.serverConfig = this.helpers.RetypeServerConfigObjects2Maps(serverConfig);
+                        this.initialData = this.helpers.RetypeServerResponseObjects2Maps(initialData);
                         this.events = new DataGrids.AgGrids.Events(this);
-                        this.initialization = new DataGrids.AgGrids.Initializations(this, this.events);
+                        this.initialization = new DataGrids.AgGrids.Initializations(this, this.events, this.helpers);
+                        this.sorting = this.initialData.sorting;
+                        this.filtering = this.initialData.filtering;
+                        this.totalCount = this.initialData.totalCount;
                     }
                     AgGrid.prototype.GetServerConfig = function () {
                         return this.serverConfig;
@@ -53,6 +58,27 @@ var MvcCore;
                     };
                     AgGrid.prototype.GetGridDataSource = function () {
                         return this.gridDataSource;
+                    };
+                    AgGrid.prototype.SetSorting = function (sorting) {
+                        this.sorting = sorting;
+                        return this;
+                    };
+                    AgGrid.prototype.GetSorting = function () {
+                        return this.sorting;
+                    };
+                    AgGrid.prototype.SetFiltering = function (filtering) {
+                        this.filtering = filtering;
+                        return this;
+                    };
+                    AgGrid.prototype.GetFiltering = function () {
+                        return this.filtering;
+                    };
+                    AgGrid.prototype.SetTotalCount = function (totalCount) {
+                        this.totalCount = totalCount;
+                        return this;
+                    };
+                    AgGrid.prototype.GetTotalCount = function () {
+                        return this.totalCount;
                     };
                     return AgGrid;
                 }());

@@ -19,6 +19,7 @@ var MvcCore;
                             //console.log(params);
                         };
                         Events.prototype.HandleFilterChanged = function (params) {
+                            this.grid.SetTotalCount(null);
                             //console.log(params);
                         };
                         Events.prototype.HandleSortChanged = function (params) {

@@ -39,6 +39,18 @@ var MvcCore;
                         function Helpers(grid) {
                             this.grid = grid;
                         }
+                        Helpers.prototype.IsTouchDevice = function () {
+                            var _a;
+                            return (_a = this.touchDevice) !== null && _a !== void 0 ? _a : (this.touchDevice = (('ontouchstart' in window) ||
+                                (navigator.maxTouchPoints > 0) ||
+                                ///@ts-ignore
+                                (navigator['msMaxTouchPoints'] > 0)));
+                        };
+                        Helpers.prototype.IsChromeBrowser = function () {
+                            var _a;
+                            return (_a = this.isChromeBrowser) !== null && _a !== void 0 ? _a : (this.isChromeBrowser = (/Chrome/.test(navigator.userAgent) &&
+                                /Google Inc/.test(navigator.vendor)));
+                        };
                         Helpers.prototype.RetypeServerConfigObjects2Maps = function (serverConfig) {
                             serverConfig.urlSegments.urlFilterOperators = this.convertObject2Map(serverConfig.urlSegments.urlFilterOperators);
                             serverConfig.ajaxParamsNames = this.convertObject2Map(serverConfig.ajaxParamsNames);

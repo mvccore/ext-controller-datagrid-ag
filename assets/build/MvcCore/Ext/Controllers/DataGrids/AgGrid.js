@@ -8,18 +8,50 @@ var MvcCore;
             (function (DataGrids) {
                 var AgGrid = /** @class */ (function () {
                     function AgGrid(serverConfig, initialData) {
+                        var _this = this;
                         this.totalCount = null;
-                        this.helpers = new DataGrids.AgGrids.Helpers(this);
-                        this.serverConfig = this.helpers.RetypeServerConfigObjects2Maps(serverConfig);
-                        this.initialData = this.helpers.RetypeServerResponseObjects2Maps(initialData);
-                        this.events = new DataGrids.AgGrids.Events(this);
-                        this.initialization = new DataGrids.AgGrids.Initializations(this, this.events, this.helpers);
-                        this.sorting = this.initialData.sorting;
-                        this.filtering = this.initialData.filtering;
-                        this.totalCount = this.initialData.totalCount;
+                        console.log(serverConfig);
+                        this
+                            .initSubClasses()
+                            .initServerConfig(serverConfig)
+                            .initData(initialData);
+                        document.addEventListener('DOMContentLoaded', function () {
+                            _this
+                                .initOptions()
+                                .initGrid();
+                        });
                     }
+                    AgGrid.prototype.SetHelpers = function (helpers) {
+                        this.helpers = helpers;
+                        return this;
+                    };
+                    AgGrid.prototype.GetHelpers = function () {
+                        return this.helpers;
+                    };
+                    AgGrid.prototype.SetEvents = function (events) {
+                        this.events = events;
+                        return this;
+                    };
+                    AgGrid.prototype.GetEvents = function () {
+                        return this.events;
+                    };
+                    AgGrid.prototype.SetOptions = function (options) {
+                        this.options = options;
+                        return this;
+                    };
+                    AgGrid.prototype.GetOptions = function () {
+                        return this.options;
+                    };
+                    AgGrid.prototype.SetServerConfig = function (serverConfig) {
+                        this.serverConfig = serverConfig;
+                        return this;
+                    };
                     AgGrid.prototype.GetServerConfig = function () {
                         return this.serverConfig;
+                    };
+                    AgGrid.prototype.SetInitialData = function (initialData) {
+                        this.initialData = initialData;
+                        return this;
                     };
                     AgGrid.prototype.GetInitialData = function () {
                         return this.initialData;
@@ -30,34 +62,6 @@ var MvcCore;
                     };
                     AgGrid.prototype.GetGrid = function () {
                         return this.grid;
-                    };
-                    AgGrid.prototype.SetGridElement = function (gridElement) {
-                        this.gridElement = gridElement;
-                        return this;
-                    };
-                    AgGrid.prototype.GetGridElement = function () {
-                        return this.gridElement;
-                    };
-                    AgGrid.prototype.SetGridOptions = function (gridOptions) {
-                        this.gridOptions = gridOptions;
-                        return this;
-                    };
-                    AgGrid.prototype.GetGridOptions = function () {
-                        return this.gridOptions;
-                    };
-                    AgGrid.prototype.SetGridColumns = function (gridColumns) {
-                        this.gridColumns = gridColumns;
-                        return this;
-                    };
-                    AgGrid.prototype.GetGridColumns = function () {
-                        return this.gridColumns;
-                    };
-                    AgGrid.prototype.SetGridDataSource = function (gridDataSource) {
-                        this.gridDataSource = gridDataSource;
-                        return this;
-                    };
-                    AgGrid.prototype.GetGridDataSource = function () {
-                        return this.gridDataSource;
                     };
                     AgGrid.prototype.SetSorting = function (sorting) {
                         this.sorting = sorting;
@@ -79,6 +83,39 @@ var MvcCore;
                     };
                     AgGrid.prototype.GetTotalCount = function () {
                         return this.totalCount;
+                    };
+                    AgGrid.prototype.initSubClasses = function () {
+                        this.helpers = new DataGrids.AgGrids.Helpers(this);
+                        this.events = new DataGrids.AgGrids.Events(this);
+                        this.options = new DataGrids.AgGrids.Options(this);
+                        return this;
+                    };
+                    AgGrid.prototype.initServerConfig = function (serverConfig) {
+                        this.serverConfig = this.helpers.RetypeServerConfigObjects2Maps(serverConfig);
+                        return this;
+                    };
+                    AgGrid.prototype.initData = function (initialData) {
+                        this.initialData = this.helpers.RetypeServerResponseObjects2Maps(initialData);
+                        this.sorting = this.initialData.sorting;
+                        this.filtering = this.initialData.filtering;
+                        this.totalCount = this.initialData.totalCount;
+                        return this;
+                    };
+                    AgGrid.prototype.initOptions = function () {
+                        this.options
+                            .InitElements()
+                            .InitAgBases()
+                            .InitAgColumns()
+                            .InitAgPageModeSpecifics();
+                        return this;
+                    };
+                    AgGrid.prototype.initGrid = function () {
+                        var gridOptions = this.options.GetAgOptions();
+                        this.grid = new agGrid.Grid(this.options.GetElements().agGridElement, gridOptions);
+                        if ((this.serverConfig.clientPageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
+                            gridOptions.api.setDatasource(this.options.GetAgDataSource());
+                        }
+                        return this;
                     };
                     return AgGrid;
                 }());

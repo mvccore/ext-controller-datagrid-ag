@@ -27,7 +27,7 @@ var MvcCore;
                         };
                         Events.prototype.HandleGridSizeChanged = function (params) {
                             // get the current grids width
-                            var gridElm = this.grid.GetGridElement(), gridElmParent = gridElm.parentNode;
+                            var gridElm = this.grid.GetOptions().GetElements().agGridElement, gridElmParent = gridElm.parentNode;
                             var gridWidth = gridElmParent.offsetWidth;
                             // keep track of which columns to hide/show
                             var columnsToShow = [];

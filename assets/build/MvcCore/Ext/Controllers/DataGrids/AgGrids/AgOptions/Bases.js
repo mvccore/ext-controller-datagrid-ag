@@ -8,8 +8,8 @@ var MvcCore;
             (function (DataGrids) {
                 var AgGrids;
                 (function (AgGrids) {
-                    var SubOptions;
-                    (function (SubOptions) {
+                    var AgOptions;
+                    (function (AgOptions) {
                         var Bases = /** @class */ (function () {
                             function Bases(grid) {
                                 var _newTarget = this.constructor;
@@ -83,8 +83,8 @@ var MvcCore;
                             };
                             return Bases;
                         }());
-                        SubOptions.Bases = Bases;
-                    })(SubOptions = AgGrids.SubOptions || (AgGrids.SubOptions = {}));
+                        AgOptions.Bases = Bases;
+                    })(AgOptions = AgGrids.AgOptions || (AgGrids.AgOptions = {}));
                 })(AgGrids = DataGrids.AgGrids || (DataGrids.AgGrids = {}));
             })(DataGrids = Controllers.DataGrids || (Controllers.DataGrids = {}));
         })(Controllers = Ext.Controllers || (Ext.Controllers = {}));

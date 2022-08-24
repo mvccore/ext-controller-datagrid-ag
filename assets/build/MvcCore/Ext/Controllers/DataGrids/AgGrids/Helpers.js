@@ -51,19 +51,37 @@ var MvcCore;
                             return (_a = this.isChromeBrowser) !== null && _a !== void 0 ? _a : (this.isChromeBrowser = (/Chrome/.test(navigator.userAgent) &&
                                 /Google Inc/.test(navigator.vendor)));
                         };
-                        Helpers.prototype.RetypeServerConfigObjects2Maps = function (serverConfig) {
+                        Helpers.prototype.GetHtmlElementFromString = function (htmlCode) {
+                            var contDiv = document.createElement('div');
+                            contDiv.innerHTML = htmlCode.trim();
+                            return contDiv.firstChild;
+                        };
+                        Helpers.prototype.RetypeRawServerConfig = function (serverConfig) {
                             serverConfig.urlSegments.urlFilterOperators = this.convertObject2Map(serverConfig.urlSegments.urlFilterOperators);
                             serverConfig.ajaxParamsNames = this.convertObject2Map(serverConfig.ajaxParamsNames);
                             serverConfig.controlsTexts = this.convertObject2Map(serverConfig.controlsTexts);
                             return serverConfig;
                         };
-                        Helpers.prototype.RetypeServerResponseObjects2Maps = function (serverResponse) {
+                        Helpers.prototype.RetypeRawServerResponse = function (serverResponse) {
                             serverResponse.filtering = this.convertObject2Map(serverResponse.filtering);
                             return serverResponse;
                         };
-                        Helpers.prototype.RetypeServerRequestMaps2Objects = function (serverRequest) {
-                            serverRequest.filtering = this.convertMap2Object(serverRequest.filtering);
-                            return serverRequest;
+                        Helpers.prototype.RetypeRequest2RawRequest = function (serverRequest) {
+                            var result = serverRequest;
+                            result.filtering = this.convertMap2Object(serverRequest.filtering);
+                            var serverConfig = this.grid.GetServerConfig();
+                            result.id = serverConfig.id;
+                            result.mode = serverConfig.clientPageMode;
+                            if (serverConfig.clientPageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) {
+                                result.gridPath = serverConfig.gridPath;
+                            }
+                            return result;
+                        };
+                        Helpers.prototype.IsInstanceOfIServerRequestRaw = function (obj) {
+                            return (obj != null &&
+                                'id' in obj && 'mode' in obj &&
+                                'offset' in obj && 'limit' in obj &&
+                                'sorting' in obj && 'filtering' in obj);
                         };
                         Helpers.prototype.convertObject2Map = function (obj) {
                             var data = [];

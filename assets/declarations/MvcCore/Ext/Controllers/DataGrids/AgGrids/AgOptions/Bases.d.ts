@@ -1,4 +1,4 @@
-declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.SubOptions {
+declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.AgOptions {
     class Bases {
         Static: typeof Bases;
         protected grid: AgGrid;

@@ -10,15 +10,21 @@ var MvcCore;
                     function AgGrid(serverConfig, initialData) {
                         var _this = this;
                         this.totalCount = null;
-                        console.log(serverConfig);
+                        this.offset = 0;
+                        console.log("AgGrid.ctor - serverConfig", serverConfig);
+                        console.log("AgGrid.ctor - initialData", initialData);
                         this
                             .initSubClasses()
-                            .initServerConfig(serverConfig)
+                            .initServerConfig(serverConfig);
+                        this.options.InitElements();
+                        this
+                            .initPageModeSpecifics()
                             .initData(initialData);
                         document.addEventListener('DOMContentLoaded', function () {
                             _this
-                                .initOptions()
-                                .initGrid();
+                                .initAgOptions()
+                                .initGrid()
+                                .initDataSource();
                         });
                     }
                     AgGrid.prototype.SetHelpers = function (helpers) {
@@ -29,11 +35,11 @@ var MvcCore;
                         return this.helpers;
                     };
                     AgGrid.prototype.SetEvents = function (events) {
-                        this.events = events;
+                        this.eventsManager = events;
                         return this;
                     };
                     AgGrid.prototype.GetEvents = function () {
-                        return this.events;
+                        return this.eventsManager;
                     };
                     AgGrid.prototype.SetOptions = function (options) {
                         this.options = options;
@@ -41,6 +47,13 @@ var MvcCore;
                     };
                     AgGrid.prototype.GetOptions = function () {
                         return this.options;
+                    };
+                    AgGrid.prototype.SetDataSource = function (dataSource) {
+                        this.dataSource = dataSource;
+                        return this;
+                    };
+                    AgGrid.prototype.GetDataSource = function () {
+                        return this.dataSource;
                     };
                     AgGrid.prototype.SetServerConfig = function (serverConfig) {
                         this.serverConfig = serverConfig;
@@ -84,26 +97,46 @@ var MvcCore;
                     AgGrid.prototype.GetTotalCount = function () {
                         return this.totalCount;
                     };
+                    AgGrid.prototype.SetOffset = function (offset) {
+                        this.offset = offset;
+                        return this;
+                    };
+                    AgGrid.prototype.GetOffset = function () {
+                        return this.offset;
+                    };
                     AgGrid.prototype.initSubClasses = function () {
                         this.helpers = new DataGrids.AgGrids.Helpers(this);
-                        this.events = new DataGrids.AgGrids.Events(this);
                         this.options = new DataGrids.AgGrids.Options(this);
                         return this;
                     };
+                    AgGrid.prototype.initPageModeSpecifics = function () {
+                        if ((this.serverConfig.clientPageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
+                            var emSinglePage = new DataGrids.AgGrids.EventsManagers.SinglePageMode(this);
+                            this.eventsManager = emSinglePage;
+                        }
+                        else if ((this.serverConfig.clientPageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
+                            var emMultiplePages = new DataGrids.AgGrids.EventsManagers.MultiplePagesMode(this);
+                            this.eventsManager = emMultiplePages;
+                            emMultiplePages
+                                .AddPagingEvents()
+                                .AddWindowPopStateChangeEvent();
+                        }
+                        return this;
+                    };
                     AgGrid.prototype.initServerConfig = function (serverConfig) {
-                        this.serverConfig = this.helpers.RetypeServerConfigObjects2Maps(serverConfig);
+                        this.serverConfig = this.helpers.RetypeRawServerConfig(serverConfig);
                         return this;
                     };
                     AgGrid.prototype.initData = function (initialData) {
-                        this.initialData = this.helpers.RetypeServerResponseObjects2Maps(initialData);
+                        this.initialData = this.helpers.RetypeRawServerResponse(initialData);
                         this.sorting = this.initialData.sorting;
                         this.filtering = this.initialData.filtering;
                         this.totalCount = this.initialData.totalCount;
+                        this.offset = this.initialData.offset;
                         return this;
                     };
-                    AgGrid.prototype.initOptions = function () {
+                    AgGrid.prototype.initAgOptions = function () {
                         this.options
-                            .InitElements()
                             .InitAgBases()
                             .InitAgColumns()
                             .InitAgPageModeSpecifics();
@@ -112,8 +145,16 @@ var MvcCore;
                     AgGrid.prototype.initGrid = function () {
                         var gridOptions = this.options.GetAgOptions();
                         this.grid = new agGrid.Grid(this.options.GetElements().agGridElement, gridOptions);
+                        return this;
+                    };
+                    AgGrid.prototype.initDataSource = function () {
                         if ((this.serverConfig.clientPageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
-                            gridOptions.api.setDatasource(this.options.GetAgDataSource());
+                            this.dataSource = new DataGrids.AgGrids.DataSources.SinglePageMode(this);
+                            var gridOptions = this.options.GetAgOptions();
+                            gridOptions.api.setDatasource(this.dataSource);
+                        }
+                        else if ((this.serverConfig.clientPageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
+                            this.dataSource = new DataGrids.AgGrids.DataSources.MultiplePagesMode(this);
                         }
                         return this;
                     };

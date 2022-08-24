@@ -1,4 +1,4 @@
-declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.SubOptions {
+declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.AgOptions {
     class Columns {
         Static: typeof Columns;
         protected static types: Map<string, string>;

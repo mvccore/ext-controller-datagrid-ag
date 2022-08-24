@@ -8,46 +8,24 @@ var MvcCore;
             (function (DataGrids) {
                 var AgGrids;
                 (function (AgGrids) {
-                    var Events = /** @class */ (function () {
-                        function Events(grid) {
+                    var EventsManager = /** @class */ (function () {
+                        function EventsManager(grid) {
                             this.grid = grid;
                         }
-                        Events.prototype.AddPagingEvents = function () {
-                            var _this = this;
-                            this.grid.GetOptions().GetElements().pagingAnchors.forEach(function (pagingAnchor) {
-                                var ofsetInt = parseInt(pagingAnchor.dataset.offset, 10);
-                                pagingAnchor.addEventListener('click', _this.handlePagingClick.bind(_this, ofsetInt), true);
-                            });
-                            return this;
-                        };
-                        Events.prototype.RemovePagingEvents = function () {
-                            var _this = this;
-                            this.grid.GetOptions().GetElements().pagingAnchors.forEach(function (pagingAnchor) {
-                                var ofsetInt = parseInt(pagingAnchor.dataset.offset, 10);
-                                pagingAnchor.removeEventListener('click', _this.handlePagingClick.bind(_this, ofsetInt), true);
-                            });
-                            return this;
-                        };
-                        Events.prototype.handlePagingClick = function (offset, e) {
-                            console.log(offset);
-                            //this.grid.GetOptions().GetAgDataSource().LoadPageData(offset);
-                            e.cancelBubble = true;
-                            e.preventDefault();
-                        };
-                        Events.prototype.HandleColumnResized = function (params) {
+                        EventsManager.prototype.HandleColumnResized = function (params) {
                             //console.log(params);
                         };
-                        Events.prototype.HandleColumnMoved = function (params) {
+                        EventsManager.prototype.HandleColumnMoved = function (params) {
                             //console.log(params);
                         };
-                        Events.prototype.HandleFilterChanged = function (params) {
+                        EventsManager.prototype.HandleFilterChanged = function (params) {
                             this.grid.SetTotalCount(null);
                             //console.log(params);
                         };
-                        Events.prototype.HandleSortChanged = function (params) {
+                        EventsManager.prototype.HandleSortChanged = function (params) {
                             //console.log(params);
                         };
-                        Events.prototype.HandleGridSizeChanged = function (params) {
+                        EventsManager.prototype.HandleGridSizeChanged = function (params) {
                             // get the current grids width
                             var gridElm = this.grid.GetOptions().GetElements().agGridElement, gridElmParent = gridElm.parentNode;
                             var gridWidth = gridElmParent.offsetWidth;
@@ -76,12 +54,12 @@ var MvcCore;
                             // fill out any available space to ensure there are no gaps
                             params.api.sizeColumnsToFit();
                         };
-                        return Events;
+                        return EventsManager;
                     }());
-                    AgGrids.Events = Events;
+                    AgGrids.EventsManager = EventsManager;
                 })(AgGrids = DataGrids.AgGrids || (DataGrids.AgGrids = {}));
             })(DataGrids = Controllers.DataGrids || (Controllers.DataGrids = {}));
         })(Controllers = Ext.Controllers || (Ext.Controllers = {}));
     })(Ext = MvcCore.Ext || (MvcCore.Ext = {}));
 })(MvcCore || (MvcCore = {}));
-//# sourceMappingURL=Events.js.map
+//# sourceMappingURL=EventManager.js.map

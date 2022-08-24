@@ -13,14 +13,12 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         static readonly SINGLE_PAGE_MODE: {
             MAX_ROWS_2_SUPPRESS_ROW_VIRTUALIZATION: number;
         };
-        static readonly MULTI_PAGES_MODE: {};
         Static: typeof Options;
         protected grid: AgGrid;
-        protected events: AgGrids.Events;
+        protected eventsManager: AgGrids.EventsManager;
         protected helpers: AgGrids.Helpers;
-        protected bases: SubOptions.Bases;
-        protected columns: AgGrids.SubOptions.Columns;
-        protected dataSource: AgGrids.SubOptions.DataSource | agGrid.IDatasource;
+        protected bases: AgOptions.Bases;
+        protected columns: AgGrids.AgOptions.Columns;
         protected elements: AgGrids.Interfaces.IElements;
         protected agOptions: agGrid.GridOptions<any>;
         protected agColumns: AgGrids.Types.GridColumn[];
@@ -32,10 +30,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         GetAgOptions(): agGrid.GridOptions<any>;
         SetAgColumns(gridColumns: AgGrids.Types.GridColumn[]): this;
         GetAgColumns(): AgGrids.Types.GridColumn[];
-        SetAgDataSource(dataSource: agGrid.IDatasource): this;
-        GetAgDataSource(): agGrid.IDatasource;
         InitElements(): this;
-        InitPagingAnchors(): this;
+        InitBottomControls(): this;
         InitAgBases(): this;
         InitAgColumns(): this;
         InitAgPageModeSpecifics(): this;

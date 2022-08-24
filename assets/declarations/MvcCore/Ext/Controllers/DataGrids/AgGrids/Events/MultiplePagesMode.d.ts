@@ -1,5 +1,5 @@
-declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
-    class Events {
+declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Events {
+    class MultiplePagesMode {
         protected grid: AgGrid;
         constructor(grid: AgGrid);
         AddPagingEvents(): this;

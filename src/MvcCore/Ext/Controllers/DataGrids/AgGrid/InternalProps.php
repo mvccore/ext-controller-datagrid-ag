@@ -30,11 +30,5 @@ trait InternalProps {
 	 * @var bool
 	 */
 	protected $countScalesCustomized = FALSE;
-	
-	/**
-	 * If `TRUE`, items per page has been customized from defaults.
-	 * @var bool
-	 */
-	protected $itemsPerPageCustomized = FALSE;
 
 }

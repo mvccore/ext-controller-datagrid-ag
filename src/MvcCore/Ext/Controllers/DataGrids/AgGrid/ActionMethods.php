@@ -28,27 +28,96 @@ trait ActionMethods {
 		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) 
 			$this->PreDispatch();
 		if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
-		$response = [
+		$response = (object) [
 			'totalCount'	=> $this->totalCount,
 			'offset'		=> $this->offset,
 			'limit'			=> $this->limit,
 			'sorting'		=> $this->GetAjaxSorting(),
 			'filtering'		=> $this->GetAjaxFiltering(),
+			'url'			=> $this->GetAjaxUrl(),
 			'dataCount'		=> count($this->pageData),
+			'controls'		=> NULL,
 			'data'			=> $this->pageData,
 		];
 		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_MULTI) {	
-			// TODO: zde posílat v $response i paginaci, count scales a status:
-
-
-			
+			$renderConf = $this->GetConfigRendering();
+			$response->controls = (object) [
+				'countScales'	=> NULL,
+				'status'		=> NULL,
+				'paging'		=> NULL,
+			];
+			if ($renderConf->GetRenderControlCountScales())
+				$response->controls->countScales	= $this->view->RenderGridControlCountScales();
+			if ($renderConf->GetRenderControlStatus())
+				$response->controls->status			= $this->view->RenderGridControlStatus();
+			if ($renderConf->GetRenderControlPaging())
+				$response->controls->paging			= $this->view->RenderGridControlPaging();
 		}
 		$callbackParamName = $this->ajaxParamsNames[self::AJAX_PARAM_CALLBACK];
 		if ($this->request->HasParam($callbackParamName)) {
-			$this->JsonpResponse($response, );
+			$this->JsonpResponse($response);
 		} else {
 			$this->JsonResponse($response);
 		}
+	}
+
+	
+	// TODO: move to internal getters trait:
+
+	/**
+	 * 
+	 * @return string
+	 */
+	public function GetAjaxUrl () {
+		// page and count
+		$page = $this->page;
+		$count = $this->count;
+		if ($count === $this->itemsPerPage) {
+			$count = NULL;
+			if ($page === 1)
+				$page = NULL;
+		}
+		$gridParams = [
+			static::URL_PARAM_PAGE	=> $page,
+			static::URL_PARAM_COUNT	=> $count,
+		];
+		// sorting ad filtering
+		$configUrlSegments = $this->configUrlSegments;
+		$urlDirAsc = $configUrlSegments->GetUrlSuffixSortAsc();
+		$urlDirDesc = $configUrlSegments->GetUrlSuffixSortDesc();
+		$subjValueDelim = $configUrlSegments->GetUrlDelimiterSubjectValue();
+		$subjsDelim = $configUrlSegments->GetUrlDelimiterSubjects();
+		$valuesDelim = $configUrlSegments->GetUrlDelimiterValues();
+		$urlFilterOperators = $configUrlSegments->GetUrlFilterOperators();
+		$urlDirections = [
+			'ASC'	=> $urlDirAsc,
+			'DESC'	=> $urlDirDesc,
+		];
+		$sortParams = [];
+		foreach ($this->sorting as $columnDbName => $sortDirection) {
+			$columnUrlDir = $urlDirections[$sortDirection];
+			$columnConfig = $this->configColumns->GetByDbColumnName($columnDbName);
+			$columnUrlName = $columnConfig->GetUrlName();
+			$sortParams[] = "{$columnUrlName}{$subjValueDelim}{$columnUrlDir}";
+		}
+		$gridParams[static::URL_PARAM_SORT] = count($sortParams) > 0 
+			? implode($subjsDelim, $sortParams) 
+			: NULL;
+		// filtering
+		$filterParams = [];
+		foreach ($this->filtering as $columnDbName => $filterOperatorsAndValues) {
+			$columnConfig = $this->configColumns->GetByDbColumnName($columnDbName);
+			$columnUrlName = $columnConfig->GetUrlName();
+			foreach ($filterOperatorsAndValues as $operator => $filterValues) {
+				$filterUrlValues = implode($valuesDelim, $filterValues);
+				$operatorUrlValue = $urlFilterOperators[$operator];
+				$filterParams[] = "{$columnUrlName}{$subjValueDelim}{$operatorUrlValue}{$subjValueDelim}{$filterUrlValues}";
+			}
+		}
+		$gridParams[static::URL_PARAM_FILTER] = count($filterParams) > 0
+			? implode($subjsDelim, $filterParams)
+			: NULL;
+		return $this->GridUrl($gridParams);
 	}
 
 	/**
@@ -71,7 +140,7 @@ trait ActionMethods {
 	public function GetAjaxFiltering () {
 		$filtering = [];
 		$configColumns = $this->GetConfigColumns(FALSE);
-		$urlFilterOperators = $this->configUrlSegments->GetUrlFilterOperators();
+		//$urlFilterOperators = $this->configUrlSegments->GetUrlFilterOperators();
 		foreach ($this->filtering as $dbColumnName => $operatorsAndValues) {
 			$columnUrlName = $configColumns->GetByDbColumnName($dbColumnName)->GetUrlName();
 			$filtering[$columnUrlName] = $operatorsAndValues;

@@ -18,18 +18,13 @@ extends		\MvcCore\Ext\Controllers\DataGrid
 implements	\MvcCore\Ext\Controllers\DataGrids\AgGrid\IConstants {
 	
 	use \MvcCore\Ext\Controllers\DataGrids\AgGrid\InternalProps,
+		\MvcCore\Ext\Controllers\DataGrids\AgGrid\InternalGettersSetters,
 		\MvcCore\Ext\Controllers\DataGrids\AgGrid\ConfigProps,
 		\MvcCore\Ext\Controllers\DataGrids\AgGrid\ConfigGettersSetters,
 		\MvcCore\Ext\Controllers\DataGrids\AgGrid\InitMethods,
 		\MvcCore\Ext\Controllers\DataGrids\AgGrid\PreDispatchMethods,
 		\MvcCore\Ext\Controllers\DataGrids\AgGrid\ActionMethods;
 	
-	/**
-	 * Items per page, `NULL` by default, it depends on client row model.
-	 * @var int
-	 */
-	protected $itemsPerPage = NULL;
-
 	/**
 	 * MvcCore Extension - Controller - DataGrid - Ag - version:
 	 * Comparison by PHP function version_compare();

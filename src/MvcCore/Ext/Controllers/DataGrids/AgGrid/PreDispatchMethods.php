@@ -30,10 +30,18 @@ trait PreDispatchMethods {
 		if ($this->ajaxDataRequest) {
 			if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
 				$this->LoadModel();
-				return;
+				$this->preDispatchPage();
 			} else {
-				parent::PreDispatch();
+				if ($this->view === NULL) {}
+					$this->view = $this->createView(TRUE);
+				$this->view->grid = $this;
+				
+				/** @var \MvcCore\Controller $parentOfParentClass */
+				$parentOfParentClass = get_parent_class(get_parent_class(__CLASS__));
+				$parentOfParentClass::PreDispatch();
+
 				$this->LoadModel();
+				$this->preDispatchPage();
 				if (!$this->preDispatchTotalCount()) return;
 				$this->preDispatchTranslations();
 				$this->preDispatchPaging();
@@ -44,6 +52,19 @@ trait PreDispatchMethods {
 			parent::PreDispatch();
 			if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 			$this->preDispatchAssets();
+		}
+	}
+
+	protected function preDispatchPage () {
+		if ($this->page === NULL && $this->clientPageMode === IConstants::CLIENT_PAGE_MODE_MULTI) {
+			$displayingCount = $this->count;
+			if (
+				$displayingCount === 0 && (
+					$this->configRendering->GetRenderControlPaging() & static::CONTROL_DISPLAY_ALWAYS
+				) != 0
+			) $displayingCount = $this->totalCount;
+			$this->page = $this->intdiv($this->offset, $displayingCount) + 1;
+			$this->urlParams[self::URL_PARAM_PAGE] = $this->page;
 		}
 	}
 
@@ -105,7 +126,7 @@ trait PreDispatchMethods {
 	protected function preDispatchCountScales () {
 		$renderCountScales = $this->configRendering->GetRenderControlCountScales();
 		if (!$renderCountScales) return;
-		$multiplePages = $this->totalCount > $this->itemsPerPage && $this->itemsPerPage !== 0;
+		$multiplePages = $this->totalCount > $this->count && $this->count !== 0;
 		if (!$multiplePages && ($renderCountScales & static::CONTROL_DISPLAY_IF_NECESSARY) != 0) 
 			$this->configRendering->SetRenderControlCountScales(static::CONTROL_DISPLAY_NEVER);
 	}

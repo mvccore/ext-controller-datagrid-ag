@@ -74,6 +74,7 @@ trait ConfigProps {
 		IConstants::AJAX_PARAM_LIMIT		=> 'limit',
 		IConstants::AJAX_PARAM_SORTING		=> 'sorting',
 		IConstants::AJAX_PARAM_FILTERING	=> 'filtering',
+		IConstants::AJAX_PARAM_MODE			=> 'mode',
 		IConstants::AJAX_PARAM_CALLBACK		=> 'callback',
 	];
 }

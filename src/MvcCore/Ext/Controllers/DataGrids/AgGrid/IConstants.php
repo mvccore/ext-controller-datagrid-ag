@@ -16,7 +16,7 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 /**
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
  */
-interface IConstants {
+interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
 
 	/**
 	 * Grid action name for ajax data.
@@ -62,7 +62,8 @@ interface IConstants {
 	 * Maximum rows in items per page to choose multiple pages mode.
 	 * @var int
 	 */
-	const CLIENT_PAGE_MODE_MULTI_MAX_ROWS	= 5000;
+	//const CLIENT_PAGE_MODE_MULTI_MAX_ROWS	= 5000;
+	const CLIENT_PAGE_MODE_MULTI_MAX_ROWS	= 1000;
 	
 
 	/**
@@ -92,31 +93,43 @@ interface IConstants {
 	
 	/**
 	 * Ajax param name key for offset.
-	 * @var int
+	 * @var string
 	 */
 	const AJAX_PARAM_OFFSET					= 'offset';
 	
 	/**
 	 * Ajax param name key for limit.
-	 * @var int
+	 * @var string
 	 */
 	const AJAX_PARAM_LIMIT					= 'limit';
 	
 	/**
 	 * Ajax param name key for sorting.
-	 * @var int
+	 * @var string
 	 */
 	const AJAX_PARAM_SORTING				= 'sorting';
 	
 	/**
 	 * Ajax param name key for filtering.
-	 * @var int
+	 * @var string
 	 */
 	const AJAX_PARAM_FILTERING				= 'filtering';
 	
 	/**
+	 * Ajax param name key for client page mode.
+	 * @var string
+	 */
+	const AJAX_PARAM_MODE					= 'mode';
+	
+	/**
+	 * Ajax param name key for grid path for grid request.
+	 * @var string
+	 */
+	const AJAX_PARAM_GRID_PATH				= 'gridPath';
+	
+	/**
 	 * Ajax param name key for JSONP callback.
-	 * @var int
+	 * @var string
 	 */
 	const AJAX_PARAM_CALLBACK				= 'callback';
 

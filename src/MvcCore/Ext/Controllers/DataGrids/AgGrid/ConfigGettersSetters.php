@@ -47,30 +47,6 @@ trait ConfigGettersSetters {
 		return $this;
 	}
 	
-	/**
-	 * @inheritDocs
-	 * @param  int $itemsPerPage
-	 * @return \MvcCore\Ext\Controllers\DataGrid
-	 */
-	public function SetItemsPerPage ($itemsPerPage) {
-		parent::SetItemsPerPage($itemsPerPage);
-		$this->itemsPerPageCustomized = TRUE;
-		return $this;
-	}
-	
-	/**
-	 * @inheritDocs
-	 * @return int
-	 */
-	public function GetItemsPerPage () {
-		if ($this->itemsPerPage === NULL) {
-			$this->itemsPerPage = ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE)
-				? 0
-				: self::ITEMS_PER_PAGE_DEFAULT;
-		}
-		return $this->itemsPerPage;
-	}
-
 
 	/**
 	 * @param  string $id 

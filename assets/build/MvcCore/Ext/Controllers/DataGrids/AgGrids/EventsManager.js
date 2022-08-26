@@ -12,30 +12,30 @@ var MvcCore;
                         function EventsManager(grid) {
                             this.grid = grid;
                         }
-                        EventsManager.prototype.HandleColumnResized = function (params) {
-                            //console.log(params);
+                        EventsManager.prototype.HandleColumnResized = function (event) {
+                            //console.log(event);
                         };
-                        EventsManager.prototype.HandleColumnMoved = function (params) {
-                            //console.log(params);
+                        EventsManager.prototype.HandleColumnMoved = function (event) {
+                            //console.log(event);
                         };
-                        EventsManager.prototype.HandleFilterChanged = function (params) {
+                        EventsManager.prototype.HandleFilterChanged = function (event) {
                             this.grid.SetTotalCount(null);
-                            //console.log(params);
+                            //console.log(event);
                         };
-                        EventsManager.prototype.HandleSortChanged = function (params) {
-                            //console.log(params);
+                        EventsManager.prototype.HandleSortChanged = function (event) {
+                            console.log(event, event.source);
+                            //event.columnApi.
                         };
-                        EventsManager.prototype.HandleGridSizeChanged = function (params) {
+                        EventsManager.prototype.HandleGridSizeChanged = function (event) {
                             // get the current grids width
                             var gridElm = this.grid.GetOptions().GetElements().agGridElement, gridElmParent = gridElm.parentNode;
                             var gridWidth = gridElmParent.offsetWidth;
                             // keep track of which columns to hide/show
-                            var columnsToShow = [];
-                            var columnsToHide = [];
+                            var columnsToShow = [], columnsToHide = [];
                             // iterate over all columns (visible or not) and work out
                             // now many columns can fit (based on their minWidth)
                             var totalColsWidth = 0;
-                            var allColumns = params.columnApi.getColumns();
+                            var allColumns = event.columnApi.getColumns();
                             if (allColumns && allColumns.length > 0) {
                                 for (var i = 0; i < allColumns.length; i++) {
                                     var column = allColumns[i];
@@ -49,10 +49,10 @@ var MvcCore;
                                 }
                             }
                             // show/hide columns based on current grid width
-                            params.columnApi.setColumnsVisible(columnsToShow, true);
-                            params.columnApi.setColumnsVisible(columnsToHide, false);
+                            event.columnApi.setColumnsVisible(columnsToShow, true);
+                            event.columnApi.setColumnsVisible(columnsToHide, false);
                             // fill out any available space to ensure there are no gaps
-                            params.api.sizeColumnsToFit();
+                            event.api.sizeColumnsToFit();
                         };
                         return EventsManager;
                     }());

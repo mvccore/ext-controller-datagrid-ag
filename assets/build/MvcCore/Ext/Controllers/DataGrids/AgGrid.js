@@ -11,6 +11,7 @@ var MvcCore;
                         var _this = this;
                         this.totalCount = null;
                         this.offset = 0;
+                        this.gridPath = '';
                         console.log("AgGrid.ctor - serverConfig", serverConfig);
                         console.log("AgGrid.ctor - initialData", initialData);
                         this
@@ -104,6 +105,13 @@ var MvcCore;
                     AgGrid.prototype.GetOffset = function () {
                         return this.offset;
                     };
+                    AgGrid.prototype.SetGridPath = function (gridPath) {
+                        this.gridPath = gridPath;
+                        return this;
+                    };
+                    AgGrid.prototype.GetGridPath = function () {
+                        return this.gridPath;
+                    };
                     AgGrid.prototype.initSubClasses = function () {
                         this.helpers = new DataGrids.AgGrids.Helpers(this);
                         this.options = new DataGrids.AgGrids.Options(this);
@@ -133,6 +141,7 @@ var MvcCore;
                         this.filtering = this.initialData.filtering;
                         this.totalCount = this.initialData.totalCount;
                         this.offset = this.initialData.offset;
+                        this.gridPath = this.initialData.path;
                         return this;
                     };
                     AgGrid.prototype.initAgOptions = function () {

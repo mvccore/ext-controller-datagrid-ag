@@ -46,6 +46,7 @@ var MvcCore;
                                 /** If you know up front how many rows are in the dataset, set it here. Otherwise leave blank. */
                                 _this.rowCount = undefined;
                                 _this.pageLoaded = false;
+                                _this.initDataCache = grid.GetServerConfig().clientMaxRowsInCache > 0;
                                 return _this;
                             }
                             /** Optional destroy method, if your datasource has state it needs to clean up. */
@@ -66,7 +67,8 @@ var MvcCore;
                                 }
                             };
                             SinglePageMode.prototype.possibleToResolveByInitData = function (params, totalCount) {
-                                return (totalCount != null &&
+                                return (this.initDataCache &&
+                                    totalCount != null &&
                                     params.startRow >= this.initialData.offset &&
                                     (params.endRow <= this.initialData.offset + this.initialData.dataCount || totalCount < params.endRow));
                             };

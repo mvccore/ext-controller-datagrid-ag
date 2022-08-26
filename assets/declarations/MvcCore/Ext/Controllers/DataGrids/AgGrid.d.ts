@@ -11,6 +11,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         protected filtering: Map<string, Map<AgGrids.Enums.Operator, string[]>>;
         protected totalCount: number | null;
         protected offset: number;
+        protected gridPath: string;
         constructor(serverConfig: AgGrids.Interfaces.IServerConfig, initialData: AgGrids.Interfaces.IServerResponse);
         SetHelpers(helpers: AgGrids.Helpers): this;
         GetHelpers(): AgGrids.Helpers;
@@ -34,6 +35,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         GetTotalCount(): number | null;
         SetOffset(offset: number): this;
         GetOffset(): number;
+        SetGridPath(gridPath: string): this;
+        GetGridPath(): string;
         protected initSubClasses(): this;
         protected initPageModeSpecifics(): this;
         protected initServerConfig(serverConfig: AgGrids.Interfaces.IServerConfig): this;

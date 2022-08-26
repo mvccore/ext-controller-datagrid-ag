@@ -48,6 +48,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				'notMin'	=> TRUE,
 				'paths'		=> [
 					$gridAssetsDir . "/ag-grid-community/ag-grid-community.min.noStyle.js",
+					$gridAssetsDir . "/ajax-min/ajax.min.js",
 				],
 			],
 			(object) [
@@ -55,6 +56,8 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				'defer'		=> FALSE,
 				'notMin'	=> FALSE,
 				'paths'		=> [
+					$mvcCoreAgGridAssetsDir . "AgGrids/MD5.js",
+
 					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/AjaxDataRequestMethod.js",
 					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/AjaxParamName.js",
 					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/ClientModelType.js",
@@ -72,6 +75,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 					$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/SinglePageMode.js",
 					$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/MultiplePagesMode.js",
 					$mvcCoreAgGridAssetsDir . "AgGrids/DataSource.js",
+					$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/MultiplePagesModes/Cache.js",
 					$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/MultiplePagesMode.js",
 					$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/SinglePageMode.js",
 					$mvcCoreAgGridAssetsDir . "AgGrids/AgOptions/Bases.js",

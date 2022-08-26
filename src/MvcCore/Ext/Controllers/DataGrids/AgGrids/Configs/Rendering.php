@@ -13,31 +13,16 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs;
 
-class Rendering extends \MvcCore\Ext\Controllers\DataGrids\Configs\Rendering {
+class		Rendering
+extends		\MvcCore\Ext\Controllers\DataGrids\Configs\Rendering
+implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	
-	/**
-	 * AgGrid css theme.
-	 * @var string
-	 */
-	const 
-		THEME_ALPINE		= 'ag-theme-alpine',
-		THEME_ALPINE_DARK	= 'ag-theme-alpine-dark',
-		THEME_BALHAM		= 'ag-theme-balham',
-		THEME_BALHAM_DARK	= 'ag-theme-balham-dark',
-		THEME_BASE			= 'ag-theme-base',
-		THEME_BLUE			= 'ag-theme-blue',
-		THEME_BOOTSTRAP		= 'ag-theme-bootstrap',
-		THEME_CLASSIC		= 'ag-theme-classic',
-		THEME_DARK			= 'ag-theme-dark',
-		THEME_FRESH			= 'ag-theme-fresh',
-		THEME_MATERIAL		= 'ag-theme-material';
-
 	/**
 	 * @var string|NULL
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
-	protected $theme = self::THEME_CLASSIC;
+	protected $theme = self::THEME_FRESH;
 	
 	/**
 	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL

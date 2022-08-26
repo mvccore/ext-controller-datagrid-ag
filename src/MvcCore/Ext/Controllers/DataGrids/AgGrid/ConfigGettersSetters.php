@@ -224,11 +224,20 @@ trait ConfigGettersSetters {
 	/**
 	 * @inheritDocs
 	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering $configRendering
-	 * @return \MvcCore\Ext\Controllers\DataGrid
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
 	#[\ReturnTypeWillChange]
 	public function SetConfigRendering (/*\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering*/ $configRendering) {
 		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering $configRendering */
+		if (!($configRendering instanceof \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering)) {
+			$namespace = "\\MvcCore\\Ext\\Controllers\\DataGrids\\AgGrids\\Configs\\";
+			$interfaceName = $namespace."IRendering";
+			$className = $namespace."Rendering";
+			throw new \InvalidArgumentException(
+				"[".get_class($this)."] Grid rendering config must implement "
+				."interface `{$interfaceName}`. Try to create instance from `$className`."
+			);
+		}
 		$this->configRendering = $configRendering;
 		return $this;
 	}

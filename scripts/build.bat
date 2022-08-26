@@ -17,9 +17,12 @@ call npm run build
 
 @cd ..\..\..
 @rmdir .\assets\ag-grid-community /s /q
-@call xcopy /E /I .\node_modules\ag-grid-community\dist .\assets\ag-grid-community
+@call xcopy /E /I .\node_modules\@mvccore\ext-controller-datagrid-ag-js\node_modules\ag-grid-community\dist .\assets\ag-grid-community
 @del /S .\assets\ag-grid-community\*.scss
 @del /S .\assets\ag-grid-community\*.hbs
+
+@rmdir .\assets\ajax-min /s /q
+@call xcopy /E /I .\node_modules\@mvccore\ext-controller-datagrid-ag-js\node_modules\ajax-min\builds\latest .\assets\ajax-min
 
 @echo.
 @echo Building finished.

@@ -14,9 +14,12 @@ sleep 1
 
 cd ../../..
 rm -r ./assets/ag-grid-community
-mv ./node_modules/ag-grid-community/dist ./assets/ag-grid-community
+cp ./node_modules/@mvccore/ext-controller-datagrid-ag-js/node_modules/ag-grid-community/dist ./assets/ag-grid-community
 find ./assets/ag-grid-community -name "*.scss" -type f -delete
 find ./assets/ag-grid-community -name "*.hbs" -type f -delete
+
+rm -r ./assets/ajax-min
+cp ./node_modules/@mvccore/ext-controller-datagrid-ag-js/node_modules/ajax-min/builds/latest ./assets/ajax-min
 
 echo "
 Building finished.

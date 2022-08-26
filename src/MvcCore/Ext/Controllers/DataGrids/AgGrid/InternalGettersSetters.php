@@ -26,7 +26,7 @@ trait InternalGettersSetters {
 		if ($this->gridRequest === NULL) {
 			$gridParam = $this->ajaxDataRequest
 				// get `gridPath` param from application AJAX request object
-				? $this->GetParam(static::AJAX_PARAM_GRID_PATH, FALSE)
+				? $this->GetParam(static::AJAX_PARAM_PATH, FALSE)
 				// get `grid` param from application GET request object
 				: $this->GetParam(static::URL_PARAM_GRID, FALSE);
 			$gridParam = $gridParam !== NULL
@@ -38,5 +38,4 @@ trait InternalGettersSetters {
 		}
 		return $this->gridRequest;
 	}
-
 }

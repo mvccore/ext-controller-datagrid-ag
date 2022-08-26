@@ -66,6 +66,24 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
+	 * @param  bool $enabledColumnsOnly 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
+	public function SetEnabledColumnsOnly ($enabledColumnsOnly) {
+		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $this */
+		$this->enabledColumnsOnly = $enabledColumnsOnly;
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function GetEnabledColumnsOnly () {
+		return $this->enabledColumnsOnly;
+	}
+	
+	
+	/**
 	 * @param  int $clientPageMode 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -148,6 +166,42 @@ trait ConfigGettersSetters {
 	 */
 	public function GetRowSelection () {
 		return $this->rowSelection;
+	}
+	
+	/**
+	 * @param  int|NULL $clientMaxRowsInCache 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
+	public function SetClientMaxRowsInCache ($clientMaxRowsInCache) {
+		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $this */
+		$this->clientMaxRowsInCache = $clientMaxRowsInCache;
+		return $this;
+	}
+
+	/**
+	 * 
+	 * @return int|NULL
+	 */
+	public function GetClientMaxRowsInCache () {
+		return $this->clientMaxRowsInCache;
+	}
+
+	/**
+	 * @param  bool $clientCache 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
+	public function SetClientCache ($clientCache) {
+		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $this */
+		$this->clientCache = $clientCache;
+		return $this;
+	}
+
+	/**
+	 * 
+	 * @return bool
+	 */
+	public function GetClientCache () {
+		return $this->clientCache;
 	}
 
 	/**

@@ -55,7 +55,6 @@ trait InitMethods {
 		
 		$this->GetConfigRendering();
 		
-		// todo - move with comment into previous method!
 		$this->initConfigRenderingByClientPageMode();
 		
 		/** @var \MvcCore\Controller $parentOfParentClass */
@@ -81,6 +80,7 @@ trait InitMethods {
 			if (!$this->initUrlParams()) return; // redirect inside
 			$this->initClientPageMode();
 			$this->initClientRowBuffer();
+			$this->initClientCache();
 			$this->initOffsetLimit();
 		}
 
@@ -93,6 +93,9 @@ trait InitMethods {
 		call_user_func([$this, $this->gridAction]);
 	}
 
+	/**
+	 * @return void
+	 */
 	protected function initConfigRenderingByClientPageMode () {
 		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
 			$this->configRendering
@@ -234,6 +237,18 @@ trait InitMethods {
 	}
 
 	/**
+	 * @return void
+	 */
+	protected function initClientCache () {
+		if ($this->clientCache) {
+			if ($this->clientMaxRowsInCache === NULL)
+				$this->clientMaxRowsInCache = IConstants::CLIENT_JS_MAX_ROWS_IN_CACHE;
+		} else {
+			$this->clientMaxRowsInCache = 0;
+		}
+	}
+
+	/**
 	 * Initialize internal property `$this->queryStringParamsSepatator`
 	 * to be able to build internal grid URL strings.
 	 * Check valid values from URL for page and items par page.
@@ -272,7 +287,6 @@ trait InitMethods {
 			: 1;
 	}
 	
-	
 	/**
 	 * If client row model is single page and request is ajax:
 	 *    Get request param for offset and limit.
@@ -289,9 +303,6 @@ trait InitMethods {
 			parent::initOffsetLimit();
 		}
 	}
-
-
-
 
 	/**
 	 * Process canonical redirect if necessary and remove default 

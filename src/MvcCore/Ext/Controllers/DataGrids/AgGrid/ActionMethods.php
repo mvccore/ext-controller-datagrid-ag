@@ -28,13 +28,15 @@ trait ActionMethods {
 		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) 
 			$this->PreDispatch();
 		if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
+		list($gridPath, $gridUrl) = $this->GetAjaxGridPathAndUrl();
 		$response = (object) [
 			'totalCount'	=> $this->totalCount,
 			'offset'		=> $this->offset,
 			'limit'			=> $this->limit,
 			'sorting'		=> $this->GetAjaxSorting(),
 			'filtering'		=> $this->GetAjaxFiltering(),
-			'url'			=> $this->GetAjaxUrl(),
+			'url'			=> $gridUrl,
+			'path'			=> $gridPath,
 			'dataCount'		=> count($this->pageData),
 			'controls'		=> NULL,
 			'data'			=> $this->pageData,
@@ -68,7 +70,7 @@ trait ActionMethods {
 	 * 
 	 * @return string
 	 */
-	public function GetAjaxUrl () {
+	public function GetAjaxGridPathAndUrl () {
 		// page and count
 		$page = $this->page;
 		$count = $this->count;
@@ -117,7 +119,22 @@ trait ActionMethods {
 		$gridParams[static::URL_PARAM_FILTER] = count($filterParams) > 0
 			? implode($subjsDelim, $filterParams)
 			: NULL;
-		return $this->GridUrl($gridParams);
+		// complete grid param path
+		list ($gridParam) = $this->route->Url(
+			$this->gridRequest,
+			$gridParams,
+			$this->urlParams,
+			$this->queryStringParamsSepatator,
+			FALSE
+		);
+		$gridParam = rtrim(rawurldecode($gridParam), '/');
+		$urlParams = [static::URL_PARAM_GRID => $gridParam];
+		if (array_key_exists(static::URL_PARAM_ACTION, $gridParams) && $gridParams[static::URL_PARAM_ACTION] === NULL)
+			$urlParams[static::URL_PARAM_ACTION] = NULL;
+		/** @var \MvcCore\Controller $parentOfParentClass */
+		$parentOfParentClass = get_parent_class(get_parent_class(__CLASS__));
+		$url = $parentOfParentClass::Url($this->appRouteName, $urlParams);
+		return [$gridParam, $url];
 	}
 
 	/**

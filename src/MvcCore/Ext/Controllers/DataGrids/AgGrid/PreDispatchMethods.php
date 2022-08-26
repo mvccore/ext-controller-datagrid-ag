@@ -39,7 +39,7 @@ trait PreDispatchMethods {
 				/** @var \MvcCore\Controller $parentOfParentClass */
 				$parentOfParentClass = get_parent_class(get_parent_class(__CLASS__));
 				$parentOfParentClass::PreDispatch();
-
+				
 				$this->LoadModel();
 				$this->preDispatchPage();
 				if (!$this->preDispatchTotalCount()) return;

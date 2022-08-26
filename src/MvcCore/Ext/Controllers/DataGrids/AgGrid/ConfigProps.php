@@ -40,6 +40,11 @@ trait ConfigProps {
 	protected $id = NULL;
 	
 	/**
+	 * @var bool
+	 */
+	protected $enabledColumnsOnly = TRUE;
+	
+	/**
 	 * @var int|NULL
 	 */
 	protected $clientPageMode = NULL;
@@ -60,9 +65,20 @@ trait ConfigProps {
 	protected $dataRequestMethod = IConstants::AJAX_DATA_REQUEST_METHOD_JSONP;
 
 	/**
-	 * @var int|NULL
+	 * @var int
 	 */
 	protected $rowSelection = IConstants::ROW_SELECTION_NONE;
+
+	/**
+	 * 
+	 * @var bool
+	 */
+	protected $clientCache = TRUE;
+	
+	/**
+	 * @var int|NULL
+	 */
+	protected $clientMaxRowsInCache = NULL;
 	
 	/**
 	 * Ajax params for dataset offset, limit, sorting and filtering.

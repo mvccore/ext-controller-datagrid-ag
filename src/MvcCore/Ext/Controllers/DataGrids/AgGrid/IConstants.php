@@ -59,6 +59,12 @@ interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
 	const CLIENT_JS_BUFFER_MAX_SIZE			= 500;
 
 	/**
+	 * Maximum rows in client cache by default.
+	 * @var int
+	 */
+	const CLIENT_JS_MAX_ROWS_IN_CACHE		= 10000;
+
+	/**
 	 * Maximum rows in items per page to choose multiple pages mode.
 	 * @var int
 	 */
@@ -125,7 +131,7 @@ interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
 	 * Ajax param name key for grid path for grid request.
 	 * @var string
 	 */
-	const AJAX_PARAM_GRID_PATH				= 'gridPath';
+	const AJAX_PARAM_PATH					= 'path';
 	
 	/**
 	 * Ajax param name key for JSONP callback.

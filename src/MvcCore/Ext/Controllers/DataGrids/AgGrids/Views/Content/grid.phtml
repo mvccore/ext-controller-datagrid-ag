@@ -43,7 +43,6 @@
 		'id'					=> $gridId,
 		'clientPageMode'		=> $grid->GetClientPageMode(),
 		'dataUrl'				=> $grid->GetDataUrl(),
-		'gridPath'				=> $grid->GetGridRequest()->GetPath(),
 		'dataRequestMethod'		=> $grid->GetDataRequestMethod(),
 		'rowSelection'			=> $grid->GetRowSelection(),
 		'itemsPerPage'			=> $grid->GetItemsPerPage(),
@@ -51,6 +50,7 @@
 		'count'					=> $grid->GetCount(),
 		'controlsTexts'			=> $grid->GetControlsTexts(),
 		'clientRowBuffer'		=> $grid->GetClientRowBuffer(),
+		'clientMaxRowsInCache'	=> $grid->GetClientMaxRowsInCache(),
 		'clientRowBufferMax'	=> $grid::CLIENT_JS_BUFFER_MAX_SIZE,
 
 	]);
@@ -61,6 +61,8 @@
 		'limit'				=> $grid->GetLimit(),
 		'sorting'			=> $grid->GetAjaxSorting(),
 		'filtering'			=> $grid->GetAjaxFiltering(),
+		'url'				=> $this->controller->GetRequest()->GetFullUrl(),
+		'path'				=> $grid->GetGridRequest()->GetPath(),
 		'dataCount'			=> count($grid->GetPageData()),
 		'data'				=> $grid->GetPageData()
 	]);

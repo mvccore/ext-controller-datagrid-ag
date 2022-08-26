@@ -89,6 +89,8 @@ trait InitMethods {
 		
 		$this->initSorting();
 		if (!$this->initFiltering()) return; // redirect inside
+
+		$this->GetTimeZoneOffset();
 		
 		call_user_func([$this, $this->gridAction]);
 	}

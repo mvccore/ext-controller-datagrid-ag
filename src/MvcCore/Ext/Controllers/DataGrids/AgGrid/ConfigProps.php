@@ -58,6 +58,11 @@ trait ConfigProps {
 	 * @var string|NULL
 	 */
 	protected $dataUrl = NULL;
+
+	/**
+	 * @var \DateInterval|NULL
+	 */
+	protected $timeZoneOffset = NULL;
 	
 	/**
 	 * @var int

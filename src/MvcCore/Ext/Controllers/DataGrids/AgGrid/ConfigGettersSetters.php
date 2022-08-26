@@ -133,7 +133,27 @@ trait ConfigGettersSetters {
 	public function GetDataUrl () {
 		return $this->dataUrl;
 	}
-	
+
+	/**
+	 * @param  \DateInterval $timeZoneOffset 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
+	public function SetTimeZoneOffset (\DateInterval $timeZoneOffset) {
+		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $this */
+		$this->timeZoneOffset = $timeZoneOffset;
+		return $this;
+	}
+
+	/**
+	 * @return \DateInterval|NULL
+	 */
+	public function GetTimeZoneOffset () {
+		if ($this->timeZoneOffset === NULL) {
+			$this->timeZoneOffset = new \DateInterval("PT0H0M0S");
+		}
+		return $this->timeZoneOffset;
+	}
+
 	/**
 	 * @param  int $dataRequestMethod 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid

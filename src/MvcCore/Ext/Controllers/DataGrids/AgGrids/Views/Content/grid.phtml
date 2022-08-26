@@ -49,10 +49,10 @@
 		'page'					=> $grid->GetPage(),
 		'count'					=> $grid->GetCount(),
 		'controlsTexts'			=> $grid->GetControlsTexts(),
+		'timeZoneOffset'		=> $grid->GetTimeZoneOffsetSeconds(),
 		'clientRowBuffer'		=> $grid->GetClientRowBuffer(),
 		'clientMaxRowsInCache'	=> $grid->GetClientMaxRowsInCache(),
 		'clientRowBufferMax'	=> $grid::CLIENT_JS_BUFFER_MAX_SIZE,
-
 	]);
 ?>,<?php
 	echo \MvcCore\Tool::JsonEncode([

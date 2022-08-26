@@ -38,4 +38,12 @@ trait InternalGettersSetters {
 		}
 		return $this->gridRequest;
 	}
+
+	public function GetTimeZoneOffsetSeconds () {
+		$tzOffset = $this->GetTimeZoneOffset();
+		$hoursSeconds = intval($tzOffset->format('%h')) * 3600;
+		$minutesSeconds = intval($tzOffset->format('%i')) * 60;
+		$seconds = intval($tzOffset->format('%s'));
+		return $hoursSeconds + $minutesSeconds + $seconds;
+	}
 }

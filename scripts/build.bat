@@ -21,6 +21,10 @@ call npm run build
 @del /S .\assets\ag-grid-community\*.scss
 @del /S .\assets\ag-grid-community\*.hbs
 
+@rmdir .\assets\moment /s /q
+@call xcopy /E /I .\node_modules\@mvccore\ext-controller-datagrid-ag-js\node_modules\moment\min .\assets\moment
+@call xcopy /E /I .\node_modules\@mvccore\ext-controller-datagrid-ag-js\node_modules\moment\locale .\assets\moment\locale
+
 @rmdir .\assets\ajax-min /s /q
 @call xcopy /E /I .\node_modules\@mvccore\ext-controller-datagrid-ag-js\node_modules\ajax-min\builds\latest .\assets\ajax-min
 

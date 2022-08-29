@@ -274,4 +274,26 @@ trait ConfigGettersSetters {
 		return $this->configRendering;
 	}
 
+
+	/**
+	 * @inheritDocs
+	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales $configRendering
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
+	#[\ReturnTypeWillChange]
+	public function SetConfigLocales (\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales $configLocales) {
+		$this->configLocales = $configLocales;
+		return $this;
+	}
+
+	/**
+	 * @inheritDocs
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
+	 */
+	public function GetConfigLocales () {
+		if ($this->configLocales === NULL) {
+			$this->configLocales = new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales;
+		}
+		return $this->configLocales;
+	}
 }

@@ -84,6 +84,12 @@ trait ConfigProps {
 	 * @var int|NULL
 	 */
 	protected $clientMaxRowsInCache = NULL;
+
+	/**
+	 * 
+	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales|NULL
+	 */
+	protected $configLocales = NULL;
 	
 	/**
 	 * Ajax params for dataset offset, limit, sorting and filtering.

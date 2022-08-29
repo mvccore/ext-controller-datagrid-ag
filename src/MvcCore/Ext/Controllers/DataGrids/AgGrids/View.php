@@ -41,53 +41,74 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 	public function GetGridAssetsGroupsJs () {
 		$gridAssetsDir = static::getAssetsDir();
 		$mvcCoreAgGridAssetsDir = $gridAssetsDir . '/build/MvcCore/Ext/Controllers/DataGrids/';
-		return [
-			(object) [
-				'async'		=> FALSE,
-				'defer'		=> FALSE,
-				'notMin'	=> TRUE,
-				'paths'		=> [
-					$gridAssetsDir . "/ag-grid-community/ag-grid-community.min.noStyle.js",
-					$gridAssetsDir . "/ajax-min/ajax.min.js",
-				],
+		
+		$minimalizedCode = (object) [
+			'async'		=> FALSE,
+			'defer'		=> FALSE,
+			'notMin'	=> TRUE,
+			'paths'		=> [
+				$gridAssetsDir . "/ag-grid-community/ag-grid-community.min.noStyle.js",
+				$gridAssetsDir . "/moment/moment.min.js",
+				$gridAssetsDir . "/ajax-min/ajax.min.js",
 			],
-			(object) [
-				'async'		=> FALSE,
-				'defer'		=> FALSE,
-				'notMin'	=> FALSE,
-				'paths'		=> [
-					$mvcCoreAgGridAssetsDir . "AgGrids/MD5.js",
+		];
+		$notMinimalizedCode = (object) [
+			'async'		=> FALSE,
+			'defer'		=> FALSE,
+			'notMin'	=> FALSE,
+			'paths'		=> [
+				$mvcCoreAgGridAssetsDir . "AgGrids/MD5.js",
 
-					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/AjaxDataRequestMethod.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/AjaxParamName.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/ClientModelType.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/ClientPageMode.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/ControlText.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/FilteringMode.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/Operator.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/RowSelection.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/RowSelection.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/Enums/SortingMode.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/AjaxDataRequestMethod.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/AjaxParamName.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/ClientModelType.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/ClientPageMode.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/ControlText.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/FilteringMode.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/Operator.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/RowSelection.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/RowSelection.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/SortingMode.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Enums/ServerType.js",
 
-					$mvcCoreAgGridAssetsDir . "AgGrids/Types/GridColumn.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Types/GridColumn.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Types/ViewHelper.js",
 					
-					$mvcCoreAgGridAssetsDir . "AgGrids/EventsManager.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/SinglePageMode.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/MultiplePagesMode.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/DataSource.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/MultiplePagesModes/Cache.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/MultiplePagesMode.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/SinglePageMode.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/AgOptions/Bases.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/AgOptions/Columns.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/Options.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManager.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/SinglePageMode.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/MultiplePagesMode.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/DataSource.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/MultiplePagesModes/Cache.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/MultiplePagesMode.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/SinglePageMode.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/AgOptionsBases.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManagers/Header.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManagers/ViewHelper.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManager.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Options.js",
 
-					$mvcCoreAgGridAssetsDir . "AgGrids/Helpers.js",
-					$mvcCoreAgGridAssetsDir . "AgGrids/ToolTip.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Helpers.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/ToolTip.js",
 
-					$mvcCoreAgGridAssetsDir . "AgGrid.js",
-				],
+				$mvcCoreAgGridAssetsDir . "AgGrid.js",
 			],
+		];
+
+		$dateTimeLangAndLocaleArr = $this->controller->GetConfigLocales()->GetLocaleDateTime(FALSE);
+		$dateTimeLangAndLocaleStr = implode('-', $dateTimeLangAndLocaleArr);
+		$dateTimeLangAndLocaleFile = $gridAssetsDir . "/moment/locale/{$dateTimeLangAndLocaleStr}.js";
+		if (file_exists($dateTimeLangAndLocaleFile)) {
+			array_unshift($notMinimalizedCode->paths, $dateTimeLangAndLocaleFile);
+		} else {
+			$dateTimeLang = $dateTimeLangAndLocaleArr[0];
+			$dateTimeLangFile = $gridAssetsDir . "/moment/locale/{$dateTimeLang}.js";
+			if (file_exists($dateTimeLangFile))
+				array_unshift($notMinimalizedCode->paths, $dateTimeLangFile);
+		}
+
+		return [
+			$minimalizedCode,
+			$notMinimalizedCode,
 		];
 	}
 

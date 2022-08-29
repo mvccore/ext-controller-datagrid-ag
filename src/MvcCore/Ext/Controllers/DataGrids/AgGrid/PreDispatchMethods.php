@@ -51,6 +51,7 @@ trait PreDispatchMethods {
 			if ($this->dispatchState >= \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 			parent::PreDispatch();
 			if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
+			$this->preDispatchLocales();
 			$this->preDispatchAssets();
 		}
 	}
@@ -130,6 +131,14 @@ trait PreDispatchMethods {
 		if (!$multiplePages && ($renderCountScales & static::CONTROL_DISPLAY_IF_NECESSARY) != 0) 
 			$this->configRendering->SetRenderControlCountScales(static::CONTROL_DISPLAY_NEVER);
 	}
+	
+	/**
+	 * 
+	 * @return void
+	 */
+	protected function preDispatchLocales () {
+		$this->GetConfigLocales()->Init();
+	}
 
 	/**
 	 * 
@@ -171,5 +180,4 @@ trait PreDispatchMethods {
 			}
 		}
 	}
-
 }

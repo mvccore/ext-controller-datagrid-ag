@@ -10,6 +10,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
                 PAGING_ANCHOR_SEL: string;
             };
         };
+        static readonly SYSTEM_LOCALE_SEPARATOR: string;
         static readonly SINGLE_PAGE_MODE: {
             MAX_ROWS_2_SUPPRESS_ROW_VIRTUALIZATION: number;
         };
@@ -17,8 +18,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected grid: AgGrid;
         protected eventsManager: AgGrids.EventsManager;
         protected helpers: AgGrids.Helpers;
-        protected bases: AgOptions.Bases;
-        protected columns: AgGrids.AgOptions.Columns;
+        protected bases: AgGrids.AgOptionsBases;
+        protected columns: AgGrids.ColumnsManager;
         protected elements: AgGrids.Interfaces.IElements;
         protected agOptions: agGrid.GridOptions<any>;
         protected agColumns: AgGrids.Types.GridColumn[];

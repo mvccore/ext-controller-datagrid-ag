@@ -40,17 +40,17 @@ var MvcCore;
                             };
                             Columns.prototype.initColumns = function () {
                                 this.agColumns = [];
-                                var agColumn, serverColumnCfg, serverColumns = this.grid.GetServerConfig().columns;
+                                var agColumn, serverColumnCfg, serverConfig = this.grid.GetServerConfig(), serverColumns = serverConfig.columns;
                                 for (var columnUrlName in serverColumns) {
                                     serverColumnCfg = serverColumns[columnUrlName];
                                     if (serverColumnCfg.disabled === true)
                                         continue;
-                                    agColumn = this.initColumn(columnUrlName, serverColumnCfg);
+                                    agColumn = this.initColumn(columnUrlName, serverColumnCfg, serverConfig);
                                     this.agColumns.push(agColumn);
                                 }
                                 return this;
                             };
-                            Columns.prototype.initColumn = function (columnUrlName, serverColumnCfg) {
+                            Columns.prototype.initColumn = function (columnUrlName, serverColumnCfg, serverConfig) {
                                 var column = {
                                     colId: columnUrlName,
                                     field: serverColumnCfg.propName,
@@ -67,8 +67,16 @@ var MvcCore;
                                 if (this.Static.types.has(serverType)) {
                                     column.type = this.Static.types.get(serverType);
                                     console.log(column.type);
-                                    if (column.type === '\\Date' && column.filter) {
-                                        column.filter = 'agDateColumnFilter';
+                                    if (column.type === 'dateColumn') {
+                                        if (column.filter)
+                                            column.filter = 'agDateColumnFilter';
+                                        column.valueFormatter = function (params) {
+                                            // TODO
+                                            var dateAsString = params.data[serverColumnCfg.propName];
+                                            var dateTime = Date.parse(dateAsString) + serverConfig.timeZoneOffset;
+                                            var formatArgs = serverColumnCfg.format;
+                                            return moment(dateTime).format(formatArgs[formatArgs.length - 1]);
+                                        };
                                     }
                                 }
                                 if (serverColumnCfg.width != null && typeof (serverColumnCfg.width) == 'number')

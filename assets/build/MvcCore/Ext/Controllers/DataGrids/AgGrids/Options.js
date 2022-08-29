@@ -69,13 +69,13 @@ var MvcCore;
                             return this;
                         };
                         Options.prototype.InitAgBases = function () {
-                            this.bases = new AgGrids.AgOptions.Bases(this.grid);
+                            this.bases = new AgGrids.AgOptionsBases(this.grid);
                             this.bases.Init();
                             this.agOptions = this.bases.GetAgOptions();
                             return this;
                         };
                         Options.prototype.InitAgColumns = function () {
-                            this.columns = new AgGrids.AgOptions.Columns(this.grid);
+                            this.columns = new AgGrids.ColumnsManager(this.grid);
                             this.columns.Init();
                             this.agOptions.columnDefs = this.columns.GetAgColumns();
                             this.agOptions.defaultColDef = this.columns.GetDefaultColDef();
@@ -151,6 +151,7 @@ var MvcCore;
                                 PAGING_ANCHOR_SEL: '.grid-page a',
                             }
                         };
+                        Options.SYSTEM_LOCALE_SEPARATOR = '-';
                         Options.SINGLE_PAGE_MODE = {
                             MAX_ROWS_2_SUPPRESS_ROW_VIRTUALIZATION: 500
                         };

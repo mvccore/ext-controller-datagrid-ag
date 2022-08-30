@@ -74,6 +74,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				$mvcCoreAgGridAssetsDir . "AgGrids/Types/GridColumn.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/Types/ViewHelper.js",
 					
+				$mvcCoreAgGridAssetsDir . "AgGrids/Translator.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManager.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/SinglePageMode.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/MultiplePagesMode.js",
@@ -82,7 +83,9 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/MultiplePagesMode.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/SinglePageMode.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/AgOptionsBases.js",
-				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManagers/Header.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManagers/SortHeader.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManagers/FilterInput.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManagers/FilterMenu.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManagers/ViewHelper.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManager.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/Options.js",
@@ -94,13 +97,31 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 			],
 		];
 
+		// add localization for AgGrid library:
+		$dateTimeLangAndLocaleArr = $this->controller->GetConfigLocales()->GetLocale(FALSE);
+		$dateTimeLangAndLocaleStr = strtolower(implode('-', $dateTimeLangAndLocaleArr));
+		$dateTimeLangAndLocaleFile = $gridAssetsDir . "/ag-grid-locale/{$dateTimeLangAndLocaleStr}.js";
+		if (file_exists($dateTimeLangAndLocaleFile)) {
+			array_unshift($notMinimalizedCode->paths, $dateTimeLangAndLocaleFile);
+		} else {
+			$dateTimeLang = strtolower($dateTimeLangAndLocaleArr[0]);
+			$dateTimeLangFile = $gridAssetsDir . "/ag-grid-locale/{$dateTimeLang}.js";
+			if (file_exists($dateTimeLangFile)) {
+				array_unshift($notMinimalizedCode->paths, $dateTimeLangFile);
+			} else {
+				$dateTimeLangFile = $gridAssetsDir . "/ag-grid-locale/en-us.js";
+				array_unshift($notMinimalizedCode->paths, $dateTimeLangFile);
+			}
+		}
+
+		// add localization for Moment library:
 		$dateTimeLangAndLocaleArr = $this->controller->GetConfigLocales()->GetLocaleDateTime(FALSE);
-		$dateTimeLangAndLocaleStr = implode('-', $dateTimeLangAndLocaleArr);
+		$dateTimeLangAndLocaleStr = strtolower(implode('-', $dateTimeLangAndLocaleArr));
 		$dateTimeLangAndLocaleFile = $gridAssetsDir . "/moment/locale/{$dateTimeLangAndLocaleStr}.js";
 		if (file_exists($dateTimeLangAndLocaleFile)) {
 			array_unshift($notMinimalizedCode->paths, $dateTimeLangAndLocaleFile);
 		} else {
-			$dateTimeLang = $dateTimeLangAndLocaleArr[0];
+			$dateTimeLang = strtolower($dateTimeLangAndLocaleArr[0]);
 			$dateTimeLangFile = $gridAssetsDir . "/moment/locale/{$dateTimeLang}.js";
 			if (file_exists($dateTimeLangFile))
 				array_unshift($notMinimalizedCode->paths, $dateTimeLangFile);
@@ -137,6 +158,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				'media'		=> 'all',
 				'notMin'	=> FALSE,
 				'paths'		=> [
+					$gridAssetsDir . "/custom-styles/common.css",
 					$gridAssetsDir . "/custom-styles/{$agGridCustomStyle}.css",
 				],
 			],

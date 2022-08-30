@@ -30,12 +30,12 @@ var MvcCore;
                         Options.prototype.GetAgOptions = function () {
                             return this.agOptions;
                         };
-                        Options.prototype.SetAgColumns = function (gridColumns) {
-                            this.agColumns = gridColumns;
+                        Options.prototype.SetColumnManager = function (columnManager) {
+                            this.columnManager = columnManager;
                             return this;
                         };
-                        Options.prototype.GetAgColumns = function () {
-                            return this.agColumns;
+                        Options.prototype.GetColumnManager = function () {
+                            return this.columnManager;
                         };
                         Options.prototype.InitElements = function () {
                             var contElementSelector = this.grid.GetServerConfig().contElementSelector, contElement = document.querySelector(contElementSelector);
@@ -51,12 +51,13 @@ var MvcCore;
                                 statusControl: null,
                                 pagingAnchors: []
                             };
-                            if (bottomControlsElement != null)
-                                this.InitBottomControls();
+                            this.InitBottomControls();
                             return this;
                         };
                         Options.prototype.InitBottomControls = function () {
                             var bcSels = this.Static.SELECTORS.BOTTOM_CONTROLS, bottomControlsElement = this.elements.bottomControlsElement;
+                            if (bottomControlsElement == null)
+                                return this;
                             this.elements.countScalesControl = bottomControlsElement.querySelector(bcSels.COUNT_SCALES_SEL);
                             this.elements.pagingControl = bottomControlsElement.querySelector(bcSels.PAGING_SEL);
                             this.elements.statusControl = bottomControlsElement.querySelector(bcSels.STATUS_SEL);
@@ -75,10 +76,10 @@ var MvcCore;
                             return this;
                         };
                         Options.prototype.InitAgColumns = function () {
-                            this.columns = new AgGrids.ColumnsManager(this.grid);
-                            this.columns.Init();
-                            this.agOptions.columnDefs = this.columns.GetAgColumns();
-                            this.agOptions.defaultColDef = this.columns.GetDefaultColDef();
+                            this.columnManager = new AgGrids.ColumnsManager(this.grid);
+                            this.columnManager.Init();
+                            this.agOptions.columnDefs = Array.from(this.columnManager.GetAgColumnsConfigs().values());
+                            this.agOptions.defaultColDef = this.columnManager.GetDefaultColDef();
                             return this;
                         };
                         Options.prototype.InitAgPageModeSpecifics = function () {

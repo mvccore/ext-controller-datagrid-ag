@@ -24,6 +24,13 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
+	protected $locale					= NULL;
+	
+	/**
+	 * @var \string[]|NULL
+	 * @jsonSerialize
+	 */
+	#[JsonSerialize]
 	protected $localeNumeric			= NULL;
 	
 	/**
@@ -93,6 +100,10 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	 * @return void
 	 */
 	public function Init () {
+		if ($this->locale === NULL) {
+			$locale = \MvcCore\Ext\Tools\Locale::GetLocale(LC_CTYPE);
+			$this->locale = [$locale->lang, $locale->locale];
+		}
 		if ($this->localeNumeric === NULL) {
 			$localeNumeric = \MvcCore\Ext\Tools\Locale::GetLocale(LC_NUMERIC);
 			$this->localeNumeric = [$localeNumeric->lang, $localeNumeric->locale];
@@ -110,6 +121,29 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 			$this->currencyCode = utf8_encode($localeData->int_curr_symbol);
 		if ($this->currencySign === NULL)
 			$this->currencySign = utf8_encode($localeData->currency_symbol);
+	}
+	
+	/**
+	 * @inheritDocs
+	 * @param  bool $asString
+	 * @return \string[]|NULL
+	 */
+	public function GetLocale ($asString = FALSE) {
+		return $asString && $this->locale !== NULL
+			? implode(static::SYSTEM_LOCALE_SEPARATOR, $this->locale)
+			: $this->locale;
+	}
+	/**
+	 * @inheritDocs
+	 * @param  \string[]|NULL $locale
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
+	 */
+	public function SetLocale ($locale) {
+		$this->locale = $locale;
+		$this->localeNumeric = $locale;
+		$this->localeMoney = $locale;
+		$this->localeDateTime = $locale;
+		return $this;
 	}
 
 	/**

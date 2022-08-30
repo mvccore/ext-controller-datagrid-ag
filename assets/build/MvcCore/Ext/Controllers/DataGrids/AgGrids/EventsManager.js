@@ -1,3 +1,30 @@
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 var MvcCore;
 (function (MvcCore) {
     var Ext;
@@ -22,10 +49,50 @@ var MvcCore;
                             this.grid.SetTotalCount(null);
                             //console.log(event);
                         };
-                        EventsManager.prototype.HandleSortChanged = function (event) {
+                        EventsManager.prototype.HandleSortChange = function (columnId, direction) {
+                            var e_1, _a;
+                            var oldSorting = this.grid.GetSorting(), sortHeaders = this.grid.GetSortHeaders(), newSorting = [], sortRemoving = direction == null;
+                            if (!sortRemoving)
+                                newSorting.push([columnId, direction]);
+                            try {
+                                for (var oldSorting_1 = __values(oldSorting), oldSorting_1_1 = oldSorting_1.next(); !oldSorting_1_1.done; oldSorting_1_1 = oldSorting_1.next()) {
+                                    var _b = __read(oldSorting_1_1.value, 2), sortColId = _b[0], sortDir = _b[1];
+                                    if (sortColId === columnId)
+                                        continue;
+                                    newSorting.push([sortColId, sortDir]);
+                                }
+                            }
+                            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                            finally {
+                                try {
+                                    if (oldSorting_1_1 && !oldSorting_1_1.done && (_a = oldSorting_1.return)) _a.call(oldSorting_1);
+                                }
+                                finally { if (e_1) throw e_1.error; }
+                            }
+                            for (var i = 0, sortColId = '', l = newSorting.length; i < l; i++) {
+                                var _c = __read(newSorting[i], 1), sortColId = _c[0];
+                                if (sortColId === columnId)
+                                    continue;
+                                sortHeaders.get(sortColId).SetSequence(i);
+                            }
+                            this.grid.SetSorting(newSorting);
+                            var pageMode = this.grid.GetPageMode();
+                            if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
+                                // for single page - TODO
+                                var dataSourceSp = this.grid.GetDataSource();
+                                console.log(dataSourceSp);
+                            }
+                            else if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
+                                // for multiple pages - call ajax with new params completed later
+                                var dataSourceMp = this.grid.GetDataSource();
+                                dataSourceMp.Load();
+                            }
+                        };
+                        /*public HandleSortChanged (event: agGrid.SortChangedEvent<any>): void {
+                            
                             console.log(event, event.source);
                             //event.columnApi.
-                        };
+                        }*/
                         EventsManager.prototype.HandleGridSizeChanged = function (event) {
                             // get the current grids width
                             var gridElm = this.grid.GetOptions().GetElements().agGridElement, gridElmParent = gridElm.parentNode;

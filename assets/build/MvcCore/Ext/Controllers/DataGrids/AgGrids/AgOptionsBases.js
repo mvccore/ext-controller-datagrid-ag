@@ -34,10 +34,9 @@ var MvcCore;
                         AgOptionsBases.prototype.initBases = function () {
                             this.agOptions = {
                                 //debug: true,
-                                //localeText: agGridLocales['cs-CZ']
-                                components: {
-                                    agColumnHeader: AgGrids.ColumnsManagers.SortHeader,
-                                },
+                                /*components: {
+                                    agColumnHeader: AgGrids.ColumnsManagers.SortHeader
+                                },*/
                                 suppressMenuHide: true,
                                 tooltipShowDelay: 0,
                                 tooltipHideDelay: 2000,
@@ -48,6 +47,7 @@ var MvcCore;
                             };
                             if (this.helpers.IsChromeBrowser())
                                 this.agOptions.suppressAnimationFrame = true;
+                            this.agOptions.localeText = this.grid.GetTranslator().GetStore();
                             return this;
                         };
                         AgOptionsBases.prototype.initRowSelection = function () {
@@ -72,7 +72,7 @@ var MvcCore;
                             this.agOptions.onColumnResized = this.eventsManager.HandleColumnResized.bind(this.eventsManager);
                             this.agOptions.onColumnMoved = this.eventsManager.HandleColumnMoved.bind(this.eventsManager);
                             this.agOptions.onFilterChanged = this.eventsManager.HandleFilterChanged.bind(this.eventsManager);
-                            this.agOptions.onSortChanged = this.eventsManager.HandleSortChanged.bind(this.eventsManager);
+                            /*this.agOptions.onSortChanged = this.eventsManager.HandleSortChanged.bind(this.eventsManager);*/
                             /*this.agOptions.onFirstDataRendered = (params: agGrid.FirstDataRenderedEvent) => {
                                 params.api.sizeColumnsToFit();
                             },*/

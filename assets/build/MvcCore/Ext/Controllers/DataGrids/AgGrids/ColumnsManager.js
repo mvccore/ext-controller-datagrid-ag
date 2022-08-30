@@ -1,3 +1,30 @@
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 var MvcCore;
 (function (MvcCore) {
     var Ext;
@@ -17,12 +44,12 @@ var MvcCore;
                             this.eventsManager = grid.GetEvents();
                             this.helpers = grid.GetHelpers();
                         }
-                        ColumnsManager.prototype.SetAgColumns = function (gridColumns) {
-                            this.agColumns = gridColumns;
+                        ColumnsManager.prototype.SetAgColumnsConfigs = function (gridColumns) {
+                            this.agColumnsConfigs = gridColumns;
                             return this;
                         };
-                        ColumnsManager.prototype.GetAgColumns = function () {
-                            return this.agColumns;
+                        ColumnsManager.prototype.GetAgColumnsConfigs = function () {
+                            return this.agColumnsConfigs;
                         };
                         ColumnsManager.prototype.SetDefaultColDef = function (defaultColDef) {
                             this.defaultColDef = defaultColDef;
@@ -39,18 +66,40 @@ var MvcCore;
                         };
                         ColumnsManager.prototype.initServerCfgAndViewHelper = function () {
                             this.serverConfig = this.grid.GetServerConfig();
+                            this.initData = this.grid.GetInitialData();
                             this.viewHelper = new AgGrids.ColumnsManagers.ViewHelper(this.grid);
                             return this;
                         };
                         ColumnsManager.prototype.initColumns = function () {
-                            this.agColumns = [];
+                            var e_1, _a;
+                            this.agColumnsConfigs = new Map();
                             var agColumn, serverColumnCfg, serverColumns = this.serverConfig.columns;
+                            this.grid.SetSortHeaders(new Map());
                             for (var columnUrlName in serverColumns) {
                                 serverColumnCfg = serverColumns[columnUrlName];
                                 if (serverColumnCfg.disabled === true)
                                     continue;
                                 agColumn = this.initColumn(serverColumnCfg);
-                                this.agColumns.push(agColumn);
+                                this.agColumnsConfigs.set(columnUrlName, agColumn);
+                            }
+                            var sortIndex = 0;
+                            try {
+                                for (var _b = __values(this.initData.sorting), _c = _b.next(); !_c.done; _c = _b.next()) {
+                                    var sortItem = _c.value;
+                                    var _d = __read(sortItem, 2), columnUrlName = _d[0], sortDirection = _d[1];
+                                    agColumn = this.agColumnsConfigs.get(columnUrlName);
+                                    var headerComponentParams = agColumn.headerComponentParams;
+                                    headerComponentParams.direction = sortDirection;
+                                    headerComponentParams.sequence = sortIndex;
+                                    sortIndex++;
+                                }
+                            }
+                            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                            finally {
+                                try {
+                                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                                }
+                                finally { if (e_1) throw e_1.error; }
                             }
                             return this;
                         };
@@ -63,13 +112,58 @@ var MvcCore;
                             };
                             column.filter = !(serverColumnCfg.filter === false);
                             column.sortable = !(serverColumnCfg.sort === false);
+                            var headerComponentParams = {
+                                grid: this.grid,
+                                columnId: serverColumnCfg.urlName,
+                                sortable: column.sortable
+                            };
+                            column.headerComponentParams = headerComponentParams;
                             var serverType = serverColumnCfg.types[serverColumnCfg.types.length - 1];
-                            if (this.Static.types.has(serverType))
-                                column.type = this.Static.types.get(serverType);
+                            if (this.Static.agColumnsTypes.has(serverType))
+                                column.type = this.Static.agColumnsTypes.get(serverType);
+                            column.filterParams = {
+                                suppressAndOrCondition: true,
+                                /*filterOptions:[
+                                    'equals',
+                                    'notEqual',
+                                    'contains',
+                                    'notContains',
+                                    'startsWith',
+                                    'endsWith',
+                                    'lessThan',
+                                    'lessThanOrEqual',
+                                    'greaterThan',
+                                    'greaterThanOrEqual',
+                                    'inRange',
+                
+                                    'blank',
+                                    'notBlank',
+                                    'empty'
+                                ],*/
+                                buttons: [
+                                    'apply', 'clear', 'reset', 'cancel'
+                                ]
+                            };
                             // TODO
                             if (column.type === 'dateColumn') {
                                 if (column.filter)
                                     column.filter = 'agDateColumnFilter';
+                                column.floatingFilterComponent = AgGrids.ColumnsManagers.FilterInput;
+                                column.floatingFilterComponentParams = {
+                                    suppressFilterButton: false,
+                                    context: this.grid
+                                };
+                            }
+                            if (column.type === 'numericColumn') {
+                                column.filter = AgGrids.ColumnsManagers.FilterMenu;
+                                column.filterParams = {
+                                    context: this.grid
+                                };
+                                column.floatingFilterComponent = AgGrids.ColumnsManagers.FilterInput;
+                                column.floatingFilterComponentParams = {
+                                    suppressFilterButton: false,
+                                    context: this.grid
+                                };
                             }
                             this.viewHelper.SetUpColumnCfg(column, serverColumnCfg);
                             if (serverColumnCfg.width != null && typeof (serverColumnCfg.width) == 'number')
@@ -91,11 +185,12 @@ var MvcCore;
                                 resizable: true,
                                 editable: false,
                                 flex: 1,
+                                headerComponent: AgGrids.ColumnsManagers.SortHeader,
                                 tooltipComponent: AgGrids.ToolTip
                             };
                             return this;
                         };
-                        ColumnsManager.types = new Map([
+                        ColumnsManager.agColumnsTypes = new Map([
                             [AgGrids.Enums.ServerType.INT, "numericColumn"],
                             [AgGrids.Enums.ServerType.FLOAT, "numericColumn"],
                             [AgGrids.Enums.ServerType.DATE, "dateColumn"],

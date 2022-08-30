@@ -68,6 +68,8 @@ var MvcCore;
                                 if (viewHelper != null) {
                                     var propName = serverColumnCfg.propName, formatArgs = serverColumnCfg.format;
                                     agColumnCfg.valueFormatter = function (params) {
+                                        if (params.data == null || params.data[propName] == null)
+                                            return '';
                                         return viewHelper.call(_this, params, propName, formatArgs);
                                     };
                                 }

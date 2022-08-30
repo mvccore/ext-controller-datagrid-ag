@@ -36,7 +36,7 @@ var MvcCore;
                                 //debug: true,
                                 //localeText: agGridLocales['cs-CZ']
                                 components: {
-                                    agColumnHeader: AgGrids.ColumnsManagers.Header,
+                                    agColumnHeader: AgGrids.ColumnsManagers.SortHeader,
                                 },
                                 suppressMenuHide: true,
                                 tooltipShowDelay: 0,

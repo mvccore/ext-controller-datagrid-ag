@@ -103,7 +103,6 @@ trait InitMethods {
 			$this->configRendering
 				->SetRenderControlSorting(IConstants::CONTROL_DISPLAY_NEVER)
 				->SetRenderControlCountScales(IConstants::CONTROL_DISPLAY_NEVER)
-				->SetRenderControlStatus(IConstants::CONTROL_DISPLAY_NEVER)
 				->SetRenderControlPaging(IConstants::CONTROL_DISPLAY_NEVER)
 				->SetRenderControlPagingPrevAndNext(FALSE)
 				->SetRenderControlPagingFirstAndLast(FALSE);

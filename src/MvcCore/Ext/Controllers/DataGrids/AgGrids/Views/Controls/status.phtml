@@ -9,7 +9,6 @@
 	if ($renderConf->GetRenderControlPaging()) {
 		$statusTextPages = $grid->GetControlText('statusPages');
 		$countInt = $grid->GetCount();
-		x($countInt);
 		$currentPage = $grid->GetPage();
 		$pagesCount = $countInt === 0
 			? 1

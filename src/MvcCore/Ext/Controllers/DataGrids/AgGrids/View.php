@@ -48,6 +48,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 			'notMin'	=> TRUE,
 			'paths'		=> [
 				$gridAssetsDir . "/ag-grid-community/ag-grid-community.min.noStyle.js",
+				//$gridAssetsDir . "/ag-grid-community/ag-grid-community.noStyle.js",
 				$gridAssetsDir . "/moment/moment.min.js",
 				$gridAssetsDir . "/ajax-min/ajax.min.js",
 			],

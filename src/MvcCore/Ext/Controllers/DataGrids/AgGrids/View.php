@@ -80,7 +80,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/SinglePageMode.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/MultiplePagesMode.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/DataSource.js",
-				$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/MultiplePagesModes/Cache.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/Cache.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/MultiplePagesMode.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/DataSources/SinglePageMode.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/AgOptionsBases.js",

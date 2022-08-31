@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -38,11 +49,26 @@ var MvcCore;
                     var ColumnsManager = /** @class */ (function () {
                         function ColumnsManager(grid) {
                             var _newTarget = this.constructor;
+                            this.agColumnDefaults = {
+                                floatingFilter: true,
+                                suppressMenu: true,
+                                resizable: true,
+                                editable: false,
+                                flex: 1,
+                                headerComponent: AgGrids.ColumnsManagers.SortHeader,
+                                tooltipComponent: AgGrids.ToolTip
+                            };
+                            this.sortHeaderDefaults = {
+                                renderDirection: true,
+                                renderRemove: true,
+                                renderSequence: true,
+                            };
                             this.Static = _newTarget;
                             this.grid = grid;
                             this.options = grid.GetOptions();
                             this.eventsManager = grid.GetEvents();
                             this.helpers = grid.GetHelpers();
+                            this.sortHeaderDefaults.renderRemove = !this.helpers.IsTouchDevice();
                         }
                         ColumnsManager.prototype.SetAgColumnsConfigs = function (gridColumns) {
                             this.agColumnsConfigs = gridColumns;
@@ -51,23 +77,23 @@ var MvcCore;
                         ColumnsManager.prototype.GetAgColumnsConfigs = function () {
                             return this.agColumnsConfigs;
                         };
-                        ColumnsManager.prototype.SetDefaultColDef = function (defaultColDef) {
-                            this.defaultColDef = defaultColDef;
+                        ColumnsManager.prototype.SetAgColumnDefaults = function (defaultColDef) {
+                            this.agColumnDefaults = defaultColDef;
                             return this;
                         };
-                        ColumnsManager.prototype.GetDefaultColDef = function () {
-                            return this.defaultColDef;
+                        ColumnsManager.prototype.GetAgColumnDefaults = function () {
+                            return this.agColumnDefaults;
                         };
                         ColumnsManager.prototype.Init = function () {
                             return this
                                 .initServerCfgAndViewHelper()
-                                .initColumns()
-                                .initDefaultColDef();
+                                .initColumns();
                         };
                         ColumnsManager.prototype.initServerCfgAndViewHelper = function () {
                             this.serverConfig = this.grid.GetServerConfig();
                             this.initData = this.grid.GetInitialData();
                             this.viewHelper = new AgGrids.ColumnsManagers.ViewHelper(this.grid);
+                            this.sortHeaderDefaults.renderSequence = ((this.serverConfig.sortingMode & AgGrids.Enums.SortingMode.SORT_MULTIPLE_COLUMNS) != 0);
                             return this;
                         };
                         ColumnsManager.prototype.initColumns = function () {
@@ -112,11 +138,11 @@ var MvcCore;
                             };
                             column.filter = !(serverColumnCfg.filter === false);
                             column.sortable = !(serverColumnCfg.sort === false);
-                            var headerComponentParams = {
+                            var headerComponentParams = __assign(__assign({}, this.sortHeaderDefaults), {
                                 grid: this.grid,
                                 columnId: serverColumnCfg.urlName,
                                 sortable: column.sortable
-                            };
+                            });
                             column.headerComponentParams = headerComponentParams;
                             var serverType = serverColumnCfg.types[serverColumnCfg.types.length - 1];
                             if (this.Static.agColumnsTypes.has(serverType))
@@ -177,18 +203,6 @@ var MvcCore;
                             if (serverColumnCfg.editable != null && typeof (serverColumnCfg.editable) == 'boolean')
                                 column.editable = serverColumnCfg.editable;
                             return column;
-                        };
-                        ColumnsManager.prototype.initDefaultColDef = function () {
-                            this.defaultColDef = {
-                                floatingFilter: true,
-                                suppressMenu: true,
-                                resizable: true,
-                                editable: false,
-                                flex: 1,
-                                headerComponent: AgGrids.ColumnsManagers.SortHeader,
-                                tooltipComponent: AgGrids.ToolTip
-                            };
-                            return this;
                         };
                         ColumnsManager.agColumnsTypes = new Map([
                             [AgGrids.Enums.ServerType.INT, "numericColumn"],

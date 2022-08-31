@@ -18,6 +18,15 @@ var MvcCore;
                             this.helpers = grid.GetHelpers();
                             this.initialData = grid.GetInitialData();
                         }
+                        DataSource.prototype.initPageReqDataAndCache = function () {
+                            this.cache = new AgGrids.DataSources.MultiplePagesModes.Cache(this.grid);
+                            this.pageReqData = this.helpers.RetypeRequest2RawRequest({
+                                offset: this.grid.GetOffset(),
+                                limit: this.grid.GetServerConfig().itemsPerPage,
+                                sorting: this.grid.GetSorting(),
+                                filtering: this.grid.GetFiltering(),
+                            });
+                        };
                         DataSource.prototype.getReqUrlMethodAndType = function () {
                             var serverCfg = this.grid.GetServerConfig(), cfgReqMethod = serverCfg.dataRequestMethod, dataUrl = serverCfg.dataUrl, reqMethod = 'GET', reqType = 'json';
                             if ((cfgReqMethod & AgGrids.Enums.AjaxDataRequestMethod.AJAX_DATA_REQUEST_METHOD_POST) != 0) {

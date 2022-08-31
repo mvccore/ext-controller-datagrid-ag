@@ -44,34 +44,29 @@ var MvcCore;
                             function MultiplePagesMode(grid) {
                                 var _this = _super.call(this, grid) || this;
                                 _this.eventsManager = grid.GetEvents();
-                                var reqData = _this.helpers.RetypeRequest2RawRequest({
-                                    offset: _this.grid.GetOffset(),
-                                    limit: _this.grid.GetServerConfig().count,
-                                    sorting: _this.grid.GetSorting(),
-                                    filtering: _this.grid.GetFiltering(),
-                                });
-                                history.replaceState(reqData, document.title, location.href);
-                                _this.initCache(reqData);
+                                _this.initPageReqDataAndCache();
+                                history.replaceState(_this.pageReqData, document.title, location.href);
+                                _this.pageReqData = null;
                                 return _this;
                             }
-                            MultiplePagesMode.prototype.initCache = function (reqData) {
-                                this.cache = new DataSources.MultiplePagesModes.Cache(this.grid);
-                                var initialData = this.grid.GetInitialData(), elms = this.grid.GetOptions().GetElements(), bottomControlsElement = elms.bottomControlsElement;
-                                if (bottomControlsElement != null) {
-                                    initialData.controls = {};
+                            MultiplePagesMode.prototype.initPageReqDataAndCache = function () {
+                                _super.prototype.initPageReqDataAndCache.call(this);
+                                var elms = this.grid.GetOptions().GetElements();
+                                if (elms.bottomControlsElement != null) {
+                                    this.initialData.controls = {};
                                     if (elms.pagingControl != null)
-                                        initialData.controls.paging = elms.pagingControl.outerHTML;
+                                        this.initialData.controls.paging = elms.pagingControl.outerHTML;
                                     if (elms.statusControl != null)
-                                        initialData.controls.status = elms.statusControl.outerHTML;
+                                        this.initialData.controls.status = elms.statusControl.outerHTML;
                                     if (elms.countScalesControl != null)
-                                        initialData.controls.countScales = elms.countScalesControl.outerHTML;
+                                        this.initialData.controls.countScales = elms.countScalesControl.outerHTML;
                                 }
-                                this.cache.Add(this.cache.Key(reqData), initialData);
+                                this.cache.Add(this.cache.Key(this.pageReqData), this.initialData);
                             };
                             MultiplePagesMode.prototype.Load = function () {
                                 var reqData = this.helpers.RetypeRequest2RawRequest({
                                     offset: this.grid.GetOffset(),
-                                    limit: this.grid.GetServerConfig().count,
+                                    limit: this.grid.GetServerConfig().itemsPerPage,
                                     sorting: this.grid.GetSorting(),
                                     filtering: this.grid.GetFiltering(),
                                 });

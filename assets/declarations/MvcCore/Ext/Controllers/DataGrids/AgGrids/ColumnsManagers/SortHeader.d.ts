@@ -2,6 +2,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
     class SortHeader implements agGrid.IHeaderComp {
         static readonly SELECTORS: {
             CONT_CLS: string;
+            CONT_ITEMS_CLS_BASE: string;
             SORTABLE_CLS: string;
             LABEL_CLS: string;
             ORDER_CLS: string;
@@ -19,8 +20,10 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         protected sequence: number;
         protected direction: 0 | 1 | null;
         protected elms: AgGrids.Interfaces.IHeaderElements;
+        protected contBaseClass: string;
+        protected multiSort: boolean;
         protected handlers: {
-            handleLabelClick?: (e: MouseEvent) => void;
+            handleContClick?: (e: MouseEvent) => void;
             handleRemoveClick?: (e: MouseEvent) => void;
         };
         constructor();
@@ -32,8 +35,10 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         protected initEvents(): this;
         refresh(agParams: AgGrids.Interfaces.IHeaderParams<any>): boolean;
         destroy(): void;
-        protected handleLabelClick(e: MouseEvent): void;
+        protected handleContClick(e: MouseEvent): void;
         protected handleRemoveClick(e: MouseEvent): void;
+        protected switchDirectionByTwoStates(): this;
+        protected switchDirectionByThreeStates(): this;
         protected setSortActive(): this;
         protected setSortInactive(): this;
     }

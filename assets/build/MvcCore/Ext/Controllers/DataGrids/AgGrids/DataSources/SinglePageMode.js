@@ -46,11 +46,14 @@ var MvcCore;
                                 /** If you know up front how many rows are in the dataset, set it here. Otherwise leave blank. */
                                 _this.rowCount = undefined;
                                 _this.pageLoaded = false;
-                                _this.initDataCache = grid.GetServerConfig().clientMaxRowsInCache > 0;
+                                _this.initDataCache = _this.grid.GetServerConfig().clientMaxRowsInCache > 0;
+                                _this.initPageReqDataAndCache();
+                                _this.pageReqData = null;
                                 return _this;
                             }
-                            /** Optional destroy method, if your datasource has state it needs to clean up. */
-                            SinglePageMode.prototype.destroy = function () {
+                            SinglePageMode.prototype.initPageReqDataAndCache = function () {
+                                _super.prototype.initPageReqDataAndCache.call(this);
+                                this.cache.Add(this.cache.Key(this.pageReqData), {});
                             };
                             /** Callback the grid calls that you implement to fetch rows from the server. */
                             SinglePageMode.prototype.getRows = function (params) {
@@ -67,10 +70,22 @@ var MvcCore;
                                 }
                             };
                             SinglePageMode.prototype.possibleToResolveByInitData = function (params, totalCount) {
-                                return (this.initDataCache &&
+                                var result = (this.initDataCache &&
                                     totalCount != null &&
                                     params.startRow >= this.initialData.offset &&
                                     (params.endRow <= this.initialData.offset + this.initialData.dataCount || totalCount < params.endRow));
+                                if (!result)
+                                    return false;
+                                var reqData = this.helpers.RetypeRequest2RawRequest({
+                                    offset: this.grid.GetOffset(),
+                                    limit: this.grid.GetServerConfig().itemsPerPage,
+                                    sorting: this.grid.GetSorting(),
+                                    filtering: this.grid.GetFiltering(),
+                                });
+                                var cacheKey = this.cache.Key(reqData);
+                                if (this.cache.Has(cacheKey))
+                                    return true;
+                                return false;
                             };
                             SinglePageMode.prototype.resolveByInitData = function (params, totalCount) {
                                 //console.log("resolving by initial data");
@@ -87,6 +102,8 @@ var MvcCore;
                                 }
                             };
                             SinglePageMode.prototype.resolveByAjaxRequest = function (params) {
+                                var agGridApi = this.options.GetAgOptions().api;
+                                agGridApi.showLoadingOverlay();
                                 var _a = __read(this.getReqUrlMethodAndType(), 3), reqDataUrl = _a[0], reqMethod = _a[1], reqType = _a[2];
                                 Ajax.load({
                                     url: reqDataUrl,
@@ -99,6 +116,7 @@ var MvcCore;
                                     }),
                                     type: reqType,
                                     success: function (response) {
+                                        agGridApi.hideOverlay();
                                         params.successCallback(response.data, response.totalCount);
                                     }
                                 });

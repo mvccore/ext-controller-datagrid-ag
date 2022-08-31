@@ -6,8 +6,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSources {
         protected pageLoaded: boolean;
         protected initDataCache: boolean;
         constructor(grid: AgGrid);
-        /** Optional destroy method, if your datasource has state it needs to clean up. */
-        destroy(): void;
+        protected initPageReqDataAndCache(): void;
         /** Callback the grid calls that you implement to fetch rows from the server. */
         getRows(params: agGrid.IGetRowsParams): void;
         protected possibleToResolveByInitData(params: agGrid.IGetRowsParams, totalCount: number): boolean;

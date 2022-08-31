@@ -42,7 +42,6 @@ var MvcCore;
                         Helpers.prototype.IsTouchDevice = function () {
                             var _a;
                             return (_a = this.touchDevice) !== null && _a !== void 0 ? _a : (this.touchDevice = (('ontouchstart' in window) ||
-                                (navigator.maxTouchPoints > 0) ||
                                 ///@ts-ignore
                                 (navigator['msMaxTouchPoints'] > 0)));
                         };

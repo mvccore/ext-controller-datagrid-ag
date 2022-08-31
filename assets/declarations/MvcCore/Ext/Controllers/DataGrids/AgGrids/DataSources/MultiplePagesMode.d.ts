@@ -4,7 +4,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSources {
         protected eventsManager: AgGrids.EventsManagers.MultiplePagesMode;
         protected cache: MultiplePagesModes.Cache;
         constructor(grid: AgGrid);
-        protected initCache(reqData: Interfaces.IServerRequestRaw): void;
+        protected initPageReqDataAndCache(): void;
         Load(): this;
         ExecRequest(reqData: Interfaces.IServerRequestRaw, changeUrl?: boolean): this;
         protected handleResponse(reqData: Interfaces.IServerRequestRaw, changeUrl: boolean, cacheKey: string, cached: boolean, response: AgGrids.Interfaces.IServerResponse): void;

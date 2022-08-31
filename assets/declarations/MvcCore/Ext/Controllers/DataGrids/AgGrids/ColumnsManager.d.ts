@@ -7,19 +7,19 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected eventsManager: AgGrids.EventsManager;
         protected helpers: AgGrids.Helpers;
         protected agColumnsConfigs: Map<string, AgGrids.Types.GridColumn>;
-        protected defaultColDef: agGrid.ColDef<any>;
+        protected agColumnDefaults: agGrid.ColDef<any>;
+        protected sortHeaderDefaults: AgGrids.Interfaces.IHeaderParams;
         protected serverConfig: Interfaces.IServerConfig;
         protected initData: Interfaces.IServerResponse;
         protected viewHelper: ColumnsManagers.ViewHelper;
         constructor(grid: AgGrid);
         SetAgColumnsConfigs(gridColumns: Map<string, AgGrids.Types.GridColumn>): this;
         GetAgColumnsConfigs(): Map<string, AgGrids.Types.GridColumn>;
-        SetDefaultColDef(defaultColDef: agGrid.ColDef): this;
-        GetDefaultColDef(): agGrid.ColDef;
+        SetAgColumnDefaults(defaultColDef: agGrid.ColDef): this;
+        GetAgColumnDefaults(): agGrid.ColDef;
         Init(): this;
         protected initServerCfgAndViewHelper(): this;
         protected initColumns(): this;
         protected initColumn(serverColumnCfg: AgGrids.Interfaces.IServerConfigs.IColumn): AgGrids.Types.GridColumn;
-        protected initDefaultColDef(): this;
     }
 }

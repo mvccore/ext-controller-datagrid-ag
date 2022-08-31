@@ -47,12 +47,14 @@ var MvcCore;
                                 _this.rowCount = undefined;
                                 _this.pageLoaded = false;
                                 _this.initDataCache = _this.grid.GetServerConfig().clientMaxRowsInCache > 0;
+                                _this.requestCounter = 0;
                                 _this.initPageReqDataAndCache();
                                 _this.pageReqData = null;
                                 return _this;
                             }
                             SinglePageMode.prototype.initPageReqDataAndCache = function () {
                                 _super.prototype.initPageReqDataAndCache.call(this);
+                                this.cache.SetEnabled(true);
                                 this.cache.Add(this.cache.Key(this.pageReqData), {});
                             };
                             /** Callback the grid calls that you implement to fetch rows from the server. */
@@ -70,7 +72,7 @@ var MvcCore;
                                 }
                             };
                             SinglePageMode.prototype.possibleToResolveByInitData = function (params, totalCount) {
-                                var result = (this.initDataCache &&
+                                var result = ((this.requestCounter++ === 0 || this.initDataCache) &&
                                     totalCount != null &&
                                     params.startRow >= this.initialData.offset &&
                                     (params.endRow <= this.initialData.offset + this.initialData.dataCount || totalCount < params.endRow));

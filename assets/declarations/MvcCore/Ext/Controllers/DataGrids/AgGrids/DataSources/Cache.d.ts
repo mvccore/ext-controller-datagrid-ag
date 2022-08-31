@@ -1,4 +1,4 @@
-declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSources.MultiplePagesModes {
+declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSources {
     class Cache {
         Static: typeof Cache;
         protected maxRows: number;
@@ -7,6 +7,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSources.Multiple
         protected keys: string[];
         protected rowsCount: number;
         constructor(grid: AgGrid);
+        SetEnabled(enabled: boolean): this;
         Key(obj: any): string;
         Has(key: string): boolean;
         Get(key: string): Interfaces.IServerResponse;

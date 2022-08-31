@@ -5,6 +5,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSources {
         rowCount?: number;
         protected pageLoaded: boolean;
         protected initDataCache: boolean;
+        protected requestCounter: number;
         constructor(grid: AgGrid);
         protected initPageReqDataAndCache(): void;
         /** Callback the grid calls that you implement to fetch rows from the server. */

@@ -19,7 +19,7 @@ var MvcCore;
                             this.initialData = grid.GetInitialData();
                         }
                         DataSource.prototype.initPageReqDataAndCache = function () {
-                            this.cache = new AgGrids.DataSources.MultiplePagesModes.Cache(this.grid);
+                            this.cache = new AgGrids.DataSources.Cache(this.grid);
                             this.pageReqData = this.helpers.RetypeRequest2RawRequest({
                                 offset: this.grid.GetOffset(),
                                 limit: this.grid.GetServerConfig().itemsPerPage,

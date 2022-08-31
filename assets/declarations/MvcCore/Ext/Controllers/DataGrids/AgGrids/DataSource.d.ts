@@ -6,7 +6,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected eventsManager: AgGrids.EventsManager;
         protected helpers: AgGrids.Helpers;
         protected initialData: Interfaces.IServerResponse;
-        protected cache: DataSources.MultiplePagesModes.Cache;
+        protected cache: DataSources.Cache;
         protected pageReqData?: Interfaces.IServerRequestRaw;
         constructor(grid: AgGrid);
         protected initPageReqDataAndCache(): void;

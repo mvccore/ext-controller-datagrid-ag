@@ -23,7 +23,7 @@ trait ConfigProps {
 	/**
 	 * @var string
 	 */
-	protected static $jsClassFullName = 'MvcCore.Ext.Controllers.DataGrids.AgGrid';
+	protected $jsClassFullName = 'MvcCore.Ext.Controllers.DataGrids.AgGrid';
 
 	/**
 	 * Configuration object for datagrid parts, style and controls rendering.

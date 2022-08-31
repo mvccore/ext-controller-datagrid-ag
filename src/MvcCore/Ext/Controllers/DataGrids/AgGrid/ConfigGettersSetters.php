@@ -22,24 +22,25 @@ trait ConfigGettersSetters {
 	
 	/**
 	 * @param  string $jsClassFullName 
-	 * @return string
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
-	public static function SetJsClassFullName ($jsClassFullName) {
-		return static::$jsClassFullName = $jsClassFullName;
+	public function SetJsClassFullName ($jsClassFullName) {
+		$this->jsClassFullName = $jsClassFullName;
+		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public static function GetJsClassFullName () {
-		return static::$jsClassFullName;
+	public function GetJsClassFullName () {
+		return $this->jsClassFullName;
 	}
 	
 	
 	/**
 	 * @inheritDocs
 	 * @param  \int[] $countScales
-	 * @return \MvcCore\Ext\Controllers\DataGrid
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
 	public function SetCountScales (array $countScales) {
 		parent::SetCountScales($countScales);

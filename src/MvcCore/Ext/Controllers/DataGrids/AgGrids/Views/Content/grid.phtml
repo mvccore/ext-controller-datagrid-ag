@@ -33,7 +33,7 @@
 		?></div>
 	<?php endif; ?>
 </div>
-<script<?php echo $nonceAttr; ?>>new <?php echo $grid::GetJsClassFullName(); ?>(<?php
+<script<?php echo $nonceAttr; ?>>new <?php echo $grid->GetJsClassFullName(); ?>(<?php
 	echo \MvcCore\Tool::JsonEncode([
 		'contElementSelector'	=> '#' . $gridId,
 		'renderConfig'			=> $renderConf,

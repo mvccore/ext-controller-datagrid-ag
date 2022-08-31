@@ -258,11 +258,41 @@ trait InitMethods {
 	 */
 	protected function initUrlParams () {
 		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-			// do not modify count param for ajax requests:
-			if (!$this->initUrlParamPage())	return FALSE;
+			if (!$this->initUrlParamPage())		return FALSE;
+			if (!$this->initUrlParamCount())	return FALSE;
 			return TRUE;
 		} else {
 			return parent::initUrlParams();
+		}
+	}
+
+	/**
+	 * 
+	 * @return bool
+	 */
+	protected function initUrlParamCount () {
+		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+			if (!isset($this->urlParams[static::URL_PARAM_COUNT])) {
+				// if there is no count param in url - use items per page as default count
+				$this->count = $this->GetItemsPerPage();
+			} else {
+				// verify if count is not too high, if it is - redirect to highest count in count scales:
+				$this->count = intval($this->urlParams[static::URL_PARAM_COUNT]);
+				$itemsPerPage = $this->GetItemsPerPage();
+				if ($this->count !== $itemsPerPage) {
+					$redirectUrl = $this->GridCountUrl($itemsPerPage);
+					/** @var \MvcCore\Controller $this */
+					$this::Redirect(
+						$redirectUrl, 
+						\MvcCore\IResponse::SEE_OTHER, 
+						'Grid count is not the same as items per page.'
+					);
+					return FALSE;
+				}
+			}
+			return TRUE;
+		} else {
+			return parent::initUrlParamCount();
 		}
 	}
 

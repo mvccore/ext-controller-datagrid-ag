@@ -50,7 +50,8 @@ trait PreDispatchMethods {
 		} else {
 			if ($this->dispatchState >= \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 			parent::PreDispatch();
-			$this->count = $this->totalCount;
+			if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE)
+				$this->count = $this->totalCount;
 			if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 			$this->preDispatchLocales();
 			$this->preDispatchAssets();

@@ -119,7 +119,6 @@ var MvcCore;
                                 if (changeUrl)
                                     history.pushState(reqData, document.title, response.url);
                                 // TODO: set up sorting and filtering from server
-                                // TODO: change url
                             };
                             return MultiplePagesMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSource));

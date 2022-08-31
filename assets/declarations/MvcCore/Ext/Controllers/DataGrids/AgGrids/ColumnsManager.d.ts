@@ -21,5 +21,9 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected initServerCfgAndViewHelper(): this;
         protected initColumns(): this;
         protected initColumn(serverColumnCfg: AgGrids.Interfaces.IServerConfigs.IColumn): AgGrids.Types.GridColumn;
+        protected initColumnType(column: agGrid.ColDef, serverColumnCfg: AgGrids.Interfaces.IServerConfigs.IColumn): this;
+        protected initColumnSorting(column: agGrid.ColDef, serverColumnCfg: AgGrids.Interfaces.IServerConfigs.IColumn): this;
+        protected initColumnFiltering(column: agGrid.ColDef, serverColumnCfg: AgGrids.Interfaces.IServerConfigs.IColumn): this;
+        protected initColumnStyles(column: agGrid.ColDef, serverColumnCfg: AgGrids.Interfaces.IServerConfigs.IColumn): this;
     }
 }

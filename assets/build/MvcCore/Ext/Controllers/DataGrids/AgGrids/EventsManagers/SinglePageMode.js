@@ -28,6 +28,16 @@ var MvcCore;
                             function SinglePageMode(grid) {
                                 return _super.call(this, grid) || this;
                             }
+                            SinglePageMode.prototype.AddWindowPopStateChangeEvent = function () {
+                                var _this = this;
+                                window.addEventListener('popstate', function (event) {
+                                    if (_this.grid.GetHelpers().IsInstanceOfIServerRequestRaw(event.state)) {
+                                        var dataSource = _this.grid.GetDataSource();
+                                        dataSource.ExecRequest(event.state);
+                                    }
+                                });
+                                return this;
+                            };
                             return SinglePageMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManager));
                         EventsManagers.SinglePageMode = SinglePageMode;

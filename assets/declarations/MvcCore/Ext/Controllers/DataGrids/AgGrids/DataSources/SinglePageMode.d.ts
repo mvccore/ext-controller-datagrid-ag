@@ -6,10 +6,13 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSources {
         protected pageLoaded: boolean;
         protected initDataCache: boolean;
         protected requestCounter: number;
+        protected changeUrlSwitches: Map<string, boolean>;
+        protected initLocationHref: string;
         constructor(grid: AgGrid);
         protected initPageReqDataAndCache(): void;
         /** Callback the grid calls that you implement to fetch rows from the server. */
         getRows(params: agGrid.IGetRowsParams): void;
+        ExecRequest(reqData: Interfaces.IServerRequestRaw): this;
         protected possibleToResolveByInitData(params: agGrid.IGetRowsParams, totalCount: number): boolean;
         protected resolveByInitData(params: agGrid.IGetRowsParams, totalCount: number): void;
         protected resolveByAjaxRequest(params: agGrid.IGetRowsParams): void;

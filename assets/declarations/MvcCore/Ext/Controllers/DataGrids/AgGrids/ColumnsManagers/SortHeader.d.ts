@@ -29,7 +29,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         constructor();
         init(agParams: AgGrids.Interfaces.IHeaderParams<any>): void;
         getGui(): HTMLElement;
-        SetSequence(sequence: number): this;
+        SetSequence(sequence: number | null): this;
+        SetDirection(direction: 1 | 0 | null): this;
         protected initParams(agParams: AgGrids.Interfaces.IHeaderParams<any>): this;
         protected initElements(): this;
         protected initEvents(): this;

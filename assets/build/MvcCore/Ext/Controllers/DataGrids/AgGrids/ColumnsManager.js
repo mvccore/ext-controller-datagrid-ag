@@ -136,7 +136,20 @@ var MvcCore;
                                 headerName: serverColumnCfg.headingName,
                                 tooltipField: serverColumnCfg.propName
                             };
-                            column.filter = !(serverColumnCfg.filter === false);
+                            this.initColumnType(column, serverColumnCfg);
+                            this.initColumnSorting(column, serverColumnCfg);
+                            this.initColumnFiltering(column, serverColumnCfg);
+                            this.viewHelper.SetUpColumnCfg(column, serverColumnCfg);
+                            this.initColumnStyles(column, serverColumnCfg);
+                            return column;
+                        };
+                        ColumnsManager.prototype.initColumnType = function (column, serverColumnCfg) {
+                            var serverType = serverColumnCfg.types[serverColumnCfg.types.length - 1];
+                            if (this.Static.agColumnsTypes.has(serverType))
+                                column.type = this.Static.agColumnsTypes.get(serverType);
+                            return this;
+                        };
+                        ColumnsManager.prototype.initColumnSorting = function (column, serverColumnCfg) {
                             column.sortable = !(serverColumnCfg.sort === false);
                             var headerComponentParams = __assign(__assign({}, this.sortHeaderDefaults), {
                                 grid: this.grid,
@@ -144,9 +157,10 @@ var MvcCore;
                                 sortable: column.sortable
                             });
                             column.headerComponentParams = headerComponentParams;
-                            var serverType = serverColumnCfg.types[serverColumnCfg.types.length - 1];
-                            if (this.Static.agColumnsTypes.has(serverType))
-                                column.type = this.Static.agColumnsTypes.get(serverType);
+                            return this;
+                        };
+                        ColumnsManager.prototype.initColumnFiltering = function (column, serverColumnCfg) {
+                            column.filter = !(serverColumnCfg.filter === false);
                             column.filterParams = {
                                 suppressAndOrCondition: true,
                                 /*filterOptions:[
@@ -191,7 +205,9 @@ var MvcCore;
                                     context: this.grid
                                 };
                             }
-                            this.viewHelper.SetUpColumnCfg(column, serverColumnCfg);
+                            return this;
+                        };
+                        ColumnsManager.prototype.initColumnStyles = function (column, serverColumnCfg) {
                             if (serverColumnCfg.width != null && typeof (serverColumnCfg.width) == 'number')
                                 column.width = serverColumnCfg.width;
                             if (serverColumnCfg.minWidth != null && typeof (serverColumnCfg.minWidth) == 'number')
@@ -202,7 +218,7 @@ var MvcCore;
                                 column.flex = serverColumnCfg.flex;
                             if (serverColumnCfg.editable != null && typeof (serverColumnCfg.editable) == 'boolean')
                                 column.editable = serverColumnCfg.editable;
-                            return column;
+                            return this;
                         };
                         ColumnsManager.agColumnsTypes = new Map([
                             [AgGrids.Enums.ServerType.INT, "numericColumn"],

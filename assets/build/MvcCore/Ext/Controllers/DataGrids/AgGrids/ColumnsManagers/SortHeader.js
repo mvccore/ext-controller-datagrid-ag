@@ -27,7 +27,19 @@ var MvcCore;
                             SortHeader.prototype.SetSequence = function (sequence) {
                                 this.sequence = sequence;
                                 if (this.params.renderSequence)
-                                    this.elms.sequence.innerHTML = Number(this.sequence + 1).toString();
+                                    this.elms.sequence.innerHTML = sequence == null
+                                        ? ''
+                                        : Number(this.sequence + 1).toString();
+                                return this;
+                            };
+                            SortHeader.prototype.SetDirection = function (direction) {
+                                this.direction = direction;
+                                if (direction == null) {
+                                    this.setSortInactive();
+                                }
+                                else {
+                                    this.setSortActive();
+                                }
                                 return this;
                             };
                             SortHeader.prototype.initParams = function (agParams) {

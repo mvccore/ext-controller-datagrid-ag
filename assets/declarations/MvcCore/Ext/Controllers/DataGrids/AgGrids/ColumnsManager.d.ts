@@ -8,7 +8,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected helpers: AgGrids.Helpers;
         protected agColumnsConfigs: Map<string, AgGrids.Types.GridColumn>;
         protected agColumnDefaults: agGrid.ColDef<any>;
-        protected sortHeaderDefaults: AgGrids.Interfaces.IHeaderParams;
+        protected sortHeaderDefaults: AgGrids.Interfaces.ISortHeaderParams;
         protected serverConfig: Interfaces.IServerConfig;
         protected initData: Interfaces.IServerResponse;
         protected viewHelper: ColumnsManagers.ViewHelper;

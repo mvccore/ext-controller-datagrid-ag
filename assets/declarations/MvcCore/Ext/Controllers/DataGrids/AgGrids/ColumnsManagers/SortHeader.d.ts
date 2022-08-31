@@ -13,13 +13,13 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
             DESC_CLS: string;
         };
         Static: typeof SortHeader;
-        protected params: AgGrids.Interfaces.IHeaderParams<any>;
+        protected params: AgGrids.Interfaces.ISortHeaderParams<any>;
         protected grid: AgGrid;
         protected columnId: string;
         protected sortable: boolean;
         protected sequence: number;
         protected direction: 0 | 1 | null;
-        protected elms: AgGrids.Interfaces.IHeaderElements;
+        protected elms: AgGrids.Interfaces.ISortHeaderElements;
         protected contBaseClass: string;
         protected multiSort: boolean;
         protected handlers: {
@@ -27,14 +27,14 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
             handleRemoveClick?: (e: MouseEvent) => void;
         };
         constructor();
-        init(agParams: AgGrids.Interfaces.IHeaderParams<any>): void;
+        init(agParams: AgGrids.Interfaces.ISortHeaderParams<any>): void;
         getGui(): HTMLElement;
         SetSequence(sequence: number | null): this;
         SetDirection(direction: 1 | 0 | null): this;
-        protected initParams(agParams: AgGrids.Interfaces.IHeaderParams<any>): this;
+        protected initParams(agParams: AgGrids.Interfaces.ISortHeaderParams<any>): this;
         protected initElements(): this;
         protected initEvents(): this;
-        refresh(agParams: AgGrids.Interfaces.IHeaderParams<any>): boolean;
+        refresh(agParams: AgGrids.Interfaces.ISortHeaderParams<any>): boolean;
         destroy(): void;
         protected handleContClick(e: MouseEvent): void;
         protected handleRemoveClick(e: MouseEvent): void;

@@ -34,9 +34,6 @@ var MvcCore;
                         AgOptionsBases.prototype.initBases = function () {
                             this.agOptions = {
                                 //debug: true,
-                                /*components: {
-                                    agColumnHeader: AgGrids.ColumnsManagers.SortHeader
-                                },*/
                                 suppressMenuHide: true,
                                 tooltipShowDelay: 0,
                                 tooltipHideDelay: 2000,

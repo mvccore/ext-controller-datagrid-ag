@@ -1,12 +1,33 @@
 declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
     class FilterInput implements agGrid.IFloatingFilterComp<any> {
-        eGui: HTMLDivElement;
-        currentValue: any;
-        eFilterInput: HTMLInputElement;
-        init(params: agGrid.IFloatingFilterParams<any>): void;
+        static readonly SELECTORS: {
+            INPUT_CLS: string;
+        };
+        protected params: AgGrids.Interfaces.IFilterInputParams<any>;
+        protected grid: AgGrid;
+        protected columnId: string;
+        protected input: HTMLInputElement;
+        protected multiFilter: boolean;
+        protected handlers: {
+            handleSubmit?: (e: MouseEvent) => void;
+        };
+        Static: typeof FilterInput;
+        constructor();
+        init(agParams: AgGrids.Interfaces.IFilterInputParams<any>): void;
+        getGui(): HTMLElement;
+        SetText(): this;
+        protected initParams(agParams: AgGrids.Interfaces.IFilterInputParams<any>): this;
+        protected initElements(): this;
+        protected initEvents(): this;
+        protected handleSubmit(e: KeyboardEvent): void;
         onParentModelChanged(parentModel: any, event: agGrid.FilterChangedEvent<any>): void;
-        getGui(): HTMLDivElement;
         afterGuiAttached(params?: agGrid.IAfterGuiAttachedParams): void;
+        /**
+         * Gets called when the floating filter is destroyed. Like column headers,
+         * the floating filter lifespan is only when the column is visible,
+         * so they are destroyed if the column is made not visible or when a user
+         * scrolls the column out of view with horizontal scrolling.
+         */
         destroy(): void;
     }
 }

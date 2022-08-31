@@ -66,8 +66,23 @@ var MvcCore;
                             return serverResponse;
                         };
                         Helpers.prototype.RetypeRequest2RawRequest = function (serverRequest) {
+                            var e_1, _a;
                             var result = serverRequest;
-                            result.filtering = this.convertMap2Object(serverRequest.filtering);
+                            var newFiltering = {};
+                            try {
+                                for (var _b = __values(serverRequest.filtering.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                                    var _d = __read(_c.value, 2), idColumn = _d[0], filterValues = _d[1];
+                                    newFiltering[idColumn] = this.convertMap2Object(filterValues);
+                                }
+                            }
+                            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                            finally {
+                                try {
+                                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                                }
+                                finally { if (e_1) throw e_1.error; }
+                            }
+                            result.filtering = newFiltering;
                             var serverConfig = this.grid.GetServerConfig();
                             result.id = serverConfig.id;
                             result.mode = serverConfig.clientPageMode;
@@ -87,7 +102,7 @@ var MvcCore;
                             return new Map(data);
                         };
                         Helpers.prototype.convertMap2Object = function (map) {
-                            var e_1, _a;
+                            var e_2, _a;
                             var obj = {};
                             try {
                                 for (var map_1 = __values(map), map_1_1 = map_1.next(); !map_1_1.done; map_1_1 = map_1.next()) {
@@ -95,12 +110,12 @@ var MvcCore;
                                     obj[key] = value;
                                 }
                             }
-                            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                            catch (e_2_1) { e_2 = { error: e_2_1 }; }
                             finally {
                                 try {
                                     if (map_1_1 && !map_1_1.done && (_a = map_1.return)) _a.call(map_1);
                                 }
-                                finally { if (e_1) throw e_1.error; }
+                                finally { if (e_2) throw e_2.error; }
                             }
                             return obj;
                         };

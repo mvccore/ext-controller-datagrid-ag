@@ -6,6 +6,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         HandleColumnResized(event: agGrid.ColumnResizedEvent<any>): void;
         HandleColumnMoved(event: agGrid.ColumnMovedEvent<any>): void;
         HandleFilterChanged(event: agGrid.FilterChangedEvent<any>): void;
+        HandleInputFilterChange(columnId: string, inputValue: string): void;
         HandleSortChange(columnId: string, direction: 1 | 0 | null): void;
         HandleGridSizeChanged(event: agGrid.ViewportChangedEvent<any> | agGrid.GridSizeChangedEvent<any>): void;
     }

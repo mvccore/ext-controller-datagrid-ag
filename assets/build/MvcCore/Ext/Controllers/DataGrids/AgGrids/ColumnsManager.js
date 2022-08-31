@@ -101,6 +101,7 @@ var MvcCore;
                             this.agColumnsConfigs = new Map();
                             var agColumn, serverColumnCfg, serverColumns = this.serverConfig.columns;
                             this.grid.SetSortHeaders(new Map());
+                            this.grid.SetFilterInputs(new Map());
                             for (var columnUrlName in serverColumns) {
                                 serverColumnCfg = serverColumns[columnUrlName];
                                 if (serverColumnCfg.disabled === true)
@@ -191,18 +192,20 @@ var MvcCore;
                                 column.floatingFilterComponent = AgGrids.ColumnsManagers.FilterInput;
                                 column.floatingFilterComponentParams = {
                                     suppressFilterButton: false,
-                                    context: this.grid
+                                    grid: this.grid,
+                                    columnId: serverColumnCfg.urlName
                                 };
                             }
                             if (column.type === 'numericColumn') {
                                 column.filter = AgGrids.ColumnsManagers.FilterMenu;
                                 column.filterParams = {
-                                    context: this.grid
+                                    grid: this.grid
                                 };
                                 column.floatingFilterComponent = AgGrids.ColumnsManagers.FilterInput;
                                 column.floatingFilterComponentParams = {
                                     suppressFilterButton: false,
-                                    context: this.grid
+                                    grid: this.grid,
+                                    columnId: serverColumnCfg.urlName
                                 };
                             }
                             return this;

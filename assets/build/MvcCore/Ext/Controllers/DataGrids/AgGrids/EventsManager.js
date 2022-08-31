@@ -49,9 +49,30 @@ var MvcCore;
                             this.grid.SetTotalCount(null);
                             //console.log(event);
                         };
+                        EventsManager.prototype.HandleInputFilterChange = function (columnId, inputValue) {
+                            var newFiltering = new Map();
+                            // explode multiple values and set up new column filtering:
+                            // set up filter menu if necessary:
+                            newFiltering.set(columnId, new Map([
+                                [AgGrids.Enums.Operator.LIKE, [inputValue]]
+                            ]));
+                            debugger;
+                            this.grid.SetFiltering(newFiltering);
+                            var pageMode = this.grid.GetPageMode();
+                            if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
+                                var gridOptions = this.grid.GetOptions().GetAgOptions();
+                                gridOptions.api.onFilterChanged();
+                            }
+                            else if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
+                                var dataSourceMp = this.grid.GetDataSource();
+                                dataSourceMp.Load();
+                            }
+                        };
                         EventsManager.prototype.HandleSortChange = function (columnId, direction) {
                             var e_1, _a;
-                            var oldSorting = this.grid.GetSorting(), sortHeaders = this.grid.GetSortHeaders(), newSorting = [], agColumnsState = [], sortRemoving = direction == null;
+                            var oldSorting = this.grid.GetSorting(), sortHeaders = this.grid.GetSortHeaders(), newSorting = [], 
+                            //agColumnsState: agGrid.ColumnState[] = [],
+                            sortRemoving = direction == null;
                             if (!sortRemoving)
                                 newSorting.push([columnId, direction]);
                             try {
@@ -71,11 +92,11 @@ var MvcCore;
                             }
                             for (var i = 0, sortColId = '', l = newSorting.length; i < l; i++) {
                                 var _c = __read(newSorting[i], 2), sortColId = _c[0], sortDir = _c[1];
-                                agColumnsState.push({
+                                /*agColumnsState.push(<agGrid.ColumnState>{
                                     colId: sortColId,
                                     sort: sortDir === 1 ? 'asc' : 'desc',
                                     sortIndex: i
-                                });
+                                });*/
                                 if (sortColId === columnId)
                                     continue;
                                 sortHeaders.get(sortColId).SetSequence(i);
@@ -83,18 +104,17 @@ var MvcCore;
                             this.grid.SetSorting(newSorting);
                             var pageMode = this.grid.GetPageMode();
                             if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
-                                // for single page - TODO
                                 var gridOptions = this.grid.GetOptions().GetAgOptions();
-                                gridOptions.columnApi.applyColumnState({
+                                /*gridOptions.columnApi.applyColumnState(<agGrid.ApplyColumnStateParams>{
                                     state: agColumnsState,
                                     applyOrder: false,
-                                    defaultState: {
+                                    defaultState: <agGrid.ColumnStateParams>{
                                         sort: null
                                     },
-                                });
+                                });*/
+                                gridOptions.api.onSortChanged();
                             }
                             else if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
-                                // for multiple pages - call ajax with new params completed later
                                 var dataSourceMp = this.grid.GetDataSource();
                                 dataSourceMp.Load();
                             }

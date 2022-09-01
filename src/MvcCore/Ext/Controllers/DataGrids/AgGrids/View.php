@@ -74,6 +74,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 
 				$mvcCoreAgGridAssetsDir . "AgGrids/Types/GridColumn.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/Types/ViewHelper.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Types/Sorting.js",
 					
 				$mvcCoreAgGridAssetsDir . "AgGrids/Translator.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManager.js",

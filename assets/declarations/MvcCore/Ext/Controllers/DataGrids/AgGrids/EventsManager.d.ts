@@ -16,8 +16,9 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         HandleInputFilterChange(columnId: string, rawInputValue: string): void;
         HandleSortChange(columnId: string, direction: AgGrids.Types.SortDirNullable): void;
         HandleGridSizeChanged(event: agGrid.ViewportChangedEvent<any> | agGrid.GridSizeChangedEvent<any>): void;
-        AddWindowPopStateChangeEvent(): this;
+        AddUrlChangeEvent(): this;
         HandleUrlChange(e: PopStateEvent): void;
+        protected handleUrlChangeSortsFilters(reqData: Interfaces.IServerRequest): this;
         protected getOperatorsAndPrefixesByRawValue(rawValue: string): Map<Enums.Operator, string>;
         protected getOperatorByRawValue(rawValue: string, operatorsAndPrefixes: Map<Enums.Operator, string>, columnFilterCfgIsBool: boolean, columnFilterCfgIsInt: boolean, columnFilterCfgInt: number, columnFilterCfg: number | boolean): Enums.Operator | null;
     }

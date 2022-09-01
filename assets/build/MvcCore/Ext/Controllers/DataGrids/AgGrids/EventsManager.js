@@ -157,8 +157,6 @@ var MvcCore;
                             else {
                                 this.grid.GetFilterInputs().get(columnId).SetText(filtering.get(columnId));
                             }
-                            // set up filter menu if necessary:
-                            debugger;
                             this.grid
                                 .SetFiltering(filtering)
                                 .SetTotalCount(null);
@@ -257,7 +255,7 @@ var MvcCore;
                             // fill out any available space to ensure there are no gaps
                             event.api.sizeColumnsToFit();
                         };
-                        EventsManager.prototype.AddWindowPopStateChangeEvent = function () {
+                        EventsManager.prototype.AddUrlChangeEvent = function () {
                             var _this = this;
                             window.addEventListener('popstate', function (e) {
                                 if (_this.grid.GetHelpers().IsInstanceOfIServerRequestRaw(e.state))
@@ -266,9 +264,15 @@ var MvcCore;
                             return this;
                         };
                         EventsManager.prototype.HandleUrlChange = function (e) {
-                            var e_5, _a, e_6, _b, e_7, _c;
                             var dataSource = this.grid.GetDataSource(), reqDataRaw = e.state, reqData = AgGrids.DataSource.RetypeRequestObjects2Maps(reqDataRaw);
+                            this.grid
+                                .SetSorting(reqData.sorting)
+                                .SetFiltering(reqData.filtering);
+                            this.handleUrlChangeSortsFilters(reqData);
                             dataSource.ExecRequest(reqDataRaw, false);
+                        };
+                        EventsManager.prototype.handleUrlChangeSortsFilters = function (reqData) {
+                            var e_5, _a, e_6, _b, e_7, _c;
                             // set up sort headers:
                             var sortHeaders = this.grid.GetSortHeaders(), activeSortItems = new Map(), sequence = 0;
                             try {
@@ -323,6 +327,7 @@ var MvcCore;
                                 }
                                 finally { if (e_7) throw e_7.error; }
                             }
+                            return this;
                         };
                         EventsManager.prototype.getOperatorsAndPrefixesByRawValue = function (rawValue) {
                             var operatorsAndPrefixes, containsPercentage = this.helpers.CheckFilterValueForLikeChar(rawValue, '%'), containsUnderScore = this.helpers.CheckFilterValueForLikeChar(rawValue, '_');

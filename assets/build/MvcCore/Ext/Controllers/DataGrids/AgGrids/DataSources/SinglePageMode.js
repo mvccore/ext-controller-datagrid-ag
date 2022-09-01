@@ -11,17 +11,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -86,52 +75,13 @@ var MvcCore;
                                 }
                             };
                             SinglePageMode.prototype.ExecRequest = function (reqData, changeUrl) {
-                                var e_1, _a, _b;
-                                var sortChanged = false, sortingOld = this.grid.GetSorting(), sortHeaders = this.grid.GetSortHeaders(), agColumnsState = [], sorting = reqData.sorting, sortColId, sortDir;
-                                if (JSON.stringify(sortingOld) !== JSON.stringify(sorting)) {
-                                    sortChanged = true;
-                                    try {
-                                        for (var _c = __values(sortHeaders.values()), _d = _c.next(); !_d.done; _d = _c.next()) {
-                                            var sortHeader = _d.value;
-                                            sortHeader.SetDirection(null);
-                                        }
-                                    }
-                                    catch (e_1_1) { e_1 = { error: e_1_1 }; }
-                                    finally {
-                                        try {
-                                            if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
-                                        }
-                                        finally { if (e_1) throw e_1.error; }
-                                    }
-                                    for (var i = 0, l = sorting.length; i < l; i++) {
-                                        _b = __read(sorting[i], 2), sortColId = _b[0], sortDir = _b[1];
-                                        agColumnsState.push({
-                                            colId: sortColId,
-                                            sort: sortDir === 1 ? 'asc' : 'desc',
-                                            sortIndex: i
-                                        });
-                                        sortHeaders.get(sortColId)
-                                            .SetDirection(sortDir)
-                                            .SetSequence(i);
-                                    }
-                                    this.grid.SetSorting(sorting);
-                                }
-                                // 
-                                if (sortChanged) {
-                                    var cacheKey = this.cache.Key(reqData);
-                                    this.changeUrlSwitches.set(cacheKey, true);
-                                    var gridOptions = this.grid.GetOptions().GetAgOptions();
-                                    gridOptions.columnApi.applyColumnState({
-                                        state: agColumnsState,
-                                        applyOrder: false,
-                                        defaultState: {
-                                            sort: null
-                                        },
-                                    });
-                                    // TODO: využít při změně filru kombinaci volání níže, každé samostatně spustí další AJAX
-                                    //gridOptions.api.onFilterChanged();
-                                    //gridOptions.api.onSortChanged();
-                                }
+                                var cacheKey = this.cache.Key(reqData);
+                                this.changeUrlSwitches.set(cacheKey, true);
+                                console.log("set cache", cacheKey, reqData);
+                                var gridOptions = this.grid.GetOptions().GetAgOptions();
+                                // both triggers current grid model reload and calling `this.getRows()`:
+                                //gridOptions.api.onFilterChanged();
+                                gridOptions.api.onFilterChanged();
                                 return this;
                             };
                             SinglePageMode.prototype.possibleToResolveByInitData = function (params, totalCount) {
@@ -167,6 +117,7 @@ var MvcCore;
                                         this.changeUrlSwitches.delete(cacheKey);
                                     }
                                     else {
+                                        console.log("pushState init data", reqData);
                                         history.pushState(reqData, document.title, this.initLocationHref);
                                     }
                                 }
@@ -204,6 +155,7 @@ var MvcCore;
                                             _this.changeUrlSwitches.delete(cacheKey);
                                         }
                                         else {
+                                            console.log("pushState ajax", reqData);
                                             history.pushState(reqData, document.title, response.url);
                                         }
                                         params.successCallback(response.data, response.totalCount);

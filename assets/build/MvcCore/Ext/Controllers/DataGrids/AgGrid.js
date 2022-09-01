@@ -165,14 +165,14 @@ var MvcCore;
                             var emSinglePage = new DataGrids.AgGrids.EventsManagers.SinglePageMode(this);
                             this.eventsManager = emSinglePage;
                             emSinglePage
-                                .AddWindowPopStateChangeEvent();
+                                .AddUrlChangeEvent();
                         }
                         else if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
                             var emMultiplePages = new DataGrids.AgGrids.EventsManagers.MultiplePagesMode(this);
                             this.eventsManager = emMultiplePages;
                             emMultiplePages
                                 .AddPagingEvents()
-                                .AddWindowPopStateChangeEvent();
+                                .AddUrlChangeEvent();
                         }
                         return this;
                     };

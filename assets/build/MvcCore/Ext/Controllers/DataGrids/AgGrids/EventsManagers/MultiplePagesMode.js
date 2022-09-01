@@ -51,16 +51,6 @@ var MvcCore;
                                 e.cancelBubble = true;
                                 e.preventDefault();
                             };
-                            MultiplePagesMode.prototype.AddWindowPopStateChangeEvent = function () {
-                                var _this = this;
-                                window.addEventListener('popstate', function (event) {
-                                    if (_this.grid.GetHelpers().IsInstanceOfIServerRequestRaw(event.state)) {
-                                        var dataSource = _this.grid.GetDataSource();
-                                        dataSource.ExecRequest(event.state, false);
-                                    }
-                                });
-                                return this;
-                            };
                             return MultiplePagesMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManager));
                         EventsManagers.MultiplePagesMode = MultiplePagesMode;

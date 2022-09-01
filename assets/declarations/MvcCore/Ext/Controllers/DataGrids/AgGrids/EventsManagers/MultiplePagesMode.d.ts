@@ -6,6 +6,5 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManagers {
         AddPagingEvents(): this;
         RemovePagingEvents(): this;
         protected handlePagingClick(offset: number, e: MouseEvent): void;
-        AddWindowPopStateChangeEvent(): this;
     }
 }

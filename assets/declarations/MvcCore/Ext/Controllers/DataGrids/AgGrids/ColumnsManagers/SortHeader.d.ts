@@ -18,10 +18,9 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         protected columnId: string;
         protected sortable: boolean;
         protected sequence: number;
-        protected direction: 0 | 1 | null;
+        protected direction: AgGrids.Types.SortDirNullable;
         protected elms: AgGrids.Interfaces.ISortHeaderElements;
         protected contBaseClass: string;
-        protected multiSort: boolean;
         protected handlers: {
             handleContClick?: (e: MouseEvent) => void;
             handleRemoveClick?: (e: MouseEvent) => void;
@@ -30,7 +29,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         init(agParams: AgGrids.Interfaces.ISortHeaderParams<any>): void;
         getGui(): HTMLElement;
         SetSequence(sequence: number | null): this;
-        SetDirection(direction: 1 | 0 | null): this;
+        SetDirection(direction: AgGrids.Types.SortDirNullable): this;
         protected initParams(agParams: AgGrids.Interfaces.ISortHeaderParams<any>): this;
         protected initElements(): this;
         protected initEvents(): this;

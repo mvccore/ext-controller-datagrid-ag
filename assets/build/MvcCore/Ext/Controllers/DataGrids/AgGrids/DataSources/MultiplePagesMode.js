@@ -64,7 +64,7 @@ var MvcCore;
                                 this.cache.Add(this.cache.Key(this.pageReqData), this.initialData);
                             };
                             MultiplePagesMode.prototype.Load = function () {
-                                var reqData = this.helpers.RetypeRequest2RawRequest({
+                                var reqData = this.Static.retypeRequestMaps2Objects({
                                     offset: this.grid.GetOffset(),
                                     limit: this.grid.GetServerConfig().itemsPerPage,
                                     sorting: this.grid.GetSorting(),
@@ -94,7 +94,7 @@ var MvcCore;
                             };
                             MultiplePagesMode.prototype.handleResponse = function (reqData, changeUrl, cacheKey, cached, response) {
                                 if (!cached) {
-                                    response = this.helpers.RetypeRawServerResponse(response);
+                                    response = this.Static.RetypeRawServerResponse(response);
                                     this.cache.Add(cacheKey, response);
                                 }
                                 var agGridApi = this.options.GetAgOptions().api;
@@ -118,7 +118,6 @@ var MvcCore;
                                 }
                                 if (changeUrl)
                                     history.pushState(reqData, document.title, response.url);
-                                // TODO: set up sorting and filtering from server
                             };
                             return MultiplePagesMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSource));

@@ -1,14 +1,3 @@
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -25,6 +14,21 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 var MvcCore;
 (function (MvcCore) {
     var Ext;
@@ -37,6 +41,8 @@ var MvcCore;
                 (function (AgGrids) {
                     var Helpers = /** @class */ (function () {
                         function Helpers(grid) {
+                            var _newTarget = this.constructor;
+                            this.Static = _newTarget;
                             this.grid = grid;
                         }
                         Helpers.prototype.IsTouchDevice = function () {
@@ -55,53 +61,104 @@ var MvcCore;
                             contDiv.innerHTML = htmlCode.trim();
                             return contDiv.firstChild;
                         };
-                        Helpers.prototype.RetypeRawServerConfig = function (serverConfig) {
-                            serverConfig.urlSegments.urlFilterOperators = this.convertObject2Map(serverConfig.urlSegments.urlFilterOperators);
-                            serverConfig.ajaxParamsNames = this.convertObject2Map(serverConfig.ajaxParamsNames);
-                            serverConfig.controlsTexts = this.convertObject2Map(serverConfig.controlsTexts);
-                            return serverConfig;
-                        };
-                        Helpers.prototype.RetypeRawServerResponse = function (serverResponse) {
-                            serverResponse.filtering = this.convertObject2Map(serverResponse.filtering);
-                            return serverResponse;
-                        };
-                        Helpers.prototype.RetypeRequest2RawRequest = function (serverRequest) {
-                            var e_1, _a;
-                            var result = serverRequest;
-                            var newFiltering = {};
-                            try {
-                                for (var _b = __values(serverRequest.filtering.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-                                    var _d = __read(_c.value, 2), idColumn = _d[0], filterValues = _d[1];
-                                    newFiltering[idColumn] = this.convertMap2Object(filterValues);
-                                }
-                            }
-                            catch (e_1_1) { e_1 = { error: e_1_1 }; }
-                            finally {
-                                try {
-                                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-                                }
-                                finally { if (e_1) throw e_1.error; }
-                            }
-                            result.filtering = newFiltering;
-                            var serverConfig = this.grid.GetServerConfig();
-                            result.id = serverConfig.id;
-                            result.mode = serverConfig.clientPageMode;
-                            result.path = this.grid.GetGridPath();
-                            return result;
-                        };
                         Helpers.prototype.IsInstanceOfIServerRequestRaw = function (obj) {
                             return (obj != null &&
                                 'id' in obj && 'mode' in obj &&
                                 'offset' in obj && 'limit' in obj &&
                                 'sorting' in obj && 'filtering' in obj);
                         };
-                        Helpers.prototype.convertObject2Map = function (obj) {
+                        Helpers.prototype.RetypeRawServerConfig = function (serverConfig) {
+                            serverConfig.urlSegments.urlFilterOperators = this.Static.ConvertObject2Map(serverConfig.urlSegments.urlFilterOperators);
+                            serverConfig.ajaxParamsNames = this.Static.ConvertObject2Map(serverConfig.ajaxParamsNames);
+                            serverConfig.filterOperatorPrefixes = this.Static.ConvertObject2Map(serverConfig.filterOperatorPrefixes);
+                            serverConfig.controlsTexts = this.Static.ConvertObject2Map(serverConfig.controlsTexts);
+                            return serverConfig;
+                        };
+                        Helpers.prototype.GetAllowedOperators = function (columnFilterFlags) {
+                            var e_1, _a;
+                            var urlFilterOperators = this.grid.GetServerConfig().urlSegments.urlFilterOperators, allowedOperators = new Map(), allowRanges = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_RANGES) != 0, allowLikeRight = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_LIKE_RIGHT_SIDE) != 0, allowLikeLeft = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_LIKE_LEFT_SIDE) != 0, allowLikeAnywhere = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_LIKE_ANYWHERE) != 0, operators = [
+                                AgGrids.Enums.Operator.EQUAL, AgGrids.Enums.Operator.NOT_EQUAL
+                            ]; // equal and not equal are allowed for filtering by default
+                            if (allowRanges)
+                                operators = __spread(operators, [
+                                    AgGrids.Enums.Operator.LOWER,
+                                    AgGrids.Enums.Operator.GREATER,
+                                    AgGrids.Enums.Operator.LOWER_EQUAL,
+                                    AgGrids.Enums.Operator.GREATER_EQUAL
+                                ]);
+                            if (allowLikeRight || allowLikeLeft || allowLikeAnywhere)
+                                operators = __spread(operators, [
+                                    AgGrids.Enums.Operator.LIKE,
+                                    AgGrids.Enums.Operator.NOT_LIKE
+                                ]);
+                            var urlSegment, multipleValues, likeOperator, regex;
+                            try {
+                                for (var operators_1 = __values(operators), operators_1_1 = operators_1.next(); !operators_1_1.done; operators_1_1 = operators_1.next()) {
+                                    var operator = operators_1_1.value;
+                                    urlSegment = urlFilterOperators.get(operator);
+                                    multipleValues = operator.indexOf('<') === -1 && operator.indexOf('>') === -1;
+                                    likeOperator = operator.indexOf('LIKE') !== -1;
+                                    regex = null;
+                                    if (likeOperator && !allowLikeAnywhere) {
+                                        if (allowLikeRight && !allowLikeLeft) {
+                                            regex = /^([^%_]).*$/g;
+                                        }
+                                        else if (allowLikeLeft && !allowLikeRight) {
+                                            regex = /.*([^%_])$/g;
+                                        }
+                                        else if (allowLikeLeft && allowLikeRight) {
+                                            regex = /^.([^%_]+).$/g;
+                                        }
+                                    }
+                                    allowedOperators.set(operator, {
+                                        operator: operator,
+                                        multiple: multipleValues,
+                                        regex: regex
+                                    });
+                                }
+                            }
+                            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                            finally {
+                                try {
+                                    if (operators_1_1 && !operators_1_1.done && (_a = operators_1.return)) _a.call(operators_1);
+                                }
+                                finally { if (e_1) throw e_1.error; }
+                            }
+                            return allowedOperators;
+                        };
+                        /**
+                         * Check if given value contains any LIKE/NOT LIKE special
+                         * character: `%` or `_` or escaped like this: `[%]` or `[_]`.
+                         * Returns `0` if no special char `%` or `_` matched.
+                         * Returns `1` if special char `%` or `_` matched in raw form only, not escaped.
+                         * Returns `2` if special char `%` or `_` matched in escaped form only.
+                         * Returns `1 | 2` if special char `%` or `_` matched in both forms.
+                         */
+                        Helpers.prototype.CheckFilterValueForLikeChar = function (rawValue, specialLikeChar) {
+                            var containsSpecialChar = 0, index = 0, length = rawValue.length, specialCharPos, escapedSpecialCharPos, matchedEscapedChar = 0;
+                            while (index < length) {
+                                specialCharPos = rawValue.indexOf(specialLikeChar, index);
+                                if (specialCharPos === -1)
+                                    break;
+                                escapedSpecialCharPos = rawValue.indexOf('[' + specialLikeChar + ']', Math.max(0, index - 1));
+                                if (escapedSpecialCharPos !== -1 && specialCharPos - 1 === escapedSpecialCharPos) {
+                                    index = specialCharPos + specialLikeChar.length + 1;
+                                    matchedEscapedChar = 2;
+                                    continue;
+                                }
+                                index = specialCharPos + 1;
+                                containsSpecialChar = 1;
+                                break;
+                            }
+                            return containsSpecialChar | matchedEscapedChar;
+                        };
+                        Helpers.ConvertObject2Map = function (obj) {
                             var data = [];
                             for (var key in obj)
                                 data.push([key, obj[key]]);
                             return new Map(data);
                         };
-                        Helpers.prototype.convertMap2Object = function (map) {
+                        Helpers.ConvertMap2Object = function (map) {
                             var e_2, _a;
                             var obj = {};
                             try {

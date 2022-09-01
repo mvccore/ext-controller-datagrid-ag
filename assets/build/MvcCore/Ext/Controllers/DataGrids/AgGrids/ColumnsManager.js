@@ -186,28 +186,34 @@ var MvcCore;
                                 ]
                             };
                             // TODO
-                            if (column.type === 'dateColumn') {
+                            /*if (column.type === 'dateColumn') {
                                 if (column.filter)
                                     column.filter = 'agDateColumnFilter';
+                                
                                 column.floatingFilterComponent = AgGrids.ColumnsManagers.FilterInput;
-                                column.floatingFilterComponentParams = {
+                                column.floatingFilterComponentParams = <AgGrids.Interfaces.IFilterInputParams>{
                                     suppressFilterButton: false,
                                     grid: this.grid,
                                     columnId: serverColumnCfg.urlName
                                 };
                             }
-                            if (column.type === 'numericColumn') {
-                                column.filter = AgGrids.ColumnsManagers.FilterMenu;
-                                column.filterParams = {
-                                    grid: this.grid
-                                };
-                                column.floatingFilterComponent = AgGrids.ColumnsManagers.FilterInput;
-                                column.floatingFilterComponentParams = {
-                                    suppressFilterButton: false,
-                                    grid: this.grid,
-                                    columnId: serverColumnCfg.urlName
-                                };
-                            }
+                
+                            if (column.type === 'numericColumn') {*/
+                            column.filter = AgGrids.ColumnsManagers.FilterMenu;
+                            column.filterParams = {
+                                grid: this.grid
+                            };
+                            column.floatingFilterComponent = AgGrids.ColumnsManagers.FilterInput;
+                            var filtering = this.grid.GetFiltering();
+                            column.floatingFilterComponentParams = {
+                                suppressFilterButton: false,
+                                grid: this.grid,
+                                columnId: serverColumnCfg.urlName,
+                                filteringItem: filtering.has(serverColumnCfg.urlName)
+                                    ? filtering.get(serverColumnCfg.urlName)
+                                    : null
+                            };
+                            //}
                             return this;
                         };
                         ColumnsManager.prototype.initColumnStyles = function (column, serverColumnCfg) {

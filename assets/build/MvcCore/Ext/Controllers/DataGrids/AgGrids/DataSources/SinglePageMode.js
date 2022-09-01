@@ -85,7 +85,7 @@ var MvcCore;
                                     this.resolveByAjaxRequest(params);
                                 }
                             };
-                            SinglePageMode.prototype.ExecRequest = function (reqData) {
+                            SinglePageMode.prototype.ExecRequest = function (reqData, changeUrl) {
                                 var e_1, _a, _b;
                                 var sortChanged = false, sortingOld = this.grid.GetSorting(), sortHeaders = this.grid.GetSortHeaders(), agColumnsState = [], sorting = reqData.sorting, sortColId, sortDir;
                                 if (JSON.stringify(sortingOld) !== JSON.stringify(sorting)) {
@@ -141,7 +141,7 @@ var MvcCore;
                                     (params.endRow <= this.initialData.offset + this.initialData.dataCount || totalCount < params.endRow));
                                 if (!result)
                                     return false;
-                                var reqData = this.helpers.RetypeRequest2RawRequest({
+                                var reqData = this.Static.retypeRequestMaps2Objects({
                                     offset: this.grid.GetOffset(),
                                     limit: this.grid.GetServerConfig().itemsPerPage,
                                     sorting: this.grid.GetSorting(),
@@ -156,7 +156,7 @@ var MvcCore;
                                 //console.log("resolving by initial data");
                                 params.successCallback(this.initialData.data.slice(params.startRow - this.initialData.offset, params.endRow - this.initialData.offset), totalCount);
                                 if (this.pageLoaded) {
-                                    var reqData = this.helpers.RetypeRequest2RawRequest({
+                                    var reqData = this.Static.retypeRequestMaps2Objects({
                                         offset: this.grid.GetOffset(),
                                         limit: this.grid.GetServerConfig().itemsPerPage,
                                         sorting: this.grid.GetSorting(),
@@ -186,7 +186,7 @@ var MvcCore;
                                 var agGridApi = this.options.GetAgOptions().api;
                                 agGridApi.showLoadingOverlay();
                                 var _a = __read(this.getReqUrlMethodAndType(), 3), reqDataUrl = _a[0], reqMethod = _a[1], reqType = _a[2];
-                                var reqData = this.helpers.RetypeRequest2RawRequest({
+                                var reqData = this.Static.retypeRequestMaps2Objects({
                                     offset: params.startRow,
                                     limit: params.endRow - params.startRow,
                                     sorting: this.grid.GetSorting(),

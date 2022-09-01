@@ -49,7 +49,6 @@ var MvcCore;
                                 this.sortable = this.params.sortable;
                                 this.sequence = this.params.sequence;
                                 this.direction = this.params.direction;
-                                this.multiSort = ((this.grid.GetServerConfig().sortingMode & AgGrids.Enums.SortingMode.SORT_MULTIPLE_COLUMNS) != 0);
                                 this.grid.GetSortHeaders().set(this.columnId, this);
                                 return this;
                             };

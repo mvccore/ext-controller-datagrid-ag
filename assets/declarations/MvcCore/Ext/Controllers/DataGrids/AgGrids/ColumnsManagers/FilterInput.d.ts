@@ -7,19 +7,20 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         protected grid: AgGrid;
         protected columnId: string;
         protected input: HTMLInputElement;
-        protected multiFilter: boolean;
         protected handlers: {
             handleSubmit?: (e: MouseEvent) => void;
+            handleBlur?: (e: FocusEvent) => void;
         };
         Static: typeof FilterInput;
         constructor();
         init(agParams: AgGrids.Interfaces.IFilterInputParams<any>): void;
         getGui(): HTMLElement;
-        SetText(): this;
+        SetText(filteringItem: Map<Enums.Operator, string[]> | null): this;
         protected initParams(agParams: AgGrids.Interfaces.IFilterInputParams<any>): this;
         protected initElements(): this;
         protected initEvents(): this;
         protected handleSubmit(e: KeyboardEvent): void;
+        protected handleBlur(e: KeyboardEvent): void;
         onParentModelChanged(parentModel: any, event: agGrid.FilterChangedEvent<any>): void;
         afterGuiAttached(params?: agGrid.IAfterGuiAttachedParams): void;
         /**

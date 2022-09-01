@@ -3,6 +3,5 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManagers {
         Static: typeof SinglePageMode;
         protected grid: AgGrid;
         constructor(grid: AgGrid);
-        AddWindowPopStateChangeEvent(): this;
     }
 }

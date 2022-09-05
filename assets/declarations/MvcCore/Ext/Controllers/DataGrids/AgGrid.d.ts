@@ -11,7 +11,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         protected options: AgGrids.Options;
         protected dataSource: AgGrids.DataSource;
         protected sortHeaders: Map<string, AgGrids.ColumnsManagers.SortHeader>;
-        protected filterInputs: Map<string, AgGrids.ColumnsManagers.FilterInput>;
+        protected filterHeaders: Map<string, AgGrids.ColumnsManagers.FilterHeader>;
         protected sorting: AgGrids.Types.SortItem[];
         protected filtering: Map<string, Map<AgGrids.Enums.Operator, string[]>>;
         protected totalCount: number | null;
@@ -53,8 +53,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         GetGridPath(): string;
         SetSortHeaders(sortHeaders: Map<string, AgGrids.ColumnsManagers.SortHeader>): this;
         GetSortHeaders(): Map<string, AgGrids.ColumnsManagers.SortHeader>;
-        SetFilterInputs(filterInputs: Map<string, AgGrids.ColumnsManagers.FilterInput>): this;
-        GetFilterInputs(): Map<string, AgGrids.ColumnsManagers.FilterInput>;
+        SetFilterHeaders(filterHeaders: Map<string, AgGrids.ColumnsManagers.FilterHeader>): this;
+        GetFilterHeaders(): Map<string, AgGrids.ColumnsManagers.FilterHeader>;
         protected initSubClasses(): this;
         protected initPageModeSpecifics(): this;
         protected initServerConfig(serverConfig: AgGrids.Interfaces.IServerConfig): this;

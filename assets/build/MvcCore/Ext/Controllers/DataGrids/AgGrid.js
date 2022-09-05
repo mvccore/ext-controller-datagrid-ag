@@ -148,12 +148,12 @@ var MvcCore;
                     AgGrid.prototype.GetSortHeaders = function () {
                         return this.sortHeaders;
                     };
-                    AgGrid.prototype.SetFilterInputs = function (filterInputs) {
-                        this.filterInputs = filterInputs;
+                    AgGrid.prototype.SetFilterHeaders = function (filterHeaders) {
+                        this.filterHeaders = filterHeaders;
                         return this;
                     };
-                    AgGrid.prototype.GetFilterInputs = function () {
-                        return this.filterInputs;
+                    AgGrid.prototype.GetFilterHeaders = function () {
+                        return this.filterHeaders;
                     };
                     AgGrid.prototype.initSubClasses = function () {
                         this.helpers = new DataGrids.AgGrids.Helpers(this);

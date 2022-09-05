@@ -90,12 +90,9 @@ var MvcCore;
                         EventsManager.prototype.HandleColumnMoved = function (event) {
                             //console.log(event);
                         };
-                        EventsManager.prototype.HandleFilterChanged = function (event) {
-                            //console.log(event);
-                        };
                         EventsManager.prototype.HandleInputFilterChange = function (columnId, rawInputValue) {
-                            var e_3, _a;
-                            var rawInputValue = rawInputValue.trim(), filterRemoving = rawInputValue === '' || rawInputValue == null, serverConfig = this.grid.GetServerConfig(), valuesDelimiter = serverConfig.urlSegments.urlDelimiterValues, rawValues = filterRemoving ? [] : rawInputValue.split(valuesDelimiter), serverColumnCfg = serverConfig.columns[columnId], columnFilterCfg = serverColumnCfg.filter, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = typeof (columnFilterCfg) === 'number', columnFilterCfgIsBool = !columnFilterCfgIsInt, allowedOperators = (columnFilterCfgIsInt && this.columnsAllowedOperators.has(columnId)
+                            var e_3, _a, _b;
+                            var rawInputIsNull = rawInputValue == null, rawInputValue = rawInputIsNull ? '' : rawInputValue.trim(), filterRemoving = rawInputValue === '', serverConfig = this.grid.GetServerConfig(), valuesDelimiter = serverConfig.urlSegments.urlDelimiterValues, rawValues = filterRemoving ? [] : rawInputValue.split(valuesDelimiter), serverColumnCfg = serverConfig.columns[columnId], columnFilterCfg = serverColumnCfg.filter, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = columnFilterCfg === columnFilterCfgInt, allowedOperators = (columnFilterCfgIsInt && this.columnsAllowedOperators.has(columnId)
                                 ? this.columnsAllowedOperators.get(columnId)
                                 : this.defaultAllowedOperators), columnAllowNullFilter = columnFilterCfgIsInt && ((columnFilterCfgInt & AgGrids.Enums.FilteringMode.ALLOW_NULL) != 0), filterValues, filterOperatorValues, operatorsAndPrefixes, filtering = this.grid.GetFiltering(), valueIsStringNull, operator, operatorCfg;
                             if (!filterRemoving) {
@@ -107,7 +104,7 @@ var MvcCore;
                                         // complete possible operator prefixes from submitted value
                                         operatorsAndPrefixes = this.getOperatorsAndPrefixesByRawValue(rawValue);
                                         // complete operator value from submitted value
-                                        operator = this.getOperatorByRawValue(rawValue, operatorsAndPrefixes, columnFilterCfgIsBool, columnFilterCfgIsInt, columnFilterCfgInt, columnFilterCfg);
+                                        _b = __read(this.getOperatorByRawValue(rawValue, operatorsAndPrefixes, columnFilterCfg), 2), rawValue = _b[0], operator = _b[1];
                                         // check if operator is allowed
                                         if (operator == null || !allowedOperators.has(operator))
                                             continue;
@@ -151,11 +148,13 @@ var MvcCore;
                                     filtering.set(columnId, filterValues);
                                 }
                             }
+                            var filterHeader = this.grid.GetFilterHeaders().get(columnId);
                             if (filterRemoving) {
                                 filtering.delete(columnId);
+                                filterHeader.SetText(null);
                             }
                             else {
-                                this.grid.GetFilterInputs().get(columnId).SetText(filtering.get(columnId));
+                                filterHeader.SetText(filtering.get(columnId));
                             }
                             this.grid
                                 .SetFiltering(filtering)
@@ -308,7 +307,7 @@ var MvcCore;
                                 finally { if (e_6) throw e_6.error; }
                             }
                             // set up filtering inputs:
-                            var filterInputs = this.grid.GetFilterInputs();
+                            var filterInputs = this.grid.GetFilterHeaders();
                             try {
                                 for (var _l = __values(filterInputs.entries()), _m = _l.next(); !_m.done; _m = _l.next()) {
                                     var _o = __read(_m.value, 2), columnId = _o[0], filterInput = _o[1];
@@ -344,9 +343,9 @@ var MvcCore;
                             }
                             return operatorsAndPrefixes;
                         };
-                        EventsManager.prototype.getOperatorByRawValue = function (rawValue, operatorsAndPrefixes, columnFilterCfgIsBool, columnFilterCfgIsInt, columnFilterCfgInt, columnFilterCfg) {
+                        EventsManager.prototype.getOperatorByRawValue = function (rawValue, operatorsAndPrefixes, columnFilterCfg) {
                             var e_8, _a;
-                            var operator = null;
+                            var operator = null, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = columnFilterCfg === columnFilterCfgInt, columnFilterCfgIsBool = !columnFilterCfgIsInt;
                             try {
                                 for (var _b = __values(operatorsAndPrefixes.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
                                     var _d = __read(_c.value, 2), operatorKey = _d[0], valuePrefix = _d[1];
@@ -380,7 +379,7 @@ var MvcCore;
                                 }
                                 finally { if (e_8) throw e_8.error; }
                             }
-                            return operator;
+                            return [rawValue, operator];
                         };
                         return EventsManager;
                     }());

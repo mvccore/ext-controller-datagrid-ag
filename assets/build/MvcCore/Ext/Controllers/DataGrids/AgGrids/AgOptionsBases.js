@@ -68,7 +68,6 @@ var MvcCore;
                         AgOptionsBases.prototype.initEvents = function () {
                             this.agOptions.onColumnResized = this.eventsManager.HandleColumnResized.bind(this.eventsManager);
                             this.agOptions.onColumnMoved = this.eventsManager.HandleColumnMoved.bind(this.eventsManager);
-                            this.agOptions.onFilterChanged = this.eventsManager.HandleFilterChanged.bind(this.eventsManager);
                             /*this.agOptions.onSortChanged = this.eventsManager.HandleSortChanged.bind(this.eventsManager);*/
                             /*this.agOptions.onFirstDataRendered = (params: agGrid.FirstDataRenderedEvent) => {
                                 params.api.sizeColumnsToFit();

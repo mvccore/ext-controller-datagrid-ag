@@ -66,11 +66,11 @@ var MvcCore;
                                         viewHelper = this.Static.defaults.get(serverType);
                                 }
                                 if (viewHelper != null) {
-                                    var propName = serverColumnCfg.propName, formatArgs = serverColumnCfg.format;
+                                    var propName = serverColumnCfg.propName, parserArgs = serverColumnCfg.parserArgs, formatArgs = serverColumnCfg.formatArgs;
                                     agColumnCfg.valueFormatter = function (params) {
                                         if (params.data == null || params.data[propName] == null)
                                             return '';
-                                        return viewHelper.call(_this, params, propName, formatArgs);
+                                        return viewHelper.call(_this, params, propName, parserArgs, formatArgs);
                                     };
                                 }
                                 return this;
@@ -125,36 +125,48 @@ var MvcCore;
                                 }));
                                 return this.formattersMoney.get(formatterKey);
                             };
-                            ViewHelper.prototype.formatInt = function (params, propName, formatArgs) {
+                            ViewHelper.prototype.formatInt = function (params, propName, parserArgs, formatArgs) {
                                 var formatterKey = formatArgs == null ? 'default' : formatArgs.join('|');
                                 return this.getIntFormater(formatterKey, formatArgs).format(params.data[propName]);
                             };
-                            ViewHelper.prototype.formatFloat = function (params, propName, formatArgs) {
+                            ViewHelper.prototype.formatFloat = function (params, propName, parserArgs, formatArgs) {
                                 var formatterKey = formatArgs == null ? 'default' : formatArgs.join('|');
                                 return this.getFloatFormater(formatterKey, formatArgs).format(params.data[propName]);
                             };
-                            ViewHelper.prototype.formatMoney = function (params, propName, formatArgs) {
+                            ViewHelper.prototype.formatMoney = function (params, propName, parserArgs, formatArgs) {
                                 var formatterKey = formatArgs == null ? 'default' : formatArgs.join('|');
                                 return this.getMoneyFormater(formatterKey, formatArgs).format(params.data[propName]);
                             };
-                            ViewHelper.prototype.formatDate = function (params, propName, formatArgs) {
-                                var dateTime = Date.parse(params.data[propName]) + this.serverConfig.timeZoneOffset;
+                            ViewHelper.prototype.formatDate = function (params, propName, parserArgs, formatArgs) {
+                                if (parserArgs == null || parserArgs.length === 0)
+                                    parserArgs = [this.Static.PARSER_PATTERN_DATE];
+                                var dateTime = moment(params.data[propName], parserArgs[parserArgs.length - 1]);
+                                dateTime.add(this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
                                     formatArgs = [this.Static.FORMAT_PATTERN_DATE];
-                                return moment(dateTime).format(formatArgs[formatArgs.length - 1]);
+                                return dateTime.format(formatArgs[0]);
                             };
-                            ViewHelper.prototype.formatDateTime = function (params, propName, formatArgs) {
-                                var dateTime = Date.parse(params.data[propName]) + this.serverConfig.timeZoneOffset;
+                            ViewHelper.prototype.formatDateTime = function (params, propName, parserArgs, formatArgs) {
+                                if (parserArgs == null || parserArgs.length === 0)
+                                    parserArgs = [this.Static.PARSER_PATTERN_DATE_TIME];
+                                var dateTime = moment(params.data[propName], parserArgs[parserArgs.length - 1]);
+                                dateTime.add(this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
                                     formatArgs = [this.Static.FORMAT_PATTERN_DATE_TIME];
-                                return moment(dateTime).format(formatArgs[formatArgs.length - 1]);
+                                return dateTime.format(formatArgs[0]);
                             };
-                            ViewHelper.prototype.formatTime = function (params, propName, formatArgs) {
-                                var dateTime = Date.parse(params.data[propName]) + this.serverConfig.timeZoneOffset;
+                            ViewHelper.prototype.formatTime = function (params, propName, parserArgs, formatArgs) {
+                                if (parserArgs == null || parserArgs.length === 0)
+                                    parserArgs = [this.Static.PARSER_PATTERN_TIME];
+                                var dateTime = moment(params.data[propName], parserArgs[parserArgs.length - 1]);
+                                dateTime.add(this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
                                     formatArgs = [this.Static.FORMAT_PATTERN_TIME];
-                                return moment(dateTime).format(formatArgs[formatArgs.length - 1]);
+                                return dateTime.format(formatArgs[0]);
                             };
+                            ViewHelper.PARSER_PATTERN_DATE = 'YYYY-MM-DD';
+                            ViewHelper.PARSER_PATTERN_DATE_TIME = 'YYYY-MM-DD HH:mm:ss';
+                            ViewHelper.PARSER_PATTERN_TIME = 'HH:mm:ss';
                             ViewHelper.FORMAT_PATTERN_DATE = 'YYYY-MM-DD';
                             ViewHelper.FORMAT_PATTERN_DATE_TIME = 'YYYY-MM-DD HH:mm:ss';
                             ViewHelper.FORMAT_PATTERN_TIME = 'HH:mm:ss';

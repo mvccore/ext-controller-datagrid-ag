@@ -101,7 +101,7 @@ var MvcCore;
                             this.agColumnsConfigs = new Map();
                             var agColumn, serverColumnCfg, serverColumns = this.serverConfig.columns;
                             this.grid.SetSortHeaders(new Map());
-                            this.grid.SetFilterInputs(new Map());
+                            this.grid.SetFilterHeaders(new Map());
                             for (var columnUrlName in serverColumns) {
                                 serverColumnCfg = serverColumns[columnUrlName];
                                 if (serverColumnCfg.disabled === true)
@@ -203,7 +203,7 @@ var MvcCore;
                             column.filterParams = {
                                 grid: this.grid
                             };
-                            column.floatingFilterComponent = AgGrids.ColumnsManagers.FilterInput;
+                            column.floatingFilterComponent = AgGrids.ColumnsManagers.FilterHeader;
                             var filtering = this.grid.GetFiltering();
                             column.floatingFilterComponentParams = {
                                 suppressFilterButton: false,

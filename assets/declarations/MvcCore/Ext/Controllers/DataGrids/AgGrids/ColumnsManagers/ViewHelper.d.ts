@@ -1,6 +1,9 @@
 declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
     class ViewHelper {
         Static: typeof ViewHelper;
+        static readonly PARSER_PATTERN_DATE: string;
+        static readonly PARSER_PATTERN_DATE_TIME: string;
+        static readonly PARSER_PATTERN_TIME: string;
         static readonly FORMAT_PATTERN_DATE: string;
         static readonly FORMAT_PATTERN_DATE_TIME: string;
         static readonly FORMAT_PATTERN_TIME: string;
@@ -18,11 +21,11 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         protected getIntFormater(formatterKey: string, formatArgs: string[]): Intl.NumberFormat;
         protected getFloatFormater(formatterKey: string, formatArgs: string[]): Intl.NumberFormat;
         protected getMoneyFormater(formatterKey: string, formatArgs: string[]): Intl.NumberFormat;
-        protected formatInt(params: agGrid.ValueFormatterParams<any, any>, propName: string, formatArgs: string[]): string;
-        protected formatFloat(params: agGrid.ValueFormatterParams<any, any>, propName: string, formatArgs: string[]): string;
-        protected formatMoney(params: agGrid.ValueFormatterParams<any, any>, propName: string, formatArgs: string[]): string;
-        protected formatDate(params: agGrid.ValueFormatterParams<any, any>, propName: string, formatArgs: string[]): string;
-        protected formatDateTime(params: agGrid.ValueFormatterParams<any, any>, propName: string, formatArgs: string[]): string;
-        protected formatTime(params: agGrid.ValueFormatterParams<any, any>, propName: string, formatArgs: string[]): string;
+        protected formatInt(params: agGrid.ValueFormatterParams<any, any>, propName: string, parserArgs: string[], formatArgs: string[]): string;
+        protected formatFloat(params: agGrid.ValueFormatterParams<any, any>, propName: string, parserArgs: string[], formatArgs: string[]): string;
+        protected formatMoney(params: agGrid.ValueFormatterParams<any, any>, propName: string, parserArgs: string[], formatArgs: string[]): string;
+        protected formatDate(params: agGrid.ValueFormatterParams<any, any>, propName: string, parserArgs: string[], formatArgs: string[]): string;
+        protected formatDateTime(params: agGrid.ValueFormatterParams<any, any>, propName: string, parserArgs: string[], formatArgs: string[]): string;
+        protected formatTime(params: agGrid.ValueFormatterParams<any, any>, propName: string, parserArgs: string[], formatArgs: string[]): string;
     }
 }

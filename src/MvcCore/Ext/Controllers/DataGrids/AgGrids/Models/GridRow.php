@@ -44,14 +44,14 @@ trait GridRow {
 			if (!isset(static::$activeColumns[$dbKey])) 
 				continue;
 			list(
-				$propIsPrivate, $propAllowNulls, $propTypes, $propertyName, $propFormatArgs
+				$propIsPrivate, $propAllowNulls, $propTypes, $propertyName, $propParserArgs/*, $propFormatArgs*/
 			) = static::$activeColumns[$dbKey];
 			if ($dbValue === NULL) {
 				if (!$propAllowNulls) continue;
 				$value = NULL;
 			} else {
 				$value = static::parseToTypes(
-					$dbValue, $propTypes, $propFormatArgs
+					$dbValue, $propTypes, $propParserArgs
 				);
 			}
 			if ($propIsPrivate) {
@@ -78,7 +78,7 @@ trait GridRow {
 		$nonGridProps = static::GetJsonNonGridProps();
 		foreach (static::$activeColumns as $activeColumn) {
 			list(
-				$propIsPrivate, /*$propAllowNulls*/, /*$propTypes*/, $propertyName, /*$propFormatArgs*/
+				$propIsPrivate, /*$propAllowNulls*/, /*$propTypes*/, $propertyName, /*$propParserArgs, $propFormatArgs*/
 			) = $activeColumn;
 			if (isset($nonGridProps[$propertyName]))
 				continue;

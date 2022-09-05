@@ -24,8 +24,8 @@
 	}],
 	"require": {
 		"php": ">=5.4.0",
-		"mvccore/mvccore": "^5.1.34",
-		"mvccore/ext-controller-datagrid": "^5.1.14",
+		"mvccore/mvccore": "^5.1.37",
+		"mvccore/ext-controller-datagrid": "^5.1.18",
 		"mvccore/ext-tool-locale": "^5.0.2"
 	},
 	"suggest": {

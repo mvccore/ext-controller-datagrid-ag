@@ -44,7 +44,8 @@ trait GridModel {
 				$propAllowNulls, 
 				$configColumn->GetTypes(), 
 				$propertyName, 
-				$configColumn->GetFormat()
+				$configColumn->GetParserArgs(), 
+				$configColumn->GetFormatArgs()
 			];
 		};
 		$rowClassFullName::SetActiveColumns($activeColumnsMap);

@@ -28,9 +28,6 @@ trait InitMethods {
 	 */
 	public function __construct ($controller = NULL, $childControllerIndex = NULL) {
 		/** @var \MvcCore\Controller $controller */
-		static::$gridActions = array_merge(static::$gridActions, [
-			static::GRID_ACTION_DATA	=> 'ActionData',
-		]);
 		if (is_string($this->countScales)) 
 			$this->countScales = array_map('intval', explode(',', (string) $this->countScales));
 		if ($controller === NULL) {

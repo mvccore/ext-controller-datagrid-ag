@@ -6,6 +6,7 @@ var agGridLocales = {
         notStartsWith: 'Not starts with',
 		notEndsWith: 'Not ends with',
 		addOr: '+ or',
+		displayColumns: 'Display columns:',
 
 		// Set Filter
 		selectAll: '(Select All)',

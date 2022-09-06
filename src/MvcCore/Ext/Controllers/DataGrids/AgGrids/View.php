@@ -98,6 +98,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManagers/FilterMenus/Date.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManagers/FilterMenus/Time.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsManagers/FilterOperatorsCfg.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/ColumnsMenu.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/Options.js",
 
 				$mvcCoreAgGridAssetsDir . "AgGrids/Helpers.js",
@@ -171,6 +172,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 					$gridAssetsDir . "/custom-styles/sort-header.css",
 					$gridAssetsDir . "/custom-styles/filter-header.css",
 					$gridAssetsDir . "/custom-styles/filter-menu.css",
+					$gridAssetsDir . "/custom-styles/columns-menu.css",
 					$gridAssetsDir . "/custom-styles/{$agGridCustomStyle}.css",
 				],
 			],

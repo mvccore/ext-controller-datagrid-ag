@@ -21,12 +21,14 @@ trait InternalProps {
 	/**
 	 * If `TRUE`, client row model is configured to single page 
 	 * continuous ajax loading and request is targeted to data action.
+	 * @internal
 	 * @var bool
 	 */
 	protected $ajaxDataRequest = FALSE;
 
 	/**
 	 * If `TRUE`, count scales has been customized from defaults.
+	 * @internal
 	 * @var bool
 	 */
 	protected $countScalesCustomized = FALSE;

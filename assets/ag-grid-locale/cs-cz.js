@@ -6,6 +6,7 @@ var agGridLocales = {
         notStartsWith: 'Nezačíná na',
 		notEndsWith: 'Nekončí na',
 		addOr: '+ nebo',
+		displayColumns: 'Zobrazit sloupce:',
 
         // Set Filter
         selectAll: '(Vybrat vše)',

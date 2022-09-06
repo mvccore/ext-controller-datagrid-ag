@@ -1,0 +1,77 @@
+.columns-menu{
+	position:absolute;
+	z-index:10;
+    top:1px;
+    right:1px;
+	font-size:90%;
+}
+
+.columns-menu a.columns-menu-btn-open{
+	position:relative;
+	z-index:11;
+    display:block;
+    width:17px;
+    height:50px;
+    text-align:center;
+    line-height:50px;
+    text-decoration:none;
+}
+
+.columns-menu a.columns-menu-btn-open:after,
+.columns-menu a.columns-menu-btn-open::after{
+    content:'\2699';
+    font-weight:bold;
+    color:#000;
+    text-decoration:none;
+}
+
+.columns-menu form.columns-menu-form {
+	position:absolute;
+	z-index:12;
+	border-style:solid ;
+	border-width:1px;
+    border-color:darkgrey;
+    border-color:var(--ag-border-color, darkgrey);
+    background:#fff;
+    background:var(--ag-background-color, #fff);
+    border-radius:1px;
+	top:25px;
+    right:8px;
+	padding:10px;
+	width:auto;
+	height:auto;
+	box-shadow:5px 5px 10px rgb(0 0 0 / 30%);
+}
+form.columns-menu-form .columns-menu-heading {
+	white-space:nowrap;
+}
+form.columns-menu-form .columns-menu-controls {
+	overflow-y:auto;
+}
+.columns-menu-controls label.columns-menu-control {
+	display:flex;
+	flex-direction:row;
+	flex-wrap:nowrap;
+	align-items:flex-start;
+	gap:5px;
+}
+.columns-menu-controls label.columns-menu-control span {
+	display:block;
+	text-align:left;
+	white-space:nowrap;
+}
+.columns-menu-controls label.columns-menu-control input {
+
+}
+form.columns-menu-form .columns-menu-buttons {
+	display:flex;
+	flex-direction:row;
+	flex-wrap:nowrap;
+	gap:8px;
+}
+.columns-menu-buttons button.columns-menu-btn-apply {
+
+}
+.columns-menu-buttons button.columns-menu-btn-cancel {
+
+}

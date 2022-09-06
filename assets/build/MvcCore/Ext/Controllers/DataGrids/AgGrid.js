@@ -26,7 +26,8 @@ var MvcCore;
                             _this
                                 .initAgOptions()
                                 .initGrid()
-                                .initDataSource();
+                                .initDataSource()
+                                .initColumnsMenu();
                         });
                     }
                     AgGrid.prototype.SetHelpers = function (helpers) {
@@ -162,6 +163,13 @@ var MvcCore;
                     AgGrid.prototype.GetFilterMenus = function () {
                         return this.filterMenus;
                     };
+                    AgGrid.prototype.SetColumnsMenus = function (columnsMenu) {
+                        this.columnsMenu = columnsMenu;
+                        return this;
+                    };
+                    AgGrid.prototype.GetColumnsMenus = function () {
+                        return this.columnsMenu;
+                    };
                     AgGrid.prototype.initSubClasses = function () {
                         this.helpers = new DataGrids.AgGrids.Helpers(this);
                         this.options = new DataGrids.AgGrids.Options(this);
@@ -225,6 +233,10 @@ var MvcCore;
                         else if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
                             this.dataSource = new DataGrids.AgGrids.DataSources.MultiplePagesMode(this);
                         }
+                        return this;
+                    };
+                    AgGrid.prototype.initColumnsMenu = function () {
+                        this.columnsMenu = new DataGrids.AgGrids.ColumnsMenu(this);
                         return this;
                     };
                     return AgGrid;

@@ -19,6 +19,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         protected offset: number;
         protected gridPath: string;
         protected pageMode: AgGrids.Enums.ClientPageMode;
+        protected columnsMenu: AgGrids.ColumnsMenu;
         constructor(serverConfig: AgGrids.Interfaces.IServerConfig, initialData: AgGrids.Interfaces.IServerResponse);
         SetHelpers(helpers: AgGrids.Helpers): this;
         GetHelpers(): AgGrids.Helpers;
@@ -58,6 +59,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         GetFilterHeaders(): Map<string, AgGrids.ColumnsManagers.FilterHeader>;
         SetFilterMenus(filterMenus: Map<string, AgGrids.ColumnsManagers.FilterMenu>): this;
         GetFilterMenus(): Map<string, AgGrids.ColumnsManagers.FilterMenu>;
+        SetColumnsMenus(columnsMenu: AgGrids.ColumnsMenu): this;
+        GetColumnsMenus(): AgGrids.ColumnsMenu;
         protected initSubClasses(): this;
         protected initPageModeSpecifics(): this;
         protected initServerConfig(serverConfig: AgGrids.Interfaces.IServerConfig): this;
@@ -66,5 +69,6 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         protected initAgOptions(): this;
         protected initGrid(): this;
         protected initDataSource(): this;
+        protected initColumnsMenu(): this;
     }
 }

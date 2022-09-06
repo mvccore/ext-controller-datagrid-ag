@@ -17,12 +17,24 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
  */
 interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
-
+	
 	/**
 	 * Grid action name for ajax data.
 	 * @var string
 	 */
-	const GRID_ACTION_DATA					= 'data';
+	const GRID_ACTION_DATA				= 'data';
+	
+	/**
+	 * Default grid action name.
+	 * @var string
+	 */
+	const GRID_ACTION_COLUMNS_STATES	= 'ActionColumnsStates';
+
+	/**
+	 * Default grid action name.
+	 * @var string
+	 */
+	const GRID_ACTION_COLUMNS_WIDTHS	= 'ActionColumnsWidths';
 
 
 	/**

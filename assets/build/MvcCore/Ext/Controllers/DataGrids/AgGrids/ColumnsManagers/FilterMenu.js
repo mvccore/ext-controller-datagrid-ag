@@ -353,11 +353,11 @@ var MvcCore;
                             FilterMenu.prototype.createSectionElementBtnNextValue = function (section, index, filteringItemsCount) {
                                 var sels = this.Static.SELECTORS, btnNextValue = section.appendChild(this.initElementButton(this.translator.Translate('addOr'), sels.BTN_ADD_CLS));
                                 var hiddenBtnClass = [sels.BTN_ADD_CLS, sels.BTN_ADD_HIDDEN_CLS].join(' ');
-                                ;
                                 if (index + 1 < filteringItemsCount) {
                                     btnNextValue.className = hiddenBtnClass;
                                 }
-                                else if (filteringItemsCount === 1 && !((this.params.controlTypes & AgGrids.Enums.FilterControlType.IS_NULL) != 0 ||
+                                else if (filteringItemsCount === 1 &&
+                                    this.serverType === AgGrids.Enums.ServerType.BOOL && !((this.params.controlTypes & AgGrids.Enums.FilterControlType.IS_NULL) != 0 ||
                                     (this.params.controlTypes & AgGrids.Enums.FilterControlType.IS_NOT_NULL) != 0)) {
                                     btnNextValue.className = hiddenBtnClass;
                                 }

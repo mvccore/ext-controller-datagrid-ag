@@ -155,6 +155,13 @@ var MvcCore;
                     AgGrid.prototype.GetFilterHeaders = function () {
                         return this.filterHeaders;
                     };
+                    AgGrid.prototype.SetFilterMenus = function (filterMenus) {
+                        this.filterMenus = filterMenus;
+                        return this;
+                    };
+                    AgGrid.prototype.GetFilterMenus = function () {
+                        return this.filterMenus;
+                    };
                     AgGrid.prototype.initSubClasses = function () {
                         this.helpers = new DataGrids.AgGrids.Helpers(this);
                         this.options = new DataGrids.AgGrids.Options(this);

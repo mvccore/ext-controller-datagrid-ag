@@ -16,11 +16,13 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         protected formattersInt: Map<string, Intl.NumberFormat>;
         protected formattersFloat: Map<string, Intl.NumberFormat>;
         protected formattersMoney: Map<string, Intl.NumberFormat>;
+        protected translator: Translator;
         constructor(grid: AgGrid);
         SetUpColumnCfg(agColumnCfg: agGrid.ColDef, serverColumnCfg: AgGrids.Interfaces.IServerConfigs.IColumn): this;
         protected getIntFormater(formatterKey: string, formatArgs: string[]): Intl.NumberFormat;
         protected getFloatFormater(formatterKey: string, formatArgs: string[]): Intl.NumberFormat;
         protected getMoneyFormater(formatterKey: string, formatArgs: string[]): Intl.NumberFormat;
+        protected formatBool(params: agGrid.ValueFormatterParams<any, any>, propName: string, parserArgs: string[], formatArgs: string[]): string;
         protected formatInt(params: agGrid.ValueFormatterParams<any, any>, propName: string, parserArgs: string[], formatArgs: string[]): string;
         protected formatFloat(params: agGrid.ValueFormatterParams<any, any>, propName: string, parserArgs: string[], formatArgs: string[]): string;
         protected formatMoney(params: agGrid.ValueFormatterParams<any, any>, propName: string, parserArgs: string[], formatArgs: string[]): string;

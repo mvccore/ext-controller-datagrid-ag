@@ -92,10 +92,15 @@ var MvcCore;
                                 }
                                 return this;
                             };
-                            MultiplePagesMode.prototype.handleResponse = function (reqData, changeUrl, cacheKey, cached, response) {
-                                if (!cached) {
-                                    response = this.Static.RetypeRawServerResponse(response);
+                            MultiplePagesMode.prototype.handleResponse = function (reqData, changeUrl, cacheKey, cached, rawResponse) {
+                                var response;
+                                if (cached) {
+                                    response = rawResponse;
+                                }
+                                else {
+                                    response = this.Static.RetypeRawServerResponse(rawResponse);
                                     this.cache.Add(cacheKey, response);
+                                    this.grid.GetEvents().HandleResponseLoaded(response);
                                 }
                                 var agGridApi = this.options.GetAgOptions().api;
                                 agGridApi.setRowData(response.data);

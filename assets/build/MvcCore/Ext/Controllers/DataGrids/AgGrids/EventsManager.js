@@ -90,7 +90,23 @@ var MvcCore;
                         EventsManager.prototype.HandleColumnMoved = function (event) {
                             //console.log(event);
                         };
-                        EventsManager.prototype.HandleInputFilterChange = function (columnId, rawInputValue) {
+                        EventsManager.prototype.HandleFilterMenuChange = function (columnId, filteringItem) {
+                            var filtering = this.grid.GetFiltering(), filterRemoving = filteringItem == null || filteringItem.size === 0, filterHeader = this.grid.GetFilterHeaders().get(columnId), filterMenu = this.grid.GetFilterMenus().get(columnId);
+                            if (filterRemoving) {
+                                filtering.delete(columnId);
+                                filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(null);
+                                filterMenu === null || filterMenu === void 0 ? void 0 : filterMenu.SetUpControls(null);
+                            }
+                            else {
+                                if (!this.multiFiltering)
+                                    filtering = new Map();
+                                filtering.set(columnId, filteringItem);
+                                filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(filtering.get(columnId));
+                                filterMenu === null || filterMenu === void 0 ? void 0 : filterMenu.SetUpControls(filteringItem);
+                            }
+                            this.firefiltering(filtering);
+                        };
+                        EventsManager.prototype.HandleFilterHeaderChange = function (columnId, rawInputValue) {
                             var e_3, _a, _b;
                             var rawInputIsNull = rawInputValue == null, rawInputValue = rawInputIsNull ? '' : rawInputValue.trim(), filterRemoving = rawInputValue === '', serverConfig = this.grid.GetServerConfig(), valuesDelimiter = serverConfig.urlSegments.urlDelimiterValues, rawValues = filterRemoving ? [] : rawInputValue.split(valuesDelimiter), serverColumnCfg = serverConfig.columns[columnId], columnFilterCfg = serverColumnCfg.filter, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = columnFilterCfg === columnFilterCfgInt, allowedOperators = (columnFilterCfgIsInt && this.columnsAllowedOperators.has(columnId)
                                 ? this.columnsAllowedOperators.get(columnId)
@@ -148,14 +164,20 @@ var MvcCore;
                                     filtering.set(columnId, filterValues);
                                 }
                             }
-                            var filterHeader = this.grid.GetFilterHeaders().get(columnId);
+                            var filterHeader = this.grid.GetFilterHeaders().get(columnId), filterMenu = this.grid.GetFilterMenus().get(columnId), filteringItem;
                             if (filterRemoving) {
                                 filtering.delete(columnId);
-                                filterHeader.SetText(null);
+                                filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(null);
+                                filterMenu === null || filterMenu === void 0 ? void 0 : filterMenu.SetUpControls(null);
                             }
                             else {
-                                filterHeader.SetText(filtering.get(columnId));
+                                filteringItem = filtering.get(columnId);
+                                filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(filteringItem);
+                                filterMenu === null || filterMenu === void 0 ? void 0 : filterMenu.SetUpControls(filteringItem);
                             }
+                            this.firefiltering(filtering);
+                        };
+                        EventsManager.prototype.firefiltering = function (filtering) {
                             this.grid
                                 .SetFiltering(filtering)
                                 .SetTotalCount(null);
@@ -168,6 +190,7 @@ var MvcCore;
                                 var dataSourceMp = this.grid.GetDataSource();
                                 dataSourceMp.Load();
                             }
+                            return this;
                         };
                         EventsManager.prototype.HandleSortChange = function (columnId, direction) {
                             var e_4, _a;
@@ -270,14 +293,22 @@ var MvcCore;
                             this.handleUrlChangeSortsFilters(reqData);
                             dataSource.ExecRequest(reqDataRaw, false);
                         };
-                        EventsManager.prototype.handleUrlChangeSortsFilters = function (reqData) {
+                        EventsManager.prototype.HandleResponseLoaded = function (response) {
                             var e_5, _a, e_6, _b, e_7, _c;
-                            // set up sort headers:
-                            var sortHeaders = this.grid.GetSortHeaders(), activeSortItems = new Map(), sequence = 0;
+                            this.grid
+                                .SetOffset(response.offset)
+                                .SetTotalCount(response.totalCount)
+                                .SetSorting(response.sorting)
+                                .SetFiltering(response.filtering);
                             try {
-                                for (var _d = __values(reqData.sorting), _e = _d.next(); !_e.done; _e = _d.next()) {
-                                    var _f = __read(_e.value, 2), columnId = _f[0], sortDir = _f[1];
-                                    activeSortItems.set(columnId, [sortDir, sequence++]);
+                                for (var _d = __values(this.grid.GetFilterHeaders().entries()), _e = _d.next(); !_e.done; _e = _d.next()) {
+                                    var _f = __read(_e.value, 2), columnId = _f[0], filterHeader = _f[1];
+                                    if (response.filtering.has(columnId)) {
+                                        filterHeader.SetText(response.filtering.get(columnId));
+                                    }
+                                    else {
+                                        filterHeader.SetText(null);
+                                    }
                                 }
                             }
                             catch (e_5_1) { e_5 = { error: e_5_1 }; }
@@ -286,6 +317,61 @@ var MvcCore;
                                     if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
                                 }
                                 finally { if (e_5) throw e_5.error; }
+                            }
+                            try {
+                                for (var _g = __values(this.grid.GetFilterMenus().entries()), _h = _g.next(); !_h.done; _h = _g.next()) {
+                                    var _j = __read(_h.value, 2), columnId = _j[0], filterMenu = _j[1];
+                                    if (response.filtering.has(columnId)) {
+                                        filterMenu.SetUpControls(response.filtering.get(columnId));
+                                    }
+                                    else {
+                                        filterMenu.SetUpControls(null);
+                                    }
+                                }
+                            }
+                            catch (e_6_1) { e_6 = { error: e_6_1 }; }
+                            finally {
+                                try {
+                                    if (_h && !_h.done && (_b = _g.return)) _b.call(_g);
+                                }
+                                finally { if (e_6) throw e_6.error; }
+                            }
+                            var sortHeaders = this.grid.GetSortHeaders(), index = 0;
+                            try {
+                                for (var _k = __values(response.sorting), _l = _k.next(); !_l.done; _l = _k.next()) {
+                                    var _m = __read(_l.value, 2), columnId = _m[0], sortDir = _m[1];
+                                    if (sortHeaders.has(columnId)) {
+                                        sortHeaders.get(columnId)
+                                            .SetSequence(index)
+                                            .SetDirection(sortDir);
+                                    }
+                                    index++;
+                                }
+                            }
+                            catch (e_7_1) { e_7 = { error: e_7_1 }; }
+                            finally {
+                                try {
+                                    if (_l && !_l.done && (_c = _k.return)) _c.call(_k);
+                                }
+                                finally { if (e_7) throw e_7.error; }
+                            }
+                        };
+                        EventsManager.prototype.handleUrlChangeSortsFilters = function (reqData) {
+                            var e_8, _a, e_9, _b, e_10, _c;
+                            // set up sort headers:
+                            var sortHeaders = this.grid.GetSortHeaders(), activeSortItems = new Map(), sequence = 0;
+                            try {
+                                for (var _d = __values(reqData.sorting), _e = _d.next(); !_e.done; _e = _d.next()) {
+                                    var _f = __read(_e.value, 2), columnId = _f[0], sortDir = _f[1];
+                                    activeSortItems.set(columnId, [sortDir, sequence++]);
+                                }
+                            }
+                            catch (e_8_1) { e_8 = { error: e_8_1 }; }
+                            finally {
+                                try {
+                                    if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
+                                }
+                                finally { if (e_8) throw e_8.error; }
                             }
                             try {
                                 for (var _g = __values(sortHeaders.entries()), _h = _g.next(); !_h.done; _h = _g.next()) {
@@ -299,12 +385,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_6_1) { e_6 = { error: e_6_1 }; }
+                            catch (e_9_1) { e_9 = { error: e_9_1 }; }
                             finally {
                                 try {
                                     if (_h && !_h.done && (_b = _g.return)) _b.call(_g);
                                 }
-                                finally { if (e_6) throw e_6.error; }
+                                finally { if (e_9) throw e_9.error; }
                             }
                             // set up filtering inputs:
                             var filterInputs = this.grid.GetFilterHeaders();
@@ -312,19 +398,19 @@ var MvcCore;
                                 for (var _l = __values(filterInputs.entries()), _m = _l.next(); !_m.done; _m = _l.next()) {
                                     var _o = __read(_m.value, 2), columnId = _o[0], filterInput = _o[1];
                                     if (reqData.filtering.has(columnId)) {
-                                        filterInput.SetText(reqData.filtering.get(columnId));
+                                        filterInput === null || filterInput === void 0 ? void 0 : filterInput.SetText(reqData.filtering.get(columnId));
                                     }
                                     else {
-                                        filterInput.SetText(null);
+                                        filterInput === null || filterInput === void 0 ? void 0 : filterInput.SetText(null);
                                     }
                                 }
                             }
-                            catch (e_7_1) { e_7 = { error: e_7_1 }; }
+                            catch (e_10_1) { e_10 = { error: e_10_1 }; }
                             finally {
                                 try {
                                     if (_m && !_m.done && (_c = _l.return)) _c.call(_l);
                                 }
-                                finally { if (e_7) throw e_7.error; }
+                                finally { if (e_10) throw e_10.error; }
                             }
                             return this;
                         };
@@ -344,7 +430,7 @@ var MvcCore;
                             return operatorsAndPrefixes;
                         };
                         EventsManager.prototype.getOperatorByRawValue = function (rawValue, operatorsAndPrefixes, columnFilterCfg) {
-                            var e_8, _a;
+                            var e_11, _a;
                             var operator = null, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = columnFilterCfg === columnFilterCfgInt, columnFilterCfgIsBool = !columnFilterCfgIsInt;
                             try {
                                 for (var _b = __values(operatorsAndPrefixes.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
@@ -372,12 +458,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_8_1) { e_8 = { error: e_8_1 }; }
+                            catch (e_11_1) { e_11 = { error: e_11_1 }; }
                             finally {
                                 try {
                                     if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                                 }
-                                finally { if (e_8) throw e_8.error; }
+                                finally { if (e_11) throw e_11.error; }
                             }
                             return [rawValue, operator];
                         };

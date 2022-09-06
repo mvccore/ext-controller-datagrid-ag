@@ -15,6 +15,7 @@ var MvcCore;
                                 var _newTarget = this.constructor;
                                 this.Static = _newTarget;
                                 this.grid = grid;
+                                this.translator = grid.GetTranslator();
                                 this.serverConfig = grid.GetServerConfig();
                                 this.localeNumeric = this.serverConfig.locales.localeNumeric.join(AgGrids.Options.SYSTEM_LOCALE_SEPARATOR);
                                 this.localeMoney = this.serverConfig.locales.localeMoney.join(AgGrids.Options.SYSTEM_LOCALE_SEPARATOR);
@@ -40,6 +41,7 @@ var MvcCore;
                                         })]
                                 ]);
                                 this.Static.defaults = new Map([
+                                    [AgGrids.Enums.ServerType.BOOL, this.formatBool],
                                     [AgGrids.Enums.ServerType.INT, this.formatInt],
                                     [AgGrids.Enums.ServerType.FLOAT, this.formatFloat],
                                     [AgGrids.Enums.ServerType.MONEY, this.formatMoney],
@@ -124,6 +126,9 @@ var MvcCore;
                                     maximumFractionDigits: maximumFractionDigits
                                 }));
                                 return this.formattersMoney.get(formatterKey);
+                            };
+                            ViewHelper.prototype.formatBool = function (params, propName, parserArgs, formatArgs) {
+                                return this.translator.Translate(params.data[propName] ? 'yes' : 'no');
                             };
                             ViewHelper.prototype.formatInt = function (params, propName, parserArgs, formatArgs) {
                                 var formatterKey = formatArgs == null ? 'default' : formatArgs.join('|');

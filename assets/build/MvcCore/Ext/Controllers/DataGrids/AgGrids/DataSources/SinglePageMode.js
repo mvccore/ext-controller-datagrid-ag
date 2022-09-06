@@ -148,14 +148,15 @@ var MvcCore;
                                     method: reqMethod,
                                     data: Object.assign({}, reqData),
                                     type: reqType,
-                                    success: function (response) {
+                                    success: function (rawResponse) {
                                         agGridApi.hideOverlay();
+                                        var response = _this.Static.RetypeRawServerResponse(rawResponse);
+                                        _this.grid.GetEvents().HandleResponseLoaded(response);
                                         var cacheKey = _this.cache.Key(reqData);
                                         if (_this.changeUrlSwitches.has(cacheKey) && _this.changeUrlSwitches.get(cacheKey)) {
                                             _this.changeUrlSwitches.delete(cacheKey);
                                         }
                                         else {
-                                            console.log("pushState ajax", reqData);
                                             history.pushState(reqData, document.title, response.url);
                                         }
                                         params.successCallback(response.data, response.totalCount);

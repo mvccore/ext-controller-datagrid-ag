@@ -120,8 +120,13 @@ var MvcCore;
                             FilterHeader.prototype.initEvents = function () {
                                 this.handlers = {};
                                 var input = this.elms.input, remove = this.elms.remove;
-                                input.addEventListener('keyup', this.handlers.handleSubmit = this.handleSubmit.bind(this));
-                                input.addEventListener('blur', this.handlers.handleBlur = this.handleBlur.bind(this));
+                                if (this.params.submitDelayMs > 0) {
+                                    input.addEventListener('change', this.handlers.handleChange = this.handleChange.bind(this));
+                                }
+                                else {
+                                    input.addEventListener('keyup', this.handlers.handleSubmit = this.handleSubmit.bind(this));
+                                    input.addEventListener('blur', this.handlers.handleBlur = this.handleBlur.bind(this));
+                                }
                                 remove.addEventListener('click', this.handlers.handleRemove = this.handleRemove.bind(this), true);
                                 return this;
                             };
@@ -130,9 +135,8 @@ var MvcCore;
                                 e.preventDefault();
                                 e.cancelBubble = true;
                                 var value = this.elms.input.value;
-                                debugger;
                                 if (e.key === 'Enter') {
-                                    this.grid.GetEvents().HandleInputFilterChange(this.columnId, value);
+                                    this.grid.GetEvents().HandleFilterHeaderChange(this.columnId, value);
                                 }
                                 else {
                                     if (value == null || (value.trim() === '')) {
@@ -147,7 +151,6 @@ var MvcCore;
                                 e.stopPropagation();
                                 e.preventDefault();
                                 e.cancelBubble = true;
-                                debugger;
                                 var value = this.elms.input.value.trim();
                                 if (value === '' || value == null) {
                                     var filtering = this.grid.GetFiltering();
@@ -158,13 +161,27 @@ var MvcCore;
                             FilterHeader.prototype.handleRemove = function (e) {
                                 e.stopPropagation();
                                 e.preventDefault();
-                                debugger;
                                 e.cancelBubble = true;
                                 this.elms.input.value = '';
-                                this.grid.GetEvents().HandleInputFilterChange(this.columnId, null);
+                                this.grid.GetEvents().HandleFilterHeaderChange(this.columnId, null);
+                            };
+                            FilterHeader.prototype.handleChange = function (e) {
+                                var _this = this;
+                                e.stopPropagation();
+                                e.preventDefault();
+                                e.cancelBubble = true;
+                                if (this.handlers.changeDelayTimeout)
+                                    clearTimeout(this.handlers.changeDelayTimeout);
+                                setTimeout(function () {
+                                    _this.grid.GetEvents().HandleFilterHeaderChange(_this.columnId, _this.elms.input.value.trim());
+                                }, this.params.submitDelayMs);
                             };
                             FilterHeader.prototype.destroy = function () {
                                 var input = this.elms.input, cont = this.elms.cont;
+                                if (this.handlers.changeDelayTimeout)
+                                    clearTimeout(this.handlers.changeDelayTimeout);
+                                if (this.handlers.handleChange)
+                                    this.elms.remove.removeEventListener('click', this.handlers.handleChange);
                                 if (this.handlers.handleSubmit)
                                     input.removeEventListener('keyup', this.handlers.handleSubmit);
                                 if (this.handlers.handleBlur)
@@ -200,41 +217,7 @@ var MvcCore;
                                 }
                                 return this;
                             };
-                            /*protected _tmp (): void {
-                    
-                                this.eGui = document.createElement('div');
-                                this.eGui.innerHTML = '<input type="text" />';
-                                this.currentValue = null;
-                                this.eFilterInput = this.eGui.querySelector('input');
-                                
-                                const onInputBoxChanged = () => {
-                                    if (this.eFilterInput.value === '') {
-                                        // clear the filter
-                                        params.parentFilterInstance(instance => {
-                                            instance.onFloatingFilterChanged(null, null);
-                                        });
-                                        return;
-                                    }
-                         
-                                    this.currentValue = Number(this.eFilterInput.value);
-                                    params.parentFilterInstance(instance => {
-                                        // TODO: tohle tady nebude, prostě se pošle to co tam je do gridu a provede se AJAX request
-                                        instance.onFloatingFilterChanged('greaterThan', this.currentValue);
-                                    });
-                                }
-                         
-                                this.eFilterInput.addEventListener('input', onInputBoxChanged);
-                            }*/
                             FilterHeader.prototype.onParentModelChanged = function (parentModel, event) {
-                                debugger;
-                                // When the filter is empty we will receive a null message her
-                                /*if (!parentModel) {
-                                    this.eFilterInput.value = '';
-                                    this.currentValue = null;
-                                } else {
-                                    this.eFilterInput.value = parentModel.filter + '';
-                                    this.currentValue = parentModel.filter;
-                                }*/
                             };
                             FilterHeader.SELECTORS = {
                                 CONT_CLS: 'filter-header',

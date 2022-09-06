@@ -13,6 +13,7 @@ var MvcCore;
                         var ServerType;
                         (function (ServerType) {
                             ServerType["STRING"] = "string";
+                            ServerType["BOOL"] = "bool";
                             ServerType["INT"] = "int";
                             ServerType["FLOAT"] = "float";
                             ServerType["MONEY"] = "money";

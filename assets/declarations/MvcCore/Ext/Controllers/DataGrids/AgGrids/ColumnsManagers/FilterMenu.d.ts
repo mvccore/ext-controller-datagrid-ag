@@ -1,40 +1,41 @@
 declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
     class FilterMenu implements agGrid.IFilterComp<any> {
-        eGui: HTMLDivElement;
-        rbAllYears: any;
-        rbSince2010: any;
-        filterActive: boolean;
-        filterChangedCallback: (additionalEventAttributes?: any) => void;
-        /**
-         * The init(params) method is called on the filter once. See below for details on the
-         * parameters.
-         */
-        init(params: agGrid.IFilterParams<any>): void;
-        protected onRbChanged(): void;
-        /** Returns the DOM element for this filter */
+        static readonly SELECTORS: {
+            CONT_CLS: string;
+            SECTIONS_CLS: string;
+            SECTION_CLS: string;
+            TYPE_CLS: string;
+            INPUT_CLS: string;
+            INPUT_HIDDEN_CLS: string;
+            BTN_ADD_CLS: string;
+            BTN_ADD_HIDDEN_CLS: string;
+            BTNS_CLS: string;
+            BTN_APPLY_CLS: string;
+            BTN_CLEAR_CLS: string;
+            BTN_CANCEL_CLS: string;
+        };
+        Static: typeof FilterMenu;
+        protected params: Interfaces.IFilterMenuParams<any>;
+        protected grid: AgGrid;
+        protected translator: Translator;
+        protected columnId: string;
+        protected serverColumnCfg: Interfaces.IServerConfigs.IColumn;
+        protected serverType: Enums.ServerType;
+        protected controlTypes: Enums.FilterControlType;
+        protected buttons: Enums.FilterButton;
+        protected elms: Interfaces.IFilterMenuElements;
+        protected filteringStr: string;
+        protected latestFiltering: Map<Enums.Operator, string[]> | null;
+        protected handlers: {
+            handleApply?: (e?: MouseEvent) => void;
+            handleClear?: (e: MouseEvent) => void;
+            handleCancel?: (e: MouseEvent) => void;
+        };
+        protected sectionHandlers: Interfaces.IFilterMenuSectionEvents[];
+        protected hideMenuCallback: () => void;
+        constructor();
+        init(agParams: Interfaces.IFilterMenuParams<any>): void;
         getGui(): HTMLElement;
-        /**
-         * Return true if the filter is active. If active then 1) the grid will show the filter icon in the column
-         * header and 2) the filter will be included in the filtering of the data.
-         */
-        isFilterActive(): boolean;
-        /**
-         * The grid will ask each active filter, in turn, whether each row in the grid passes. If any
-         * filter fails, then the row will be excluded from the final set. A params object is supplied
-         * containing attributes of node (the rowNode the grid creates that wraps the data) and data (the data
-         * object that you provided to the grid for that row).
-         */
-        doesFilterPass(params: agGrid.IDoesFilterPassParams): boolean;
-        /**
-         * Gets the filter state. If filter is not active, then should return null/undefined.
-         * The grid calls getModel() on all active filters when gridApi.getFilterModel() is called.
-         */
-        getModel(): void;
-        /**
-         * Restores the filter state. Called by the grid after gridApi.setFilterModel(model) is called.
-         * The grid will pass undefined/null to clear the filter.
-         */
-        setModel(): void;
         /**
          * Gets called every time the popup is shown, after the GUI returned in
          * getGui is attached to the DOM. If the filter popup is closed and re-opened, this method is
@@ -45,16 +46,6 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
          */
         afterGuiAttached(params?: agGrid.IAfterGuiAttachedParams): void;
         /**
-         * Gets called when new rows are inserted into the grid. If the filter needs to change its
-         * state after rows are loaded, it can do it here. For example the set filters uses this
-         * to update the list of available values to select from (e.g. 'Ireland', 'UK' etc for
-         * Country filter). To get the list of available values from within this method from the
-         * Client Side Row Model, use gridApi.forEachLeafNode(callback)
-         */
-        onNewRowsLoaded(): void;
-        /** Called whenever any filter is changed. */
-        onAnyFilterChanged(): void;
-        /**
          * Gets called when the column is destroyed. If your custom filter needs to do
          * any resource cleaning up, do it here. A filter is NOT destroyed when it is
          * made 'not visible', as the GUI is kept to be shown again if the user selects
@@ -62,14 +53,37 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
          * destroyed, either when new columns are set into the grid, or the grid itself is destroyed.
          */
         destroy(): void;
-        /**
-         * If floating filters are turned on for the grid, but you have no floating filter
-         * configured for this column, then the grid will check for this method. If this
-         * method exists, then the grid will provide a read-only floating filter for you
-         * and display the results of this method. For example, if your filter is a simple
-         * filter with one string input value, you could just return the simple string
-         * value here.
-         */
-        getModelAsString(model: any): string;
+        SetUpControls(filteringItem: Map<Enums.Operator, string[]> | null): this;
+        protected initParams(agParams: AgGrids.Interfaces.IFilterMenuParams<any>): this;
+        protected initElements(): this;
+        protected initElementButton(text: string, className: string): HTMLAnchorElement;
+        protected initEvents(): this;
+        protected handleApply(e?: MouseEvent): void;
+        protected handleClear(e: MouseEvent): void;
+        protected handleCancel(e: MouseEvent): void;
+        protected destroySections(): this;
+        protected destroySection(index: number, sectionElms: Interfaces.IFilterMenuSectionElements): this;
+        protected createSections(filteringItem: Map<Enums.Operator, string[]> | null): this;
+        protected createSectionElements(operator: Enums.Operator | null, value: string | null, index?: number, filteringItemsCount?: number): this;
+        protected changeValueInputType(index: number, currentControlType: Enums.FilterControlType): this;
+        protected createSectionElementTypeSelect(section: HTMLDivElement, operator: Enums.Operator | null, value: string | null): [HTMLSelectElement, Enums.FilterControlType];
+        protected createSectionElementValueInput(section: HTMLDivElement, operator: Enums.Operator | null, value: string | null, currentControlType: Enums.FilterControlType): HTMLInputElement;
+        protected createSectionElementBtnNextValue(section: HTMLDivElement, index: number, filteringItemsCount: number): HTMLAnchorElement;
+        protected setValueInput(valueInput: HTMLInputElement, value: string, currentControlType: Enums.FilterControlType): this;
+        protected getValueInput(valueInput: HTMLInputElement, currentControlType: Enums.FilterControlType): string;
+        protected isControlTypeForCompleteValue(currentControlType: Enums.FilterControlType): boolean;
+        protected initSectionEvents(index: number): this;
+        protected handleTypeChange(index: number, e: Event): void;
+        protected handleValueChange(index: number, e: Event): void;
+        protected handleValueKeyUp(index: number, e: KeyboardEvent): void;
+        protected handleAddNextValue(index: number, e: MouseEvent): void;
+        protected getFilteringFromControls(): Map<Enums.Operator, string[]>;
+        protected hide(): this;
+        protected getControlTypeByOperatorAndValue(operator: Enums.Operator | null, value: string | null, defaultResult: Enums.FilterControlType): Enums.FilterControlType;
+        protected stopEvent(e: Event): this;
+        isFilterActive(): boolean;
+        doesFilterPass(params: agGrid.IDoesFilterPassParams): boolean;
+        getModel(): void;
+        setModel(): void;
     }
 }

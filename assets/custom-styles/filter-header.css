@@ -14,8 +14,8 @@
     flex-wrap:nowrap;
     white-space:nowrap;
     padding-left:3px;
-    padding-right:3px;
-	width:calc(100% - 7px);
+    padding-right:20px;
+	width:calc(100% - 23px);
 	height:calc(100% - 2px);
 	background:#fff;
 	border-width:0;

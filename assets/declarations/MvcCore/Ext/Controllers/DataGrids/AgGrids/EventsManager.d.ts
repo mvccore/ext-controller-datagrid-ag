@@ -12,11 +12,14 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         constructor(grid: AgGrid);
         HandleColumnResized(event: agGrid.ColumnResizedEvent<any>): void;
         HandleColumnMoved(event: agGrid.ColumnMovedEvent<any>): void;
-        HandleInputFilterChange(columnId: string, rawInputValue: string): void;
+        HandleFilterMenuChange(columnId: string, filteringItem: Map<Enums.Operator, string[]> | null): void;
+        HandleFilterHeaderChange(columnId: string, rawInputValue: string): void;
+        firefiltering(filtering: Map<string, Map<Enums.Operator, string[]>>): this;
         HandleSortChange(columnId: string, direction: AgGrids.Types.SortDirNullable): void;
         HandleGridSizeChanged(event: agGrid.ViewportChangedEvent<any> | agGrid.GridSizeChangedEvent<any>): void;
         AddUrlChangeEvent(): this;
         HandleUrlChange(e: PopStateEvent): void;
+        HandleResponseLoaded(response: AgGrids.Interfaces.IServerResponse): void;
         protected handleUrlChangeSortsFilters(reqData: Interfaces.IServerRequest): this;
         protected getOperatorsAndPrefixesByRawValue(rawValue: string): Map<Enums.Operator, string>;
         protected getOperatorByRawValue(rawValue: string, operatorsAndPrefixes: Map<Enums.Operator, string>, columnFilterCfg: number | boolean): [string, Enums.Operator | null];

@@ -155,9 +155,10 @@ trait InitMethods {
 						$reqParams[$this->ajaxParamsNames[self::AJAX_PARAM_OFFSET]],
 						$reqParams[$this->ajaxParamsNames[self::AJAX_PARAM_LIMIT]],
 						$reqParams[$this->ajaxParamsNames[self::AJAX_PARAM_SORTING]],
-						$reqParams[$this->ajaxParamsNames[self::AJAX_PARAM_FILTERING]]
+						$reqParams[$this->ajaxParamsNames[self::AJAX_PARAM_FILTERING]],
+						$reqParams[$this->ajaxParamsNames[self::AJAX_PARAM_CACHE_BUSTER]]
 					);
-					if (($this->dataRequestMethod & static::AJAX_DATA_REQUEST_METHOD_POST) != 0)
+					if (($this->dataRequestMethod & static::AJAX_DATA_REQUEST_METHOD_JSONP) != 0)
 						unset($reqParams[$this->ajaxParamsNames[self::AJAX_PARAM_CALLBACK]]);
 					if (count($reqParams) > 0) {
 						static::sortRecursive($reqParams);
@@ -422,7 +423,9 @@ trait InitMethods {
 	 * @return bool
 	 */
 	protected function initFiltering () {
-		if ($this->ajaxDataRequest) {
+		if (!$this->ajaxDataRequest) {
+			return parent::initFiltering();
+		} else {
 			if (!$this->filteringMode) return TRUE;
 			$rawFilteringItemsStr = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_FILTERING], FALSE);
 			if ($rawFilteringItemsStr === NULL) return TRUE;
@@ -471,6 +474,8 @@ trait InitMethods {
 					foreach ($rawValues as $rawValue) {
 						$rawValue = $this->removeUnknownChars($rawValue);
 						if ($rawValue === NULL) continue;
+						$rawValue = ltrim($rawValue, '!<=>');
+						if ($rawValue === '') continue;
 						if ($useViewHelper) {
 							$rawValue = call_user_func_array(
 								[$viewHelper, 'Unformat'],
@@ -523,8 +528,6 @@ trait InitMethods {
 			// set up new initial filtering:
 			$this->filtering = $filtering;
 			return TRUE;
-		} else {
-			return parent::initFiltering();
 		}
 	}
 

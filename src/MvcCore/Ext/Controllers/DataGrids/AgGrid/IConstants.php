@@ -138,6 +138,12 @@ interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
 	 * @var string
 	 */
 	const AJAX_PARAM_CALLBACK				= 'callback';
+	
+	/**
+	 * Ajax param name key for cache buster.
+	 * @var string
+	 */
+	const AJAX_PARAM_CACHE_BUSTER			= '_';
 
 	
 	/**

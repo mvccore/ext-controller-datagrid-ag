@@ -1,5 +1,12 @@
 var agGridLocales = {
 	'en-US': {
+		// Custom texts:
+		yes: 'Yes',
+		no: 'No',
+        notStartsWith: 'Not starts with',
+		notEndsWith: 'Not ends with',
+		addOr: '+ or',
+
 		// Set Filter
 		selectAll: '(Select All)',
 		selectAllSearchResults: '(Select All Search Results)',
@@ -11,7 +18,7 @@ var agGridLocales = {
 		filterOoo: 'Filter...',
 		equals: 'Equals',
 		notEqual: 'Not equal',
-		blank: 'Blank',
+		blank: 'Is blank',
 		notBlank: 'Not blank',
 		empty: 'Choose One',
 

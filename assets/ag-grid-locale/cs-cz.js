@@ -1,5 +1,12 @@
 var agGridLocales = {
     'cs-CZ': {
+		// Custom texts:
+		yes: 'Ano',
+		no: 'Ne',
+        notStartsWith: 'Nezačíná na',
+		notEndsWith: 'Nekončí na',
+		addOr: '+ nebo',
+
         // Set Filter
         selectAll: '(Vybrat vše)',
         selectAllSearchResults: '(Vybrat vše ve výsledcích hledání)',
@@ -10,8 +17,8 @@ var agGridLocales = {
         filterOoo: 'Filtr...',
         equals: 'Je rovno',
         notEqual: 'Není rovno',
-        blank: 'Nemá hodnotu',
-        notBlank: 'Má hodnotu',
+        blank: 'Nemá žádnou hodnotu',
+        notBlank: 'Má nějakou hodnotu',
         empty: 'Vyberte jeden',
         // Number Filter
         lessThan: 'Menší než',

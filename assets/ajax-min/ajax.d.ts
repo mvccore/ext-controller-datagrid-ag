@@ -3,8 +3,8 @@
  * @author	Tom Flidr | tomflidr(at)gmail(dot)com
  * @url		https://github.com/tomFlidr/ajax.js
  * @licence	https://tomflidr.github.io/ajax.js/LICENCE.txt
- * @version	1.0.7
- * @date	2021-09-01
+ * @version	1.0.11
+ * @date	2022-09-06
  * @example
  *
  *    var xhr = Ajax.load(<Ajax.cfg.Load>{
@@ -15,6 +15,7 @@
  *       type: 'json', // json|jsonp|xml|html|text
  *       error: (responseText?: string, statusCode?: number, xhr?: XMLHttpRequest | null, errorObj?: Error | null, errorEvent?: Event | null, requestId?: number, url?: string, type?: string) => {},
  *       headers: {},
+ *       cache: false,
  *       async: true
  *    });
  *
@@ -49,6 +50,11 @@ declare interface Ajax {
 	 * @type	{string}
 	 */
 	jsonpCallbackParam: string;
+	/**
+	 * @summary	Cache buster param name, default `_`.
+	 * @type	{string}
+	 */
+	cacheBusterParamName: string;
 	/**
 	 * @summary	Add global custom callback before any Ajax request type is processed.
 	 * @param	{Function}	callback	Required, custom callback called before any Ajax request type. First param is null only for JSONP requests.
@@ -135,6 +141,7 @@ declare interface Ajax {
 	 * @param	{string}				[error.url]				Used request url.
 	 * @param	{string}				[error.type]			Used request type.
 	 * @param	{object}				[headers]				Optional, default: `{}`. Custom request HTTP headers to send in request.
+	 * @param	{boolean}				[cache]					Not required, default: false. Use `true` if you don't want to add `_` cache buster param into url.
 	 * @param	{boolean}				[async]					Optional, default: `true`. Use old synchronized request only if you realy know what you are doing.
 	 * @return	{XMLHttpRequest|JsonpRequest}					Build in browser request object or JsonpRequest if JSONP request.
 	 */
@@ -145,6 +152,7 @@ declare interface Ajax {
 		type?: 'json' | 'jsonp' | 'xml' | 'html' | 'text',
 		error?: (responseText?: string, statusCode?: number, xhr?: XMLHttpRequest | null, errorObj?: Error | null, errorEvent?: Event | null, requestId?: number, url?: string, type?: string) => void,
 		headers?: object,
+		cache?: boolean,
 		async?: boolean
 	): XMLHttpRequest | Ajax.JsonpRequest;
 	/**
@@ -169,6 +177,7 @@ declare interface Ajax {
 	 * @param	{string}				[error.url]				Used request url.
 	 * @param	{string}				[error.type]			Used request type.
 	 * @param	{object}				[headers]				Optional, default: `{}`. Custom request HTTP headers to send in request.
+	 * @param	{boolean}				[cache]					Not required, default: false. Use `true` if you don't want to add `_` cache buster param into url.
 	 * @param	{boolean}				[async]					Optional, default: `true`. Use old synchronized request only if you realy know what you are doing.
 	 * @return	{XMLHttpRequest}								Build in browser request object.
 	 */
@@ -179,6 +188,7 @@ declare interface Ajax {
 		type?: 'json' | 'jsonp' | 'xml' | 'html' | 'text',
 		error?: (responseText?: string, statusCode?: number, xhr?: XMLHttpRequest | null, errorObj?: Error | null, errorEvent?: Event | null, requestId?: number, url?: string, type?: string) => void,
 		headers?: object,
+		cache?: boolean,
 		async?: boolean
 	): XMLHttpRequest;
 }
@@ -256,6 +266,11 @@ declare namespace Ajax {
 		 * @type	{object}
 		 */
 		headers: object;
+		/**
+		 * @summary Optional, default: false. Use `true` if you don't want to add `_` cache buster param into url.
+		 * @type	{boolean}
+		 */
+		cache: boolean;
 		/**
 		 * @summary	Optional, default: `true`. Use old synchronized request only if you realy know what you are doing.
 		 * @type	{boolean}

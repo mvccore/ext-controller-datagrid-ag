@@ -77,7 +77,7 @@ var MvcCore;
                             SinglePageMode.prototype.ExecRequest = function (reqData, changeUrl) {
                                 var cacheKey = this.cache.Key(reqData);
                                 this.changeUrlSwitches.set(cacheKey, true);
-                                console.log("set cache", cacheKey, reqData);
+                                //console.log("set cache", cacheKey, reqData);
                                 var gridOptions = this.grid.GetOptions().GetAgOptions();
                                 // both triggers current grid model reload and calling `this.getRows()`:
                                 //gridOptions.api.onFilterChanged();
@@ -91,7 +91,7 @@ var MvcCore;
                                     (params.endRow <= this.initialData.offset + this.initialData.dataCount || totalCount < params.endRow));
                                 if (!result)
                                     return false;
-                                var reqData = this.Static.retypeRequestMaps2Objects({
+                                var reqData = this.Static.RetypeRequestMaps2Objects({
                                     offset: this.grid.GetOffset(),
                                     limit: this.grid.GetServerConfig().itemsPerPage,
                                     sorting: this.grid.GetSorting(),
@@ -106,7 +106,7 @@ var MvcCore;
                                 //console.log("resolving by initial data");
                                 params.successCallback(this.initialData.data.slice(params.startRow - this.initialData.offset, params.endRow - this.initialData.offset), totalCount);
                                 if (this.pageLoaded) {
-                                    var reqData = this.Static.retypeRequestMaps2Objects({
+                                    var reqData = this.Static.RetypeRequestMaps2Objects({
                                         offset: this.grid.GetOffset(),
                                         limit: this.grid.GetServerConfig().itemsPerPage,
                                         sorting: this.grid.GetSorting(),
@@ -117,7 +117,7 @@ var MvcCore;
                                         this.changeUrlSwitches.delete(cacheKey);
                                     }
                                     else {
-                                        console.log("pushState init data", reqData);
+                                        //console.log("pushState init data", reqData);
                                         history.pushState(reqData, document.title, this.initLocationHref);
                                     }
                                 }
@@ -137,7 +137,7 @@ var MvcCore;
                                 var agGridApi = this.options.GetAgOptions().api;
                                 agGridApi.showLoadingOverlay();
                                 var _a = __read(this.getReqUrlMethodAndType(), 3), reqDataUrl = _a[0], reqMethod = _a[1], reqType = _a[2];
-                                var reqData = this.Static.retypeRequestMaps2Objects({
+                                var reqData = this.Static.RetypeRequestMaps2Objects({
                                     offset: params.startRow,
                                     limit: params.endRow - params.startRow,
                                     sorting: this.grid.GetSorting(),

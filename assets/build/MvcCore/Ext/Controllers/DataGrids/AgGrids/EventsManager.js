@@ -342,9 +342,39 @@ var MvcCore;
                             });
                             return this;
                         };
-                        EventsManager.prototype.HandleUrlChange = function (e) {
-                            var dataSource = this.grid.GetDataSource(), reqDataRaw = e.state, oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(AgGrids.DataSource.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(reqDataRaw.sorting), reqData = AgGrids.DataSource.RetypeRequestObjects2Maps(reqDataRaw);
+                        EventsManager.prototype.HandleExecChange = function (offset, sorting, filtering) {
+                            var dataSource = this.grid.GetDataSource(), reqData = {
+                                offset: offset,
+                                limit: this.grid.GetServerConfig().itemsPerPage,
+                                sorting: sorting,
+                                filtering: filtering,
+                            }, reqDataRaw = dataSource.Static.RetypeRequestMaps2Objects(reqData), oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(dataSource.Static.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(sorting);
                             this.grid
+                                .SetOffset(offset)
+                                .SetSorting(sorting)
+                                .SetFiltering(filtering);
+                            this.handleUrlChangeSortsFilters(reqData);
+                            dataSource.ExecRequest(reqDataRaw, true);
+                            if (oldOffset !== reqData.offset) {
+                                this.FireHandlers("pageChange", {
+                                    offset: reqData.offset
+                                });
+                            }
+                            if (oldFiltering !== newFiltering) {
+                                this.FireHandlers("filterChange", {
+                                    filtering: reqData.filtering
+                                });
+                            }
+                            if (oldSorting !== newSorting) {
+                                this.FireHandlers("sortChange", {
+                                    sorting: reqData.sorting
+                                });
+                            }
+                        };
+                        EventsManager.prototype.HandleUrlChange = function (e) {
+                            var dataSource = this.grid.GetDataSource(), reqDataRaw = e.state, oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(dataSource.Static.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(reqDataRaw.sorting), reqData = dataSource.Static.RetypeRequestObjects2Maps(reqDataRaw);
+                            this.grid
+                                .SetOffset(reqData.offset)
                                 .SetSorting(reqData.sorting)
                                 .SetFiltering(reqData.filtering);
                             this.handleUrlChangeSortsFilters(reqData);
@@ -355,7 +385,6 @@ var MvcCore;
                                 });
                             }
                             if (oldFiltering !== newFiltering) {
-                                console.log(oldFiltering, newFiltering);
                                 this.FireHandlers("filterChange", {
                                     filtering: reqData.filtering
                                 });

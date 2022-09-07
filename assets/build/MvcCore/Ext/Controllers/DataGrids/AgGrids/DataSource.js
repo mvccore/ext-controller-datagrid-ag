@@ -60,7 +60,7 @@ var MvcCore;
                         DataSource.prototype.initPageReqDataAndCache = function () {
                             var grid = this.Static.grid;
                             this.cache = new AgGrids.DataSources.Cache(grid);
-                            this.pageReqData = this.Static.retypeRequestMaps2Objects({
+                            this.pageReqData = this.Static.RetypeRequestMaps2Objects({
                                 offset: grid.GetOffset(),
                                 limit: grid.GetServerConfig().itemsPerPage,
                                 sorting: grid.GetSorting(),
@@ -129,8 +129,8 @@ var MvcCore;
                             }
                             return newFiltering;
                         };
-                        DataSource.retypeRequestMaps2Objects = function (serverRequest) {
-                            var result = serverRequest;
+                        DataSource.RetypeRequestMaps2Objects = function (serverRequest) {
+                            var result = __assign({}, serverRequest);
                             if (serverRequest.filtering instanceof Map) {
                                 result.filtering = this.RetypeFilteringMap2Obj(serverRequest.filtering);
                             }

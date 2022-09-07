@@ -165,13 +165,16 @@ var MvcCore;
                         ColumnsMenu.prototype.handleOpen = function (e) {
                             if (!this.elms.form)
                                 this.initFormElements().initFormEvents();
-                            this.Show();
+                            this.stopEvent(e).Show();
                         };
                         ColumnsMenu.prototype.handleCancel = function (e) {
+                            this.stopEvent(e).Hide();
+                        };
+                        ColumnsMenu.prototype.stopEvent = function (e) {
                             e.preventDefault();
                             e.stopPropagation();
                             e.cancelBubble = true;
-                            this.Hide();
+                            return this;
                         };
                         ColumnsMenu.SELECTORS = {
                             CONT_CLS: 'columns-menu',

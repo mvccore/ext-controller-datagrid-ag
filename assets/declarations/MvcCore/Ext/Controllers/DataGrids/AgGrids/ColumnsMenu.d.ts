@@ -45,5 +45,6 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected initEvents(): this;
         protected handleOpen(e: MouseEvent): void;
         protected handleCancel(e: MouseEvent): void;
+        protected stopEvent(e: Event): this;
     }
 }

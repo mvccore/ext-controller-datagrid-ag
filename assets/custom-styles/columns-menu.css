@@ -15,6 +15,12 @@
     text-align:center;
     line-height:50px;
     text-decoration:none;
+	border-style:solid;
+	border-left-width:1px;
+    border-color:darkgrey;
+    border-color:var(--ag-border-color, darkgrey);
+	background-color:var(--ag-header-background-color);
+	background-image:linear-gradient(white, lightgrey);
 }
 
 .columns-menu a.columns-menu-btn-open:after,
@@ -28,7 +34,7 @@
 .columns-menu form.columns-menu-form {
 	position:absolute;
 	z-index:12;
-	border-style:solid ;
+	border-style:solid;
 	border-width:1px;
     border-color:darkgrey;
     border-color:var(--ag-border-color, darkgrey);

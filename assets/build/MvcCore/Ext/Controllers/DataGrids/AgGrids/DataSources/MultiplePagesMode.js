@@ -64,7 +64,7 @@ var MvcCore;
                                 this.cache.Add(this.cache.Key(this.pageReqData), this.initialData);
                             };
                             MultiplePagesMode.prototype.Load = function () {
-                                var reqData = this.Static.retypeRequestMaps2Objects({
+                                var reqData = this.Static.RetypeRequestMaps2Objects({
                                     offset: this.grid.GetOffset(),
                                     limit: this.grid.GetServerConfig().itemsPerPage,
                                     sorting: this.grid.GetSorting(),
@@ -121,8 +121,10 @@ var MvcCore;
                                         this.eventsManager.AddPagingEvents();
                                     }
                                 }
-                                if (changeUrl)
+                                if (changeUrl) {
+                                    reqData.path = response.path;
                                     history.pushState(reqData, document.title, response.url);
+                                }
                             };
                             return MultiplePagesMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSource));

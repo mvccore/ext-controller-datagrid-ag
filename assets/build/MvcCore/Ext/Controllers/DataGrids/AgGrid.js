@@ -23,8 +23,8 @@ var MvcCore;
                         this.totalCount = null;
                         this.offset = 0;
                         this.gridPath = '';
-                        console.log("AgGrid.ctor - serverConfig", serverConfig);
-                        console.log("AgGrid.ctor - initialData", initialData);
+                        //console.log("AgGrid.ctor - serverConfig", serverConfig);
+                        //console.log("AgGrid.ctor - initialData", initialData);
                         this
                             .initSubClasses()
                             .initServerConfig(serverConfig)
@@ -187,6 +187,10 @@ var MvcCore;
                     };
                     AgGrid.prototype.RemoveEventListener = function (eventName, handler) {
                         this.eventsManager.RemoveEventListener(eventName, handler);
+                        return this;
+                    };
+                    AgGrid.prototype.ExecChange = function (offset, sorting, filtering) {
+                        this.eventsManager.HandleExecChange(offset, sorting, filtering);
                         return this;
                     };
                     AgGrid.prototype.initSubClasses = function () {

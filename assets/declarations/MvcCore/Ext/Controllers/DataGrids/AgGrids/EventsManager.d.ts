@@ -23,6 +23,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         HandleSortChange(columnId: string, direction: AgGrids.Types.SortDirNullable): void;
         HandleGridSizeChanged(event: agGrid.ViewportChangedEvent<any> | agGrid.GridSizeChangedEvent<any>): void;
         AddUrlChangeEvent(): this;
+        HandleExecChange(offset: number, sorting: Types.SortItem[], filtering: Map<string, Map<Enums.Operator, string[]>>): void;
         HandleUrlChange(e: PopStateEvent): void;
         HandleResponseLoaded(response: AgGrids.Interfaces.IServerResponse): void;
         protected handleUrlChangeSortsFilters(reqData: Interfaces.IServerRequest): this;

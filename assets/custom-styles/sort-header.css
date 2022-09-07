@@ -64,7 +64,7 @@
 	font-size:115%;
 	transform:scale(2, 0.5);
 	font-family:monospace;
-	text-shadow:0px 0px 1px black;
+	text-shadow:0px 0px 1px #fff;
 }
 .ag-root div.sort-header .direction.asc:after,
 .ag-root div.sort-header .direction.asc::after {
@@ -86,11 +86,18 @@
 	font-size:130%;
 }
 
+.ag-root .sort-header-active {
+	background:#333;
+	color:#fff;
+}
+.ag-root .sort-header-active div.sort-header .label {
+	color:#fff;
+}
 .ag-root div.sort-header.active .order,
 .ag-root div.sort-header.active .direction,
 .ag-root div.sort-header.active .remove {
 	display:inline-block;
 }
-.ag-root div.sort-header.sortable.active .label {
+.ag-root div.sort-header.active.sortable .label {
 	font-style:italic;
 }

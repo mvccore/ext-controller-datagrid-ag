@@ -14,6 +14,7 @@ var MvcCore;
                             function SortHeader() {
                                 var _newTarget = this.constructor;
                                 this.Static = _newTarget;
+                                this.contActiveClsRegExp = new RegExp('\\s+(' + this.Static.SELECTORS.PARENT_ACTIVE_CLS.replace(/\-/g, '\\-') + ')\\s+', 'g');
                             }
                             SortHeader.prototype.init = function (agParams) {
                                 this
@@ -39,6 +40,14 @@ var MvcCore;
                                 }
                                 else {
                                     this.setSortActive();
+                                }
+                                return this;
+                            };
+                            SortHeader.prototype.OnReady = function () {
+                                if (this.sortable && this.direction != null) {
+                                    var sels = this.Static.SELECTORS;
+                                    var parentCont = this.elms.cont.parentNode;
+                                    parentCont.className = [parentCont.className, sels.PARENT_ACTIVE_CLS].join(' ');
                                 }
                                 return this;
                             };
@@ -182,6 +191,10 @@ var MvcCore;
                                 if (this.params.renderSequence)
                                     this.elms.sequence.innerHTML = '1';
                                 var sels = this.Static.SELECTORS;
+                                var parentCont = this.elms.cont.parentNode;
+                                var className = ' ' + parentCont.className + ' ';
+                                if (!className.match(this.contActiveClsRegExp))
+                                    parentCont.className = [className, sels.PARENT_ACTIVE_CLS].join(' ');
                                 this.elms.cont.className = [this.contBaseClass, sels.ACTIVE_CLS].join(' ');
                                 if (this.params.renderDirection) {
                                     this.elms.direction.className = [
@@ -199,9 +212,13 @@ var MvcCore;
                                     this.elms.sequence.innerHTML = '';
                                 var sels = this.Static.SELECTORS;
                                 this.elms.cont.className = this.contBaseClass;
+                                var parentCont = this.elms.cont.parentNode;
+                                var className = ' ' + parentCont.className + ' ';
+                                parentCont.className = className.replace(this.contActiveClsRegExp, ' ');
                                 return this;
                             };
                             SortHeader.SELECTORS = {
+                                PARENT_ACTIVE_CLS: 'sort-header-active',
                                 CONT_CLS: 'sort-header',
                                 CONT_ITEMS_CLS_BASE: 'sort-header-items-',
                                 SORTABLE_CLS: 'sortable',

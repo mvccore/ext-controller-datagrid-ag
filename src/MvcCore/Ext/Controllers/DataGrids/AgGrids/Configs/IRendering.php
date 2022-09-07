@@ -47,14 +47,14 @@ interface IRendering extends \MvcCore\Ext\Controllers\DataGrids\Configs\IRenderi
 	
 	/**
 	 * 
-	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL $assetsHandler 
+	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL $assetsHandler 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
-	public function SetAssetsHandler ($assetsHandler);
+	public function SetHandlerAssets ($handlerAssets);
 
 	/**
 	 * 
-	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL
 	 */
-	public function GetAssetsHandler ();
+	public function GetHandlerAssets ();
 }

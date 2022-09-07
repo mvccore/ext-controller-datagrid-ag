@@ -275,7 +275,6 @@ trait ConfigGettersSetters {
 		return $this->configRendering;
 	}
 
-
 	/**
 	 * @inheritDocs
 	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales $configRendering
@@ -296,5 +295,23 @@ trait ConfigGettersSetters {
 			$this->configLocales = new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales;
 		}
 		return $this->configLocales;
+	}
+
+	public function SetHandlerColumnsRead ($handlerColumnsRead) {
+		$this->handlerColumnsRead = $handlerColumnsRead;
+		return $this;
+	}
+
+	public function GetHandlerColumnsRead () {
+		return $this->handlerColumnsRead;
+	}
+
+	public function SetHandlerColumnsWrite ($handlerColumnsWrite) {
+		$this->handlerColumnsWrite = $handlerColumnsWrite;
+		return $this;
+	}
+
+	public function GetHandlerColumnsWrite () {
+		return $this->handlerColumnsWrite;
 	}
 }

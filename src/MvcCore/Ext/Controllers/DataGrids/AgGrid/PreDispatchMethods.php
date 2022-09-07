@@ -151,12 +151,12 @@ trait PreDispatchMethods {
 		$assetsGroupsCss = $gridView->GetGridAssetsGroupsCss();
 		$assetsGroupsJs = $gridView->GetGridAssetsGroupsJs();
 		$args = [$assetsGroupsCss, $assetsGroupsJs, $this->parentController, $this];
-		$assetsHandler = $this->configRendering->GetAssetsHandler();
+		$handlerAssets = $this->configRendering->GetHandlerAssets();
 		if (
-			is_callable($assetsHandler) || 
-			$assetsHandler instanceof \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler
+			is_callable($handlerAssets) || 
+			$handlerAssets instanceof \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets
 		) {
-			call_user_func_array($assetsHandler, $args);
+			call_user_func_array($handlerAssets, $args);
 		} else {
 			$ctrlView = $this->parentController->GetView();
 			$cssVarHead = $ctrlView->Css($gridView::ASSETS_BUNDLE_DEFAULT_NAME_CSS);

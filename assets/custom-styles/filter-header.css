@@ -44,10 +44,14 @@
     line-height:15px;
     text-align:center;
     font-size:13px;
-    background:#aaa;
+    background:#eee;
 }
 .ag-root .filter-active .filter-header .filter-remove {
 	display:block;
+}
+.ag-root .filter-active .filter-header input.filter-input {
+	color:#fff;
+	background:#333;
 }
 .ag-root .filter-header .filter-remove::after,
 .ag-root .filter-header .filter-remove:after {

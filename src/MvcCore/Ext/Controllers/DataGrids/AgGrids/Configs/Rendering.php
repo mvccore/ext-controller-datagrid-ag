@@ -25,9 +25,9 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	protected $theme = self::THEME_FRESH;
 	
 	/**
-	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL
+	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL
 	 */
-	protected $assetsHandler = NULL;
+	protected $handlerAssets = NULL;
 
 	/**
 	 * Datagrid view full class name.
@@ -53,19 +53,19 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 	
 	/**
-	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL $assetsHandler 
+	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL $handlerAssets 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
-	public function SetAssetsHandler ($assetsHandler) {
-		$this->assetsHandler = $assetsHandler;
+	public function SetHandlerAssets ($handlerAssets) {
+		$this->handlerAssets = $handlerAssets;
 		return $this;
 	}
 
 	/**
-	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IAssetsHandler|callable|NULL
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL
 	 */
-	public function GetAssetsHandler () {
-		return $this->assetsHandler;
+	public function GetHandlerAssets () {
+		return $this->handlerAssets;
 	}
 
 

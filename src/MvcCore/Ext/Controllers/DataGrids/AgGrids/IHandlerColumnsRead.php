@@ -13,10 +13,12 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrids;
 
-interface IAssetsHandler {
+interface IHandlerColumnsRead {
 	
-	public function __invoike (array $jsPaths, array $cssPaths, \MvcCore\IController $parentController): void {
-		
-	}
+	/**
+	 * 
+	 * @return void
+	 */
+	public function __invoike ();
 
 }

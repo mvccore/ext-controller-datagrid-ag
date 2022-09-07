@@ -90,6 +90,18 @@ trait ConfigProps {
 	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales|NULL
 	 */
 	protected $configLocales = NULL;
+
+	/**
+	 * 
+	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsRead|callable
+	 */
+	protected $handlerColumnsRead = NULL;
+
+	/**
+	 * 
+	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsWrite|callable
+	 */
+	protected $handlerColumnsWrite = NULL;
 	
 	/**
 	 * Ajax params for dataset offset, limit, sorting and filtering.

@@ -163,6 +163,11 @@ var MvcCore;
                             return this;
                         };
                         ColumnsMenu.prototype.handleOpen = function (e) {
+                            this.grid.ExecChange(800, [["sidloFirmyNazevFirmy", 1], ["kod", 0]], new Map([
+                                ["sidloFirmyNazevFirmy", new Map([
+                                        [AgGrids.Enums.Operator.LIKE, ["A%"]]
+                                    ])]
+                            ]));
                             if (!this.elms.form)
                                 this.initFormElements().initFormEvents();
                             this.stopEvent(e).Show();

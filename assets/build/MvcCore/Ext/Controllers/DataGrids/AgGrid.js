@@ -190,6 +190,9 @@ var MvcCore;
                         return this;
                     };
                     AgGrid.prototype.ExecChange = function (offset, sorting, filtering) {
+                        if (offset === void 0) { offset = 0; }
+                        if (sorting === void 0) { sorting = []; }
+                        if (filtering === void 0) { filtering = new Map(); }
                         this.eventsManager.HandleExecChange(offset, sorting, filtering);
                         return this;
                     };

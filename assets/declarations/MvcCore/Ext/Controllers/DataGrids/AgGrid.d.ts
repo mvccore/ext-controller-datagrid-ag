@@ -63,7 +63,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         GetColumnsMenu(): AgGrids.ColumnsMenu;
         AddEventListener<K extends keyof AgGrids.Interfaces.IGridEvensHandlersMap>(eventName: K, handler: (a: AgGrids.Interfaces.IGridEvensHandlersMap[K]) => void): this;
         RemoveEventListener<K extends keyof AgGrids.Interfaces.IGridEvensHandlersMap>(eventName: K, handler: (e: AgGrids.Interfaces.IGridEvensHandlersMap[K]) => void): this;
-        ExecChange(offset: number, sorting: AgGrids.Types.SortItem[], filtering: Map<string, Map<AgGrids.Enums.Operator, string[]>>): this;
+        ExecChange(offset?: number, sorting?: AgGrids.Types.SortItem[], filtering?: Map<string, Map<AgGrids.Enums.Operator, string[]>>): this;
         protected initSubClasses(): this;
         protected initPageModeSpecifics(): this;
         protected initServerConfig(serverConfig: AgGrids.Interfaces.IServerConfig): this;

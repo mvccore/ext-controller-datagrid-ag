@@ -64,6 +64,7 @@ trait ActionMethods {
 	}
 
 	public function ActionColumnsStates () {
+		x($this->request->GetParams(FALSE, [], \MvcCore\IRequest::PARAM_TYPE_INPUT));
 		xxx("ActionColumnsStates");
 
 		$redirectUrl = rawurldecode($this->GridUrl([

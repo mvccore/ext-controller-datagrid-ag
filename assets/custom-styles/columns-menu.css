@@ -41,6 +41,9 @@
 	height:auto;
 	box-shadow:5px 5px 10px rgb(0 0 0 / 30%);
 }
+.columns-menu form.columns-menu-form.columns-menu-form-hidden {
+	display:none;
+}
 form.columns-menu-form .columns-menu-heading {
 	white-space:nowrap;
 	padding:5px;
@@ -85,9 +88,11 @@ form.columns-menu-form .columns-menu-buttons {
 	flex-wrap:nowrap;
 	gap:8px;
 }
+form.columns-menu-form .columns-menu-buttons button {
+	cursor:pointer;
+}
 .columns-menu-buttons button.columns-menu-btn-apply {
 
 }
 .columns-menu-buttons button.columns-menu-btn-cancel {
-
 }

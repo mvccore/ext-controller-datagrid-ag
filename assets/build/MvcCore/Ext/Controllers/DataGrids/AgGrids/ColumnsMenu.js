@@ -23,6 +23,20 @@ var MvcCore;
                                 .initElements()
                                 .initEvents();
                         }
+                        ColumnsMenu.prototype.Hide = function () {
+                            if (this.elms.form) {
+                                var sels = this.Static.SELECTORS;
+                                this.elms.form.className = [sels.FORM_CLS, sels.FORM_HIDDEN_CLS].join(' ');
+                            }
+                            return this;
+                        };
+                        ColumnsMenu.prototype.Show = function () {
+                            if (this.elms.form) {
+                                this.elms.form.className = this.Static.SELECTORS.FORM_CLS;
+                                this.resizeControls();
+                            }
+                            return this;
+                        };
                         ColumnsMenu.prototype.initElements = function () {
                             var contElm = this.options.GetElements().contElement, sels = this.Static.SELECTORS;
                             var menuCont = this.createElm('div', [sels.CONT_CLS]);
@@ -75,6 +89,10 @@ var MvcCore;
                             }
                             return this;
                         };
+                        ColumnsMenu.prototype.initFormEvents = function () {
+                            this.elms.btnCancel.addEventListener('click', this.handleCancel.bind(this));
+                            return this;
+                        };
                         ColumnsMenu.prototype.resizeControls = function () {
                             var gridElm = this.grid.GetOptions().GetElements().agGridElement, gridElmParent = gridElm.parentNode, heightDiff = this.elms.heading.offsetHeight + this.elms.buttons.offsetHeight + 20;
                             var offsetHeight = Math.max((gridElmParent.offsetHeight * 0.75) - heightDiff, 200);
@@ -111,8 +129,14 @@ var MvcCore;
                         };
                         ColumnsMenu.prototype.handleOpen = function (e) {
                             if (!this.elms.form)
-                                this.initFormElements();
-                            this.resizeControls();
+                                this.initFormElements().initFormEvents();
+                            this.Show();
+                        };
+                        ColumnsMenu.prototype.handleCancel = function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            e.cancelBubble = true;
+                            this.Hide();
                         };
                         ColumnsMenu.SELECTORS = {
                             CONT_CLS: 'columns-menu',
@@ -120,6 +144,7 @@ var MvcCore;
                             BTN_APPLY_CLS: 'columns-menu-btn-apply',
                             BTN_CANCEL_CLS: 'columns-menu-btn-cancel',
                             FORM_CLS: 'columns-menu-form',
+                            FORM_HIDDEN_CLS: 'columns-menu-form-hidden',
                             FORM_HEAD_CLS: 'columns-menu-heading',
                             FORM_CTRLS_CLS: 'columns-menu-controls',
                             MENU_CTRL_CLS: 'columns-menu-control',

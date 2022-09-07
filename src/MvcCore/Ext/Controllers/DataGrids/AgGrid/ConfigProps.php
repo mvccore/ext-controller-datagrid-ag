@@ -57,7 +57,7 @@ trait ConfigProps {
 	/**
 	 * @var string|NULL
 	 */
-	protected $dataUrl = NULL;
+	protected $urlData = NULL;
 
 	/**
 	 * @var \DateInterval|NULL
@@ -90,6 +90,18 @@ trait ConfigProps {
 	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales|NULL
 	 */
 	protected $configLocales = NULL;
+	
+	/**
+	 * 
+	 * @var string|NULL
+	 */
+	protected $urlColumnsStates = NULL;
+	
+	/**
+	 * 
+	 * @var string|NULL
+	 */
+	protected $urlColumnsChanges = NULL;
 
 	/**
 	 * 

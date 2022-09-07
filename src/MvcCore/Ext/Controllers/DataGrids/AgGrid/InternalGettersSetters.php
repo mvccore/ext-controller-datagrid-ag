@@ -20,22 +20,6 @@ trait InternalGettersSetters {
 	
 	/**
 	 * @inheritDocs
-	 * @return string
-	 */
-	public function GetColumnsStatesUrl () {
-		return rawurldecode($this->GridUrl([static::URL_PARAM_ACTION => static::GRID_ACTION_COLUMNS_STATES]));
-	}
-	
-	/**
-	 * @inheritDocs
-	 * @return string
-	 */
-	public function GetColumnsSizesUrl () {
-		return rawurldecode($this->GridUrl([static::URL_PARAM_ACTION => static::GRID_ACTION_COLUMNS_WIDTHS]));
-	}
-
-	/**
-	 * @inheritDocs
 	 * @return \MvcCore\Request
 	 */
 	public function GetGridRequest () {

@@ -119,20 +119,20 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * @param  string $dataUrl 
+	 * @param  string $urlData 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
-	public function SetDataUrl ($dataUrl) {
+	public function SetUrlData ($urlData) {
 		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $this */
-		$this->dataUrl = $dataUrl;
+		$this->urlData = $urlData;
 		return $this;
 	}
 
 	/**
 	 * @return string|NULL
 	 */
-	public function GetDataUrl () {
-		return $this->dataUrl;
+	public function GetUrlData () {
+		return $this->urlData;
 	}
 
 	/**
@@ -295,6 +295,58 @@ trait ConfigGettersSetters {
 			$this->configLocales = new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales;
 		}
 		return $this->configLocales;
+	}
+
+	/**
+	 * @inheritDocs
+	 * @param  string $urlColumnsStates
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
+	public function SetUrlColumnsStates ($urlColumnsStates) {
+		$this->urlColumnsStates = $urlColumnsStates;
+		return $this;
+	}
+	
+	/**
+	 * @inheritDocs
+	 * @return string
+	 */
+	public function GetUrlColumnsStates () {
+		if ($this->urlColumnsStates === NULL) {
+			$gridParam = rtrim(rawurldecode($this->gridRequest->GetPath()), '/');
+			$controllerClass = get_parent_class(get_parent_class(__CLASS__));
+			$this->urlColumnsStates = $controllerClass::Url($this->appRouteName, [
+				static::URL_PARAM_GRID		=> $gridParam,
+				static::URL_PARAM_ACTION	=> static::GRID_ACTION_COLUMNS_STATES,
+			]);
+		}
+		return $this->urlColumnsStates;
+	}
+
+	/**
+	 * @inheritDocs
+	 * @param  string $urlColumnsChanges
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
+	public function SetUrlColumnsChanges ($urlColumnsChanges) {
+		$this->urlColumnsChanges = $urlColumnsChanges;
+		return $this;
+	}
+	
+	/**
+	 * @inheritDocs
+	 * @return string
+	 */
+	public function GetUrlColumnsChanges () {
+		if ($this->urlColumnsChanges === NULL) {
+			$gridParam = rtrim(rawurldecode($this->gridRequest->GetPath()), '/');
+			$controllerClass = get_parent_class(get_parent_class(__CLASS__));
+			$this->urlColumnsChanges = $controllerClass::Url($this->appRouteName, [
+				static::URL_PARAM_GRID		=> $gridParam,
+				static::URL_PARAM_ACTION	=> static::GRID_ACTION_COLUMNS_CHANGES,
+			]);
+		}
+		return $this->urlColumnsChanges;
 	}
 
 	public function SetHandlerColumnsRead ($handlerColumnsRead) {

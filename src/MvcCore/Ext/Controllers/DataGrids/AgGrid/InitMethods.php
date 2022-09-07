@@ -62,6 +62,8 @@ trait InitMethods {
 		$this->initTranslations();
 		$this->GetConfigColumns(FALSE);
 
+		$this->initPersistentColumnsData();
+
 		$this->initGridAction();
 
 		$this->GetRoute();
@@ -107,6 +109,24 @@ trait InitMethods {
 	}
 	
 	/**
+	 * @return void
+	 */
+	protected function initPersistentColumnsData () {
+		/** @var array<string, \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn> $persistentColumns */
+		$persistentColumns = $this->gridPersistentColumnsRead();
+		if (count($persistentColumns) === 0) return;
+		foreach ($this->GetConfigColumns(FALSE) as $configColumn) {
+			$propName = $configColumn->GetPropName();
+			if (isset($persistentColumns[$propName])) {
+				$persistentColumn = $persistentColumns[$propName];
+				$configColumn->SetColumnIndex($persistentColumn->GetColumnIndex());
+				$configColumn->SetWidth($persistentColumn->GetWidth());
+				$configColumn->SetDisabled($persistentColumn->GetDisabled());
+			}
+		}
+	}
+
+	/**
 	 * Complete internal action method name.
 	 * @return void
 	 */
@@ -123,12 +143,12 @@ trait InitMethods {
 	 */
 	protected function initDataUrlAndAjaxDataRequest ($gridActionParam) {
 		// absolutize data url if any:
-		if ($this->dataUrl === NULL) {
+		if ($this->urlData === NULL) {
 			$this->ajaxDataRequest = $gridActionParam === static::GRID_ACTION_DATA;
 		} else {
-			if (!(mb_strpos($this->dataUrl, 'http://') === 0 || mb_strpos($this->dataUrl, 'https://') === 0))
-				$this->dataUrl = $this->request->GetDomainUrl() . $this->dataUrl;
-			$dataUrlParsed = (object) \MvcCore\Tool::ParseUrl($this->dataUrl);
+			if (!(mb_strpos($this->urlData, 'http://') === 0 || mb_strpos($this->urlData, 'https://') === 0))
+				$this->urlData = $this->request->GetDomainUrl() . $this->urlData;
+			$dataUrlParsed = (object) \MvcCore\Tool::ParseUrl($this->urlData);
 			$this->ajaxDataRequest = (
 				$dataUrlParsed->path === $this->request->GetPath() &&
 				$dataUrlParsed->scheme . ':' === $this->request->GetScheme() &&
@@ -392,7 +412,11 @@ trait InitMethods {
 				$rawColumnUrlName = $this->removeUnknownChars($rawColumnUrlName);
 				if ($rawColumnUrlName === NULL || !isset($this->configColumns[$rawColumnUrlName])) continue;
 				$configColumn = $this->configColumns[$rawColumnUrlName];
-				if (!$this->ignoreDisabledColumns && $configColumn->GetDisabled()) continue;
+				if (!$this->ignoreDisabledColumns) {
+					if (!$configColumn->GetDisabled()) $configColumn->SetDisabled(FALSE);
+				} else {
+					if ($configColumn->GetDisabled()) continue;
+				}
 				$columnSortCfg = $configColumn->GetSort();
 				if ($columnSortCfg === FALSE || $columnSortCfg === NULL) continue;
 				$sorting[$configColumn->GetDbColumnName()] = $direction;
@@ -444,7 +468,13 @@ trait InitMethods {
 				$columnPropName = $configColumn->GetPropName();
 				$columnTypes = $configColumn->GetTypes();
 				// check if column support filtering
-				if (!isset($filteringColumns[$columnPropName])) continue;
+				if (!isset($filteringColumns[$columnPropName])) {
+					if (!$this->ignoreDisabledColumns) {
+						$configColumn->SetDisabled(FALSE);
+					} else {
+						continue;
+					}
+				}
 				$columnDbName = $configColumn->GetDbColumnName();
 				$columnFilterCfg = $configColumn->GetFilter();
 				// check if column has allowed parsed operator

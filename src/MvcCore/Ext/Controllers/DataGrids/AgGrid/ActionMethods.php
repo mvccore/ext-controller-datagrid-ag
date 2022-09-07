@@ -64,21 +64,138 @@ trait ActionMethods {
 	}
 
 	public function ActionColumnsStates () {
-		x($this->request->GetParams(FALSE, [], \MvcCore\IRequest::PARAM_TYPE_INPUT));
-		xxx("ActionColumnsStates");
+		$columnsUrlNamesRaw = $this->request->GetParams(FALSE, [], \MvcCore\IRequest::PARAM_TYPE_INPUT);
 
-		$redirectUrl = rawurldecode($this->GridUrl([
-			static::URL_PARAM_ACTION => NULL
-		]));
+		$persistentColumns = [];
+		foreach ($this->GetConfigColumns(FALSE) as $urlName => $configColumn) {
+			$disabled = !isset($columnsUrlNamesRaw[$urlName]);
+			if (!$this->ignoreDisabledColumns) {
+				$dbColumnName = $configColumn->GetDbColumnName();
+				if (isset($this->filtering[$dbColumnName]) || isset($this->sorting[$dbColumnName]))
+					$disabled = FALSE;
+			}
+			$propName = $configColumn->GetPropName();
+			$persistentColumns[$propName] = new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn(
+				$propName,
+				$configColumn->GetColumnIndex(),
+				$configColumn->GetWidth(),
+				$disabled
+			);
+		}
+
+		$this->gridPersistentColumnsWrite($persistentColumns);
+
+		$gridParam = rtrim(rawurldecode($this->gridRequest->GetPath()), '/');
+		$controllerClass = get_parent_class(get_parent_class(__CLASS__));
+		$redirectUrl = $controllerClass::Url($this->appRouteName, [
+			static::URL_PARAM_GRID		=> $gridParam,
+			static::URL_PARAM_ACTION	=> NULL,
+		]);
 		self::Redirect($redirectUrl, \MvcCore\IResponse::SEE_OTHER);
 	}
 
-	public function ActionColumnsWidths () {
-		xxx("ActionColumnsWidths");
+	public function ActionColumnsChanges () {
+		$changesJson = $this->request->GetParam(self::AJAX_PARAM_COLUMNS_CHANGES, FALSE);
+		$toolClass = $this->application->GetToolClass();
+		try {
+			$changesRaw = (array) $toolClass::JsonDecode($changesJson);
+		} catch (\Throwable $e) {
+			$changesRaw = [];
+		}
+		
+		$parseSuccess = count($changesRaw) > 0;
+		if ($parseSuccess) {
+			$persistentColumns = [];
+			foreach ($this->GetConfigColumns(FALSE) as $urlName => $configColumn) {
+				if (isset($changesRaw[$urlName])) {
+					/** @var \stdClass $columnChange */
+					$columnChange = $changesRaw[$urlName];
+					if (isset($columnChange->index))
+						$configColumn->SetColumnIndex($columnChange->index);
+					if (isset($columnChange->width))
+						$configColumn->SetWidth($columnChange->width);
+				}
+				$propName = $configColumn->GetPropName();
+				$persistentColumns[$propName] = new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn(
+					$propName,
+					$configColumn->GetColumnIndex(),
+					$configColumn->GetWidth(),
+					$configColumn->GetDisabled()
+				);
+			}
+			$this->gridPersistentColumnsWrite($persistentColumns);
+		}
+		
+		$this->JsonResponse([
+			'success'	=> $parseSuccess
+		]);
+	}
 
-		$redirectUrl = rawurldecode($this->GridUrl([
-			static::URL_PARAM_ACTION => NULL
-		]));
-		self::Redirect($redirectUrl, \MvcCore\IResponse::SEE_OTHER);
+	/**
+	 * Write persistent columns info into db or into session.
+	 * @param  array $persistentColumns 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
+	protected function gridPersistentColumnsWrite (array $persistentColumns) {
+		if ($this->handlerColumnsWrite != NULL) {
+			// db
+			try {
+				$user = $this->GetUser();
+				$idUser = $user !== NULL ? $user->GetId() : NULL;
+				call_user_func(
+					$this->handlerColumnsWrite, 
+					$this->id,
+					$idUser,
+					new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns($persistentColumns)
+				);
+			} catch (\Throwable $e) {}
+		} else {
+			// session
+			$sessionNamespace = $this->getGridSessionNamespace();
+			$sessionNamespace->columns = $persistentColumns;
+		}
+		return $this;
+	}
+	
+	/**
+	 * Write persistent columns info into db or into session.
+	 * @return array<string, \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn>
+	 */
+	protected function gridPersistentColumnsRead () {
+		$persistentColumns = NULL;
+		if ($this->handlerColumnsRead != NULL) {
+			// db
+			try {
+				$user = $this->GetUser();
+				$idUser = $user !== NULL ? $user->GetId() : NULL;
+				$persistentColumns = call_user_func(
+					$this->handlerColumnsRead, 
+					$this->id,
+					$idUser
+				);
+			} catch (\Throwable $e) {
+			}
+		} else {
+			// session
+			$sessionNamespace = $this->getGridSessionNamespace();
+			$persistentColumns = $sessionNamespace->columns;
+		}
+		if ($persistentColumns === NULL) {
+			$persistentColumns = [];
+		} else if ($persistentColumns instanceof \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns) {
+			$persistentColumns = $persistentColumns->getArray();
+		}
+		return $persistentColumns;
+	}
+
+	/**
+	 * @return \MvcCore\Session
+	 */
+	protected function getGridSessionNamespace () {
+		$toolClass = $this->application->GetToolClass();
+		$sessionNamespaceName = implode('\\', ['', __CLASS__, $toolClass::GetPascalCaseFromDashed($this->id)]);
+		$sessionNamespace = $this->GetSessionNamespace($sessionNamespaceName);
+		$sessionNamespace->SetExpirationSeconds(0);
+		return $sessionNamespace;
 	}
 }

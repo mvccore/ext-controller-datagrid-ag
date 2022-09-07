@@ -34,7 +34,7 @@ interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
 	 * Default grid action name.
 	 * @var string
 	 */
-	const GRID_ACTION_COLUMNS_WIDTHS	= 'ActionColumnsWidths';
+	const GRID_ACTION_COLUMNS_CHANGES	= 'ActionColumnsChanges';
 
 
 	/**
@@ -156,6 +156,12 @@ interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
 	 * @var string
 	 */
 	const AJAX_PARAM_CACHE_BUSTER			= '_';
+	
+	/**
+	 * Ajax param name to sent column order and width changes.
+	 * @var string
+	 */
+	const AJAX_PARAM_COLUMNS_CHANGES		= 'changes';
 
 	
 	/**

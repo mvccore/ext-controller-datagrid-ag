@@ -47,7 +47,7 @@ implements	IConstantsAg {
 		IConstantsBase::GRID_ACTION_DEFAULT			=> 'ActionDefault',
 		IConstantsAg::GRID_ACTION_DATA				=> 'ActionData',
 		IConstantsAg::GRID_ACTION_COLUMNS_STATES	=> 'ActionColumnsStates',
-		IConstantsAg::GRID_ACTION_COLUMNS_WIDTHS	=> 'ActionColumnsWidths',
+		IConstantsAg::GRID_ACTION_COLUMNS_CHANGES	=> 'ActionColumnsChanges',
 	];
 
 }

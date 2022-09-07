@@ -16,9 +16,10 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrids;
 interface IHandlerColumnsRead {
 	
 	/**
-	 * 
-	 * @return void
+	 * @param  string   $idGrid 
+	 * @param  int|NULL $idUser 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns
 	 */
-	public function __invoike ();
+	public function __invoike ($idGrid, $idUser);
 
 }

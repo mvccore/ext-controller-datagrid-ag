@@ -384,6 +384,9 @@
   cursor: default;
   height: 24px;
 }
+.ag-keyboard-focus .ag-theme-alpine-dark .ag-rich-select-virtual-list-item:focus::after {
+  content: none;
+}
 .ag-theme-alpine-dark .ag-rich-select-virtual-list-item:hover {
   background-color: rgba(33, 150, 243, 0.1);
   background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));

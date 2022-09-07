@@ -374,6 +374,9 @@
   cursor: default;
   height: 20px;
 }
+.ag-keyboard-focus .ag-theme-blue .ag-rich-select-virtual-list-item:focus::after {
+  content: none;
+}
 .ag-theme-blue .ag-rich-select-virtual-list-item:hover {
   background-color: #f0f0f0;
   background-color: var(--ag-row-hover-color, #f0f0f0);

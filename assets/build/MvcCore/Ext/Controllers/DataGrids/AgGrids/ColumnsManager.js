@@ -56,7 +56,6 @@ var MvcCore;
                                 editable: false,
                                 flex: 1,
                                 headerComponent: AgGrids.ColumnsManagers.SortHeader,
-                                //tooltipComponent: AgGrids.ToolTip TODO
                             };
                             this.sortHeaderDefaults = {
                                 renderDirection: true,

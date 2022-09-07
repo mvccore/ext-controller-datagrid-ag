@@ -19,7 +19,7 @@ var MvcCore;
                             eGui.classList.add('custom-tooltip');
                             ///@ts-ignore
                             eGui.style['background-color'] = color;
-                            eGui.innerHTML = "\n\t\t\t\t<p>\n\t\t\t\t\t<span class\"name\">".concat(data.athlete, "</span>\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\t<span>Country: </span>\n\t\t\t\t\t").concat(data.country, "\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\t<span>Total: </span>\n\t\t\t\t\t").concat(data.total, "\n\t\t\t\t</p>\n\t\t\t");
+                            eGui.innerHTML = "\n\t\t\t\t<p>\n\t\t\t\t\t<span class\"name\">" + data.athlete + "</span>\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\t<span>Country: </span>\n\t\t\t\t\t" + data.country + "\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\t<span>Total: </span>\n\t\t\t\t\t" + data.total + "\n\t\t\t\t</p>\n\t\t\t";
                         };
                         ToolTip.prototype.getGui = function () {
                             return this.eGui;

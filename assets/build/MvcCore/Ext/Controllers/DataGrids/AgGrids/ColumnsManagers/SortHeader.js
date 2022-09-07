@@ -64,10 +64,10 @@ var MvcCore;
                             SortHeader.prototype.initElements = function () {
                                 var sels = this.Static.SELECTORS, cont = document.createElement('div'), innerCode = [];
                                 var innerCodes = {
-                                    label: "<div class=\"".concat(sels.LABEL_CLS, "\">").concat(this.params.displayName, "</div>"),
-                                    sequence: "<div class=\"".concat(sels.ORDER_CLS, "\"></div>"),
-                                    direction: "<div class=\"".concat(sels.DIRECTION_CLS, "\"></div>"),
-                                    remove: "<div class=\"".concat(sels.REMOVE_CLS, "\"></div>"),
+                                    label: "<div class=\"" + sels.LABEL_CLS + "\">" + this.params.displayName + "</div>",
+                                    sequence: "<div class=\"" + sels.ORDER_CLS + "\"></div>",
+                                    direction: "<div class=\"" + sels.DIRECTION_CLS + "\"></div>",
+                                    remove: "<div class=\"" + sels.REMOVE_CLS + "\"></div>",
                                 };
                                 innerCode = [innerCodes.label];
                                 if (this.sortable) {

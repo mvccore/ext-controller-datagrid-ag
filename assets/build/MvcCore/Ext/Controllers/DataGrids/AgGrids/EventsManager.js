@@ -84,6 +84,10 @@ var MvcCore;
                                 finally { if (e_2) throw e_2.error; }
                             }
                         }
+                        EventsManager.prototype.HandleSelectionChange = function (event) {
+                            this.grid.GetColumnsMenu().Hide();
+                            console.log(event);
+                        };
                         EventsManager.prototype.HandleColumnResized = function (event) {
                             //console.log(event);
                         };
@@ -222,11 +226,6 @@ var MvcCore;
                             }
                             for (var i = 0, sortColId = '', l = newSorting.length; i < l; i++) {
                                 var _c = __read(newSorting[i], 2), sortColId = _c[0], sortDir = _c[1];
-                                /*agColumnsState.push(<agGrid.ColumnState>{
-                                    colId: sortColId,
-                                    sort: sortDir === 1 ? 'asc' : 'desc',
-                                    sortIndex: i
-                                });*/
                                 if (sortColId === columnId)
                                     continue;
                                 sortHeaders.get(sortColId).SetSequence(i);
@@ -235,13 +234,6 @@ var MvcCore;
                             var pageMode = this.grid.GetPageMode();
                             if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
                                 var gridOptions = this.grid.GetOptions().GetAgOptions();
-                                /*gridOptions.columnApi.applyColumnState(<agGrid.ApplyColumnStateParams>{
-                                    state: agColumnsState,
-                                    applyOrder: false,
-                                    defaultState: <agGrid.ColumnStateParams>{
-                                        sort: null
-                                    },
-                                });*/
                                 gridOptions.api.onSortChanged();
                             }
                             else if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
@@ -276,6 +268,7 @@ var MvcCore;
                             event.columnApi.setColumnsVisible(columnsToHide, false);
                             // fill out any available space to ensure there are no gaps
                             event.api.sizeColumnsToFit();
+                            this.grid.GetColumnsMenu().ResizeControls();
                         };
                         EventsManager.prototype.AddUrlChangeEvent = function () {
                             var _this = this;

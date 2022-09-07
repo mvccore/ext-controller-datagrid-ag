@@ -174,11 +174,11 @@ var MvcCore;
                     AgGrid.prototype.GetFilterMenus = function () {
                         return this.filterMenus;
                     };
-                    AgGrid.prototype.SetColumnsMenus = function (columnsMenu) {
+                    AgGrid.prototype.SetColumnsMenu = function (columnsMenu) {
                         this.columnsMenu = columnsMenu;
                         return this;
                     };
-                    AgGrid.prototype.GetColumnsMenus = function () {
+                    AgGrid.prototype.GetColumnsMenu = function () {
                         return this.columnsMenu;
                     };
                     AgGrid.prototype.initSubClasses = function () {

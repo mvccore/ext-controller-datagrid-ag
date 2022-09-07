@@ -19,23 +19,64 @@ var MvcCore;
                             this.translator = grid.GetTranslator();
                             this.serverConfig = grid.GetServerConfig();
                             this.isTouchDevice = this.helpers.IsTouchDevice();
+                            this.displayed = false;
+                            this.formClick = false;
                             this
                                 .initElements()
                                 .initEvents();
                         }
                         ColumnsMenu.prototype.Hide = function () {
+                            if (!this.displayed)
+                                return this;
                             if (this.elms.form) {
+                                this.displayed = false;
                                 var sels = this.Static.SELECTORS;
                                 this.elms.form.className = [sels.FORM_CLS, sels.FORM_HIDDEN_CLS].join(' ');
+                                this.removeShownEvents();
                             }
                             return this;
                         };
                         ColumnsMenu.prototype.Show = function () {
+                            if (this.displayed)
+                                return this;
                             if (this.elms.form) {
+                                this.displayed = true;
                                 this.elms.form.className = this.Static.SELECTORS.FORM_CLS;
-                                this.resizeControls();
+                                this.ResizeControls();
+                                this.addShownEvents();
                             }
                             return this;
+                        };
+                        ColumnsMenu.prototype.ResizeControls = function () {
+                            if (!this.displayed)
+                                return this;
+                            var gridElm = this.grid.GetOptions().GetElements().agGridElement, gridElmParent = gridElm.parentNode, heightDiff = this.elms.heading.offsetHeight + this.elms.buttons.offsetHeight + 20;
+                            var offsetHeight = Math.max((gridElmParent.offsetHeight * 0.75) - heightDiff, 200);
+                            this.elms.controls.style.maxHeight = offsetHeight + 'px';
+                            return this;
+                        };
+                        ColumnsMenu.prototype.removeShownEvents = function () {
+                            document.removeEventListener('click', this.handlers.handleDocumentClick);
+                            this.elms.form.removeEventListener('click', this.handlers.handleFormClick, true);
+                            return this;
+                        };
+                        ColumnsMenu.prototype.addShownEvents = function () {
+                            var _this = this;
+                            this.handlers = {};
+                            setTimeout(function () {
+                                document.addEventListener('click', _this.handlers.handleDocumentClick = _this.handleDocumentClick.bind(_this));
+                                _this.elms.form.addEventListener('click', _this.handlers.handleFormClick = _this.handleFormClick.bind(_this), true);
+                            });
+                            return this;
+                        };
+                        ColumnsMenu.prototype.handleDocumentClick = function (e) {
+                            if (!this.formClick) {
+                                this.Hide();
+                            }
+                            this.formClick = false;
+                        };
+                        ColumnsMenu.prototype.handleFormClick = function (e) {
+                            this.formClick = true;
                         };
                         ColumnsMenu.prototype.initElements = function () {
                             var contElm = this.options.GetElements().contElement, sels = this.Static.SELECTORS;
@@ -91,12 +132,6 @@ var MvcCore;
                         };
                         ColumnsMenu.prototype.initFormEvents = function () {
                             this.elms.btnCancel.addEventListener('click', this.handleCancel.bind(this));
-                            return this;
-                        };
-                        ColumnsMenu.prototype.resizeControls = function () {
-                            var gridElm = this.grid.GetOptions().GetElements().agGridElement, gridElmParent = gridElm.parentNode, heightDiff = this.elms.heading.offsetHeight + this.elms.buttons.offsetHeight + 20;
-                            var offsetHeight = Math.max((gridElmParent.offsetHeight * 0.75) - heightDiff, 200);
-                            this.elms.controls.style.maxHeight = offsetHeight + 'px';
                             return this;
                         };
                         ColumnsMenu.prototype.createElm = function (elmName, clsNames, innerHTML, props) {

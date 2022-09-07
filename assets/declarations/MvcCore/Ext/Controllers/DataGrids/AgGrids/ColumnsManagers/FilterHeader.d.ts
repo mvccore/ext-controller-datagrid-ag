@@ -14,6 +14,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         protected activeFilterClsRegExp: RegExp;
         protected handlers: {
             handleSubmit?: (e: MouseEvent) => void;
+            handleFocus?: (e: FocusEvent) => void;
             handleBlur?: (e: FocusEvent) => void;
             handleRemove?: (e: MouseEvent) => void;
             handleChange?: (e: Event) => void;
@@ -28,8 +29,10 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         protected initEvents(): this;
         protected handleSubmit(e: KeyboardEvent): void;
         protected handleBlur(e: KeyboardEvent): void;
+        protected handleFocus(e: KeyboardEvent): void;
         protected handleRemove(e: KeyboardEvent): void;
         protected handleChange(e: Event): void;
+        protected stopEvent(e: Event): this;
         destroy(): void;
         afterGuiAttached(params?: agGrid.IAfterGuiAttachedParams): void;
         protected setHeaderActive(active: boolean): this;

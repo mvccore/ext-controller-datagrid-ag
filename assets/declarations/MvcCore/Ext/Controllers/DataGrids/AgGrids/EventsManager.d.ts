@@ -10,6 +10,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected likeOperatorsAndPrefixes: Map<Enums.Operator, string>;
         protected notLikeOperatorsAndPrefixes: Map<Enums.Operator, string>;
         constructor(grid: AgGrid);
+        HandleSelectionChange(event: agGrid.SelectionChangedEvent<any>): void;
         HandleColumnResized(event: agGrid.ColumnResizedEvent<any>): void;
         HandleColumnMoved(event: agGrid.ColumnMovedEvent<any>): void;
         HandleFilterMenuChange(columnId: string, filteringItem: Map<Enums.Operator, string[]> | null): void;

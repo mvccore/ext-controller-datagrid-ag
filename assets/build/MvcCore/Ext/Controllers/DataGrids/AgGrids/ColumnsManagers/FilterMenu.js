@@ -67,6 +67,7 @@ var MvcCore;
                                     ? filtering.get(this.columnId)
                                     : null;
                                 this.SetUpControls(this.latestFiltering);
+                                this.grid.GetColumnsMenu().Hide();
                             };
                             /**
                              * Gets called when the column is destroyed. If your custom filter needs to do

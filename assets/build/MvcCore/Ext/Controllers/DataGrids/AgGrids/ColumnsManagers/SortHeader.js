@@ -144,6 +144,7 @@ var MvcCore;
                                 this.direction = null;
                             };
                             SortHeader.prototype.handleContClick = function (e) {
+                                this.grid.GetColumnsMenu().Hide();
                                 if (this.params.renderRemove) {
                                     this.switchDirectionByTwoStates();
                                 }
@@ -156,6 +157,7 @@ var MvcCore;
                                 e.preventDefault();
                                 e.stopPropagation();
                                 e.cancelBubble = true;
+                                this.grid.GetColumnsMenu().Hide();
                                 this.direction = null;
                                 this.setSortInactive();
                                 this.grid.GetEvents().HandleSortChange(this.columnId, this.direction);

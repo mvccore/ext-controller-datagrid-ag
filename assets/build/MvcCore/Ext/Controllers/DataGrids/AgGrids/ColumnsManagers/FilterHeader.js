@@ -127,13 +127,12 @@ var MvcCore;
                                     input.addEventListener('keyup', this.handlers.handleSubmit = this.handleSubmit.bind(this));
                                     input.addEventListener('blur', this.handlers.handleBlur = this.handleBlur.bind(this));
                                 }
+                                input.addEventListener('focus', this.handlers.handleFocus = this.handleFocus.bind(this));
                                 remove.addEventListener('click', this.handlers.handleRemove = this.handleRemove.bind(this), true);
                                 return this;
                             };
                             FilterHeader.prototype.handleSubmit = function (e) {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                e.cancelBubble = true;
+                                this.stopEvent(e);
                                 var value = this.elms.input.value;
                                 if (e.key === 'Enter') {
                                     this.grid.GetEvents().HandleFilterHeaderChange(this.columnId, value);
@@ -148,9 +147,7 @@ var MvcCore;
                                 }
                             };
                             FilterHeader.prototype.handleBlur = function (e) {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                e.cancelBubble = true;
+                                this.stopEvent(e);
                                 var value = this.elms.input.value.trim();
                                 if (value === '' || value == null) {
                                     var filtering = this.grid.GetFiltering();
@@ -158,23 +155,30 @@ var MvcCore;
                                         filtering.delete(this.columnId);
                                 }
                             };
+                            FilterHeader.prototype.handleFocus = function (e) {
+                                this.grid.GetColumnsMenu().Hide();
+                            };
                             FilterHeader.prototype.handleRemove = function (e) {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                e.cancelBubble = true;
+                                this.stopEvent(e);
                                 this.elms.input.value = '';
                                 this.grid.GetEvents().HandleFilterHeaderChange(this.columnId, null);
                             };
                             FilterHeader.prototype.handleChange = function (e) {
                                 var _this = this;
-                                e.stopPropagation();
-                                e.preventDefault();
-                                e.cancelBubble = true;
+                                this.stopEvent(e);
                                 if (this.handlers.changeDelayTimeout)
                                     clearTimeout(this.handlers.changeDelayTimeout);
                                 setTimeout(function () {
                                     _this.grid.GetEvents().HandleFilterHeaderChange(_this.columnId, _this.elms.input.value.trim());
                                 }, this.params.submitDelayMs);
+                            };
+                            FilterHeader.prototype.stopEvent = function (e) {
+                                if (e == null)
+                                    return this;
+                                e.preventDefault();
+                                e.stopPropagation();
+                                e.cancelBubble = true;
+                                return this;
                             };
                             FilterHeader.prototype.destroy = function () {
                                 var input = this.elms.input, cont = this.elms.cont;

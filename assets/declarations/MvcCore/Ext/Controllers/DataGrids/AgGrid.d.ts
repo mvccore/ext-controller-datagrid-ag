@@ -59,8 +59,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         GetFilterHeaders(): Map<string, AgGrids.ColumnsManagers.FilterHeader>;
         SetFilterMenus(filterMenus: Map<string, AgGrids.ColumnsManagers.FilterMenu>): this;
         GetFilterMenus(): Map<string, AgGrids.ColumnsManagers.FilterMenu>;
-        SetColumnsMenus(columnsMenu: AgGrids.ColumnsMenu): this;
-        GetColumnsMenus(): AgGrids.ColumnsMenu;
+        SetColumnsMenu(columnsMenu: AgGrids.ColumnsMenu): this;
+        GetColumnsMenu(): AgGrids.ColumnsMenu;
         protected initSubClasses(): this;
         protected initPageModeSpecifics(): this;
         protected initServerConfig(serverConfig: AgGrids.Interfaces.IServerConfig): this;

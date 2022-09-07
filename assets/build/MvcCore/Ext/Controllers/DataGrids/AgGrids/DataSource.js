@@ -68,14 +68,14 @@ var MvcCore;
                             });
                         };
                         DataSource.prototype.getReqUrlMethodAndType = function () {
-                            var serverCfg = this.Static.grid.GetServerConfig(), cfgReqMethod = serverCfg.dataRequestMethod, dataUrl = serverCfg.dataUrl, reqMethod = 'GET', reqType = 'json';
+                            var serverCfg = this.Static.grid.GetServerConfig(), cfgReqMethod = serverCfg.dataRequestMethod, urlData = serverCfg.urlData, reqMethod = 'GET', reqType = 'json';
                             if ((cfgReqMethod & AgGrids.Enums.AjaxDataRequestMethod.AJAX_DATA_REQUEST_METHOD_POST) != 0) {
                                 reqMethod = 'POST';
                             }
                             else if ((cfgReqMethod & AgGrids.Enums.AjaxDataRequestMethod.AJAX_DATA_REQUEST_METHOD_JSONP) != 0) {
                                 reqType = 'jsonp';
                             }
-                            return [dataUrl, reqMethod, reqType];
+                            return [urlData, reqMethod, reqType];
                         };
                         DataSource.RetypeRawServerResponse = function (serverResponse) {
                             serverResponse.filtering = this.retypeFilteringObj2Map(serverResponse.filtering);

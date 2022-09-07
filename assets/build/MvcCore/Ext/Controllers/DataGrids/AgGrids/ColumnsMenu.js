@@ -1,3 +1,30 @@
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 var MvcCore;
 (function (MvcCore) {
     var Ext;
@@ -13,12 +40,9 @@ var MvcCore;
                             var _newTarget = this.constructor;
                             this.Static = _newTarget;
                             this.grid = grid;
-                            this.eventsManager = grid.GetEvents();
                             this.options = grid.GetOptions();
-                            this.helpers = grid.GetHelpers();
                             this.translator = grid.GetTranslator();
                             this.serverConfig = grid.GetServerConfig();
-                            this.isTouchDevice = this.helpers.IsTouchDevice();
                             this.displayed = false;
                             this.formClick = false;
                             this
@@ -42,10 +66,18 @@ var MvcCore;
                             if (this.elms.form) {
                                 this.displayed = true;
                                 this.elms.form.className = this.Static.SELECTORS.FORM_CLS;
-                                this.ResizeControls();
-                                this.addShownEvents();
+                                this
+                                    .ResizeControls()
+                                    .disableUsedColumns()
+                                    .addShownEvents();
                             }
                             return this;
+                        };
+                        ColumnsMenu.prototype.RedrawControls = function () {
+                            if (!this.elms.controls)
+                                return this;
+                            this.elms.controls.innerHTML = '';
+                            return this.initFormControls();
                         };
                         ColumnsMenu.prototype.ResizeControls = function () {
                             if (!this.displayed)
@@ -58,6 +90,39 @@ var MvcCore;
                         ColumnsMenu.prototype.removeShownEvents = function () {
                             document.removeEventListener('click', this.handlers.handleDocumentClick);
                             this.elms.form.removeEventListener('click', this.handlers.handleFormClick, true);
+                            return this;
+                        };
+                        ColumnsMenu.prototype.disableUsedColumns = function () {
+                            var e_1, _a, e_2, _b;
+                            if (this.serverConfig.ignoreDisabledColumns)
+                                return this;
+                            var filtering = this.grid.GetFiltering(), sorting = this.grid.GetSorting(), sortingSet = new Set();
+                            try {
+                                for (var sorting_1 = __values(sorting), sorting_1_1 = sorting_1.next(); !sorting_1_1.done; sorting_1_1 = sorting_1.next()) {
+                                    var _c = __read(sorting_1_1.value, 1), idColumn = _c[0];
+                                    sortingSet.add(idColumn);
+                                }
+                            }
+                            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                            finally {
+                                try {
+                                    if (sorting_1_1 && !sorting_1_1.done && (_a = sorting_1.return)) _a.call(sorting_1);
+                                }
+                                finally { if (e_1) throw e_1.error; }
+                            }
+                            try {
+                                for (var _d = __values(this.elms.inputs.entries()), _e = _d.next(); !_e.done; _e = _d.next()) {
+                                    var _f = __read(_e.value, 2), idColumn = _f[0], input = _f[1];
+                                    input.disabled = filtering.has(idColumn) || sortingSet.has(idColumn);
+                                }
+                            }
+                            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                            finally {
+                                try {
+                                    if (_e && !_e.done && (_b = _d.return)) _b.call(_d);
+                                }
+                                finally { if (e_2) throw e_2.error; }
+                            }
                             return this;
                         };
                         ColumnsMenu.prototype.addShownEvents = function () {
@@ -93,7 +158,7 @@ var MvcCore;
                             var sels = this.Static.SELECTORS;
                             var form = this.createElm('form', [sels.FORM_CLS], null, {
                                 method: 'POST',
-                                action: this.serverConfig.columnsStatesUrl
+                                action: this.serverConfig.urlColumnsStates
                             });
                             var head = this.createElm('div', [sels.FORM_HEAD_CLS], this.translator.Translate('displayColumns'));
                             this.elms.heading = form.appendChild(head);
@@ -112,21 +177,33 @@ var MvcCore;
                             return this;
                         };
                         ColumnsMenu.prototype.initFormControls = function () {
-                            var _a;
-                            var columnCfg, inputId, sels = this.Static.SELECTORS, baseId = sels.INPUT_ID_BASE, labelCls = sels.MENU_CTRL_CLS, label, text, span, checkbox;
-                            for (var idColumn in this.serverConfig.columns) {
-                                columnCfg = this.serverConfig.columns[idColumn];
-                                text = (_a = columnCfg.title) !== null && _a !== void 0 ? _a : columnCfg.headingName;
-                                if (text === idColumn)
-                                    continue;
-                                inputId = baseId + idColumn;
-                                label = this.createElm('label', [labelCls], null, { for: inputId });
-                                checkbox = this.createElm('input', [], null, { id: inputId, name: idColumn, type: 'checkbox' });
-                                checkbox.checked = !columnCfg.disabled;
-                                span = this.createElm('span', [], text);
-                                label.appendChild(checkbox);
-                                label.appendChild(span);
-                                this.elms.controls.appendChild(label);
+                            var e_3, _a;
+                            var _b;
+                            var columnCfg, inputId, idColumn, sels = this.Static.SELECTORS, baseId = sels.INPUT_ID_BASE, labelCls = sels.MENU_CTRL_CLS, label, text, span, checkbox;
+                            this.elms.inputs = new Map();
+                            try {
+                                for (var _c = __values(this.grid.GetOptions().GetColumnManager().GetAllServerColumnsSorted()), _d = _c.next(); !_d.done; _d = _c.next()) {
+                                    var columnCfg = _d.value;
+                                    idColumn = columnCfg.urlName;
+                                    text = (_b = columnCfg.title) !== null && _b !== void 0 ? _b : columnCfg.headingName;
+                                    if (text === idColumn)
+                                        continue;
+                                    inputId = baseId + idColumn;
+                                    label = this.createElm('label', [labelCls], null, { for: inputId });
+                                    checkbox = this.createElm('input', [], null, { id: inputId, name: idColumn, type: 'checkbox' });
+                                    checkbox.checked = !columnCfg.disabled;
+                                    span = this.createElm('span', [], text);
+                                    this.elms.inputs.set(idColumn, label.appendChild(checkbox));
+                                    label.appendChild(span);
+                                    this.elms.controls.appendChild(label);
+                                }
+                            }
+                            catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                            finally {
+                                try {
+                                    if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+                                }
+                                finally { if (e_3) throw e_3.error; }
                             }
                             return this;
                         };
@@ -163,11 +240,6 @@ var MvcCore;
                             return this;
                         };
                         ColumnsMenu.prototype.handleOpen = function (e) {
-                            this.grid.ExecChange(800, [["sidloFirmyNazevFirmy", 1], ["kod", 0]], new Map([
-                                ["sidloFirmyNazevFirmy", new Map([
-                                        [AgGrids.Enums.Operator.LIKE, ["A%"]]
-                                    ])]
-                            ]));
                             if (!this.elms.form)
                                 this.initFormElements().initFormEvents();
                             this.stopEvent(e).Show();

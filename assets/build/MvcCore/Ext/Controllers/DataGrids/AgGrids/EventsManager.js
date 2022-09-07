@@ -38,6 +38,8 @@ var MvcCore;
                     var EventsManager = /** @class */ (function () {
                         function EventsManager(grid) {
                             var e_1, _a, e_2, _b;
+                            var _newTarget = this.constructor;
+                            this.Static = _newTarget;
                             this.grid = grid;
                             var serverConfig = grid.GetServerConfig();
                             this.multiSorting = ((serverConfig.sortingMode & AgGrids.Enums.SortingMode.SORT_MULTIPLE_COLUMNS) != 0);
@@ -84,6 +86,8 @@ var MvcCore;
                                 finally { if (e_2) throw e_2.error; }
                             }
                             this.handlers = new Map();
+                            this.columnsChanges = new Map();
+                            this.columnsChangesSending = false;
                         }
                         EventsManager.prototype.AddEventListener = function (eventName, handler) {
                             var handlers = this.handlers.has(eventName)
@@ -147,10 +151,71 @@ var MvcCore;
                             });
                         };
                         EventsManager.prototype.HandleColumnResized = function (event) {
-                            //console.log(event);
+                            if (event.source !== 'uiColumnDragged' || !event.finished)
+                                return;
+                            if (this.columnsChangesTimeout)
+                                clearTimeout(this.columnsChangesTimeout);
+                            var columnId = event.column.getColId(), newWidth = event.column.getActualWidth();
+                            if (this.columnsChanges.has(columnId)) {
+                                this.columnsChanges.get(columnId).width = newWidth;
+                            }
+                            else {
+                                this.columnsChanges.set(columnId, {
+                                    width: newWidth
+                                });
+                            }
+                            this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
                         };
                         EventsManager.prototype.HandleColumnMoved = function (event) {
-                            //console.log(event);
+                            if (this.columnsChangesTimeout)
+                                clearTimeout(this.columnsChangesTimeout);
+                            var columnId = event.column.getColId(), columnConfig = this.grid.GetServerConfig().columns[columnId], columnsManager = this.grid.GetOptions().GetColumnManager(), activeColumnsSorted = columnsManager.GetActiveServerColumnsSorted(), allColumnsSorted = columnsManager.GetAllServerColumnsSorted(), activeIndexOld = columnConfig.activeColumnIndex, activeIndexNex = event.toIndex, allIndexOld = columnConfig.columnIndex, allIndexNew = allColumnsSorted[activeIndexNex].columnIndex;
+                            // přehodit reálné all indexy
+                            var _a = __read(allColumnsSorted.splice(allIndexOld, 1), 1), allColumnCfg = _a[0];
+                            allColumnsSorted.splice(allIndexNew, 0, allColumnCfg);
+                            var _b = __read(activeColumnsSorted.splice(activeIndexOld, 1), 1), activeColumnCfg = _b[0];
+                            activeColumnsSorted.splice(activeIndexNex, 0, activeColumnCfg);
+                            for (var i = 0, l = allColumnsSorted.length; i < l; i++) {
+                                columnConfig = allColumnsSorted[i];
+                                columnConfig.columnIndex = i;
+                                columnId = columnConfig.urlName;
+                                if (this.columnsChanges.has(columnId)) {
+                                    this.columnsChanges.get(columnId).index = i;
+                                }
+                                else {
+                                    this.columnsChanges.set(columnId, {
+                                        index: i
+                                    });
+                                }
+                            }
+                            for (var i = 0, l = activeColumnsSorted.length; i < l; i++)
+                                activeColumnsSorted[i].activeColumnIndex = i;
+                            columnsManager.SetActiveServerColumnsSorted(activeColumnsSorted);
+                            columnsManager.SetAllServerColumnsSorted(allColumnsSorted);
+                            this.grid.GetColumnsMenu().RedrawControls();
+                            this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
+                        };
+                        EventsManager.prototype.handleColumnChangesSent = function () {
+                            if (this.columnsChangesSending)
+                                return;
+                            var plainObj = AgGrids.Helpers.ConvertMap2Object(this.columnsChanges);
+                            this.columnsChanges = new Map();
+                            Ajax.load({
+                                url: this.grid.GetServerConfig().urlColumnsChanges,
+                                data: { changes: plainObj },
+                                type: 'json',
+                                method: 'POST',
+                                success: this.handleColumnChangesResponse.bind(this),
+                                error: this.handleColumnChangesResponse.bind(this)
+                            });
+                        };
+                        EventsManager.prototype.handleColumnChangesResponse = function () {
+                            this.columnsChangesSending = false;
+                            if (this.columnsChanges.size === 0)
+                                return;
+                            if (this.columnsChangesTimeout)
+                                clearTimeout(this.columnsChangesTimeout);
+                            this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
                         };
                         EventsManager.prototype.HandleFilterMenuChange = function (columnId, filteringItem) {
                             var filtering = this.grid.GetFiltering(), filterRemoving = filteringItem == null || filteringItem.size === 0, filterHeader = this.grid.GetFilterHeaders().get(columnId), filterMenu = this.grid.GetFilterMenus().get(columnId);
@@ -305,7 +370,7 @@ var MvcCore;
                                 sorting: newSorting
                             });
                         };
-                        EventsManager.prototype.HandleGridSizeChanged = function (event) {
+                        EventsManager.prototype.HandleGridSizeChanged = function (viewPort, event) {
                             // get the current grids width
                             var gridElm = this.grid.GetOptions().GetElements().agGridElement, gridElmParent = gridElm.parentNode;
                             var gridWidth = gridElmParent.offsetWidth;
@@ -569,6 +634,7 @@ var MvcCore;
                             }
                             return [rawValue, operator];
                         };
+                        EventsManager.COLUMN_CHANGES_TIMEOUT = 2000;
                         return EventsManager;
                     }());
                     AgGrids.EventsManager = EventsManager;

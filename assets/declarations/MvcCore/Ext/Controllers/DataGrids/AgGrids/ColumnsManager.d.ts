@@ -13,7 +13,13 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected serverConfig: Interfaces.IServerConfig;
         protected initData: Interfaces.IServerResponse;
         protected viewHelper: ColumnsManagers.ViewHelper;
+        protected allServerColumnsSorted: Interfaces.IServerConfigs.IColumn[];
+        protected activeServerColumnsSorted: Interfaces.IServerConfigs.IColumn[];
         constructor(grid: AgGrid);
+        SetAllServerColumnsSorted(allServerColumnsSorted: Interfaces.IServerConfigs.IColumn[]): this;
+        GetAllServerColumnsSorted(): Interfaces.IServerConfigs.IColumn[];
+        SetActiveServerColumnsSorted(activeServerColumnsSorted: Interfaces.IServerConfigs.IColumn[]): this;
+        GetActiveServerColumnsSorted(): Interfaces.IServerConfigs.IColumn[];
         SetAgColumnsConfigs(gridColumns: Map<string, AgGrids.Types.GridColumn>): this;
         GetAgColumnsConfigs(): Map<string, AgGrids.Types.GridColumn>;
         SetAgColumnDefaults(defaultColDef: agGrid.ColDef): this;

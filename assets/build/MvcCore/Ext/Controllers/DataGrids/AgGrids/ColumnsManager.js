@@ -56,7 +56,6 @@ var MvcCore;
                                 editable: false,
                                 flex: 1,
                                 headerComponent: AgGrids.ColumnsManagers.SortHeader,
-                                tooltipComponent: AgGrids.ToolTip
                             };
                             this.sortHeaderDefaults = {
                                 renderDirection: true,
@@ -82,7 +81,23 @@ var MvcCore;
                                 this.filterHeaderDefaults.submitDelayMs = 0;
                             }
                             this.filterMenuDefaults.isTouchDevice = isTouchDevice;
+                            this.allServerColumnsSorted = [];
+                            this.activeServerColumnsSorted = [];
                         }
+                        ColumnsManager.prototype.SetAllServerColumnsSorted = function (allServerColumnsSorted) {
+                            this.allServerColumnsSorted = allServerColumnsSorted;
+                            return this;
+                        };
+                        ColumnsManager.prototype.GetAllServerColumnsSorted = function () {
+                            return this.allServerColumnsSorted;
+                        };
+                        ColumnsManager.prototype.SetActiveServerColumnsSorted = function (activeServerColumnsSorted) {
+                            this.activeServerColumnsSorted = activeServerColumnsSorted;
+                            return this;
+                        };
+                        ColumnsManager.prototype.GetActiveServerColumnsSorted = function () {
+                            return this.activeServerColumnsSorted;
+                        };
                         ColumnsManager.prototype.SetAgColumnsConfigs = function (gridColumns) {
                             this.agColumnsConfigs = gridColumns;
                             return this;
@@ -110,24 +125,37 @@ var MvcCore;
                             return this;
                         };
                         ColumnsManager.prototype.initColumns = function () {
-                            var e_1, _a;
+                            var e_1, _a, e_2, _b;
                             this.agColumnsConfigs = new Map();
-                            var agColumn, serverColumnCfg, serverColumns = this.serverConfig.columns;
+                            var agColumn, serverColumnCfg, columnUrlName;
+                            this.allServerColumnsSorted = this.helpers.SortConfigColumns(this.serverConfig.columns);
                             this.grid.SetSortHeaders(new Map());
                             this.grid.SetFilterHeaders(new Map());
                             this.grid.SetFilterMenus(new Map());
-                            for (var columnUrlName in serverColumns) {
-                                serverColumnCfg = serverColumns[columnUrlName];
-                                if (serverColumnCfg.disabled === true)
-                                    continue;
-                                agColumn = this.initColumn(serverColumnCfg);
-                                this.agColumnsConfigs.set(columnUrlName, agColumn);
+                            try {
+                                for (var _c = __values(this.allServerColumnsSorted), _d = _c.next(); !_d.done; _d = _c.next()) {
+                                    var serverColumnCfg = _d.value;
+                                    columnUrlName = serverColumnCfg.urlName;
+                                    if (serverColumnCfg.disabled === true)
+                                        continue;
+                                    serverColumnCfg.activeColumnIndex = this.activeServerColumnsSorted.length;
+                                    this.activeServerColumnsSorted.push(serverColumnCfg);
+                                    agColumn = this.initColumn(serverColumnCfg);
+                                    this.agColumnsConfigs.set(columnUrlName, agColumn);
+                                }
+                            }
+                            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                            finally {
+                                try {
+                                    if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+                                }
+                                finally { if (e_1) throw e_1.error; }
                             }
                             var sortIndex = 0;
                             try {
-                                for (var _b = __values(this.initData.sorting), _c = _b.next(); !_c.done; _c = _b.next()) {
-                                    var sortItem = _c.value;
-                                    var _d = __read(sortItem, 2), columnUrlName = _d[0], sortDirection = _d[1];
+                                for (var _e = __values(this.initData.sorting), _f = _e.next(); !_f.done; _f = _e.next()) {
+                                    var sortItem = _f.value;
+                                    var _g = __read(sortItem, 2), columnUrlName = _g[0], sortDirection = _g[1];
                                     agColumn = this.agColumnsConfigs.get(columnUrlName);
                                     var headerComponentParams = agColumn.headerComponentParams;
                                     headerComponentParams.direction = sortDirection;
@@ -135,12 +163,12 @@ var MvcCore;
                                     sortIndex++;
                                 }
                             }
-                            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                            catch (e_2_1) { e_2 = { error: e_2_1 }; }
                             finally {
                                 try {
-                                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                                    if (_f && !_f.done && (_b = _e.return)) _b.call(_e);
                                 }
-                                finally { if (e_1) throw e_1.error; }
+                                finally { if (e_2) throw e_2.error; }
                             }
                             return this;
                         };
@@ -168,7 +196,7 @@ var MvcCore;
                             return this;
                         };
                         ColumnsManager.prototype.initColumnFiltering = function (column, serverColumnCfg) {
-                            var e_2, _a, e_3, _b;
+                            var e_3, _a, e_4, _b;
                             column.filter = (serverColumnCfg.filter !== AgGrids.Enums.FilteringMode.DISABLED &&
                                 serverColumnCfg.filter !== false);
                             if (!column.filter)
@@ -193,27 +221,27 @@ var MvcCore;
                                     var _e = __read(_d.value, 2), filteringMode = _e[0], controlTypes = _e[1];
                                     if ((columnFiltering & filteringMode) != 0) {
                                         try {
-                                            for (var controlTypes_1 = (e_3 = void 0, __values(controlTypes)), controlTypes_1_1 = controlTypes_1.next(); !controlTypes_1_1.done; controlTypes_1_1 = controlTypes_1.next()) {
+                                            for (var controlTypes_1 = (e_4 = void 0, __values(controlTypes)), controlTypes_1_1 = controlTypes_1.next(); !controlTypes_1_1.done; controlTypes_1_1 = controlTypes_1.next()) {
                                                 var controlType = controlTypes_1_1.value;
                                                 columnControlTypes |= controlType;
                                             }
                                         }
-                                        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                                        catch (e_4_1) { e_4 = { error: e_4_1 }; }
                                         finally {
                                             try {
                                                 if (controlTypes_1_1 && !controlTypes_1_1.done && (_b = controlTypes_1.return)) _b.call(controlTypes_1);
                                             }
-                                            finally { if (e_3) throw e_3.error; }
+                                            finally { if (e_4) throw e_4.error; }
                                         }
                                     }
                                 }
                             }
-                            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                            catch (e_3_1) { e_3 = { error: e_3_1 }; }
                             finally {
                                 try {
                                     if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
                                 }
-                                finally { if (e_2) throw e_2.error; }
+                                finally { if (e_3) throw e_3.error; }
                             }
                             var filterMenuParams = __assign(__assign({}, this.filterMenuDefaults), {
                                 grid: this.grid,

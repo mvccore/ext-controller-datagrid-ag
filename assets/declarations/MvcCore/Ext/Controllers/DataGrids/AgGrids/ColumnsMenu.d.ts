@@ -15,12 +15,9 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         };
         Static: typeof ColumnsMenu;
         protected grid: AgGrid;
-        protected helpers: Helpers;
         protected options: Options;
-        protected eventsManager: EventsManager;
         protected translator: Translator;
         protected serverConfig: Interfaces.IServerConfig;
-        protected isTouchDevice: boolean;
         protected elms: Interfaces.IColumnsMenuElements;
         protected displayed: boolean;
         protected formClick: boolean;
@@ -31,8 +28,10 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         constructor(grid: AgGrid);
         Hide(): this;
         Show(): this;
+        RedrawControls(): this;
         ResizeControls(): this;
         protected removeShownEvents(): this;
+        protected disableUsedColumns(): this;
         protected addShownEvents(): this;
         protected handleDocumentClick(e: MouseEvent): void;
         protected handleFormClick(e: MouseEvent): void;

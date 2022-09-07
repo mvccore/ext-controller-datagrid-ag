@@ -126,6 +126,67 @@ var MvcCore;
                             }
                             return allowedOperators;
                         };
+                        Helpers.prototype.SortConfigColumns = function (serverColumns) {
+                            var e_2, _a, e_3, _b, e_4, _c;
+                            var indexedMap = new Map(), notIndexedSet = new Set(), serverColumnCfg, columnIndex;
+                            for (var columnUrlName in serverColumns) {
+                                serverColumnCfg = serverColumns[columnUrlName];
+                                columnIndex = serverColumnCfg.columnIndex;
+                                if (columnIndex == null) {
+                                    notIndexedSet.add(serverColumnCfg);
+                                }
+                                else {
+                                    if (indexedMap.has(columnIndex)) {
+                                        indexedMap.get(columnIndex).push(serverColumnCfg);
+                                    }
+                                    else {
+                                        indexedMap.set(columnIndex, [serverColumnCfg]);
+                                    }
+                                }
+                            }
+                            var result = [], index = 0, indexedMapKeys = Array.from(indexedMap.keys()).sort();
+                            try {
+                                for (var indexedMapKeys_1 = __values(indexedMapKeys), indexedMapKeys_1_1 = indexedMapKeys_1.next(); !indexedMapKeys_1_1.done; indexedMapKeys_1_1 = indexedMapKeys_1.next()) {
+                                    var indexedMapKey = indexedMapKeys_1_1.value;
+                                    try {
+                                        for (var _d = (e_3 = void 0, __values(indexedMap.get(indexedMapKey))), _e = _d.next(); !_e.done; _e = _d.next()) {
+                                            var serverColumnCfg = _e.value;
+                                            serverColumnCfg.columnIndex = index++;
+                                            result.push(serverColumnCfg);
+                                        }
+                                    }
+                                    catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                                    finally {
+                                        try {
+                                            if (_e && !_e.done && (_b = _d.return)) _b.call(_d);
+                                        }
+                                        finally { if (e_3) throw e_3.error; }
+                                    }
+                                }
+                            }
+                            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                            finally {
+                                try {
+                                    if (indexedMapKeys_1_1 && !indexedMapKeys_1_1.done && (_a = indexedMapKeys_1.return)) _a.call(indexedMapKeys_1);
+                                }
+                                finally { if (e_2) throw e_2.error; }
+                            }
+                            try {
+                                for (var notIndexedSet_1 = __values(notIndexedSet), notIndexedSet_1_1 = notIndexedSet_1.next(); !notIndexedSet_1_1.done; notIndexedSet_1_1 = notIndexedSet_1.next()) {
+                                    var serverColumnCfg = notIndexedSet_1_1.value;
+                                    serverColumnCfg.columnIndex = index++;
+                                    result.push(serverColumnCfg);
+                                }
+                            }
+                            catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                            finally {
+                                try {
+                                    if (notIndexedSet_1_1 && !notIndexedSet_1_1.done && (_c = notIndexedSet_1.return)) _c.call(notIndexedSet_1);
+                                }
+                                finally { if (e_4) throw e_4.error; }
+                            }
+                            return result;
+                        };
                         /**
                          * Check if given value contains any LIKE/NOT LIKE special
                          * character: `%` or `_` or escaped like this: `[%]` or `[_]`.
@@ -159,7 +220,7 @@ var MvcCore;
                             return new Map(data);
                         };
                         Helpers.ConvertMap2Object = function (map) {
-                            var e_2, _a;
+                            var e_5, _a;
                             var obj = {};
                             try {
                                 for (var map_1 = __values(map), map_1_1 = map_1.next(); !map_1_1.done; map_1_1 = map_1.next()) {
@@ -167,12 +228,12 @@ var MvcCore;
                                     obj[key] = value;
                                 }
                             }
-                            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                            catch (e_5_1) { e_5 = { error: e_5_1 }; }
                             finally {
                                 try {
                                     if (map_1_1 && !map_1_1.done && (_a = map_1.return)) _a.call(map_1);
                                 }
-                                finally { if (e_2) throw e_2.error; }
+                                finally { if (e_5) throw e_5.error; }
                             }
                             return obj;
                         };

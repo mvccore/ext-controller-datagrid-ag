@@ -44,7 +44,7 @@
     line-height:15px;
     text-align:center;
     font-size:13px;
-    background:#eee;
+	color:#fff;
 }
 .ag-root .filter-active .filter-header .filter-remove {
 	display:block;

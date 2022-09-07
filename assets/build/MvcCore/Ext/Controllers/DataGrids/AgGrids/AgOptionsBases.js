@@ -68,8 +68,8 @@ var MvcCore;
                         AgOptionsBases.prototype.initEvents = function () {
                             this.agOptions.onColumnResized = this.eventsManager.HandleColumnResized.bind(this.eventsManager);
                             this.agOptions.onColumnMoved = this.eventsManager.HandleColumnMoved.bind(this.eventsManager);
-                            this.agOptions.onViewportChanged = this.eventsManager.HandleGridSizeChanged.bind(this.eventsManager);
-                            this.agOptions.onGridSizeChanged = this.eventsManager.HandleGridSizeChanged.bind(this.eventsManager);
+                            this.agOptions.onViewportChanged = this.eventsManager.HandleGridSizeChanged.bind(this.eventsManager, true);
+                            this.agOptions.onGridSizeChanged = this.eventsManager.HandleGridSizeChanged.bind(this.eventsManager, false);
                             this.agOptions.onSelectionChanged = this.eventsManager.HandleSelectionChange.bind(this.eventsManager);
                             return this;
                         };

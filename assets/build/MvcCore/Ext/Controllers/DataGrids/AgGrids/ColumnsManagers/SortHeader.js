@@ -35,11 +35,11 @@ var MvcCore;
                             };
                             SortHeader.prototype.SetDirection = function (direction) {
                                 this.direction = direction;
-                                if (direction == null) {
-                                    this.setSortInactive();
+                                if (direction != null) {
+                                    this.setSortActive();
                                 }
                                 else {
-                                    this.setSortActive();
+                                    this.setSortInactive();
                                 }
                                 return this;
                             };

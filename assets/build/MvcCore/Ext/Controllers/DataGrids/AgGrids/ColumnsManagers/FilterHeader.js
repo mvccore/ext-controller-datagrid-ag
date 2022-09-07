@@ -41,6 +41,7 @@ var MvcCore;
                             function FilterHeader() {
                                 var _newTarget = this.constructor;
                                 this.Static = _newTarget;
+                                this.activeState = false;
                             }
                             FilterHeader.prototype.init = function (agParams) {
                                 this
@@ -54,6 +55,10 @@ var MvcCore;
                             };
                             FilterHeader.prototype.SetText = function (filteringItem) {
                                 var e_1, _a, e_2, _b;
+                                var newStateActive = filteringItem != null;
+                                if (this.activeState === newStateActive)
+                                    return this;
+                                this.activeState = newStateActive;
                                 var input = this.elms.input;
                                 if (filteringItem == null) {
                                     input.value = '';

@@ -181,6 +181,14 @@ var MvcCore;
                     AgGrid.prototype.GetColumnsMenu = function () {
                         return this.columnsMenu;
                     };
+                    AgGrid.prototype.AddEventListener = function (eventName, handler) {
+                        this.eventsManager.AddEventListener(eventName, handler);
+                        return this;
+                    };
+                    AgGrid.prototype.RemoveEventListener = function (eventName, handler) {
+                        this.eventsManager.RemoveEventListener(eventName, handler);
+                        return this;
+                    };
                     AgGrid.prototype.initSubClasses = function () {
                         this.helpers = new DataGrids.AgGrids.Helpers(this);
                         this.options = new DataGrids.AgGrids.Options(this);

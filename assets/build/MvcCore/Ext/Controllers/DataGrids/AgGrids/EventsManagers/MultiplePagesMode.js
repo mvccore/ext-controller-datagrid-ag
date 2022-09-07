@@ -50,6 +50,10 @@ var MvcCore;
                                 dataSource.Load();
                                 e.cancelBubble = true;
                                 e.preventDefault();
+                                e.stopPropagation();
+                                this.FireHandlers("pageChange", {
+                                    offset: offset
+                                });
                             };
                             return MultiplePagesMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManager));

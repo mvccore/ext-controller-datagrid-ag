@@ -83,10 +83,68 @@ var MvcCore;
                                 }
                                 finally { if (e_2) throw e_2.error; }
                             }
+                            this.handlers = new Map();
                         }
+                        EventsManager.prototype.AddEventListener = function (eventName, handler) {
+                            var handlers = this.handlers.has(eventName)
+                                ? this.handlers.get(eventName)
+                                : [];
+                            handlers.push(handler);
+                            this.handlers.set(eventName, handlers);
+                            return this;
+                        };
+                        EventsManager.prototype.RemoveEventListener = function (eventName, handler) {
+                            var e_3, _a;
+                            var handlers = this.handlers.has(eventName)
+                                ? this.handlers.get(eventName)
+                                : [];
+                            var newHandlers = [];
+                            try {
+                                for (var handlers_1 = __values(handlers), handlers_1_1 = handlers_1.next(); !handlers_1_1.done; handlers_1_1 = handlers_1.next()) {
+                                    var handlersItem = handlers_1_1.value;
+                                    if (handlersItem !== handler)
+                                        newHandlers.push(handlersItem);
+                                }
+                            }
+                            catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                            finally {
+                                try {
+                                    if (handlers_1_1 && !handlers_1_1.done && (_a = handlers_1.return)) _a.call(handlers_1);
+                                }
+                                finally { if (e_3) throw e_3.error; }
+                            }
+                            this.handlers.set(eventName, newHandlers);
+                            return this;
+                        };
+                        EventsManager.prototype.FireHandlers = function (eventName, event) {
+                            var e_4, _a;
+                            if (!this.handlers.has(eventName))
+                                return this;
+                            var handlers = this.handlers.get(eventName);
+                            event.grid = this.grid;
+                            event.eventName = eventName;
+                            try {
+                                for (var handlers_2 = __values(handlers), handlers_2_1 = handlers_2.next(); !handlers_2_1.done; handlers_2_1 = handlers_2.next()) {
+                                    var handler = handlers_2_1.value;
+                                    try {
+                                        handler(event);
+                                    }
+                                    catch (e) { }
+                                }
+                            }
+                            catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                            finally {
+                                try {
+                                    if (handlers_2_1 && !handlers_2_1.done && (_a = handlers_2.return)) _a.call(handlers_2);
+                                }
+                                finally { if (e_4) throw e_4.error; }
+                            }
+                            return this;
+                        };
                         EventsManager.prototype.HandleSelectionChange = function (event) {
-                            this.grid.GetColumnsMenu().Hide();
-                            console.log(event);
+                            this.FireHandlers("selectionChange", {
+                                selectedRows: this.grid.GetGridApi().getSelectedRows()
+                            });
                         };
                         EventsManager.prototype.HandleColumnResized = function (event) {
                             //console.log(event);
@@ -111,7 +169,7 @@ var MvcCore;
                             this.firefiltering(filtering);
                         };
                         EventsManager.prototype.HandleFilterHeaderChange = function (columnId, rawInputValue) {
-                            var e_3, _a, _b;
+                            var e_5, _a, _b;
                             var rawInputIsNull = rawInputValue == null, rawInputValue = rawInputIsNull ? '' : rawInputValue.trim(), filterRemoving = rawInputValue === '', serverConfig = this.grid.GetServerConfig(), valuesDelimiter = serverConfig.urlSegments.urlDelimiterValues, rawValues = filterRemoving ? [] : rawInputValue.split(valuesDelimiter), serverColumnCfg = serverConfig.columns[columnId], columnFilterCfg = serverColumnCfg.filter, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = columnFilterCfg === columnFilterCfgInt, allowedOperators = (columnFilterCfgIsInt && this.columnsAllowedOperators.has(columnId)
                                 ? this.columnsAllowedOperators.get(columnId)
                                 : this.defaultAllowedOperators), columnAllowNullFilter = columnFilterCfgIsInt && ((columnFilterCfgInt & AgGrids.Enums.FilteringMode.ALLOW_NULL) != 0), filterValues, filterOperatorValues, operatorsAndPrefixes, filtering = this.grid.GetFiltering(), valueIsStringNull, operator, operatorCfg;
@@ -152,12 +210,12 @@ var MvcCore;
                                             filterValues.set(operator, [filterOperatorValues[0]]);
                                     }
                                 }
-                                catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                                catch (e_5_1) { e_5 = { error: e_5_1 }; }
                                 finally {
                                     try {
                                         if (rawValues_1_1 && !rawValues_1_1.done && (_a = rawValues_1.return)) _a.call(rawValues_1);
                                     }
-                                    finally { if (e_3) throw e_3.error; }
+                                    finally { if (e_5) throw e_5.error; }
                                 }
                                 if (filterValues.size === 0) {
                                     filterRemoving = true;
@@ -194,10 +252,13 @@ var MvcCore;
                                 var dataSourceMp = this.grid.GetDataSource();
                                 dataSourceMp.Load();
                             }
+                            this.FireHandlers("filterChange", {
+                                filtering: filtering
+                            });
                             return this;
                         };
                         EventsManager.prototype.HandleSortChange = function (columnId, direction) {
-                            var e_4, _a;
+                            var e_6, _a;
                             var sortRemoving = direction == null, sortHeaders = this.grid.GetSortHeaders(), newSorting = [], 
                             //agColumnsState: agGrid.ColumnState[] = [],
                             oldSorting = [];
@@ -217,12 +278,12 @@ var MvcCore;
                                     newSorting.push([sortColId, sortDir]);
                                 }
                             }
-                            catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                            catch (e_6_1) { e_6 = { error: e_6_1 }; }
                             finally {
                                 try {
                                     if (oldSorting_1_1 && !oldSorting_1_1.done && (_a = oldSorting_1.return)) _a.call(oldSorting_1);
                                 }
-                                finally { if (e_4) throw e_4.error; }
+                                finally { if (e_6) throw e_6.error; }
                             }
                             for (var i = 0, sortColId = '', l = newSorting.length; i < l; i++) {
                                 var _c = __read(newSorting[i], 2), sortColId = _c[0], sortDir = _c[1];
@@ -240,6 +301,9 @@ var MvcCore;
                                 var dataSourceMp = this.grid.GetDataSource();
                                 dataSourceMp.Load();
                             }
+                            this.FireHandlers("sortChange", {
+                                sorting: newSorting
+                            });
                         };
                         EventsManager.prototype.HandleGridSizeChanged = function (event) {
                             // get the current grids width
@@ -279,15 +343,31 @@ var MvcCore;
                             return this;
                         };
                         EventsManager.prototype.HandleUrlChange = function (e) {
-                            var dataSource = this.grid.GetDataSource(), reqDataRaw = e.state, reqData = AgGrids.DataSource.RetypeRequestObjects2Maps(reqDataRaw);
+                            var dataSource = this.grid.GetDataSource(), reqDataRaw = e.state, oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(AgGrids.DataSource.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(reqDataRaw.sorting), reqData = AgGrids.DataSource.RetypeRequestObjects2Maps(reqDataRaw);
                             this.grid
                                 .SetSorting(reqData.sorting)
                                 .SetFiltering(reqData.filtering);
                             this.handleUrlChangeSortsFilters(reqData);
                             dataSource.ExecRequest(reqDataRaw, false);
+                            if (oldOffset !== reqData.offset) {
+                                this.FireHandlers("pageChange", {
+                                    offset: reqData.offset
+                                });
+                            }
+                            if (oldFiltering !== newFiltering) {
+                                console.log(oldFiltering, newFiltering);
+                                this.FireHandlers("filterChange", {
+                                    filtering: reqData.filtering
+                                });
+                            }
+                            if (oldSorting !== newSorting) {
+                                this.FireHandlers("sortChange", {
+                                    sorting: reqData.sorting
+                                });
+                            }
                         };
                         EventsManager.prototype.HandleResponseLoaded = function (response) {
-                            var e_5, _a, e_6, _b, e_7, _c;
+                            var e_7, _a, e_8, _b, e_9, _c;
                             this.grid
                                 .SetOffset(response.offset)
                                 .SetTotalCount(response.totalCount)
@@ -304,12 +384,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_5_1) { e_5 = { error: e_5_1 }; }
+                            catch (e_7_1) { e_7 = { error: e_7_1 }; }
                             finally {
                                 try {
                                     if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
                                 }
-                                finally { if (e_5) throw e_5.error; }
+                                finally { if (e_7) throw e_7.error; }
                             }
                             try {
                                 for (var _g = __values(this.grid.GetFilterMenus().entries()), _h = _g.next(); !_h.done; _h = _g.next()) {
@@ -322,12 +402,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_6_1) { e_6 = { error: e_6_1 }; }
+                            catch (e_8_1) { e_8 = { error: e_8_1 }; }
                             finally {
                                 try {
                                     if (_h && !_h.done && (_b = _g.return)) _b.call(_g);
                                 }
-                                finally { if (e_6) throw e_6.error; }
+                                finally { if (e_8) throw e_8.error; }
                             }
                             var sortHeaders = this.grid.GetSortHeaders(), index = 0;
                             try {
@@ -341,16 +421,16 @@ var MvcCore;
                                     index++;
                                 }
                             }
-                            catch (e_7_1) { e_7 = { error: e_7_1 }; }
+                            catch (e_9_1) { e_9 = { error: e_9_1 }; }
                             finally {
                                 try {
                                     if (_l && !_l.done && (_c = _k.return)) _c.call(_k);
                                 }
-                                finally { if (e_7) throw e_7.error; }
+                                finally { if (e_9) throw e_9.error; }
                             }
                         };
                         EventsManager.prototype.handleUrlChangeSortsFilters = function (reqData) {
-                            var e_8, _a, e_9, _b, e_10, _c;
+                            var e_10, _a, e_11, _b, e_12, _c;
                             // set up sort headers:
                             var sortHeaders = this.grid.GetSortHeaders(), activeSortItems = new Map(), sequence = 0;
                             try {
@@ -359,12 +439,12 @@ var MvcCore;
                                     activeSortItems.set(columnId, [sortDir, sequence++]);
                                 }
                             }
-                            catch (e_8_1) { e_8 = { error: e_8_1 }; }
+                            catch (e_10_1) { e_10 = { error: e_10_1 }; }
                             finally {
                                 try {
                                     if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
                                 }
-                                finally { if (e_8) throw e_8.error; }
+                                finally { if (e_10) throw e_10.error; }
                             }
                             try {
                                 for (var _g = __values(sortHeaders.entries()), _h = _g.next(); !_h.done; _h = _g.next()) {
@@ -378,12 +458,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_9_1) { e_9 = { error: e_9_1 }; }
+                            catch (e_11_1) { e_11 = { error: e_11_1 }; }
                             finally {
                                 try {
                                     if (_h && !_h.done && (_b = _g.return)) _b.call(_g);
                                 }
-                                finally { if (e_9) throw e_9.error; }
+                                finally { if (e_11) throw e_11.error; }
                             }
                             // set up filtering inputs:
                             var filterInputs = this.grid.GetFilterHeaders();
@@ -398,12 +478,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_10_1) { e_10 = { error: e_10_1 }; }
+                            catch (e_12_1) { e_12 = { error: e_12_1 }; }
                             finally {
                                 try {
                                     if (_m && !_m.done && (_c = _l.return)) _c.call(_l);
                                 }
-                                finally { if (e_10) throw e_10.error; }
+                                finally { if (e_12) throw e_12.error; }
                             }
                             return this;
                         };
@@ -423,7 +503,7 @@ var MvcCore;
                             return operatorsAndPrefixes;
                         };
                         EventsManager.prototype.getOperatorByRawValue = function (rawValue, operatorsAndPrefixes, columnFilterCfg) {
-                            var e_11, _a;
+                            var e_13, _a;
                             var operator = null, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = columnFilterCfg === columnFilterCfgInt, columnFilterCfgIsBool = !columnFilterCfgIsInt;
                             try {
                                 for (var _b = __values(operatorsAndPrefixes.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
@@ -451,12 +531,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_11_1) { e_11 = { error: e_11_1 }; }
+                            catch (e_13_1) { e_13 = { error: e_13_1 }; }
                             finally {
                                 try {
                                     if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                                 }
-                                finally { if (e_11) throw e_11.error; }
+                                finally { if (e_13) throw e_13.error; }
                             }
                             return [rawValue, operator];
                         };

@@ -12,6 +12,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.ColumnsManagers {
         protected columnId: string;
         protected elms: AgGrids.Interfaces.IFilterHeaderElements;
         protected activeFilterClsRegExp: RegExp;
+        protected activeState: boolean;
         protected handlers: {
             handleSubmit?: (e: MouseEvent) => void;
             handleFocus?: (e: FocusEvent) => void;

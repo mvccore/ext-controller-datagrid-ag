@@ -9,7 +9,11 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected helpers: Helpers;
         protected likeOperatorsAndPrefixes: Map<Enums.Operator, string>;
         protected notLikeOperatorsAndPrefixes: Map<Enums.Operator, string>;
+        protected handlers: Map<Types.GridEventName, Types.GridEventHandler[]>;
         constructor(grid: AgGrid);
+        AddEventListener<K extends keyof Interfaces.IGridEvensHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.IGridEvensHandlersMap[K]) => void): this;
+        RemoveEventListener<K extends keyof Interfaces.IGridEvensHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.IGridEvensHandlersMap[K]) => void): this;
+        FireHandlers(eventName: Types.GridEventName, event: Interfaces.IGridEvent): this;
         HandleSelectionChange(event: agGrid.SelectionChangedEvent<any>): void;
         HandleColumnResized(event: agGrid.ColumnResizedEvent<any>): void;
         HandleColumnMoved(event: agGrid.ColumnMovedEvent<any>): void;

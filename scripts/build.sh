@@ -9,6 +9,9 @@ cd ./node_modules/@mvccore/ext-controller-datagrid-ag-js
 npm update --dev
 sleep 1
 
+rm -r ../../../assets/build
+rm -r ../../../assets/declarations
+
 npm run build
 sleep 1
 

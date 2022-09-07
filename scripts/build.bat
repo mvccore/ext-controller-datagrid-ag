@@ -12,6 +12,9 @@ call npm update --dev
 call npm update --dev
 @timeout 1
 
+@rmdir ..\..\..\assets\build /s /q
+@rmdir ..\..\..\assets\declarations /s /q
+
 call npm run build
 @timeout 1
 

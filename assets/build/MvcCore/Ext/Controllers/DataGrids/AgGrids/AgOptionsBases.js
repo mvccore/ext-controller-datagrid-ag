@@ -41,6 +41,7 @@ var MvcCore;
                                 suppressColumnVirtualisation: true,
                                 debounceVerticalScrollbar: true,
                                 alwaysShowVerticalScroll: true,
+                                suppressCellFocus: true,
                             };
                             if (this.helpers.IsChromeBrowser())
                                 this.agOptions.suppressAnimationFrame = true;
@@ -50,19 +51,19 @@ var MvcCore;
                         AgOptionsBases.prototype.initRowSelection = function () {
                             var rowSel = this.grid.GetServerConfig().rowSelection;
                             var rowSelectionNone = (rowSel & AgGrids.Enums.RowSelection.ROW_SELECTION_NONE) != 0;
-                            if (rowSelectionNone ||
-                                (rowSel & AgGrids.Enums.RowSelection.ROW_SELECTION_SINGLE) != 0) {
-                                this.agOptions.rowSelection = 'single';
-                                if (rowSelectionNone)
-                                    this.agOptions.suppressRowClickSelection = true;
+                            if (!rowSelectionNone) {
+                                if ((rowSel & AgGrids.Enums.RowSelection.ROW_SELECTION_SINGLE) != 0) {
+                                    this.agOptions.rowSelection = 'single';
+                                }
+                                else if ((rowSel & AgGrids.Enums.RowSelection.ROW_SELECTION_MULTIPLE) != 0) {
+                                    this.agOptions.rowSelection = 'multiple';
+                                    if (this.helpers.IsTouchDevice())
+                                        this.agOptions.rowMultiSelectWithClick = true;
+                                }
+                                if ((rowSel & AgGrids.Enums.RowSelection.ROW_SELECTION_NOT_DESELECT) != 0) {
+                                    this.agOptions.suppressRowDeselection = true;
+                                }
                             }
-                            else if ((rowSel & AgGrids.Enums.RowSelection.ROW_SELECTION_MULTIPLE) != 0) {
-                                this.agOptions.rowSelection = 'multiple';
-                                if (this.helpers.IsTouchDevice())
-                                    this.agOptions.rowMultiSelectWithClick = true;
-                            }
-                            if ((rowSel & AgGrids.Enums.RowSelection.ROW_SELECTION_NOT_DESELECT) != 0)
-                                this.agOptions.suppressRowDeselection = true;
                             return this;
                         };
                         AgOptionsBases.prototype.initEvents = function () {

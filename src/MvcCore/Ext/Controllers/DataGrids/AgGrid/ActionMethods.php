@@ -69,7 +69,7 @@ trait ActionMethods {
 		$persistentColumns = [];
 		foreach ($this->GetConfigColumns(FALSE) as $urlName => $configColumn) {
 			$disabled = !isset($columnsUrlNamesRaw[$urlName]);
-			if (!$this->ignoreDisabledColumns) {
+			if ($this->ignoreDisabledColumns) {
 				$dbColumnName = $configColumn->GetDbColumnName();
 				if (isset($this->filtering[$dbColumnName]) || isset($this->sorting[$dbColumnName]))
 					$disabled = FALSE;

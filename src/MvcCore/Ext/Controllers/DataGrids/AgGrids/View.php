@@ -15,9 +15,9 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrids;
 
 class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 
-	const ASSETS_BUNDLE_DEFAULT_NAME_JS = 'agGridJs';
+	const ASSETS_BUNDLE_DEFAULT_NAME_JS = 'agGrid';
 
-	const ASSETS_BUNDLE_DEFAULT_NAME_CSS = 'agGridCss';
+	const ASSETS_BUNDLE_DEFAULT_NAME_CSS = 'agGrid';
 
 	/**
 	 * @var string|NULL
@@ -169,6 +169,8 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				'media'		=> 'all',
 				'notMin'	=> FALSE,
 				'paths'		=> [
+					$gridAssetsDir . "/custom-styles/common.css",
+					$gridAssetsDir . "/custom-styles/bottom-controls.css",
 					$gridAssetsDir . "/custom-styles/sort-header.css",
 					$gridAssetsDir . "/custom-styles/filter-header.css",
 					$gridAssetsDir . "/custom-styles/filter-menu.css",

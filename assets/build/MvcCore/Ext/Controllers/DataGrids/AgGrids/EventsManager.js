@@ -513,8 +513,8 @@ var MvcCore;
                                     var _m = __read(_l.value, 2), columnId = _m[0], sortDir = _m[1];
                                     if (sortHeaders.has(columnId)) {
                                         sortHeaders.get(columnId)
-                                            .SetSequence(index)
-                                            .SetDirection(sortDir);
+                                            .SetDirection(sortDir)
+                                            .SetSequence(index);
                                     }
                                     index++;
                                 }

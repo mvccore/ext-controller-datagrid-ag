@@ -1,0 +1,60 @@
+.grid .grid-controls-bottom{
+	position:absolute;
+	bottom:0;
+	flex-wrap:nowrap;
+	align-items:flex-start;
+	justify-content:space-between;
+	display:flex;
+	flex-direction:row;
+	width:calc(100% - 6px);
+	padding:0 2px;
+	height:31px;
+	border:1px solid #a9a9a9;
+	border-top:0;
+	background-image:linear-gradient(white, lightgrey);
+}
+.grid .grid-controls-bottom .grid-control-count-scales{
+	order:1;
+}
+.grid .grid-controls-bottom .grid-control-status{
+	order:2;
+	line-height:32px;
+	height:31px;
+	margin:0 12px;
+	font-size:9pt;
+}
+.grid .grid-controls-bottom .grid-control-paging{
+	order:3;
+}
+.grid .grid-controls-bottom table{
+	border-collapse:collapse;
+}
+.grid .grid-controls-bottom table tbody tr td{
+	padding:1px;
+	vertical-align:top;
+}
+.grid .grid-controls-bottom .grid-page-current,
+.grid .grid-controls-bottom .grid-count-current,
+.grid .grid-controls-bottom .grid-page-space{
+	vertical-align:top;
+}
+.grid .grid-controls-bottom .grid-page-space > span{
+	display:inline-block;
+	line-height:28px;
+	height:26px;
+	font-size:8px;
+	padding:0 1px;
+}
+.grid .grid-controls-bottom .grid-count-current > span,
+.grid .grid-controls-bottom .grid-page-current > span{
+	display:inline-block;
+	margin:2px 0 0 0;
+	min-width:18px;
+	text-align:center;
+	line-height:24px;
+	height:26px;
+	font-size:12px;
+	padding:0 4px;
+	color:#fff;
+	background:#333;
+}

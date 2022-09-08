@@ -157,7 +157,9 @@ var MvcCore;
                                             _this.changeUrlSwitches.delete(cacheKey);
                                         }
                                         else {
+                                            reqData.path = response.path;
                                             history.pushState(reqData, document.title, response.url);
+                                            _this.grid.GetColumnsMenu().UpdateFormAction();
                                         }
                                         params.successCallback(response.data, response.totalCount);
                                     }

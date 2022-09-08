@@ -145,6 +145,9 @@ var MvcCore;
                             }
                             return this;
                         };
+                        EventsManager.prototype.HandleGridReady = function (event) {
+                            this.FireHandlers("gridReady", {});
+                        };
                         EventsManager.prototype.HandleSelectionChange = function (event) {
                             this.FireHandlers("selectionChange", {
                                 selectedRows: this.grid.GetGridApi().getSelectedRows()
@@ -444,6 +447,7 @@ var MvcCore;
                                 .SetFiltering(reqData.filtering);
                             this.handleUrlChangeSortsFilters(reqData);
                             dataSource.ExecRequest(reqDataRaw, false);
+                            this.grid.GetColumnsMenu().UpdateFormAction();
                             if (oldOffset !== reqData.offset) {
                                 this.FireHandlers("pageChange", {
                                     offset: reqData.offset

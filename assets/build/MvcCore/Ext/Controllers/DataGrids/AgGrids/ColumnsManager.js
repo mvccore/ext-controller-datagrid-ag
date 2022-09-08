@@ -81,9 +81,17 @@ var MvcCore;
                                 this.filterHeaderDefaults.submitDelayMs = 0;
                             }
                             this.filterMenuDefaults.isTouchDevice = isTouchDevice;
+                            this.allServerColumnsMap = new Map();
                             this.allServerColumnsSorted = [];
                             this.activeServerColumnsSorted = [];
                         }
+                        ColumnsManager.prototype.SetAllServerColumnsMap = function (allServerColumnsMap) {
+                            this.allServerColumnsMap = allServerColumnsMap;
+                            return this;
+                        };
+                        ColumnsManager.prototype.GetAllServerColumnsMap = function () {
+                            return this.allServerColumnsMap;
+                        };
                         ColumnsManager.prototype.SetAllServerColumnsSorted = function (allServerColumnsSorted) {
                             this.allServerColumnsSorted = allServerColumnsSorted;
                             return this;
@@ -136,6 +144,7 @@ var MvcCore;
                                 for (var _c = __values(this.allServerColumnsSorted), _d = _c.next(); !_d.done; _d = _c.next()) {
                                     var serverColumnCfg = _d.value;
                                     columnUrlName = serverColumnCfg.urlName;
+                                    this.allServerColumnsMap.set(serverColumnCfg.propName, serverColumnCfg);
                                     if (serverColumnCfg.disabled === true)
                                         continue;
                                     serverColumnCfg.activeColumnIndex = this.activeServerColumnsSorted.length;

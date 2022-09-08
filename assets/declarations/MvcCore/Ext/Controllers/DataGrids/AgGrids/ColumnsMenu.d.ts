@@ -30,6 +30,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         Show(): this;
         RedrawControls(): this;
         ResizeControls(): this;
+        UpdateFormAction(): this;
         protected removeShownEvents(): this;
         protected disableUsedColumns(): this;
         protected addShownEvents(): this;

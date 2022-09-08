@@ -65,7 +65,8 @@ var MvcCore;
                             return (obj != null &&
                                 'id' in obj && 'mode' in obj &&
                                 'offset' in obj && 'limit' in obj &&
-                                'sorting' in obj && 'filtering' in obj);
+                                'sorting' in obj && 'filtering' in obj &&
+                                obj.id === this.grid.GetServerConfig().id);
                         };
                         Helpers.prototype.RetypeRawServerConfig = function (serverConfig) {
                             serverConfig.urlSegments.urlFilterOperators = this.Static.ConvertObject2Map(serverConfig.urlSegments.urlFilterOperators);

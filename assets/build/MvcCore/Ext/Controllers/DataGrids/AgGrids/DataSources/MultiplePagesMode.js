@@ -124,6 +124,7 @@ var MvcCore;
                                 if (changeUrl) {
                                     reqData.path = response.path;
                                     history.pushState(reqData, document.title, response.url);
+                                    this.grid.GetColumnsMenu().UpdateFormAction();
                                 }
                             };
                             return MultiplePagesMode;

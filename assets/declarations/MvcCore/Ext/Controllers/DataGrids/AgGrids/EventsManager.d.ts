@@ -18,6 +18,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         AddEventListener<K extends keyof Interfaces.IGridEvensHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.IGridEvensHandlersMap[K]) => void): this;
         RemoveEventListener<K extends keyof Interfaces.IGridEvensHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.IGridEvensHandlersMap[K]) => void): this;
         FireHandlers(eventName: Types.GridEventName, event: Interfaces.IGridEvent): this;
+        HandleGridReady(event: agGrid.GridReadyEvent<any>): void;
         HandleSelectionChange(event: agGrid.SelectionChangedEvent<any>): void;
         HandleColumnResized(event: agGrid.ColumnResizedEvent<any>): void;
         HandleColumnMoved(event: agGrid.ColumnMovedEvent<any>): void;

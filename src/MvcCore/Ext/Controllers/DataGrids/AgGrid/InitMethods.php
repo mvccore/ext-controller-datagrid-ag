@@ -521,9 +521,9 @@ trait InitMethods {
 						//  check if operator configuration allowes submitted value form
 						if ($regex !== NULL && !preg_match($regex, $rawValue)) continue;
 						// check value by configured types
-						if (strtolower($rawValue) === 'null') {
+						if (strtolower($rawValue) === static::NULL_STRING_VALUE) {
 							if ($columnAllowNullFilter)
-								$operatorValues[] = 'null';
+								$operatorValues[] = static::NULL_STRING_VALUE;
 						} else if (is_array($columnTypes) && count($columnTypes) > 0) {
 							$typeValidationSuccess = FALSE;
 							foreach ($columnTypes as $columnType) {

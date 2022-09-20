@@ -5,19 +5,19 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected grid: AgGrid;
         protected multiSorting: boolean;
         protected multiFiltering: boolean;
-        protected defaultAllowedOperators: Map<Enums.Operator, Interfaces.IAllowedOperator>;
-        protected columnsAllowedOperators: Map<string, Map<Enums.Operator, Interfaces.IAllowedOperator>>;
-        protected helpers: Helpers;
+        protected defaultAllowedOperators: Map<Enums.Operator, Interfaces.SortHeaders.IAllowedOperator>;
+        protected columnsAllowedOperators: Map<string, Map<Enums.Operator, Interfaces.SortHeaders.IAllowedOperator>>;
+        protected helpers: Tools.Helpers;
         protected likeOperatorsAndPrefixes: Map<Enums.Operator, string>;
         protected notLikeOperatorsAndPrefixes: Map<Enums.Operator, string>;
-        protected columnsChanges: Map<string, Interfaces.IColumnChange>;
+        protected columnsChanges: Map<string, Interfaces.EventArgs.IColumnChange>;
         protected columnsChangesTimeout: number;
         protected columnsChangesSending: boolean;
         protected handlers: Map<Types.GridEventName, Types.GridEventHandler[]>;
         constructor(grid: AgGrid);
-        AddEventListener<K extends keyof Interfaces.IGridEvensHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.IGridEvensHandlersMap[K]) => void): this;
-        RemoveEventListener<K extends keyof Interfaces.IGridEvensHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.IGridEvensHandlersMap[K]) => void): this;
-        FireHandlers(eventName: Types.GridEventName, event: Interfaces.IGridEvent): this;
+        AddEventListener<K extends keyof Interfaces.Events.IHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.Events.IHandlersMap[K]) => void): this;
+        RemoveEventListener<K extends keyof Interfaces.Events.IHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.Events.IHandlersMap[K]) => void): this;
+        FireHandlers(eventName: Types.GridEventName, event: Interfaces.Events.IBase): this;
         HandleGridReady(event: agGrid.GridReadyEvent<any>): void;
         HandleSelectionChange(event: agGrid.SelectionChangedEvent<any>): void;
         HandleColumnResized(event: agGrid.ColumnResizedEvent<any>): void;
@@ -32,8 +32,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         AddUrlChangeEvent(): this;
         HandleExecChange(offset: number, sorting: Types.SortItem[], filtering: Map<string, Map<Enums.Operator, string[]>>): void;
         HandleUrlChange(e: PopStateEvent): void;
-        HandleResponseLoaded(response: AgGrids.Interfaces.IServerResponse): void;
-        protected handleUrlChangeSortsFilters(reqData: Interfaces.IServerRequest): this;
+        HandleResponseLoaded(response: AgGrids.Interfaces.Ajax.IResponse): void;
+        protected handleUrlChangeSortsFilters(reqData: Interfaces.Ajax.IRequest): this;
         protected getOperatorsAndPrefixesByRawValue(rawValue: string): Map<Enums.Operator, string>;
         protected getOperatorByRawValue(rawValue: string, operatorsAndPrefixes: Map<Enums.Operator, string>, columnFilterCfg: number | boolean): [string, Enums.Operator | null];
     }

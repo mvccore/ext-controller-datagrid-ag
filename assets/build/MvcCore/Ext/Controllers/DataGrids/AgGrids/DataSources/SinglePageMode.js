@@ -80,10 +80,10 @@ var MvcCore;
                                     this.changeUrlSwitches.set(cacheKey, true);
                                 }
                                 //console.log("set cache", cacheKey, reqData);
-                                var gridOptions = this.grid.GetOptions().GetAgOptions();
+                                var gridOptionsManager = this.grid.GetOptionsManager().GetAgOptions();
                                 // both triggers current grid model reload and calling `this.getRows()`:
                                 //gridOptions.api.onFilterChanged();
-                                gridOptions.api.onFilterChanged();
+                                gridOptionsManager.api.onFilterChanged();
                                 return this;
                             };
                             SinglePageMode.prototype.possibleToResolveByInitData = function (params, totalCount) {
@@ -130,13 +130,13 @@ var MvcCore;
                                     if (serverCfg.page > 1) {
                                         var scrollOffset = (serverCfg.page - 1) * serverCfg.clientRowBuffer;
                                         //console.log("scrolling top", scrollOffset);
-                                        this.options.GetAgOptions().api.ensureIndexVisible(scrollOffset, "top");
+                                        this.optionsManager.GetAgOptions().api.ensureIndexVisible(scrollOffset, "top");
                                     }
                                 }
                             };
                             SinglePageMode.prototype.resolveByAjaxRequest = function (params) {
                                 var _this = this;
-                                var agGridApi = this.options.GetAgOptions().api;
+                                var agGridApi = this.optionsManager.GetAgOptions().api;
                                 agGridApi.showLoadingOverlay();
                                 var _a = __read(this.getReqUrlMethodAndType(), 3), reqDataUrl = _a[0], reqMethod = _a[1], reqType = _a[2];
                                 var reqData = this.Static.RetypeRequestMaps2Objects({
@@ -160,7 +160,7 @@ var MvcCore;
                                         }
                                         else {
                                             history.pushState(reqData, document.title, response.url);
-                                            _this.grid.GetColumnsMenu().UpdateFormAction();
+                                            _this.grid.GetColumnsVisibilityMenu().UpdateFormAction();
                                         }
                                         params.successCallback(response.data, response.totalCount);
                                     }

@@ -52,7 +52,7 @@ var MvcCore;
                             this.Static = _newTarget;
                             this.Static.grid = grid;
                             this.grid = grid;
-                            this.options = grid.GetOptions();
+                            this.optionsManager = grid.GetOptionsManager();
                             this.eventsManager = grid.GetEvents();
                             this.helpers = grid.GetHelpers();
                             this.initialData = grid.GetInitialData();
@@ -95,7 +95,7 @@ var MvcCore;
                                 try {
                                     for (var columnsIds_1 = __values(columnsIds), columnsIds_1_1 = columnsIds_1.next(); !columnsIds_1_1.done; columnsIds_1_1 = columnsIds_1.next()) {
                                         var idColumn = columnsIds_1_1.value;
-                                        newFiltering.set(idColumn, AgGrids.Helpers.ConvertObject2Map(filtering[idColumn]));
+                                        newFiltering.set(idColumn, AgGrids.Tools.Helpers.ConvertObject2Map(filtering[idColumn]));
                                     }
                                 }
                                 catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -117,7 +117,7 @@ var MvcCore;
                             try {
                                 for (var _b = __values(filtering.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
                                     var _d = __read(_c.value, 2), idColumn = _d[0], filterValues = _d[1];
-                                    newFiltering[idColumn] = AgGrids.Helpers.ConvertMap2Object(filterValues);
+                                    newFiltering[idColumn] = AgGrids.Tools.Helpers.ConvertMap2Object(filterValues);
                                 }
                             }
                             catch (e_2_1) { e_2 = { error: e_2_1 }; }

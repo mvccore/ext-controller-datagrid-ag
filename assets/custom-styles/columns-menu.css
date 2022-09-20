@@ -1,19 +1,18 @@
 .columns-menu{
 	position:absolute;
+	/*
 	z-index:10;
     top:1px;
-    right:1px;
+	*/
+    right:0;
 	font-size:90%;
 }
-
 .columns-menu a.columns-menu-btn-open{
 	position:relative;
-	z-index:11;
+	/*z-index:11;*/
     display:block;
     width:17px;
-    height:50px;
     text-align:center;
-    line-height:50px;
     text-decoration:none;
 	border-style:solid;
 	border-left-width:1px;
@@ -22,7 +21,6 @@
 	background-color:var(--ag-header-background-color);
 	background-image:linear-gradient(white, lightgrey);
 }
-
 .columns-menu a.columns-menu-btn-open:after,
 .columns-menu a.columns-menu-btn-open::after{
     content:'\2699';
@@ -30,6 +28,8 @@
     color:#000;
     text-decoration:none;
 }
+
+
 
 .columns-menu form.columns-menu-form {
 	position:absolute;
@@ -41,7 +41,6 @@
     background:#fff;
     background:var(--ag-background-color, #fff);
     border-radius:1px;
-	top:25px;
     right:8px;
 	width:auto;
 	height:auto;
@@ -85,7 +84,6 @@ form.columns-menu-form .columns-menu-controls {
 	cursor:pointer;
 }
 .columns-menu-controls label.columns-menu-control input {
-
 }
 form.columns-menu-form .columns-menu-buttons {
 	padding:5px;
@@ -98,7 +96,60 @@ form.columns-menu-form .columns-menu-buttons button {
 	cursor:pointer;
 }
 .columns-menu-buttons button.columns-menu-btn-apply {
-
 }
 .columns-menu-buttons button.columns-menu-btn-cancel {
+}
+
+
+
+
+
+
+/* 
+ * with table head sorting, with table head filtering,
+ * no table head sorting, with table head filtering
+ */
+.grid.grid-with-table-head-sorting.grid-with-table-head-filtering .columns-menu a.columns-menu-btn-open,
+.grid.grid-no-table-head-sorting.grid-with-table-head-filtering .columns-menu a.columns-menu-btn-open{
+	height:50px;
+	line-height:50px;
+}
+.grid.grid-with-table-head-sorting.grid-with-table-head-filtering .columns-menu form.columns-menu-form,
+.grid.grid-no-table-head-sorting.grid-with-table-head-filtering .columns-menu form.columns-menu-form{
+	top:25px;
+}
+
+/* with table head sorting, no table head filtering */
+.grid.grid-with-table-head-sorting.grid-no-table-head-filtering .columns-menu a.columns-menu-btn-open{
+	height:25px;
+	line-height:27px;
+}
+.grid.grid-with-table-head-sorting.grid-no-table-head-filtering .columns-menu form.columns-menu-form{
+	top:12px;
+}
+
+/* no table head sorting, no table head filtering, with table head */
+.grid.grid-no-table-head-sorting.grid-no-table-head-filtering .columns-menu a.columns-menu-btn-open{
+	height:25px;
+	line-height:27px;
+}
+.grid.grid-no-table-head-sorting.grid-no-table-head-filtering .columns-menu form.columns-menu-form{
+	top:12px;
+}
+
+/* no table head, with bottom controls */
+.grid.grid-with-bottom-controls.grid-no-table-head .columns-menu {
+	bottom:0;
+	right:1px;
+    height:32px;
+	z-index:10;
+}
+.grid.grid-with-bottom-controls.grid-no-table-head .columns-menu a.columns-menu-btn-open{
+	height:31px;
+    line-height:33px;
+	z-index:11;
+}
+.grid.grid-with-bottom-controls.grid-no-table-head .columns-menu form.columns-menu-form{
+	top:auto;
+	bottom:15px;
 }

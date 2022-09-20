@@ -172,7 +172,7 @@ var MvcCore;
                         EventsManager.prototype.HandleColumnMoved = function (event) {
                             if (this.columnsChangesTimeout)
                                 clearTimeout(this.columnsChangesTimeout);
-                            var columnId = event.column.getColId(), columnConfig = this.grid.GetServerConfig().columns[columnId], columnsManager = this.grid.GetOptions().GetColumnManager(), activeColumnsSorted = columnsManager.GetActiveServerColumnsSorted(), allColumnsSorted = columnsManager.GetAllServerColumnsSorted(), activeIndexOld = columnConfig.activeColumnIndex, activeIndexNex = event.toIndex, allIndexOld = columnConfig.columnIndex, allIndexNew = allColumnsSorted[activeIndexNex].columnIndex;
+                            var columnId = event.column.getColId(), columnConfig = this.grid.GetServerConfig().columns[columnId], columnsManager = this.grid.GetOptionsManager().GetColumnManager(), activeColumnsSorted = columnsManager.GetActiveServerColumnsSorted(), allColumnsSorted = columnsManager.GetAllServerColumnsSorted(), activeIndexOld = columnConfig.activeColumnIndex, activeIndexNex = event.toIndex, allIndexOld = columnConfig.columnIndex, allIndexNew = allColumnsSorted[activeIndexNex].columnIndex;
                             // přehodit reálné all indexy
                             var _a = __read(allColumnsSorted.splice(allIndexOld, 1), 1), allColumnCfg = _a[0];
                             allColumnsSorted.splice(allIndexNew, 0, allColumnCfg);
@@ -195,13 +195,13 @@ var MvcCore;
                                 activeColumnsSorted[i].activeColumnIndex = i;
                             columnsManager.SetActiveServerColumnsSorted(activeColumnsSorted);
                             columnsManager.SetAllServerColumnsSorted(allColumnsSorted);
-                            this.grid.GetColumnsMenu().RedrawControls();
+                            this.grid.GetColumnsVisibilityMenu().RedrawControls();
                             this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
                         };
                         EventsManager.prototype.handleColumnChangesSent = function () {
                             if (this.columnsChangesSending)
                                 return;
-                            var plainObj = AgGrids.Helpers.ConvertMap2Object(this.columnsChanges);
+                            var plainObj = AgGrids.Tools.Helpers.ConvertMap2Object(this.columnsChanges);
                             this.columnsChanges = new Map();
                             Ajax.load({
                                 url: this.grid.GetServerConfig().urlColumnsChanges,
@@ -313,8 +313,8 @@ var MvcCore;
                                 .SetTotalCount(null);
                             var pageMode = this.grid.GetPageMode();
                             if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
-                                var gridOptions = this.grid.GetOptions().GetAgOptions();
-                                gridOptions.api.onFilterChanged();
+                                var gridOptionsManager = this.grid.GetOptionsManager().GetAgOptions();
+                                gridOptionsManager.api.onFilterChanged();
                             }
                             else if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
                                 var dataSourceMp = this.grid.GetDataSource();
@@ -362,8 +362,8 @@ var MvcCore;
                             this.grid.SetSorting(newSorting);
                             var pageMode = this.grid.GetPageMode();
                             if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
-                                var gridOptions = this.grid.GetOptions().GetAgOptions();
-                                gridOptions.api.onSortChanged();
+                                var gridOptionsManager = this.grid.GetOptionsManager().GetAgOptions();
+                                gridOptionsManager.api.onSortChanged();
                             }
                             else if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
                                 var dataSourceMp = this.grid.GetDataSource();
@@ -375,7 +375,7 @@ var MvcCore;
                         };
                         EventsManager.prototype.HandleGridSizeChanged = function (viewPort, event) {
                             // get the current grids width
-                            var gridElm = this.grid.GetOptions().GetElements().agGridElement, gridElmParent = gridElm.parentNode;
+                            var gridElm = this.grid.GetOptionsManager().GetElements().agGridElement, gridElmParent = gridElm.parentNode;
                             var gridWidth = gridElmParent.offsetWidth;
                             // keep track of which columns to hide/show
                             var columnsToShow = [], columnsToHide = [];
@@ -400,7 +400,7 @@ var MvcCore;
                             event.columnApi.setColumnsVisible(columnsToHide, false);
                             // fill out any available space to ensure there are no gaps
                             event.api.sizeColumnsToFit();
-                            this.grid.GetColumnsMenu().ResizeControls();
+                            this.grid.GetColumnsVisibilityMenu().ResizeControls();
                         };
                         EventsManager.prototype.AddUrlChangeEvent = function () {
                             var _this = this;
@@ -447,7 +447,7 @@ var MvcCore;
                                 .SetFiltering(reqData.filtering);
                             this.handleUrlChangeSortsFilters(reqData);
                             dataSource.ExecRequest(reqDataRaw, false);
-                            this.grid.GetColumnsMenu().UpdateFormAction();
+                            this.grid.GetColumnsVisibilityMenu().UpdateFormAction();
                             if (oldOffset !== reqData.offset) {
                                 this.FireHandlers("pageChange", {
                                     offset: reqData.offset

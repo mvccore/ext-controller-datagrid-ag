@@ -3,21 +3,21 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         Static: typeof DataSource;
         protected static grid: AgGrid;
         protected grid: AgGrid;
-        protected options: AgGrids.Options;
+        protected optionsManager: AgGrids.Options.Manager;
         protected eventsManager: AgGrids.EventsManager;
-        protected helpers: AgGrids.Helpers;
-        protected initialData: Interfaces.IServerResponse;
+        protected helpers: AgGrids.Tools.Helpers;
+        protected initialData: Interfaces.Ajax.IResponse;
         protected cache: DataSources.Cache;
-        protected pageReqData?: Interfaces.IServerRequestRaw;
+        protected pageReqData?: Interfaces.Ajax.IReqRawObj;
         constructor(grid: AgGrid);
-        abstract ExecRequest(reqData: Interfaces.IServerRequestRaw, changeUrl: boolean): this;
+        abstract ExecRequest(reqData: Interfaces.Ajax.IReqRawObj, changeUrl: boolean): this;
         protected initPageReqDataAndCache(): void;
         protected getReqUrlMethodAndType(): [string, string, string];
-        static RetypeRawServerResponse(serverResponse: Interfaces.IServerResponse): Interfaces.IServerResponse;
-        static RetypeRequestObjects2Maps(serverRequest: Interfaces.IServerRequestRaw): Interfaces.IServerRequest;
+        static RetypeRawServerResponse(serverResponse: Interfaces.Ajax.IResponse): Interfaces.Ajax.IResponse;
+        static RetypeRequestObjects2Maps(serverRequest: Interfaces.Ajax.IReqRawObj): Interfaces.Ajax.IRequest;
         protected static retypeFilteringObj2Map(filtering: any): Map<string, Map<Enums.Operator, string[]>>;
         static RetypeFilteringMap2Obj(filtering: Map<string, Map<Enums.Operator, string[]>>): any;
-        static RetypeRequestMaps2Objects(serverRequest: Interfaces.IServerRequest): Interfaces.IServerRequestRaw;
-        protected static addRequestSystemData(serverRequest: Interfaces.IServerRequestRaw): Interfaces.IServerRequestRaw;
+        static RetypeRequestMaps2Objects(serverRequest: Interfaces.Ajax.IRequest): Interfaces.Ajax.IReqRawObj;
+        protected static addRequestSystemData(serverRequest: Interfaces.Ajax.IReqRawObj): Interfaces.Ajax.IReqRawObj;
     }
 }

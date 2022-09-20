@@ -30,7 +30,7 @@ var MvcCore;
                             }
                             MultiplePagesMode.prototype.AddPagingEvents = function () {
                                 var _this = this;
-                                this.grid.GetOptions().GetElements().pagingAnchors.forEach(function (pagingAnchor) {
+                                this.grid.GetOptionsManager().GetElements().pagingAnchors.forEach(function (pagingAnchor) {
                                     var ofsetInt = parseInt(pagingAnchor.dataset.offset, 10);
                                     pagingAnchor.addEventListener('click', _this.handlePagingClick.bind(_this, ofsetInt), true);
                                 });
@@ -38,7 +38,7 @@ var MvcCore;
                             };
                             MultiplePagesMode.prototype.RemovePagingEvents = function () {
                                 var _this = this;
-                                this.grid.GetOptions().GetElements().pagingAnchors.forEach(function (pagingAnchor) {
+                                this.grid.GetOptionsManager().GetElements().pagingAnchors.forEach(function (pagingAnchor) {
                                     var ofsetInt = parseInt(pagingAnchor.dataset.offset, 10);
                                     pagingAnchor.removeEventListener('click', _this.handlePagingClick.bind(_this, ofsetInt), true);
                                 });

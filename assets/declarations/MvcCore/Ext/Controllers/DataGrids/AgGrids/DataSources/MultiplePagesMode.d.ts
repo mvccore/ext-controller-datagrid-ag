@@ -5,7 +5,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSources {
         constructor(grid: AgGrid);
         protected initPageReqDataAndCache(): void;
         Load(): this;
-        ExecRequest(reqData: Interfaces.IServerRequestRaw, changeUrl?: boolean): this;
-        protected handleResponse(reqData: Interfaces.IServerRequestRaw, changeUrl: boolean, cacheKey: string, cached: boolean, rawResponse: AgGrids.Interfaces.IServerResponse): void;
+        ExecRequest(reqData: Interfaces.Ajax.IReqRawObj, changeUrl?: boolean): this;
+        protected handleResponse(reqData: Interfaces.Ajax.IReqRawObj, changeUrl: boolean, cacheKey: string, cached: boolean, rawResponse: AgGrids.Interfaces.Ajax.IResponse): void;
     }
 }

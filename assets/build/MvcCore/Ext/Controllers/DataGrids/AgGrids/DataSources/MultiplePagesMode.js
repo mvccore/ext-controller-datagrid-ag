@@ -51,7 +51,7 @@ var MvcCore;
                             }
                             MultiplePagesMode.prototype.initPageReqDataAndCache = function () {
                                 _super.prototype.initPageReqDataAndCache.call(this);
-                                var elms = this.grid.GetOptions().GetElements();
+                                var elms = this.grid.GetOptionsManager().GetElements();
                                 if (elms.bottomControlsElement != null) {
                                     this.initialData.controls = {};
                                     if (elms.pagingControl != null)
@@ -74,7 +74,7 @@ var MvcCore;
                             };
                             MultiplePagesMode.prototype.ExecRequest = function (reqData, changeUrl) {
                                 if (changeUrl === void 0) { changeUrl = true; }
-                                var agGridApi = this.options.GetAgOptions().api;
+                                var agGridApi = this.optionsManager.GetAgOptions().api;
                                 agGridApi.showLoadingOverlay();
                                 var _a = __read(this.getReqUrlMethodAndType(), 3), reqDataUrl = _a[0], reqMethod = _a[1], reqType = _a[2];
                                 var cacheKey = this.cache.Key(reqData);
@@ -102,12 +102,12 @@ var MvcCore;
                                     this.cache.Add(cacheKey, response);
                                     this.grid.GetEvents().HandleResponseLoaded(response);
                                 }
-                                var agGridApi = this.options.GetAgOptions().api;
+                                var agGridApi = this.optionsManager.GetAgOptions().api;
                                 agGridApi.setRowData(response.data);
                                 agGridApi.hideOverlay();
                                 if (response.controls != null) {
-                                    this.options.InitBottomControls();
-                                    var elms = this.options.GetElements(), controls = response.controls;
+                                    this.optionsManager.InitBottomControls();
+                                    var elms = this.optionsManager.GetElements(), controls = response.controls;
                                     if (elms.countScalesControl != null && controls.countScales != null) {
                                         elms.countScalesControl.parentNode.replaceChild(this.helpers.GetHtmlElementFromString(controls.countScales), elms.countScalesControl);
                                     }
@@ -117,14 +117,14 @@ var MvcCore;
                                     if (elms.pagingControl != null && controls.paging != null) {
                                         this.eventsManager.RemovePagingEvents();
                                         elms.pagingControl.parentNode.replaceChild(this.helpers.GetHtmlElementFromString(controls.paging), elms.pagingControl);
-                                        this.options.InitBottomControls();
+                                        this.optionsManager.InitBottomControls();
                                         this.eventsManager.AddPagingEvents();
                                     }
                                 }
                                 if (changeUrl) {
                                     reqData.path = response.path;
                                     history.pushState(reqData, document.title, response.url);
-                                    this.grid.GetColumnsMenu().UpdateFormAction();
+                                    this.grid.GetColumnsVisibilityMenu().UpdateFormAction();
                                 }
                             };
                             return MultiplePagesMode;

@@ -29,7 +29,7 @@ var MvcCore;
                             .initSubClasses()
                             .initServerConfig(serverConfig)
                             .initTranslator();
-                        this.options.InitElements();
+                        this.optionsManager.InitElements();
                         this
                             .initPageModeSpecifics()
                             .initData(initialData);
@@ -62,12 +62,12 @@ var MvcCore;
                     AgGrid.prototype.GetTranslator = function () {
                         return this.translator;
                     };
-                    AgGrid.prototype.SetOptions = function (options) {
-                        this.options = options;
+                    AgGrid.prototype.SetOptionsManager = function (optionsManager) {
+                        this.optionsManager = optionsManager;
                         return this;
                     };
-                    AgGrid.prototype.GetOptions = function () {
-                        return this.options;
+                    AgGrid.prototype.GetOptionsManager = function () {
+                        return this.optionsManager;
                     };
                     AgGrid.prototype.SetDataSource = function (dataSource) {
                         this.dataSource = dataSource;
@@ -174,12 +174,12 @@ var MvcCore;
                     AgGrid.prototype.GetFilterMenus = function () {
                         return this.filterMenus;
                     };
-                    AgGrid.prototype.SetColumnsMenu = function (columnsMenu) {
-                        this.columnsMenu = columnsMenu;
+                    AgGrid.prototype.SetColumnsVisibilityMenu = function (columnsVisibilityMenu) {
+                        this.columnsVisibilityMenu = columnsVisibilityMenu;
                         return this;
                     };
-                    AgGrid.prototype.GetColumnsMenu = function () {
-                        return this.columnsMenu;
+                    AgGrid.prototype.GetColumnsVisibilityMenu = function () {
+                        return this.columnsVisibilityMenu;
                     };
                     AgGrid.prototype.AddEventListener = function (eventName, handler) {
                         this.eventsManager.AddEventListener(eventName, handler);
@@ -194,8 +194,8 @@ var MvcCore;
                         return this;
                     };
                     AgGrid.prototype.initSubClasses = function () {
-                        this.helpers = new DataGrids.AgGrids.Helpers(this);
-                        this.options = new DataGrids.AgGrids.Options(this);
+                        this.helpers = new DataGrids.AgGrids.Tools.Helpers(this);
+                        this.optionsManager = new DataGrids.AgGrids.Options.Manager(this);
                         return this;
                     };
                     AgGrid.prototype.initPageModeSpecifics = function () {
@@ -220,7 +220,7 @@ var MvcCore;
                         return this;
                     };
                     AgGrid.prototype.initTranslator = function () {
-                        this.translator = new DataGrids.AgGrids.Translator(this);
+                        this.translator = new DataGrids.AgGrids.Tools.Translator(this);
                         return this;
                     };
                     AgGrid.prototype.initData = function (initialData) {
@@ -233,7 +233,7 @@ var MvcCore;
                         return this;
                     };
                     AgGrid.prototype.initAgOptions = function () {
-                        this.options
+                        this.optionsManager
                             .InitAgBases()
                             .InitAgColumns()
                             .InitAgPageModeSpecifics();
@@ -241,9 +241,9 @@ var MvcCore;
                     };
                     AgGrid.prototype.initGrid = function () {
                         var e_1, _a;
-                        var gridOptions = this.options.GetAgOptions();
-                        this.grid = new agGrid.Grid(this.options.GetElements().agGridElement, gridOptions);
-                        this.options.GetColumnManager().SetAgColumnsConfigs(null); // frees memory
+                        var gridOptions = this.optionsManager.GetAgOptions();
+                        this.grid = new agGrid.Grid(this.optionsManager.GetElements().agGridElement, gridOptions);
+                        this.optionsManager.GetColumnManager().SetAgColumnsConfigs(null); // frees memory
                         this.agGridApi = gridOptions.api;
                         this.agColumnApi = gridOptions.columnApi;
                         try {
@@ -264,7 +264,7 @@ var MvcCore;
                     AgGrid.prototype.initDataSource = function () {
                         if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
                             this.dataSource = new DataGrids.AgGrids.DataSources.SinglePageMode(this);
-                            var gridOptions = this.options.GetAgOptions();
+                            var gridOptions = this.optionsManager.GetAgOptions();
                             gridOptions.api.setDatasource(this.dataSource);
                         }
                         else if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
@@ -273,7 +273,7 @@ var MvcCore;
                         return this;
                     };
                     AgGrid.prototype.initColumnsMenu = function () {
-                        this.columnsMenu = new DataGrids.AgGrids.ColumnsMenu(this);
+                        this.columnsVisibilityMenu = new DataGrids.AgGrids.Columns.VisibilityMenu(this);
                         return this;
                     };
                     return AgGrid;

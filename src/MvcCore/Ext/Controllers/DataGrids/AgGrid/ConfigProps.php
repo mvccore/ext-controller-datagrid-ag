@@ -67,7 +67,7 @@ trait ConfigProps {
 	/**
 	 * @var int
 	 */
-	protected $dataRequestMethod = IConstants::AJAX_DATA_REQUEST_METHOD_JSONP;
+	protected $dataRequestMethod = IConstants::AJAX_DATA_REQUEST_METHOD_GET;
 
 	/**
 	 * @var int

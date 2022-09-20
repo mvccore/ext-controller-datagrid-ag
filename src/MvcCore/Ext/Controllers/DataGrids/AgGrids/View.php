@@ -102,7 +102,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				$mvcCoreAgGridAssetsDir . "AgGrids/Options/Manager.js",
 
 				$mvcCoreAgGridAssetsDir . "AgGrids/Tools/Helpers.js",
-				$mvcCoreAgGridAssetsDir . "AgGrids/ToolTip.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Tools/ToolTip.js",
 
 				$mvcCoreAgGridAssetsDir . "AgGrid.js",
 			],

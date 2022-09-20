@@ -240,6 +240,32 @@ var MvcCore;
                                 }
                                 return obj;
                             };
+                            Helpers.prototype.MergeObjectsRecursively = function (target) {
+                                var _a, _b;
+                                var sources = [];
+                                for (var _i = 1; _i < arguments.length; _i++) {
+                                    sources[_i - 1] = arguments[_i];
+                                }
+                                if (!sources.length)
+                                    return target;
+                                var source = sources.shift();
+                                if (this.isObject(target) && this.isObject(source)) {
+                                    for (var key in source) {
+                                        if (this.isObject(source[key])) {
+                                            if (!target[key])
+                                                Object.assign(target, (_a = {}, _a[key] = {}, _a));
+                                            this.MergeObjectsRecursively(target[key], source[key]);
+                                        }
+                                        else {
+                                            Object.assign(target, (_b = {}, _b[key] = source[key], _b));
+                                        }
+                                    }
+                                }
+                                return this.MergeObjectsRecursively.apply(this, __spread([target], sources));
+                            };
+                            Helpers.prototype.isObject = function (item) {
+                                return (item && typeof item === 'object' && !Array.isArray(item));
+                            };
                             return Helpers;
                         }());
                         Tools.Helpers = Helpers;

@@ -58,6 +58,7 @@ var MvcCore;
                                     editable: false,
                                     flex: 1,
                                     headerComponent: AgGrids.Columns.SortHeader,
+                                    tooltipComponent: AgGrids.Tools.ToolTip
                                 };
                                 this.sortHeaderDefaults = {
                                     renderDirection: true,
@@ -86,6 +87,9 @@ var MvcCore;
                                 this.allServerColumnsMap = new Map();
                                 this.allServerColumnsSorted = [];
                                 this.activeServerColumnsSorted = [];
+                                this.agColumnDefaults.headerComponent = grid.Static.Classes.Columns.SortHeader;
+                                //this.agColumnDefaults.tooltipComponent = grid.Static.Classes.Tools.ToolTip;
+                                this.agColumnDefaults.tooltipComponent = undefined; // TODO
                             }
                             Manager.prototype.SetAllServerColumnsMap = function (allServerColumnsMap) {
                                 this.allServerColumnsMap = allServerColumnsMap;
@@ -130,7 +134,7 @@ var MvcCore;
                             Manager.prototype.initServerCfgAndViewHelper = function () {
                                 this.serverConfig = this.grid.GetServerConfig();
                                 this.initData = this.grid.GetInitialData();
-                                this.viewHelper = new AgGrids.Columns.ViewHelper(this.grid);
+                                this.viewHelper = new this.grid.Static.Classes.Columns.ViewHelper(this.grid);
                                 this.sortHeaderDefaults.renderSequence = ((this.serverConfig.sortingMode & AgGrids.Enums.SortingMode.SORT_MULTIPLE_COLUMNS) != 0);
                                 var renderConfig = this.serverConfig.renderConfig;
                                 this.sortingEnabled = renderConfig.renderTableHead && renderConfig.renderTableHeadSorting;
@@ -229,17 +233,15 @@ var MvcCore;
                                 var filtering = this.grid.GetFiltering(), filteringItem = filtering.has(serverColumnCfg.urlName)
                                     ? filtering.get(serverColumnCfg.urlName)
                                     : null;
-                                column.floatingFilterComponent = AgGrids.Columns.FilterHeader;
+                                column.floatingFilterComponent = this.grid.Static.Classes.Columns.FilterHeader;
                                 var floatingFilterComponentParams = __assign(__assign({}, this.filterHeaderDefaults), {
                                     grid: this.grid,
                                     columnId: serverColumnCfg.urlName,
                                     filteringItem: filteringItem
                                 });
                                 column.floatingFilterComponentParams = floatingFilterComponentParams;
-                                var serverType = serverColumnCfg.types[serverColumnCfg.types.length - 1], filterMenuClass = Columns.FilterMenu, serverTypesExtendefFilterMenus = Columns.FilterOperatorsCfg.SERVER_TYPES_EXTENDED_FILTER_MENUS;
-                                if (serverTypesExtendefFilterMenus.has(serverType))
-                                    filterMenuClass = serverTypesExtendefFilterMenus.get(serverType);
-                                column.filter = filterMenuClass;
+                                var serverType = serverColumnCfg.types[serverColumnCfg.types.length - 1];
+                                column.filter = Columns.FilterOperatorsCfg.GetServerTypesExtendedFilterMenu(this.grid, serverType);
                                 var allControlTypes = AgGrids.Columns.FilterOperatorsCfg.FILTERING_CONTROL_TYPES, columnControlTypes = AgGrids.Enums.FilterControlType.UNKNOWN, columnFiltering = Number(serverColumnCfg.filter);
                                 try {
                                     for (var _c = __values(allControlTypes.entries()), _d = _c.next(); !_d.done; _d = _c.next()) {

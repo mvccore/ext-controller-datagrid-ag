@@ -1,5 +1,7 @@
 declare namespace MvcCore.Ext.Controllers.DataGrids {
     class AgGrid {
+        static Classes: AgGrids.Interfaces.IClasses;
+        Static: typeof AgGrid;
         protected serverConfig: AgGrids.Interfaces.IServerConfig;
         protected initialData: AgGrids.Interfaces.Ajax.IResponse;
         protected grid: agGrid.Grid;

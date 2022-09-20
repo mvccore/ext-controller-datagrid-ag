@@ -25,5 +25,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Tools {
         CheckFilterValueForLikeChar(rawValue: string, specialLikeChar: '_' | '%'): number;
         static ConvertObject2Map<TKey, TValue>(obj: any): Map<TKey, TValue>;
         static ConvertMap2Object<TKey, TValue>(map: Map<TKey, TValue>): object;
+        MergeObjectsRecursively(target: any, ...sources: any[]): any;
+        protected isObject(item: any): boolean;
     }
 }

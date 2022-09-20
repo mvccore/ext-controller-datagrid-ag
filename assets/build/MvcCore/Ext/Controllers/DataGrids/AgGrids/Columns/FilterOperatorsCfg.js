@@ -45,6 +45,24 @@ var MvcCore;
                         var FilterOperatorsCfg = /** @class */ (function () {
                             function FilterOperatorsCfg() {
                             }
+                            FilterOperatorsCfg.GetServerTypesExtendedFilterMenu = function (grid, serverType) {
+                                var filterMenuClass = grid.Static.Classes.Columns.FilterMenu, filterMenusClasses = grid.Static.Classes.Columns.FilterMenus;
+                                if (this.serverTypesExtendedFilterMenus == null) {
+                                    this.serverTypesExtendedFilterMenus = new Map([
+                                        [AgGrids.Enums.ServerType.STRING, filterMenuClass],
+                                        [AgGrids.Enums.ServerType.BOOL, filterMenuClass],
+                                        [AgGrids.Enums.ServerType.INT, filterMenusClasses.Int],
+                                        [AgGrids.Enums.ServerType.FLOAT, filterMenusClasses.Float],
+                                        [AgGrids.Enums.ServerType.MONEY, filterMenusClasses.Money],
+                                        [AgGrids.Enums.ServerType.DATE, filterMenusClasses.Date],
+                                        [AgGrids.Enums.ServerType.DATE_TIME, filterMenusClasses.DateTime],
+                                        [AgGrids.Enums.ServerType.TIME, filterMenusClasses.Time],
+                                    ]);
+                                }
+                                if (this.serverTypesExtendedFilterMenus.has(serverType))
+                                    return this.serverTypesExtendedFilterMenus.get(serverType);
+                                return filterMenuClass;
+                            };
                             FilterOperatorsCfg.FILTERING_CONTROL_TYPES = new Map([
                                 [AgGrids.Enums.FilteringMode.ALLOW_EQUALS, [
                                         AgGrids.Enums.FilterControlType.EQUAL,
@@ -93,16 +111,6 @@ var MvcCore;
                                 [AgGrids.Enums.ServerType.DATE, stringAndDateFilteringModeOrder],
                                 [AgGrids.Enums.ServerType.DATE_TIME, stringAndDateFilteringModeOrder],
                                 [AgGrids.Enums.ServerType.TIME, stringAndDateFilteringModeOrder]
-                            ]);
-                            FilterOperatorsCfg.SERVER_TYPES_EXTENDED_FILTER_MENUS = new Map([
-                                [AgGrids.Enums.ServerType.STRING, Columns.FilterMenu],
-                                [AgGrids.Enums.ServerType.BOOL, Columns.FilterMenu],
-                                [AgGrids.Enums.ServerType.INT, Columns.FilterMenus.Int],
-                                [AgGrids.Enums.ServerType.FLOAT, Columns.FilterMenus.Float],
-                                [AgGrids.Enums.ServerType.MONEY, Columns.FilterMenus.Money],
-                                [AgGrids.Enums.ServerType.DATE, Columns.FilterMenus.Date],
-                                [AgGrids.Enums.ServerType.DATE_TIME, Columns.FilterMenus.DateTime],
-                                [AgGrids.Enums.ServerType.TIME, Columns.FilterMenus.Time],
                             ]);
                             FilterOperatorsCfg.CONTROL_TYPES_OPERATORS = new Map([
                                 [AgGrids.Enums.FilterControlType.EQUAL, AgGrids.Enums.Operator.EQUAL],

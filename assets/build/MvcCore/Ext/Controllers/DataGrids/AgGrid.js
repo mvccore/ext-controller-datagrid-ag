@@ -19,12 +19,14 @@ var MvcCore;
             (function (DataGrids) {
                 var AgGrid = /** @class */ (function () {
                     function AgGrid(serverConfig, initialData) {
+                        var _newTarget = this.constructor;
                         var _this = this;
                         this.totalCount = null;
                         this.offset = 0;
                         this.gridPath = '';
                         //console.log("AgGrid.ctor - serverConfig", serverConfig);
                         //console.log("AgGrid.ctor - initialData", initialData);
+                        this.Static = _newTarget;
                         this
                             .initSubClasses()
                             .initServerConfig(serverConfig)
@@ -194,19 +196,23 @@ var MvcCore;
                         return this;
                     };
                     AgGrid.prototype.initSubClasses = function () {
-                        this.helpers = new DataGrids.AgGrids.Tools.Helpers(this);
-                        this.optionsManager = new DataGrids.AgGrids.Options.Manager(this);
+                        var _a, _b;
+                        var extendedClasses = this.Static.Classes, origClasses = AgGrid.Classes, helpersType = (_b = (_a = extendedClasses === null || extendedClasses === void 0 ? void 0 : extendedClasses.Tools) === null || _a === void 0 ? void 0 : _a.Helpers) !== null && _b !== void 0 ? _b : origClasses.Tools.Helpers;
+                        this.helpers = new helpersType(this);
+                        var classes = this.helpers.MergeObjectsRecursively({}, origClasses, extendedClasses);
+                        this.Static.Classes = classes;
+                        this.optionsManager = new classes.Options.Manager(this);
                         return this;
                     };
                     AgGrid.prototype.initPageModeSpecifics = function () {
                         if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
-                            var emSinglePage = new DataGrids.AgGrids.EventsManagers.SinglePageMode(this);
+                            var emSinglePage = new this.Static.Classes.EventsManager.SinglePageMode(this);
                             this.eventsManager = emSinglePage;
                             emSinglePage
                                 .AddUrlChangeEvent();
                         }
                         else if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
-                            var emMultiplePages = new DataGrids.AgGrids.EventsManagers.MultiplePagesMode(this);
+                            var emMultiplePages = new this.Static.Classes.EventsManager.MultiplePagesMode(this);
                             this.eventsManager = emMultiplePages;
                             emMultiplePages
                                 .AddPagingEvents()
@@ -220,7 +226,7 @@ var MvcCore;
                         return this;
                     };
                     AgGrid.prototype.initTranslator = function () {
-                        this.translator = new DataGrids.AgGrids.Tools.Translator(this);
+                        this.translator = new this.Static.Classes.Tools.Translator(this);
                         return this;
                     };
                     AgGrid.prototype.initData = function (initialData) {
@@ -263,18 +269,54 @@ var MvcCore;
                     };
                     AgGrid.prototype.initDataSource = function () {
                         if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
-                            this.dataSource = new DataGrids.AgGrids.DataSources.SinglePageMode(this);
+                            this.dataSource = new this.Static.Classes.DataSources.SinglePageMode(this);
                             var gridOptions = this.optionsManager.GetAgOptions();
                             gridOptions.api.setDatasource(this.dataSource);
                         }
                         else if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
-                            this.dataSource = new DataGrids.AgGrids.DataSources.MultiplePagesMode(this);
+                            this.dataSource = new this.Static.Classes.DataSources.MultiplePagesMode(this);
                         }
                         return this;
                     };
                     AgGrid.prototype.initColumnsMenu = function () {
-                        this.columnsVisibilityMenu = new DataGrids.AgGrids.Columns.VisibilityMenu(this);
+                        this.columnsVisibilityMenu = new this.Static.Classes.Columns.VisibilityMenu(this);
                         return this;
+                    };
+                    AgGrid.Classes = {
+                        Columns: {
+                            FilterMenus: {
+                                Date: DataGrids.AgGrids.Columns.FilterMenus.Date,
+                                DateTime: DataGrids.AgGrids.Columns.FilterMenus.DateTime,
+                                Time: DataGrids.AgGrids.Columns.FilterMenus.Time,
+                                Int: DataGrids.AgGrids.Columns.FilterMenus.Int,
+                                Float: DataGrids.AgGrids.Columns.FilterMenus.Float,
+                                Money: DataGrids.AgGrids.Columns.FilterMenus.Money,
+                            },
+                            FilterHeader: DataGrids.AgGrids.Columns.FilterHeader,
+                            FilterMenu: DataGrids.AgGrids.Columns.FilterMenu,
+                            Manager: DataGrids.AgGrids.Columns.Manager,
+                            SortHeader: DataGrids.AgGrids.Columns.SortHeader,
+                            ViewHelper: DataGrids.AgGrids.Columns.ViewHelper,
+                            VisibilityMenu: DataGrids.AgGrids.Columns.VisibilityMenu,
+                        },
+                        DataSources: {
+                            MultiplePagesMode: DataGrids.AgGrids.DataSources.MultiplePagesMode,
+                            SinglePageMode: DataGrids.AgGrids.DataSources.SinglePageMode,
+                            Cache: DataGrids.AgGrids.DataSources.Cache,
+                        },
+                        EventsManager: {
+                            MultiplePagesMode: DataGrids.AgGrids.EventsManagers.MultiplePagesMode,
+                            SinglePageMode: DataGrids.AgGrids.EventsManagers.SinglePageMode,
+                        },
+                        Options: {
+                            AgBases: DataGrids.AgGrids.Options.AgBases,
+                            Manager: DataGrids.AgGrids.Options.Manager,
+                        },
+                        Tools: {
+                            Helpers: DataGrids.AgGrids.Tools.Helpers,
+                            Translator: DataGrids.AgGrids.Tools.Translator,
+                            ToolTip: DataGrids.AgGrids.Tools.ToolTip,
+                        },
                     };
                     return AgGrid;
                 }());

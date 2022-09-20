@@ -65,7 +65,7 @@ var MvcCore;
                         };
                         DataSource.prototype.initPageReqDataAndCache = function () {
                             var grid = this.Static.grid;
-                            this.cache = new AgGrids.DataSources.Cache(grid);
+                            this.cache = new grid.Static.Classes.DataSources.Cache(grid);
                             this.pageReqData = this.Static.RetypeRequestMaps2Objects({
                                 offset: grid.GetOffset(),
                                 limit: grid.GetServerConfig().itemsPerPage,

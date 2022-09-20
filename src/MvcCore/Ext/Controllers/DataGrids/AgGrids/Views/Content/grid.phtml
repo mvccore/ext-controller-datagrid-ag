@@ -10,12 +10,27 @@
 		$renderConf->GetRenderControlPaging() || 
 		$renderConf->GetRenderControlCountScales()
 	);
+	$renderTableHead = $renderConf->GetRenderTableHead();
+	$renderTableHeadSorting = $renderTableHead && $renderConf->GetRenderTableHeadSorting();
+	$renderTableHeadFiltering = $renderTableHead && $renderConf->GetRenderTableHeadFiltering();
+	
+	$gridCssClasses[] = $renderBottomControls 
+		? 'grid-with-bottom-controls' 
+		: 'grid-no-bottom-controls';
+	$gridCssClasses[] = $renderTableHead 
+		? 'grid-with-table-head' 
+		: 'grid-no-table-head';
+	$gridCssClasses[] = $renderTableHeadSorting 
+		? 'grid-with-table-head-sorting' 
+		: 'grid-no-table-head-sorting';
+	$gridCssClasses[] = $renderTableHeadFiltering 
+		? 'grid-with-table-head-filtering' 
+		: 'grid-no-table-head-filtering';
+
 	$gridId = $grid->GetId();
 	$nonceAttr = $this->nonce !== NULL 
 		? ' nonce="' . $this->nonce . '"' 
 		: '' ;
-	if ($renderBottomControls)
-		$gridCssClasses[] = 'grid-with-bottom-controls';
 	$gridContClassAttr = count($gridCssClasses) > 0
 		? ' class="'.implode(' ', $gridCssClasses) . '"'
 		: '';

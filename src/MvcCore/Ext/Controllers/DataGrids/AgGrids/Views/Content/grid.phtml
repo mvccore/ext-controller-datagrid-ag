@@ -50,6 +50,7 @@
 </div>
 <script<?php echo $nonceAttr; ?>>new <?php echo $grid->GetJsClassFullName(); ?>(<?php
 	echo \MvcCore\Tool::JsonEncode([
+		'version'				=> $grid::VERSION,
 		'contElementSelector'	=> '#' . $gridId,
 		'renderConfig'			=> $renderConf,
 		'columns'				=> $grid->GetConfigColumns(FALSE),

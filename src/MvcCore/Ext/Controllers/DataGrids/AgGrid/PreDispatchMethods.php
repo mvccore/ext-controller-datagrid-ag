@@ -28,25 +28,20 @@ trait PreDispatchMethods {
 	 */
 	public function PreDispatch () {
 		if ($this->ajaxDataRequest) {
-			if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-				$this->LoadModel();
-				$this->preDispatchPage();
-			} else {
-				if ($this->view === NULL) {}
-					$this->view = $this->createView(TRUE);
-				$this->view->grid = $this;
+			if ($this->view === NULL) {}
+				$this->view = $this->createView(TRUE);
+			$this->view->grid = $this;
 				
-				/** @var \MvcCore\Controller $parentOfParentClass */
-				$parentOfParentClass = get_parent_class(get_parent_class(__CLASS__));
-				$parentOfParentClass::PreDispatch();
+			/** @var \MvcCore\Controller $parentOfParentClass */
+			$parentOfParentClass = get_parent_class(get_parent_class(__CLASS__));
+			$parentOfParentClass::PreDispatch();
 				
-				$this->LoadModel();
-				$this->preDispatchPage();
-				if (!$this->preDispatchTotalCount()) return;
-				$this->preDispatchTranslations();
-				$this->preDispatchPaging();
-				$this->preDispatchCountScales();
-			}
+			$this->LoadModel();
+			$this->preDispatchPage();
+			if (!$this->preDispatchTotalCount()) return;
+			$this->preDispatchTranslations();
+			$this->preDispatchPaging();
+			$this->preDispatchCountScales();
 		} else {
 			if ($this->dispatchState >= \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 			parent::PreDispatch();

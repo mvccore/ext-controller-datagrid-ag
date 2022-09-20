@@ -41,8 +41,13 @@ trait ActionMethods {
 			'controls'		=> NULL,
 			'data'			=> $this->pageData,
 		];
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_MULTI) {	
-			$renderConf = $this->GetConfigRendering();
+		$renderConf = $this->GetConfigRendering();
+		$renderBottomControls = (
+			$renderConf->GetRenderControlCountScales() ||
+			$renderConf->GetRenderControlStatus() ||
+			$renderConf->GetRenderControlPaging()
+		);
+		if ($renderBottomControls) {
 			$response->controls = (object) [
 				'countScales'	=> NULL,
 				'status'		=> NULL,

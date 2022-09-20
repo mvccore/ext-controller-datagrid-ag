@@ -154,6 +154,10 @@ var MvcCore;
                                         agGridApi.hideOverlay();
                                         var response = _this.Static.RetypeRawServerResponse(rawResponse);
                                         _this.grid.GetEvents().HandleResponseLoaded(response);
+                                        if (response.controls != null) {
+                                            _this.optionsManager.InitBottomControls();
+                                            _this.handleResponseControls(response);
+                                        }
                                         var cacheKey = _this.cache.Key(reqData);
                                         if (_this.changeUrlSwitches.has(cacheKey) && _this.changeUrlSwitches.get(cacheKey)) {
                                             _this.changeUrlSwitches.delete(cacheKey);

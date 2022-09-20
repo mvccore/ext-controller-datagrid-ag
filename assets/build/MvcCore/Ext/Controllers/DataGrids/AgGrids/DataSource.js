@@ -57,6 +57,12 @@ var MvcCore;
                             this.helpers = grid.GetHelpers();
                             this.initialData = grid.GetInitialData();
                         }
+                        DataSource.prototype.handleResponseControls = function (response) {
+                            var elms = this.optionsManager.GetElements(), controls = response.controls;
+                            if (elms.statusControl != null && controls.status != null) {
+                                elms.statusControl.parentNode.replaceChild(this.helpers.GetHtmlElementFromString(controls.status), elms.statusControl);
+                            }
+                        };
                         DataSource.prototype.initPageReqDataAndCache = function () {
                             var grid = this.Static.grid;
                             this.cache = new AgGrids.DataSources.Cache(grid);

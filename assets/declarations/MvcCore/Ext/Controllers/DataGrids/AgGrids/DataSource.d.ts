@@ -11,6 +11,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected pageReqData?: Interfaces.Ajax.IReqRawObj;
         constructor(grid: AgGrid);
         abstract ExecRequest(reqData: Interfaces.Ajax.IReqRawObj, changeUrl: boolean): this;
+        protected handleResponseControls(response: AgGrids.Interfaces.Ajax.IResponse): void;
         protected initPageReqDataAndCache(): void;
         protected getReqUrlMethodAndType(): [string, string, string];
         static RetypeRawServerResponse(serverResponse: Interfaces.Ajax.IResponse): Interfaces.Ajax.IResponse;

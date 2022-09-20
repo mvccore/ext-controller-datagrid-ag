@@ -10,3 +10,9 @@
 .grid.grid-with-bottom-controls .grid-table-component{
 	height:calc(100% - 32px);
 }
+
+
+.grid.grid-no-table-head .ag-header{
+	display:none;
+}
+

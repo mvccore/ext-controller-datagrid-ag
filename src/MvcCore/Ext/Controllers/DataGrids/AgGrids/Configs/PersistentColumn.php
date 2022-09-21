@@ -21,10 +21,8 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	
 	/**
 	 * Model PHP code propery name.
-	 * @jsonSerialize
 	 * @var string|NULL
 	 */
-	#[JsonSerialize]
 	protected $propName = NULL;
 
 	/**

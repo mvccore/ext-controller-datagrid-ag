@@ -349,20 +349,38 @@ trait ConfigGettersSetters {
 		return $this->urlColumnsChanges;
 	}
 
+	/**
+	 * @inheritDocs
+	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsRead|callable $handlerColumnsRead 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
 	public function SetHandlerColumnsRead ($handlerColumnsRead) {
 		$this->handlerColumnsRead = $handlerColumnsRead;
 		return $this;
 	}
-
+	
+	/**
+	 * @inheritDocs
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsRead|callable
+	 */
 	public function GetHandlerColumnsRead () {
 		return $this->handlerColumnsRead;
 	}
-
+	
+	/**
+	 * @inheritDocs
+	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsWrite|callable $handlerColumnsRead 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
 	public function SetHandlerColumnsWrite ($handlerColumnsWrite) {
 		$this->handlerColumnsWrite = $handlerColumnsWrite;
 		return $this;
 	}
 
+	/**
+	 * @inheritDocs
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsWrite|callable
+	 */
 	public function GetHandlerColumnsWrite () {
 		return $this->handlerColumnsWrite;
 	}

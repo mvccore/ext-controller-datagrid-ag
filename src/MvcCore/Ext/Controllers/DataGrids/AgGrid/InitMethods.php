@@ -468,9 +468,10 @@ trait InitMethods {
 				$columnPropName = $configColumn->GetPropName();
 				$columnTypes = $configColumn->GetTypes();
 				// check if column support filtering
-				if (!isset($filteringColumns[$columnPropName])) {
+				if (isset($filteringColumns[$columnPropName])) {
 					if ($this->ignoreDisabledColumns) {
-						$configColumn->SetDisabled(FALSE);
+						if ($configColumn->GetDisabled())
+							$configColumn->SetDisabled(FALSE);
 					} else {
 						continue;
 					}

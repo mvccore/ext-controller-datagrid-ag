@@ -107,6 +107,12 @@ interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
 	 * @var int
 	 */
 	const ROW_SELECTION_NOT_DESELECT		= 8;
+	
+	/**
+	 * Client row selection mode - select automatically first row.
+	 * @var int
+	 */
+	const ROW_SELECTION_AUTOSELECT_FIRST	= 16;
 
 	
 	/**

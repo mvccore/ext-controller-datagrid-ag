@@ -100,11 +100,17 @@ var MvcCore;
                                 else {
                                     response = this.Static.RetypeRawServerResponse(rawResponse);
                                     this.cache.Add(cacheKey, response);
-                                    this.grid.GetEvents().HandleResponseLoaded(response);
+                                    //this.grid.GetEvents().HandleResponseLoaded(response);
                                 }
                                 var agGridApi = this.optionsManager.GetAgOptions().api;
                                 agGridApi.setRowData(response.data);
                                 agGridApi.hideOverlay();
+                                if (cached) {
+                                    this.grid.GetEvents().SelectRowByIndex(0);
+                                }
+                                else {
+                                    this.grid.GetEvents().HandleResponseLoaded(response, true);
+                                }
                                 if (response.controls != null) {
                                     this.optionsManager.InitBottomControls();
                                     this.handleResponseControls(response);
@@ -118,14 +124,26 @@ var MvcCore;
                             MultiplePagesMode.prototype.handleResponseControls = function (response) {
                                 _super.prototype.handleResponseControls.call(this, response);
                                 var elms = this.optionsManager.GetElements(), controls = response.controls;
-                                if (elms.countScalesControl != null && controls.countScales != null) {
-                                    elms.countScalesControl.parentNode.replaceChild(this.helpers.GetHtmlElementFromString(controls.countScales), elms.countScalesControl);
+                                if (elms.countScalesControl != null) {
+                                    if (controls.countScales == null) {
+                                        elms.countScalesControl.innerHTML = '';
+                                    }
+                                    else {
+                                        elms.countScalesControl.parentNode.replaceChild(this.helpers.GetHtmlElementFromString(controls.countScales), elms.countScalesControl);
+                                    }
                                 }
-                                if (elms.pagingControl != null && controls.paging != null) {
-                                    this.eventsManager.RemovePagingEvents();
-                                    elms.pagingControl.parentNode.replaceChild(this.helpers.GetHtmlElementFromString(controls.paging), elms.pagingControl);
-                                    this.optionsManager.InitBottomControls();
-                                    this.eventsManager.AddPagingEvents();
+                                if (elms.pagingControl != null) {
+                                    if (controls.paging == null) {
+                                        this.eventsManager.RemovePagingEvents();
+                                        elms.pagingControl.innerHTML = '';
+                                        this.optionsManager.InitBottomControls();
+                                    }
+                                    else {
+                                        this.eventsManager.RemovePagingEvents();
+                                        elms.pagingControl.parentNode.replaceChild(this.helpers.GetHtmlElementFromString(controls.paging), elms.pagingControl);
+                                        this.optionsManager.InitBottomControls();
+                                        this.eventsManager.AddPagingEvents();
+                                    }
                                 }
                             };
                             return MultiplePagesMode;

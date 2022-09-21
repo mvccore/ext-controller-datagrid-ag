@@ -16,6 +16,7 @@ var MvcCore;
                             RowSelection[RowSelection["ROW_SELECTION_SINGLE"] = 2] = "ROW_SELECTION_SINGLE";
                             RowSelection[RowSelection["ROW_SELECTION_MULTIPLE"] = 4] = "ROW_SELECTION_MULTIPLE";
                             RowSelection[RowSelection["ROW_SELECTION_NOT_DESELECT"] = 8] = "ROW_SELECTION_NOT_DESELECT";
+                            RowSelection[RowSelection["ROW_SELECTION_AUTOSELECT_FIRST"] = 16] = "ROW_SELECTION_AUTOSELECT_FIRST";
                         })(RowSelection = Enums.RowSelection || (Enums.RowSelection = {}));
                     })(Enums = AgGrids.Enums || (AgGrids.Enums = {}));
                 })(AgGrids = DataGrids.AgGrids || (DataGrids.AgGrids = {}));

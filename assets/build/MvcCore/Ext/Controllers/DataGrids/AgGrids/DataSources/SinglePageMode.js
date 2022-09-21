@@ -45,7 +45,9 @@ var MvcCore;
                                 var _this = _super.call(this, grid) || this;
                                 /** If you know up front how many rows are in the dataset, set it here. Otherwise leave blank. */
                                 _this.rowCount = undefined;
-                                _this.pageLoaded = false;
+                                _this.autoSelectFirstRow = false;
+                                _this.scrolled = false;
+                                _this.pageLoadedState = 0;
                                 _this.initDataCache = _this.grid.GetServerConfig().clientMaxRowsInCache > 0;
                                 _this.requestCounter = 0;
                                 _this.initLocationHref = location.href;
@@ -55,6 +57,10 @@ var MvcCore;
                                 _this.changeUrlSwitches = new Map();
                                 return _this;
                             }
+                            SinglePageMode.prototype.SetBodyScrolled = function (scrolled) {
+                                this.scrolled = scrolled;
+                                return this;
+                            };
                             SinglePageMode.prototype.initPageReqDataAndCache = function () {
                                 _super.prototype.initPageReqDataAndCache.call(this);
                                 this.cache.SetEnabled(true);
@@ -105,9 +111,10 @@ var MvcCore;
                                 return false;
                             };
                             SinglePageMode.prototype.resolveByInitData = function (params, totalCount) {
+                                var _this = this;
                                 //console.log("resolving by initial data");
                                 params.successCallback(this.initialData.data.slice(params.startRow - this.initialData.offset, params.endRow - this.initialData.offset), totalCount);
-                                if (this.pageLoaded) {
+                                if (this.pageLoadedState > 0) {
                                     var reqData = this.Static.RetypeRequestMaps2Objects({
                                         offset: this.grid.GetOffset(),
                                         limit: this.grid.GetServerConfig().itemsPerPage,
@@ -122,20 +129,36 @@ var MvcCore;
                                         //console.log("pushState init data", reqData);
                                         history.pushState(reqData, document.title, this.initLocationHref);
                                     }
+                                    if (this.autoSelectFirstRow)
+                                        this.grid.GetEvents().SelectRowByIndex(0);
                                 }
                                 else {
-                                    this.pageLoaded = true;
+                                    this.pageLoadedState++;
                                     var serverCfg = this.grid.GetServerConfig();
                                     //console.log("page", serverCfg.page);
                                     if (serverCfg.page > 1) {
-                                        var scrollOffset = (serverCfg.page - 1) * serverCfg.clientRowBuffer;
+                                        var scrollOffset = (serverCfg.page - 1) * serverCfg.itemsPerPage;
                                         //console.log("scrolling top", scrollOffset);
                                         this.optionsManager.GetAgOptions().api.ensureIndexVisible(scrollOffset, "top");
+                                        this.specialCase = true;
+                                        this.grid.GetEvents().SelectRowByIndex(scrollOffset, function () {
+                                            setTimeout(function () {
+                                                _this.autoSelectFirstRow = true;
+                                            }, 1000);
+                                        });
+                                    }
+                                    else {
+                                        this.grid.GetEvents().SelectRowByIndex(0, function () {
+                                            setTimeout(function () {
+                                                _this.autoSelectFirstRow = true;
+                                            }, 1000);
+                                        });
                                     }
                                 }
                             };
                             SinglePageMode.prototype.resolveByAjaxRequest = function (params) {
                                 var _this = this;
+                                //console.log("resolveByAjaxRequest");
                                 var agGridApi = this.optionsManager.GetAgOptions().api;
                                 agGridApi.showLoadingOverlay();
                                 var _a = __read(this.getReqUrlMethodAndType(), 3), reqDataUrl = _a[0], reqMethod = _a[1], reqType = _a[2];
@@ -153,20 +176,30 @@ var MvcCore;
                                     success: function (rawResponse) {
                                         agGridApi.hideOverlay();
                                         var response = _this.Static.RetypeRawServerResponse(rawResponse);
-                                        _this.grid.GetEvents().HandleResponseLoaded(response);
                                         if (response.controls != null) {
                                             _this.optionsManager.InitBottomControls();
                                             _this.handleResponseControls(response);
+                                        }
+                                        var serverCfg = _this.grid.GetServerConfig();
+                                        if (serverCfg.page > 1) {
+                                            _this.pageLoadedState++;
+                                        }
+                                        else if (serverCfg.page === 1) {
+                                            _this.pageLoadedState = 4;
                                         }
                                         var cacheKey = _this.cache.Key(reqData);
                                         if (_this.changeUrlSwitches.has(cacheKey) && _this.changeUrlSwitches.get(cacheKey)) {
                                             _this.changeUrlSwitches.delete(cacheKey);
                                         }
                                         else {
-                                            history.pushState(reqData, document.title, response.url);
-                                            _this.grid.GetColumnsVisibilityMenu().UpdateFormAction();
+                                            if (_this.pageLoadedState > 3) {
+                                                history.pushState(reqData, document.title, response.url);
+                                                _this.grid.GetColumnsVisibilityMenu().UpdateFormAction();
+                                            }
                                         }
+                                        var selectFirstRow = !_this.scrolled && _this.pageLoadedState > 3;
                                         params.successCallback(response.data, response.totalCount);
+                                        _this.grid.GetEvents().HandleResponseLoaded(response, selectFirstRow);
                                     }
                                 });
                             };

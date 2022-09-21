@@ -39,6 +39,8 @@ var MvcCore;
                         function EventsManager(grid) {
                             var e_1, _a, e_2, _b;
                             var _newTarget = this.constructor;
+                            this.onLoadSelectionIndex = null;
+                            this.onLoadSelectionCallback = null;
                             this.Static = _newTarget;
                             this.grid = grid;
                             var serverConfig = grid.GetServerConfig();
@@ -88,7 +90,21 @@ var MvcCore;
                             this.handlers = new Map();
                             this.columnsChanges = new Map();
                             this.columnsChangesSending = false;
+                            this.autoSelectFirstRow = ((serverConfig.rowSelection & AgGrids.Enums.RowSelection.ROW_SELECTION_AUTOSELECT_FIRST) != 0);
                         }
+                        EventsManager.prototype.SetAutoSelectFirstRow = function (autoSelectFirstRow) {
+                            this.autoSelectFirstRow = autoSelectFirstRow;
+                            return this;
+                        };
+                        EventsManager.prototype.GetAutoSelectFirstRow = function () {
+                            return this.autoSelectFirstRow;
+                        };
+                        EventsManager.prototype.SetOnLoadSelectionIndex = function (rowIndexToSelectAfterLoad, onLoadSelectionCallback) {
+                            if (onLoadSelectionCallback === void 0) { onLoadSelectionCallback = null; }
+                            this.onLoadSelectionIndex = rowIndexToSelectAfterLoad;
+                            this.onLoadSelectionCallback = onLoadSelectionCallback;
+                            return this;
+                        };
                         EventsManager.prototype.AddEventListener = function (eventName, handler) {
                             var handlers = this.handlers.has(eventName)
                                 ? this.handlers.get(eventName)
@@ -142,6 +158,40 @@ var MvcCore;
                                     if (handlers_2_1 && !handlers_2_1.done && (_a = handlers_2.return)) _a.call(handlers_2);
                                 }
                                 finally { if (e_4) throw e_4.error; }
+                            }
+                            return this;
+                        };
+                        EventsManager.prototype.HandleModelUpdated = function (params) {
+                            //console.log("onModelUpdated", this.onLoadSelectionIndex)
+                            if (this.onLoadSelectionIndex != null) {
+                                var nextIndex = this.onLoadSelectionIndex;
+                                var nextRow = params.api.getDisplayedRowAtIndex(nextIndex);
+                                if (nextRow.data == null) {
+                                    //console.log("onModelUpdated1", nextIndex, nextRow.data);
+                                }
+                                else {
+                                    //console.log("onModelUpdated2", nextIndex, nextRow.data);
+                                    nextRow.setSelected(true);
+                                    if (this.onLoadSelectionCallback) {
+                                        this.onLoadSelectionCallback();
+                                        this.onLoadSelectionCallback = null;
+                                    }
+                                    this.onLoadSelectionIndex = null;
+                                }
+                            }
+                        };
+                        EventsManager.prototype.SelectRowByIndex = function (rowIndex, onLoadSelectionCallback) {
+                            if (onLoadSelectionCallback === void 0) { onLoadSelectionCallback = null; }
+                            if (this.autoSelectFirstRow) {
+                                var row = this.grid.GetGridApi().getDisplayedRowAtIndex(rowIndex);
+                                if (row != null) {
+                                    if (row.data == null) {
+                                        this.SetOnLoadSelectionIndex(rowIndex, onLoadSelectionCallback);
+                                    }
+                                    else {
+                                        row.setSelected(true);
+                                    }
+                                }
                             }
                             return this;
                         };
@@ -309,10 +359,13 @@ var MvcCore;
                         };
                         EventsManager.prototype.firefiltering = function (filtering) {
                             this.grid
+                                .SetOffset(0)
                                 .SetFiltering(filtering)
                                 .SetTotalCount(null);
                             var pageMode = this.grid.GetPageMode();
                             if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
+                                var dataSource = this.grid.GetDataSource();
+                                dataSource.SetBodyScrolled(false);
                                 var gridOptionsManager = this.grid.GetOptionsManager().GetAgOptions();
                                 gridOptionsManager.api.onFilterChanged();
                             }
@@ -464,8 +517,9 @@ var MvcCore;
                                 });
                             }
                         };
-                        EventsManager.prototype.HandleResponseLoaded = function (response) {
+                        EventsManager.prototype.HandleResponseLoaded = function (response, selectFirstRow) {
                             var e_7, _a, e_8, _b, e_9, _c;
+                            if (selectFirstRow === void 0) { selectFirstRow = false; }
                             this.grid
                                 .SetOffset(response.offset)
                                 .SetTotalCount(response.totalCount)
@@ -526,6 +580,8 @@ var MvcCore;
                                 }
                                 finally { if (e_9) throw e_9.error; }
                             }
+                            if (selectFirstRow)
+                                this.SelectRowByIndex(0);
                         };
                         EventsManager.prototype.handleUrlChangeSortsFilters = function (reqData) {
                             var e_10, _a, e_11, _b, e_12, _c;

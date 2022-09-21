@@ -26,6 +26,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Options {
         constructor(grid: AgGrid);
         SetElements(elements: AgGrids.Interfaces.SortHeaders.IElements): this;
         GetElements(): AgGrids.Interfaces.SortHeaders.IElements;
+        SetAgBases(agBases: AgGrids.Options.AgBases): this;
+        GetAgBases(): AgGrids.Options.AgBases;
         SetAgOptions(options: agGrid.GridOptions<any>): this;
         GetAgOptions(): agGrid.GridOptions<any>;
         SetColumnManager(columnManager: AgGrids.Columns.Manager): this;

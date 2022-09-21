@@ -3,6 +3,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManagers {
         Static: typeof MultiplePagesMode;
         protected grid: AgGrid;
         constructor(grid: AgGrid);
+        HandleGridReady(event: agGrid.GridReadyEvent<any>): void;
         AddPagingEvents(): this;
         RemovePagingEvents(): this;
         protected handlePagingClick(offset: number, e: MouseEvent): void;

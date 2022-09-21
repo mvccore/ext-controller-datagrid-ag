@@ -28,6 +28,10 @@ var MvcCore;
                             function SinglePageMode(grid) {
                                 return _super.call(this, grid) || this;
                             }
+                            SinglePageMode.prototype.HandleBodyScroll = function (params) {
+                                var dataSource = this.grid.GetDataSource();
+                                dataSource.SetBodyScrolled(params.top > 0);
+                            };
                             return SinglePageMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManager));
                         EventsManagers.SinglePageMode = SinglePageMode;

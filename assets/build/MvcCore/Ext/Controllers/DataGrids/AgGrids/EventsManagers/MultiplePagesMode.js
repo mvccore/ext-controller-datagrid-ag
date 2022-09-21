@@ -28,6 +28,10 @@ var MvcCore;
                             function MultiplePagesMode(grid) {
                                 return _super.call(this, grid) || this;
                             }
+                            MultiplePagesMode.prototype.HandleGridReady = function (event) {
+                                this.SelectRowByIndex(0);
+                                _super.prototype.HandleGridReady.call(this, event);
+                            };
                             MultiplePagesMode.prototype.AddPagingEvents = function () {
                                 var _this = this;
                                 this.grid.GetOptionsManager().GetElements().pagingAnchors.forEach(function (pagingAnchor) {

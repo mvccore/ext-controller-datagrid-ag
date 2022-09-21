@@ -14,10 +14,18 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected columnsChangesTimeout: number;
         protected columnsChangesSending: boolean;
         protected handlers: Map<Types.GridEventName, Types.GridEventHandler[]>;
+        protected autoSelectFirstRow: boolean;
+        protected onLoadSelectionIndex: number | null;
+        protected onLoadSelectionCallback: () => void;
         constructor(grid: AgGrid);
+        SetAutoSelectFirstRow(autoSelectFirstRow: boolean): this;
+        GetAutoSelectFirstRow(): boolean;
+        SetOnLoadSelectionIndex(rowIndexToSelectAfterLoad: number, onLoadSelectionCallback?: () => void): this;
         AddEventListener<K extends keyof Interfaces.Events.IHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.Events.IHandlersMap[K]) => void): this;
         RemoveEventListener<K extends keyof Interfaces.Events.IHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.Events.IHandlersMap[K]) => void): this;
         FireHandlers(eventName: Types.GridEventName, event: Interfaces.Events.IBase): this;
+        HandleModelUpdated(params: agGrid.ModelUpdatedEvent<any>): void;
+        SelectRowByIndex(rowIndex: number, onLoadSelectionCallback?: () => void): this;
         HandleGridReady(event: agGrid.GridReadyEvent<any>): void;
         HandleSelectionChange(event: agGrid.SelectionChangedEvent<any>): void;
         HandleColumnResized(event: agGrid.ColumnResizedEvent<any>): void;
@@ -32,7 +40,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         AddUrlChangeEvent(): this;
         HandleExecChange(offset: number, sorting: Types.SortItem[], filtering: Map<string, Map<Enums.Operator, string[]>>): void;
         HandleUrlChange(e: PopStateEvent): void;
-        HandleResponseLoaded(response: AgGrids.Interfaces.Ajax.IResponse): void;
+        HandleResponseLoaded(response: AgGrids.Interfaces.Ajax.IResponse, selectFirstRow?: boolean): void;
         protected handleUrlChangeSortsFilters(reqData: Interfaces.Ajax.IRequest): this;
         protected getOperatorsAndPrefixesByRawValue(rawValue: string): Map<Enums.Operator, string>;
         protected getOperatorByRawValue(rawValue: string, operatorsAndPrefixes: Map<Enums.Operator, string>, columnFilterCfg: number | boolean): [string, Enums.Operator | null];

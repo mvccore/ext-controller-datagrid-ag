@@ -25,6 +25,13 @@ var MvcCore;
                             Manager.prototype.GetElements = function () {
                                 return this.elements;
                             };
+                            Manager.prototype.SetAgBases = function (agBases) {
+                                this.agBases = agBases;
+                                return this;
+                            };
+                            Manager.prototype.GetAgBases = function () {
+                                return this.agBases;
+                            };
                             Manager.prototype.SetAgOptions = function (options) {
                                 this.agOptions = options;
                                 return this;

@@ -147,7 +147,8 @@ var MvcCore;
                                         }
                                     }
                                 }
-                                var result = [], index = 0, indexedMapKeys = Array.from(indexedMap.keys()).sort();
+                                var result = [], index = 0, indexedMapKeys = Array.from(indexedMap.keys());
+                                indexedMapKeys.sort(function (a, b) { return a - b; });
                                 try {
                                     for (var indexedMapKeys_1 = __values(indexedMapKeys), indexedMapKeys_1_1 = indexedMapKeys_1.next(); !indexedMapKeys_1_1.done; indexedMapKeys_1_1 = indexedMapKeys_1.next()) {
                                         var indexedMapKey = indexedMapKeys_1_1.value;

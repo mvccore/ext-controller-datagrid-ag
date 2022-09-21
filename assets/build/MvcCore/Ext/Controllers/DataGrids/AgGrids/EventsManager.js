@@ -638,7 +638,7 @@ var MvcCore;
                             }
                             return [rawValue, operator];
                         };
-                        EventsManager.COLUMN_CHANGES_TIMEOUT = 2000;
+                        EventsManager.COLUMN_CHANGES_TIMEOUT = 500;
                         return EventsManager;
                     }());
                     AgGrids.EventsManager = EventsManager;

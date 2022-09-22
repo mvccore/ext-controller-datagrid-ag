@@ -32,25 +32,19 @@
 	height:100%;
 }
 .ag-root div.sort-header.sortable .label {
-	order:1;
+	order:4;
 	color:#000;
+	margin-right:auto;
 }
 .ag-root div.sort-header .order {
-	order:2;
+	order:3;
 	position:relative;
 	top:-5px;
 	font-size:75%;
     font-weight:bold;
 }
 .ag-root div.sort-header .direction {
-	order:3;
-}
-.ag-root div.sort-header > div:nth-child(3),
-.ag-root div.sort-header.sort-header-items-2 > div:last-child {
-	margin-left:auto;
-}
-.ag-root div.sort-header.sort-header-items-2 > div:nth-child(3) {
-	margin-left:0;
+	order:1;
 }
 .ag-root div.sort-header .direction,
 .ag-root div.sort-header .remove {
@@ -75,7 +69,7 @@
 	content:'\2191';
 }
 .ag-root div.sort-header .remove {
-	order:4;
+	order:2;
 	cursor:pointer;
 	height:80%;
 }

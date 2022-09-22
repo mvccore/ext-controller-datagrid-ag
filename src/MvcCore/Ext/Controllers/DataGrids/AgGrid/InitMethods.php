@@ -119,7 +119,7 @@ trait InitMethods {
 			$propName = $configColumn->GetPropName();
 			if (isset($persistentColumns[$propName])) {
 				$persistentColumn = $persistentColumns[$propName];
-				$configColumn->SetColumnIndex($persistentColumn->GetColumnIndex());
+				$configColumn->SetColumnIndexUser($persistentColumn->GetColumnIndex());
 				$configColumn->SetWidth($persistentColumn->GetWidth());
 				$configColumn->SetDisabled($persistentColumn->GetDisabled());
 			}
@@ -412,10 +412,12 @@ trait InitMethods {
 				$rawColumnUrlName = $this->removeUnknownChars($rawColumnUrlName);
 				if ($rawColumnUrlName === NULL || !isset($this->configColumns[$rawColumnUrlName])) continue;
 				$configColumn = $this->configColumns[$rawColumnUrlName];
-				if ($this->ignoreDisabledColumns) {
-					if ($configColumn->GetDisabled()) $configColumn->SetDisabled(FALSE);
-				} else {
-					if ($configColumn->GetDisabled()) continue;
+				if ($configColumn->GetDisabled()) {
+					if ($this->ignoreDisabledColumns) {
+						$this->enableColumn($configColumn);
+					} else {
+						continue;
+					}
 				}
 				$columnSortCfg = $configColumn->GetSort();
 				if ($columnSortCfg === FALSE || $columnSortCfg === NULL) continue;
@@ -471,7 +473,7 @@ trait InitMethods {
 				if (isset($filteringColumns[$columnPropName])) {
 					if ($this->ignoreDisabledColumns) {
 						if ($configColumn->GetDisabled())
-							$configColumn->SetDisabled(FALSE);
+							$this->enableColumn($configColumn);
 					} else {
 						continue;
 					}
@@ -560,6 +562,7 @@ trait InitMethods {
 	}
 
 	/**
+	 * 
 	 * @param  array  $array 
 	 * @param  string $sortFn 
 	 * @return array

@@ -32,5 +32,4 @@ trait InternalProps {
 	 * @var bool
 	 */
 	protected $countScalesCustomized = FALSE;
-
 }

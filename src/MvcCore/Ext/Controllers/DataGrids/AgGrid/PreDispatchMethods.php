@@ -13,8 +13,6 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 
-use \MvcCore\Ext\Controllers\IDataGrid;
-
 /**
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
  */
@@ -53,6 +51,10 @@ trait PreDispatchMethods {
 		}
 	}
 
+	/**
+	 * 
+	 * @return void
+	 */
 	protected function preDispatchPage () {
 		if ($this->page === NULL && $this->clientPageMode === IConstants::CLIENT_PAGE_MODE_MULTI) {
 			$displayingCount = $this->count;
@@ -77,7 +79,6 @@ trait PreDispatchMethods {
 			// If offset is to high, there is returned empty result and it OK.
 			return TRUE;
 		} else if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-
 			$pagesCountByTotalCount = ($this->clientRowBuffer > 0) 
 				? intval(ceil(floatval($this->totalCount) / floatval($this->clientRowBuffer))) 
 				: 0 ;

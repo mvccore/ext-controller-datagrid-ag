@@ -13,12 +13,36 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 
+use \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn;
+use \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns;
+
 /**
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
  */
 trait ActionMethods {
 	
 	/**
+	 * Internal default action for datagrid content rendering.
+	 * @template
+	 * @return void
+	 */
+	public function ActionDefault () {
+		if (!$this->writeChangedColumnsConfigs) return;
+		$persistentColumns = [];
+		foreach ($this->GetConfigColumns(FALSE) as $configColumn) {
+			$propName = $configColumn->GetPropName();
+			$persistentColumns[$propName] = new PersistentColumn(
+				$propName,
+				$configColumn->GetColumnIndexUser() ?: $configColumn->GetColumnIndex(),
+				$configColumn->GetWidth(),
+				$configColumn->GetDisabled()
+			);
+		}
+		$this->gridPersistentColumnsWrite($persistentColumns);
+	}
+
+	/**
+	 * 
 	 * @return void
 	 */
 	public function ActionData () {
@@ -68,6 +92,10 @@ trait ActionMethods {
 		}
 	}
 
+	/**
+	 * 
+	 * @return void
+	 */
 	public function ActionColumnsStates () {
 		$columnsUrlNamesRaw = $this->request->GetParams(FALSE, [], \MvcCore\IRequest::PARAM_TYPE_INPUT);
 
@@ -80,7 +108,7 @@ trait ActionMethods {
 					$disabled = FALSE;
 			}
 			$propName = $configColumn->GetPropName();
-			$persistentColumns[$propName] = new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn(
+			$persistentColumns[$propName] = new PersistentColumn(
 				$propName,
 				$configColumn->GetColumnIndex(),
 				$configColumn->GetWidth(),
@@ -99,6 +127,10 @@ trait ActionMethods {
 		self::Redirect($redirectUrl, \MvcCore\IResponse::SEE_OTHER);
 	}
 
+	/**
+	 * 
+	 * @return void
+	 */
 	public function ActionColumnsChanges () {
 		$changesJson = $this->request->GetParam(self::AJAX_PARAM_COLUMNS_CHANGES, FALSE);
 		$toolClass = $this->application->GetToolClass();
@@ -116,14 +148,14 @@ trait ActionMethods {
 					/** @var \stdClass $columnChange */
 					$columnChange = $changesRaw[$urlName];
 					if (isset($columnChange->index))
-						$configColumn->SetColumnIndex($columnChange->index);
+						$configColumn->SetColumnIndexUser($columnChange->index);
 					if (isset($columnChange->width))
 						$configColumn->SetWidth($columnChange->width);
 				}
 				$propName = $configColumn->GetPropName();
-				$persistentColumns[$propName] = new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn(
+				$persistentColumns[$propName] = new PersistentColumn(
 					$propName,
-					$configColumn->GetColumnIndex(),
+					$configColumn->GetColumnIndexUser() ?: $configColumn->GetColumnIndex(),
 					$configColumn->GetWidth(),
 					$configColumn->GetDisabled()
 				);
@@ -151,7 +183,7 @@ trait ActionMethods {
 					$this->handlerColumnsWrite, 
 					$this->id,
 					$idUser,
-					new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns($persistentColumns)
+					new PersistentColumns($persistentColumns)
 				);
 			} catch (\Throwable $e) {}
 		} else {
@@ -164,7 +196,7 @@ trait ActionMethods {
 	
 	/**
 	 * Write persistent columns info into db or into session.
-	 * @return array<string, \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn>
+	 * @return array<string, PersistentColumn>
 	 */
 	protected function gridPersistentColumnsRead () {
 		$persistentColumns = NULL;
@@ -187,13 +219,14 @@ trait ActionMethods {
 		}
 		if ($persistentColumns === NULL) {
 			$persistentColumns = [];
-		} else if ($persistentColumns instanceof \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns) {
+		} else if ($persistentColumns instanceof PersistentColumns) {
 			$persistentColumns = $persistentColumns->getArray();
 		}
 		return $persistentColumns;
 	}
 
 	/**
+	 * 
 	 * @return \MvcCore\Session
 	 */
 	protected function getGridSessionNamespace () {

@@ -49,7 +49,7 @@ var MvcCore;
                             Manager.prototype.InitElements = function () {
                                 var contElementSelector = this.grid.GetServerConfig().contElementSelector, contElement = document.querySelector(contElementSelector);
                                 if (contElement == null)
-                                    throw new Error("Element with selector '" + contElementSelector + "' not found.");
+                                    throw new Error("Element with selector '".concat(contElementSelector, "' not found."));
                                 var sels = this.Static.SELECTORS, agGridElement = contElement.querySelector(sels.AG_GRID_SEL), bottomControlsElement = contElement.querySelector(sels.BOTTOM_CONTROLS.CONT_SEL);
                                 this.elements = {
                                     contElement: contElement,

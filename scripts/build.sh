@@ -15,7 +15,11 @@ rm -r ../../../assets/declarations
 npm run build
 sleep 1
 
-cd ../../..
+cd ..
+cp ./ext-controller-datagrid-ag/assets/build ../../assets/build
+cp ./ext-controller-datagrid-ag/assets/declarations ../../assets/declarations
+
+cd ../..
 rm -r ./assets/ag-grid-community
 cp ./node_modules/@mvccore/ext-controller-datagrid-ag-js/node_modules/ag-grid-community/dist ./assets/ag-grid-community
 find ./assets/ag-grid-community -name "*.scss" -type f -delete
@@ -27,6 +31,11 @@ cp ./node_modules/@mvccore/ext-controller-datagrid-ag-js/node_modules/moment/loc
 
 rm -r ./assets/ajax-min
 cp ./node_modules/@mvccore/ext-controller-datagrid-ag-js/node_modules/ajax-min/builds/latest ./assets/ajax-min
+
+rm -r ./node_modules
+rm ./package-lock.json
+
+cd ./scripts
 
 echo "
 Building finished.

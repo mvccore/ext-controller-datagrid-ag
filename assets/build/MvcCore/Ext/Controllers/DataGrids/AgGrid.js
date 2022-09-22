@@ -315,7 +315,6 @@ var MvcCore;
                         Tools: {
                             Helpers: DataGrids.AgGrids.Tools.Helpers,
                             Translator: DataGrids.AgGrids.Tools.Translator,
-                            ToolTip: DataGrids.AgGrids.Tools.ToolTip,
                         },
                     };
                     return AgGrid;

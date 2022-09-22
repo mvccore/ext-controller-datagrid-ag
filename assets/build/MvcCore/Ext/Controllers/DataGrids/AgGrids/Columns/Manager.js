@@ -58,7 +58,6 @@ var MvcCore;
                                     editable: false,
                                     flex: 1,
                                     headerComponent: AgGrids.Columns.SortHeader,
-                                    tooltipComponent: AgGrids.Tools.ToolTip
                                 };
                                 this.sortHeaderDefaults = {
                                     renderDirection: true,
@@ -89,8 +88,6 @@ var MvcCore;
                                 this.serverColumnsUserSortedAll = [];
                                 this.serverColumnsSortedActive = [];
                                 this.agColumnDefaults.headerComponent = grid.Static.Classes.Columns.SortHeader;
-                                //this.agColumnDefaults.tooltipComponent = grid.Static.Classes.Tools.ToolTip;
-                                this.agColumnDefaults.tooltipComponent = undefined; // TODO
                             }
                             Manager.prototype.SetServerColumnsMapAll = function (serverColumnsMapAll) {
                                 this.serverColumnsMapAll = serverColumnsMapAll;

@@ -196,7 +196,7 @@ var MvcCore;
                                 var columnCfg, inputId, idColumn, sels = this.Static.SELECTORS, baseId = sels.INPUT_ID_BASE, labelCls = sels.MENU_CTRL_CLS, label, text, span, checkbox;
                                 this.elms.inputs = new Map();
                                 try {
-                                    for (var _c = __values(this.grid.GetOptionsManager().GetColumnManager().GetAllServerColumnsSorted()), _d = _c.next(); !_d.done; _d = _c.next()) {
+                                    for (var _c = __values(this.grid.GetOptionsManager().GetColumnManager().GetServerColumnsSortedAll()), _d = _c.next(); !_d.done; _d = _c.next()) {
                                         var columnCfg = _d.value;
                                         idColumn = columnCfg.urlName;
                                         text = (_b = columnCfg.title) !== null && _b !== void 0 ? _b : columnCfg.headingName;

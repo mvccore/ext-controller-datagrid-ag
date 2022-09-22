@@ -84,33 +84,41 @@ var MvcCore;
                                     this.filterHeaderDefaults.submitDelayMs = 0;
                                 }
                                 this.filterMenuDefaults.isTouchDevice = isTouchDevice;
-                                this.allServerColumnsMap = new Map();
-                                this.allServerColumnsSorted = [];
-                                this.activeServerColumnsSorted = [];
+                                this.serverColumnsMapAll = new Map();
+                                this.serverColumnsSortedAll = [];
+                                this.serverColumnsUserSortedAll = [];
+                                this.serverColumnsSortedActive = [];
                                 this.agColumnDefaults.headerComponent = grid.Static.Classes.Columns.SortHeader;
                                 //this.agColumnDefaults.tooltipComponent = grid.Static.Classes.Tools.ToolTip;
                                 this.agColumnDefaults.tooltipComponent = undefined; // TODO
                             }
-                            Manager.prototype.SetAllServerColumnsMap = function (allServerColumnsMap) {
-                                this.allServerColumnsMap = allServerColumnsMap;
+                            Manager.prototype.SetServerColumnsMapAll = function (serverColumnsMapAll) {
+                                this.serverColumnsMapAll = serverColumnsMapAll;
                                 return this;
                             };
-                            Manager.prototype.GetAllServerColumnsMap = function () {
-                                return this.allServerColumnsMap;
+                            Manager.prototype.GetServerColumnsMapAll = function () {
+                                return this.serverColumnsMapAll;
                             };
-                            Manager.prototype.SetAllServerColumnsSorted = function (allServerColumnsSorted) {
-                                this.allServerColumnsSorted = allServerColumnsSorted;
+                            Manager.prototype.SetServerColumnsSortedAll = function (serverColumnsSortedAll) {
+                                this.serverColumnsSortedAll = serverColumnsSortedAll;
                                 return this;
                             };
-                            Manager.prototype.GetAllServerColumnsSorted = function () {
-                                return this.allServerColumnsSorted;
+                            Manager.prototype.GetServerColumnsSortedAll = function () {
+                                return this.serverColumnsSortedAll;
                             };
-                            Manager.prototype.SetActiveServerColumnsSorted = function (activeServerColumnsSorted) {
-                                this.activeServerColumnsSorted = activeServerColumnsSorted;
+                            Manager.prototype.SetServerColumnsUserSortedAll = function (serverColumnsUserSortedAll) {
+                                this.serverColumnsUserSortedAll = serverColumnsUserSortedAll;
                                 return this;
                             };
-                            Manager.prototype.GetActiveServerColumnsSorted = function () {
-                                return this.activeServerColumnsSorted;
+                            Manager.prototype.GetServerColumnsUserSortedAll = function () {
+                                return this.serverColumnsUserSortedAll;
+                            };
+                            Manager.prototype.SetServerColumnsSortedActive = function (serverColumnsSortedActive) {
+                                this.serverColumnsSortedActive = serverColumnsSortedActive;
+                                return this;
+                            };
+                            Manager.prototype.GetServerColumnsSortedActive = function () {
+                                return this.serverColumnsSortedActive;
                             };
                             Manager.prototype.SetAgColumnsConfigs = function (gridColumns) {
                                 this.agColumnsConfigs = gridColumns;
@@ -151,19 +159,20 @@ var MvcCore;
                                 var e_1, _a, e_2, _b;
                                 this.agColumnsConfigs = new Map();
                                 var agColumn, serverColumnCfg, columnUrlName;
-                                this.allServerColumnsSorted = this.helpers.SortConfigColumns(this.serverConfig.columns);
+                                this.serverColumnsSortedAll = this.helpers.SortConfigColumns(this.serverConfig.columns, 'columnIndex');
+                                this.serverColumnsUserSortedAll = this.helpers.SortConfigColumns(this.serverConfig.columns, 'columnIndexUser');
                                 this.grid.SetSortHeaders(new Map());
                                 this.grid.SetFilterHeaders(new Map());
                                 this.grid.SetFilterMenus(new Map());
                                 try {
-                                    for (var _c = __values(this.allServerColumnsSorted), _d = _c.next(); !_d.done; _d = _c.next()) {
+                                    for (var _c = __values(this.serverColumnsUserSortedAll), _d = _c.next(); !_d.done; _d = _c.next()) {
                                         var serverColumnCfg = _d.value;
                                         columnUrlName = serverColumnCfg.urlName;
-                                        this.allServerColumnsMap.set(serverColumnCfg.propName, serverColumnCfg);
+                                        this.serverColumnsMapAll.set(serverColumnCfg.propName, serverColumnCfg);
                                         if (serverColumnCfg.disabled === true)
                                             continue;
-                                        serverColumnCfg.activeColumnIndex = this.activeServerColumnsSorted.length;
-                                        this.activeServerColumnsSorted.push(serverColumnCfg);
+                                        serverColumnCfg.columnIndexActive = this.serverColumnsSortedActive.length;
+                                        this.serverColumnsSortedActive.push(serverColumnCfg);
                                         agColumn = this.initColumn(serverColumnCfg);
                                         this.agColumnsConfigs.set(columnUrlName, agColumn);
                                     }

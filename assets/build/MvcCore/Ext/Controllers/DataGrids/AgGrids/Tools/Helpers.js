@@ -129,12 +129,12 @@ var MvcCore;
                                 }
                                 return allowedOperators;
                             };
-                            Helpers.prototype.SortConfigColumns = function (serverColumns) {
+                            Helpers.prototype.SortConfigColumns = function (serverColumns, columnIndexPropName) {
                                 var e_2, _a, e_3, _b, e_4, _c;
                                 var indexedMap = new Map(), notIndexedSet = new Set(), serverColumnCfg, columnIndex;
                                 for (var columnUrlName in serverColumns) {
                                     serverColumnCfg = serverColumns[columnUrlName];
-                                    columnIndex = serverColumnCfg.columnIndex;
+                                    columnIndex = serverColumnCfg[columnIndexPropName];
                                     if (columnIndex == null) {
                                         notIndexedSet.add(serverColumnCfg);
                                     }
@@ -155,7 +155,7 @@ var MvcCore;
                                         try {
                                             for (var _d = (e_3 = void 0, __values(indexedMap.get(indexedMapKey))), _e = _d.next(); !_e.done; _e = _d.next()) {
                                                 var serverColumnCfg = _e.value;
-                                                serverColumnCfg.columnIndex = index++;
+                                                serverColumnCfg[columnIndexPropName] = index++;
                                                 result.push(serverColumnCfg);
                                             }
                                         }
@@ -178,7 +178,7 @@ var MvcCore;
                                 try {
                                     for (var notIndexedSet_1 = __values(notIndexedSet), notIndexedSet_1_1 = notIndexedSet_1.next(); !notIndexedSet_1_1.done; notIndexedSet_1_1 = notIndexedSet_1.next()) {
                                         var serverColumnCfg = notIndexedSet_1_1.value;
-                                        serverColumnCfg.columnIndex = index++;
+                                        serverColumnCfg[columnIndexPropName] = index++;
                                         result.push(serverColumnCfg);
                                     }
                                 }

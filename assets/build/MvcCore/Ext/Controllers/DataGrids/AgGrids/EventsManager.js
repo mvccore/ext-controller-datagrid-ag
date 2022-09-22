@@ -222,7 +222,7 @@ var MvcCore;
                         EventsManager.prototype.HandleColumnMoved = function (event) {
                             if (this.columnsChangesTimeout)
                                 clearTimeout(this.columnsChangesTimeout);
-                            var columnId = event.column.getColId(), columnConfig = this.grid.GetServerConfig().columns[columnId], columnsManager = this.grid.GetOptionsManager().GetColumnManager(), activeColumnsSorted = columnsManager.GetActiveServerColumnsSorted(), allColumnsSorted = columnsManager.GetAllServerColumnsSorted(), activeIndexOld = columnConfig.activeColumnIndex, activeIndexNex = event.toIndex, allIndexOld = columnConfig.columnIndex, allIndexNew = allColumnsSorted[activeIndexNex].columnIndex;
+                            var columnId = event.column.getColId(), columnConfig = this.grid.GetServerConfig().columns[columnId], columnsManager = this.grid.GetOptionsManager().GetColumnManager(), activeColumnsSorted = columnsManager.GetServerColumnsSortedActive(), allColumnsSorted = columnsManager.GetServerColumnsUserSortedAll(), activeIndexOld = columnConfig.columnIndexActive, activeIndexNex = event.toIndex, allIndexOld = columnConfig.columnIndexUser, allIndexNew = allColumnsSorted[activeIndexNex].columnIndexUser;
                             // přehodit reálné all indexy
                             var _a = __read(allColumnsSorted.splice(allIndexOld, 1), 1), allColumnCfg = _a[0];
                             allColumnsSorted.splice(allIndexNew, 0, allColumnCfg);
@@ -230,7 +230,7 @@ var MvcCore;
                             activeColumnsSorted.splice(activeIndexNex, 0, activeColumnCfg);
                             for (var i = 0, l = allColumnsSorted.length; i < l; i++) {
                                 columnConfig = allColumnsSorted[i];
-                                columnConfig.columnIndex = i;
+                                columnConfig.columnIndexUser = i;
                                 columnId = columnConfig.urlName;
                                 if (this.columnsChanges.has(columnId)) {
                                     this.columnsChanges.get(columnId).index = i;
@@ -242,9 +242,9 @@ var MvcCore;
                                 }
                             }
                             for (var i = 0, l = activeColumnsSorted.length; i < l; i++)
-                                activeColumnsSorted[i].activeColumnIndex = i;
-                            columnsManager.SetActiveServerColumnsSorted(activeColumnsSorted);
-                            columnsManager.SetAllServerColumnsSorted(allColumnsSorted);
+                                activeColumnsSorted[i].columnIndexActive = i;
+                            columnsManager.SetServerColumnsSortedActive(activeColumnsSorted);
+                            columnsManager.SetServerColumnsSortedAll(allColumnsSorted);
                             this.grid.GetColumnsVisibilityMenu().RedrawControls();
                             this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
                         };

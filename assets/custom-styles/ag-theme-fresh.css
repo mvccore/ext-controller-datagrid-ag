@@ -26,3 +26,8 @@
 .ag-header-cell-label {
 	padding-left:10px;
 }
+
+
+.ag-popup.ag-theme-fresh .ag-tooltip{
+	background:#fff;
+}

@@ -93,6 +93,30 @@ trait ActionMethods {
 	}
 
 	/**
+	 * Write current user columns configurations.
+	 * @return void
+	 */
+	public function WriteColumnsConfigs () {
+		$persistentColumns = [];
+		foreach ($this->GetConfigColumns(FALSE) as $urlName => $configColumn) {
+			$disabled = $configColumn->GetDisabled();
+			if ($this->ignoreDisabledColumns) {
+				$dbColumnName = $configColumn->GetDbColumnName();
+				if (isset($this->filtering[$dbColumnName]) || isset($this->sorting[$dbColumnName]))
+					$disabled = FALSE;
+			}
+			$propName = $configColumn->GetPropName();
+			$persistentColumns[$propName] = new PersistentColumn(
+				$propName,
+				$configColumn->GetColumnIndex(),
+				$configColumn->GetWidth(),
+				$disabled
+			);
+		}
+		$this->gridPersistentColumnsWrite($persistentColumns);
+	}
+
+	/**
 	 * 
 	 * @return void
 	 */
@@ -118,7 +142,7 @@ trait ActionMethods {
 
 		$this->gridPersistentColumnsWrite($persistentColumns);
 
-		$gridParam = rtrim(rawurldecode($this->gridRequest->GetPath()), '/');
+		$gridParam = rtrim($this->gridRequest->GetPath(), '/');
 		$controllerClass = get_parent_class(get_parent_class(__CLASS__));
 		$redirectUrl = $controllerClass::Url($this->appRouteName, [
 			static::URL_PARAM_GRID		=> $gridParam,

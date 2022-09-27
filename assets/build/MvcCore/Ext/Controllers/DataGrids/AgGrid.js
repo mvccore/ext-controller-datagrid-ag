@@ -192,7 +192,7 @@ var MvcCore;
                         return this;
                     };
                     AgGrid.prototype.ExecChange = function (offset, sorting, filtering) {
-                        this.eventsManager.HandleExecChange(offset !== null && offset !== void 0 ? offset : 0, sorting !== null && sorting !== void 0 ? sorting : [], filtering !== null && filtering !== void 0 ? filtering : new Map());
+                        this.eventsManager.HandleExecChange(offset, sorting, filtering);
                         return this;
                     };
                     AgGrid.prototype.initSubClasses = function () {

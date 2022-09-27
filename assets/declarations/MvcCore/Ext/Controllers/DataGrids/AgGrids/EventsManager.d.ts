@@ -32,13 +32,13 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         HandleColumnMoved(event: agGrid.ColumnMovedEvent<any>): void;
         protected handleColumnChangesSent(): void;
         protected handleColumnChangesResponse(): void;
-        HandleFilterMenuChange(columnId: string, filteringItem: Map<Enums.Operator, string[]> | null): void;
-        HandleFilterHeaderChange(columnId: string, rawInputValue: string): void;
+        HandleFilterMenuChange(columnId: string, filteringItem: Map<Enums.Operator, string[]> | null, clearAllOther?: boolean): void;
+        HandleFilterHeaderChange(columnId: string, rawInputValue: string, clearAllOther?: boolean): void;
         firefiltering(filtering: Map<string, Map<Enums.Operator, string[]>>): this;
         HandleSortChange(columnId: string, direction: AgGrids.Types.SortDirNullable): void;
         HandleGridSizeChanged(viewPort: boolean, event: agGrid.ViewportChangedEvent<any> | agGrid.GridSizeChangedEvent<any>): void;
         AddUrlChangeEvent(): this;
-        HandleExecChange(offset: number, sorting: Types.SortItem[], filtering: Map<string, Map<Enums.Operator, string[]>>): void;
+        HandleExecChange(offset?: number, sorting?: Types.SortItem[] | false, filtering?: Map<string, Map<Enums.Operator, string[]>> | false): void;
         HandleUrlChange(e: PopStateEvent): void;
         HandleResponseLoaded(response: AgGrids.Interfaces.Ajax.IResponse, selectFirstRow?: boolean): void;
         protected handleUrlChangeSortsFilters(reqData: Interfaces.Ajax.IRequest): this;

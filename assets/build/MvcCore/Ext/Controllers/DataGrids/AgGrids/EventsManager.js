@@ -270,15 +270,21 @@ var MvcCore;
                                 clearTimeout(this.columnsChangesTimeout);
                             this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
                         };
-                        EventsManager.prototype.HandleFilterMenuChange = function (columnId, filteringItem) {
+                        EventsManager.prototype.HandleFilterMenuChange = function (columnId, filteringItem, clearAllOther) {
+                            if (clearAllOther === void 0) { clearAllOther = false; }
                             var filtering = this.grid.GetFiltering(), filterRemoving = filteringItem == null || filteringItem.size === 0, filterHeader = this.grid.GetFilterHeaders().get(columnId), filterMenu = this.grid.GetFilterMenus().get(columnId);
                             if (filterRemoving) {
-                                filtering.delete(columnId);
+                                if (clearAllOther) {
+                                    filtering = new Map();
+                                }
+                                else {
+                                    filtering.delete(columnId);
+                                }
                                 filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(null);
                                 filterMenu === null || filterMenu === void 0 ? void 0 : filterMenu.SetUpControls(null);
                             }
                             else {
-                                if (!this.multiFiltering)
+                                if (!this.multiFiltering || clearAllOther)
                                     filtering = new Map();
                                 filtering.set(columnId, filteringItem);
                                 filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(filtering.get(columnId));
@@ -286,8 +292,9 @@ var MvcCore;
                             }
                             this.firefiltering(filtering);
                         };
-                        EventsManager.prototype.HandleFilterHeaderChange = function (columnId, rawInputValue) {
+                        EventsManager.prototype.HandleFilterHeaderChange = function (columnId, rawInputValue, clearAllOther) {
                             var e_5, _a, _b;
+                            if (clearAllOther === void 0) { clearAllOther = false; }
                             var rawInputIsNull = rawInputValue == null, rawInputValue = rawInputIsNull ? '' : rawInputValue.trim(), filterRemoving = rawInputValue === '', serverConfig = this.grid.GetServerConfig(), valuesDelimiter = serverConfig.urlSegments.urlDelimiterValues, rawValues = filterRemoving ? [] : rawInputValue.split(valuesDelimiter), serverColumnCfg = serverConfig.columns[columnId], columnFilterCfg = serverColumnCfg.filter, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = columnFilterCfg === columnFilterCfgInt, allowedOperators = (columnFilterCfgIsInt && this.columnsAllowedOperators.has(columnId)
                                 ? this.columnsAllowedOperators.get(columnId)
                                 : this.defaultAllowedOperators), columnAllowNullFilter = columnFilterCfgIsInt && ((columnFilterCfgInt & AgGrids.Enums.FilteringMode.ALLOW_NULL) != 0), filterValues, filterOperatorValues, operatorsAndPrefixes, filtering = this.grid.GetFiltering(), valueIsStringNull, operator, operatorCfg;
@@ -339,14 +346,19 @@ var MvcCore;
                                     filterRemoving = true;
                                 }
                                 else {
-                                    if (!this.multiFiltering)
+                                    if (!this.multiFiltering || clearAllOther)
                                         filtering = new Map();
                                     filtering.set(columnId, filterValues);
                                 }
                             }
                             var filterHeader = this.grid.GetFilterHeaders().get(columnId), filterMenu = this.grid.GetFilterMenus().get(columnId), filteringItem;
                             if (filterRemoving) {
-                                filtering.delete(columnId);
+                                if (clearAllOther) {
+                                    filtering = new Map();
+                                }
+                                else {
+                                    filtering.delete(columnId);
+                                }
                                 filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(null);
                                 filterMenu === null || filterMenu === void 0 ? void 0 : filterMenu.SetUpControls(null);
                             }
@@ -464,7 +476,21 @@ var MvcCore;
                             return this;
                         };
                         EventsManager.prototype.HandleExecChange = function (offset, sorting, filtering) {
-                            var dataSource = this.grid.GetDataSource(), reqData = {
+                            if (offset === void 0) { offset = 0; }
+                            var dataSource = this.grid.GetDataSource();
+                            if (sorting === false) {
+                                sorting = [];
+                            }
+                            else if (sorting == null) {
+                                sorting = this.grid.GetSorting();
+                            }
+                            if (filtering === false) {
+                                filtering = new Map();
+                            }
+                            else if (filtering == null) {
+                                filtering = this.grid.GetFiltering();
+                            }
+                            var reqData = {
                                 offset: offset,
                                 limit: this.grid.GetServerConfig().itemsPerPage,
                                 sorting: sorting,

@@ -56,7 +56,7 @@ var MvcCore;
                             FilterHeader.prototype.SetText = function (filteringItem) {
                                 var e_1, _a, e_2, _b;
                                 var newStateActive = filteringItem != null;
-                                if (this.activeState === newStateActive)
+                                if (!this.activeState && !newStateActive)
                                     return this;
                                 this.activeState = newStateActive;
                                 var input = this.elms.input;

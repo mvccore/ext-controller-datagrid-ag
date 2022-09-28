@@ -44,6 +44,17 @@ interface IRendering extends \MvcCore\Ext\Controllers\DataGrids\Configs\IRenderi
 	 * @return string|NULL
 	 */
 	public function GetTheme ();
+
+	/**
+	 * @param  string|NULL $tableHeadFilteringTitle
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
+	 */
+	public function SetTableHeadFilteringTitle ($tableHeadFilteringTitle);
+
+	/**
+	 * @return string|NULL
+	 */
+	public function GetTableHeadFilteringTitle ();
 	
 	/**
 	 * 

@@ -1,4 +1,7 @@
 <?php
+
+	use \MvcCore\Ext\Controllers\DataGrids\Configs\JsonSerialize;
+
 	/** @var \MvcCore\Ext\Controllers\DataGrids\View $this */
 	/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $grid */
 	$renderConf = $grid->GetConfigRendering();
@@ -49,13 +52,14 @@
 	<?php endif; ?>
 </div>
 <script<?php echo $nonceAttr; ?>>new <?php echo $grid->GetJsClassFullName(); ?>(<?php
+	;
 	echo \MvcCore\Tool::JsonEncode([
 		'version'				=> $grid::VERSION,
 		'contElementSelector'	=> '#' . $gridId,
-		'renderConfig'			=> $renderConf,
+		'renderConfig'			=> JsonSerialize::Serialize($renderConf),
 		'columns'				=> $grid->GetConfigColumns(FALSE),
-		'locales'				=> $grid->GetConfigLocales(),
-		'urlSegments'			=> $grid->GetConfigUrlSegments(),
+		'locales'				=> JsonSerialize::Serialize($grid->GetConfigLocales()),
+		'urlSegments'			=> JsonSerialize::Serialize($grid->GetConfigUrlSegments()),
 		'filterOperatorPrefixes'=> $grid->GetFilterOperatorPrefixes(),
 		'ajaxParamsNames'		=> $grid->GetAjaxParamsNames(),
 		'id'					=> $gridId,
@@ -74,6 +78,7 @@
 		'filteringMode'			=> $grid->GetFilteringMode(),
 		'controlsTexts'			=> $grid->GetControlsTexts(),
 		'timeZoneOffset'		=> $grid->GetTimeZoneOffsetSeconds(),
+		'clientRequestBlockSize'=> $grid->GetClientRequestBlockSize(),
 		'clientRowBuffer'		=> $grid->GetClientRowBuffer(),
 		'clientMaxRowsInCache'	=> $grid->GetClientMaxRowsInCache(),
 		'clientRowBufferMax'	=> $grid::CLIENT_JS_BUFFER_MAX_SIZE,

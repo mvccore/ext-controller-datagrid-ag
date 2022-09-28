@@ -13,6 +13,8 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs;
 
+use \MvcCore\Ext\Controllers\DataGrids\Configs\JsonSerialize;
+
 class		Rendering
 extends		\MvcCore\Ext\Controllers\DataGrids\Configs\Rendering
 implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
@@ -28,6 +30,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL
 	 */
 	protected $handlerAssets = NULL;
+
+	/**
+	 * Table head filtering html title attribute.
+	 * @jsonSerialize
+	 * @var string|NULL
+	 */
+	#[JsonSerialize]
+	protected $tableHeadFilteringTitle = NULL;
 
 	/**
 	 * Datagrid view full class name.
@@ -67,6 +77,24 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	public function GetHandlerAssets () {
 		return $this->handlerAssets;
 	}
+	
+	/**
+	 * @param  string|NULL $tableHeadFilteringTitle
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
+	 */
+	public function SetTableHeadFilteringTitle ($tableHeadFilteringTitle) {
+		$this->tableHeadFilteringTitle = $tableHeadFilteringTitle;
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function GetTableHeadFilteringTitle () {
+		return $this->tableHeadFilteringTitle;
+	}
+
+	
 
 
 	/**

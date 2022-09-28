@@ -59,7 +59,10 @@ trait InternalGettersSetters {
 		// page and count
 		$page = $this->page;
 		$count = $this->count;
-		if ($count === $this->itemsPerPage) {
+		$defaultCount = $this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE
+			? $this->clientRequestBlockSize
+			: $this->itemsPerPage;
+		if ($count === $defaultCount) {
 			$count = NULL;
 			if ($page === 1)
 				$page = NULL;

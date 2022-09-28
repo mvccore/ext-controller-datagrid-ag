@@ -77,6 +77,7 @@ trait ActionMethods {
 				'status'		=> NULL,
 				'paging'		=> NULL,
 			];
+			$this->reinitGridRequestAndUrlParams($gridPath);
 			if ($renderConf->GetRenderControlCountScales())
 				$response->controls->countScales	= $this->view->RenderGridControlCountScales();
 			if ($renderConf->GetRenderControlStatus())
@@ -98,7 +99,7 @@ trait ActionMethods {
 	 */
 	public function WriteColumnsConfigs () {
 		$persistentColumns = [];
-		foreach ($this->GetConfigColumns(FALSE) as $urlName => $configColumn) {
+		foreach ($this->GetConfigColumns(FALSE) as $configColumn) {
 			$disabled = $configColumn->GetDisabled();
 			if ($this->ignoreDisabledColumns) {
 				$dbColumnName = $configColumn->GetDbColumnName();
@@ -193,12 +194,34 @@ trait ActionMethods {
 	}
 
 	/**
+	 * Reinitialize grid request object by grid path completed from ajax params
+	 * to properly render count scales template and paging template.
+	 * @param  string $gridPath 
+	 * @return void
+	 */
+	protected function reinitGridRequestAndUrlParams ($gridPath) {
+		$this->gridRequest = \MvcCore\Request::CreateInstance()
+			->SetBasePath('')
+			->SetPath($gridPath);
+		$matches = $this->route->Matches($this->gridRequest);
+		if ($matches === NULL) {
+			$this->urlParams = [];
+		} else {
+			if (isset($matches[static::URL_PARAM_PAGE])) 
+				$matches[static::URL_PARAM_PAGE] = intval($matches[static::URL_PARAM_PAGE]);
+			if (isset($matches[static::URL_PARAM_COUNT])) 
+				$matches[static::URL_PARAM_COUNT] = intval($matches[static::URL_PARAM_COUNT]);
+			$this->urlParams = $matches;
+		}
+	}
+
+	/**
 	 * Write persistent columns info into db or into session.
 	 * @param  array $persistentColumns 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
 	protected function gridPersistentColumnsWrite (array $persistentColumns) {
-		if ($this->handlerColumnsWrite != NULL) {
+		if ($this->handlerColumnsWrite !== NULL) {
 			// db
 			try {
 				$user = $this->GetUser();
@@ -224,7 +247,7 @@ trait ActionMethods {
 	 */
 	protected function gridPersistentColumnsRead () {
 		$persistentColumns = NULL;
-		if ($this->handlerColumnsRead != NULL) {
+		if ($this->handlerColumnsRead !== NULL) {
 			// db
 			try {
 				$user = $this->GetUser();

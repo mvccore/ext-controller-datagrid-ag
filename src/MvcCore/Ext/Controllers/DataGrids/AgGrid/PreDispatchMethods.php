@@ -38,13 +38,13 @@ trait PreDispatchMethods {
 			$this->preDispatchPage();
 			if (!$this->preDispatchTotalCount()) return;
 			$this->preDispatchTranslations();
+			if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE)
+				$this->configRendering->SetRenderControlPaging(\MvcCore\Ext\Controllers\IDataGrid::CONTROL_DISPLAY_NEVER);
 			$this->preDispatchPaging();
 			$this->preDispatchCountScales();
 		} else {
 			if ($this->dispatchState >= \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 			parent::PreDispatch();
-			if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE)
-				$this->count = $this->totalCount;
 			if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 			$this->preDispatchLocales();
 			$this->preDispatchAssets();

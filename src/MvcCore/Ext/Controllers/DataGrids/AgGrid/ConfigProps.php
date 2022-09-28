@@ -52,6 +52,11 @@ trait ConfigProps {
 	/**
 	 * @var int|NULL
 	 */
+	protected $clientRequestBlockSize = NULL;
+	
+	/**
+	 * @var int|NULL
+	 */
 	protected $clientRowBuffer = NULL;
 
 	/**

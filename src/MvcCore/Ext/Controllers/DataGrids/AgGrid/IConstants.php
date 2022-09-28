@@ -63,6 +63,13 @@ interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
 	 * @var int
 	 */
 	const CLIENT_JS_BUFFER_PAGE_MODE_SINGLE	= 100;
+
+	/**
+	 * Default size for JS request limit.
+	 * @var int
+	 */
+	const CLIENT_JS_REQUEST_BLOCK_SIZE		= 100;
+
 	
 	/**
 	 * Maximum rows to render in client JS buffer at once.

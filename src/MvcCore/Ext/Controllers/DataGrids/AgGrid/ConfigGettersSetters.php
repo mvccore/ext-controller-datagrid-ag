@@ -100,6 +100,23 @@ trait ConfigGettersSetters {
 	public function GetClientPageMode () {
 		return $this->clientPageMode;
 	}
+
+	/**
+	 * @param  int $clientRequestBlockSize 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
+	 */
+	public function SetClientRequestBlockSize ($clientRequestBlockSize) {
+		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $this */
+		$this->clientRequestBlockSize = $clientRequestBlockSize;
+		return $this;
+	}
+
+	/**
+	 * @return int|NULL
+	 */
+	public function GetClientRequestBlockSize () {
+		return $this->clientRequestBlockSize;
+	}
 	
 	/**
 	 * @param  int $clientRowBuffer 

@@ -65,7 +65,7 @@ trait InitMethods {
 		$this->initPersistentColumnsData();
 
 		$this->initGridAction();
-
+		
 		$this->GetRoute();
 		$this->GetUrlParams();
 		
@@ -74,10 +74,12 @@ trait InitMethods {
 
 		if ($this->ajaxDataRequest) {
 			$this->initAjaxParams();
+			$this->initRequestBlockSize();
 			$this->initClientRowBuffer();
 		} else {
 			if (!$this->initUrlParams()) return; // redirect inside
 			$this->initClientPageMode();
+			$this->initRequestBlockSize();
 			$this->initClientRowBuffer();
 			$this->initClientCache();
 			$this->initOffsetLimit();
@@ -196,39 +198,6 @@ trait InitMethods {
 
 
 	/**
-	 * If client row model is single page:
-	 *    clear count scales array to `[0]` or thrown 
-	 *    an exception if count scales has been customized.
-	 * If client row model is for multiple pages:
-	 *    set up items per page configured from script 
-	 *    into count scales if it is not there.
-	 * @return void
-	 */
-	protected function initCountScales () {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
-			// if client page mode is configured forcelly:
-			if (
-				!$this->countScalesCustomized || (
-					$this->countScalesCustomized &&
-					count($this->countScales) === 1 && 
-					$this->countScales[0] === 0
-				)
-			) {
-				// count scales has not been customized or
-				// count scales has been optimized only to `[0]`:
-				$this->countScales = [0];
-			} else {
-				throw new \Exception(
-					"[".get_class($this)."] Datagrid with client row model for "
-					."single page data loading needs count scales configuration with `[0]` value.", 
-				);
-			}
-		} else {
-			parent::initCountScales();
-		}
-	}
-
-	/**
 	 * Initialize client row model if not specified.
 	 * @return void
 	 */
@@ -243,6 +212,16 @@ trait InitMethods {
 		} else {
 			$this->clientPageMode = IConstants::CLIENT_PAGE_MODE_MULTI;
 		}
+	}
+	
+	/**
+	 * @return void
+	 */
+	protected function initRequestBlockSize () {
+		if ($this->clientRequestBlockSize !== NULL) return;
+		$this->clientRequestBlockSize = $this->clientPageMode === IConstants::CLIENT_PAGE_MODE_MULTI
+			? $this->itemsPerPage
+			: IConstants::CLIENT_JS_REQUEST_BLOCK_SIZE;
 	}
 	
 	/**
@@ -282,6 +261,10 @@ trait InitMethods {
 		} else {
 			return parent::initUrlParams();
 		}
+	}
+	
+	protected function initUrlParamPageByCount () {
+		return TRUE;
 	}
 
 	/**
@@ -326,8 +309,9 @@ trait InitMethods {
 		);
 		$this->offset = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_OFFSET], '0-9', 0, 'int');
 		$this->limit = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_LIMIT], '0-9', NULL, 'int');
-		$lastCountsScale = $this->countScales[count($this->countScales) - 1];
-		if ($lastCountsScale !== 0 && ($this->limit === 0 || $this->limit > $lastCountsScale)) {
+		$allCountScaleMatched = array_search(0, $this->countScales, TRUE) !== FALSE;
+		$lastCountsScale = max($this->countScales);
+		if (!$allCountScaleMatched && ($this->limit === 0 || $this->limit > $lastCountsScale)) {
 			$this->limit = $lastCountsScale;
 		}
 		$this->count = $this->limit;

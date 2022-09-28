@@ -101,7 +101,7 @@ var MvcCore;
                                     return false;
                                 var reqData = this.Static.RetypeRequestMaps2Objects({
                                     offset: this.grid.GetOffset(),
-                                    limit: this.grid.GetServerConfig().itemsPerPage,
+                                    limit: this.grid.GetLimit(),
                                     sorting: this.grid.GetSorting(),
                                     filtering: this.grid.GetFiltering(),
                                 });
@@ -117,7 +117,7 @@ var MvcCore;
                                 if (this.pageLoadedState > 0) {
                                     var reqData = this.Static.RetypeRequestMaps2Objects({
                                         offset: this.grid.GetOffset(),
-                                        limit: this.grid.GetServerConfig().itemsPerPage,
+                                        limit: this.grid.GetLimit(),
                                         sorting: this.grid.GetSorting(),
                                         filtering: this.grid.GetFiltering(),
                                     });
@@ -137,7 +137,7 @@ var MvcCore;
                                     var serverCfg = this.grid.GetServerConfig();
                                     //console.log("page", serverCfg.page);
                                     if (serverCfg.page > 1) {
-                                        var scrollOffset = (serverCfg.page - 1) * serverCfg.itemsPerPage;
+                                        var scrollOffset = (serverCfg.page - 1) * this.grid.GetLimit();
                                         //console.log("scrolling top", scrollOffset);
                                         this.optionsManager.GetAgOptions().api.ensureIndexVisible(scrollOffset, "top");
                                         this.specialCase = true;

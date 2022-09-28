@@ -73,7 +73,7 @@ var MvcCore;
                             this.cache = new grid.Static.Classes.DataSources.Cache(grid);
                             this.pageReqData = this.Static.RetypeRequestMaps2Objects({
                                 offset: grid.GetOffset(),
-                                limit: grid.GetServerConfig().itemsPerPage,
+                                limit: grid.GetLimit(),
                                 sorting: grid.GetSorting(),
                                 filtering: grid.GetFiltering(),
                             });

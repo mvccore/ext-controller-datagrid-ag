@@ -23,6 +23,7 @@ var MvcCore;
                         var _this = this;
                         this.totalCount = null;
                         this.offset = 0;
+                        this.limit = 0;
                         this.gridPath = '';
                         //console.log("AgGrid.ctor - serverConfig", serverConfig);
                         //console.log("AgGrid.ctor - initialData", initialData);
@@ -148,6 +149,13 @@ var MvcCore;
                     AgGrid.prototype.GetOffset = function () {
                         return this.offset;
                     };
+                    AgGrid.prototype.SetLimit = function (limit) {
+                        this.limit = limit;
+                        return this;
+                    };
+                    AgGrid.prototype.GetLimit = function () {
+                        return this.limit;
+                    };
                     AgGrid.prototype.SetGridPath = function (gridPath) {
                         this.gridPath = gridPath;
                         return this;
@@ -204,22 +212,6 @@ var MvcCore;
                         this.optionsManager = new classes.Options.Manager(this);
                         return this;
                     };
-                    AgGrid.prototype.initPageModeSpecifics = function () {
-                        if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
-                            var emSinglePage = new this.Static.Classes.EventsManager.SinglePageMode(this);
-                            this.eventsManager = emSinglePage;
-                            emSinglePage
-                                .AddUrlChangeEvent();
-                        }
-                        else if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
-                            var emMultiplePages = new this.Static.Classes.EventsManager.MultiplePagesMode(this);
-                            this.eventsManager = emMultiplePages;
-                            emMultiplePages
-                                .AddPagingEvents()
-                                .AddUrlChangeEvent();
-                        }
-                        return this;
-                    };
                     AgGrid.prototype.initServerConfig = function (serverConfig) {
                         this.serverConfig = this.helpers.RetypeRawServerConfig(serverConfig);
                         this.pageMode = this.serverConfig.clientPageMode;
@@ -227,6 +219,24 @@ var MvcCore;
                     };
                     AgGrid.prototype.initTranslator = function () {
                         this.translator = new this.Static.Classes.Tools.Translator(this);
+                        return this;
+                    };
+                    AgGrid.prototype.initPageModeSpecifics = function () {
+                        if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
+                            var emSinglePage = new this.Static.Classes.EventsManager.SinglePageMode(this);
+                            this.eventsManager = emSinglePage;
+                            emSinglePage
+                                .AddUrlChangeEvent();
+                            this.limit = this.serverConfig.clientRequestBlockSize;
+                        }
+                        else if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
+                            var emMultiplePages = new this.Static.Classes.EventsManager.MultiplePagesMode(this);
+                            this.eventsManager = emMultiplePages;
+                            emMultiplePages
+                                .AddPagingEvents()
+                                .AddUrlChangeEvent();
+                            this.limit = this.serverConfig.count;
+                        }
                         return this;
                     };
                     AgGrid.prototype.initData = function (initialData) {

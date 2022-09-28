@@ -66,7 +66,7 @@ var MvcCore;
                             MultiplePagesMode.prototype.Load = function () {
                                 var reqData = this.Static.RetypeRequestMaps2Objects({
                                     offset: this.grid.GetOffset(),
-                                    limit: this.grid.GetServerConfig().itemsPerPage,
+                                    limit: this.grid.GetLimit(),
                                     sorting: this.grid.GetSorting(),
                                     filtering: this.grid.GetFiltering(),
                                 });

@@ -492,7 +492,7 @@ var MvcCore;
                             }
                             var reqData = {
                                 offset: offset,
-                                limit: this.grid.GetServerConfig().itemsPerPage,
+                                limit: this.grid.GetLimit(),
                                 sorting: sorting,
                                 filtering: filtering,
                             }, reqDataRaw = dataSource.Static.RetypeRequestMaps2Objects(reqData), oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(dataSource.Static.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(sorting);
@@ -547,6 +547,7 @@ var MvcCore;
                             var e_7, _a, e_8, _b, e_9, _c;
                             if (selectFirstRow === void 0) { selectFirstRow = false; }
                             this.grid
+                                .SetGridPath(response.path)
                                 .SetOffset(response.offset)
                                 .SetTotalCount(response.totalCount)
                                 .SetSorting(response.sorting)

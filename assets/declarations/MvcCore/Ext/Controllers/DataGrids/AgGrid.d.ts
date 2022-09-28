@@ -19,6 +19,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         protected filtering: Map<string, Map<AgGrids.Enums.Operator, string[]>>;
         protected totalCount: number | null;
         protected offset: number;
+        protected limit: number;
         protected gridPath: string;
         protected pageMode: AgGrids.Enums.ClientPageMode;
         protected columnsVisibilityMenu: AgGrids.Columns.VisibilityMenu;
@@ -53,6 +54,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         GetPageMode(): AgGrids.Enums.ClientPageMode;
         SetOffset(offset: number): this;
         GetOffset(): number;
+        SetLimit(limit: number): this;
+        GetLimit(): number;
         SetGridPath(gridPath: string): this;
         GetGridPath(): string;
         SetSortHeaders(sortHeaders: Map<string, AgGrids.Columns.SortHeader>): this;
@@ -67,9 +70,9 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         RemoveEventListener<K extends keyof AgGrids.Interfaces.Events.IHandlersMap>(eventName: K, handler: (e: AgGrids.Interfaces.Events.IHandlersMap[K]) => void): this;
         ExecChange(offset?: number, sorting?: AgGrids.Types.SortItem[] | false, filtering?: Map<string, Map<AgGrids.Enums.Operator, string[]>> | false): this;
         protected initSubClasses(): this;
-        protected initPageModeSpecifics(): this;
         protected initServerConfig(serverConfig: AgGrids.Interfaces.IServerConfig): this;
         protected initTranslator(): this;
+        protected initPageModeSpecifics(): this;
         protected initData(initialData: AgGrids.Interfaces.Ajax.IResponse): this;
         protected initAgOptions(): this;
         protected initGrid(): this;

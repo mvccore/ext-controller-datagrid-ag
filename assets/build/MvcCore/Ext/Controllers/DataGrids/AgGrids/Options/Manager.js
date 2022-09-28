@@ -108,7 +108,7 @@ var MvcCore;
                                 // tell grid we want virtual row model type
                                 this.agOptions.rowModelType = 'infinite';
                                 // how big each page in our page cache will be, default is 100
-                                this.agOptions.cacheBlockSize = serverConfig.itemsPerPage;
+                                this.agOptions.cacheBlockSize = serverConfig.clientRequestBlockSize;
                                 // how many extra blank rows to display to the user at the end of the dataset,
                                 // which sets the vertical scroll and then allows the grid to request viewing more rows of data.
                                 // default is 1, ie show 1 row.
@@ -123,7 +123,7 @@ var MvcCore;
                                 // pages are never purged. this should be set for large data to stop your browser from getting
                                 // full of data
                                 if (serverConfig.clientMaxRowsInCache > 0) {
-                                    this.agOptions.maxBlocksInCache = Math.round(serverConfig.clientMaxRowsInCache / serverConfig.itemsPerPage);
+                                    this.agOptions.maxBlocksInCache = Math.round(serverConfig.clientMaxRowsInCache / serverConfig.clientRequestBlockSize);
                                 }
                                 else {
                                     this.agOptions.maxBlocksInCache = 1;

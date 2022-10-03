@@ -58,6 +58,7 @@ trait InitMethods {
 		$parentOfParentClass = get_parent_class(get_parent_class(__CLASS__));
 		$parentOfParentClass::Init();
 		
+		$this->initModelClasses();
 		$this->GetConfigUrlSegments();
 		$this->initTranslations();
 		$this->GetConfigColumns(FALSE);
@@ -95,7 +96,21 @@ trait InitMethods {
 		
 		call_user_func([$this, $this->gridAction]);
 	}
-
+	
+	/**
+	 * @inheritDocs
+	 * @throws \InvalidArgumentException
+	 * @return void
+	 */
+	protected function initModelClasses () {
+		parent::initModelClasses();
+		/** @var \MvcCore\Tool $toolClass */
+		$toolClass = $this->application->GetToolClass();
+		$this->rowClassIsActiveColumnsModel = $toolClass::CheckClassInterface(
+			$this->rowClass, self::$rowModelActiveColumnsInterface, TRUE, FALSE
+		);
+	}
+	
 	/**
 	 * @return void
 	 */
@@ -454,7 +469,7 @@ trait InitMethods {
 				$columnPropName = $configColumn->GetPropName();
 				$columnTypes = $configColumn->GetTypes();
 				// check if column support filtering
-				if (isset($filteringColumns[$columnPropName])) {
+				if (!isset($filteringColumns[$columnPropName])) {
 					if ($this->ignoreDisabledColumns) {
 						if ($configColumn->GetDisabled())
 							$this->enableColumn($configColumn);

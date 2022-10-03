@@ -154,4 +154,15 @@ trait InternalGettersSetters {
 		}
 		return $filtering;
 	}
+
+	/**
+	 * @inheritDocs
+	 * @return array|[string, \string[]]
+	 */
+	public function GetGridCacheKeyAndTags () {
+		$localization = $this->GetConfigLocales()->GetLocale(TRUE);
+		$cacheKey = "grid_{$this->id}_{$localization}";
+		$cacheTags = ['grid', "grid-{$this->id}"];
+		return [$cacheKey, $cacheTags];
+	}
 }

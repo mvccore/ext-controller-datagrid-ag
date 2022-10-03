@@ -19,17 +19,29 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 trait InternalProps {
 	
 	/**
+	 * Row model class interface.
+	 * @var string
+	 */
+	protected static $rowModelActiveColumnsInterface = "\\MvcCore\\Ext\\Controllers\\DataGrids\\AgGrids\\Models\\IGridRow";
+
+	/**
 	 * If `TRUE`, client row model is configured to single page 
 	 * continuous ajax loading and request is targeted to data action.
 	 * @internal
 	 * @var bool
 	 */
-	protected $ajaxDataRequest = FALSE;
+	protected $ajaxDataRequest			= FALSE;
 
 	/**
 	 * If `TRUE`, count scales has been customized from defaults.
 	 * @internal
 	 * @var bool
 	 */
-	protected $countScalesCustomized = FALSE;
+	protected $countScalesCustomized	= FALSE;
+
+	/**
+	 * If `TRUE`, row class implements active columns interface.
+	 * @var bool
+	 */
+	protected $rowClassIsActiveColumnsModel = FALSE;
 }

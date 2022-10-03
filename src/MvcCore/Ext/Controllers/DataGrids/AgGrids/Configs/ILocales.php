@@ -16,168 +16,272 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs;
 interface ILocales {
 	
 	/**
+	 * 
 	 * @var string
 	 */
-	const SYSTEM_LOCALE_SEPARATOR	= '-';
+	const SYSTEM_LOCALE_SEPARATOR		= '-';
 
 	/**
+	 * 
 	 * @var int
 	 */
-	const FRACTIONS_DEFAULT_FLOAT	= 2;
+	const FRACTIONS_DEFAULT_FLOAT		= 2;
 	
 	/**
+	 * 
 	 * @var int
 	 */
-	const FRACTIONS_DEFAULT_CURRENCY= 2;
+	const FRACTIONS_DEFAULT_CURRENCY	= 2;
+
 
 	/**
+	 * 
 	 * @var string
 	 */
-	const FORMAT_PATTERN_DATE		= 'YYYY-MM-DD';
+	const PARSER_ARG_DB2CODE_DATE		= 'Y-m-d';
 	
 	/**
+	 * 
 	 * @var string
 	 */
-	const FORMAT_PATTERN_DATE_TIME	= 'YYYY-MM-DD HH:mm:ss';
+	const PARSER_ARG_DB2CODE_DATE_TIME	= 'Y-m-d H:i:s.v';
 	
 	/**
+	 * 
 	 * @var string
 	 */
-	const FORMAT_PATTERN_TIME		= 'HH:mm:ss';
+	const PARSER_ARG_DB2CODE_TIME		= 'H:i:s';
 
 
 	/**
+	 * 
+	 * @var string
+	 */
+	const PARSER_ARG_CLIENT_DATE		= 'YYYY-MM-DD';
+	
+	/**
+	 * 
+	 * @var string
+	 */
+	const PARSER_ARG_CLIENT_DATE_TIME	= 'YYYY-MM-DD HH:mm:ss.SSS';
+	
+	/**
+	 * 
+	 * @var string
+	 */
+	const PARSER_ARG_CLIENT_TIME		= 'HH:mm:ss';
+
+	
+	/**
+	 * 
+	 * @var string
+	 */
+	const FORMAT_ARG_CLIENT_DATE		= 'YYYY-MM-DD';
+	
+	/**
+	 * 
+	 * @var string
+	 */
+	const FORMAT_ARG_CLIENT_DATE_TIME	= 'YYYY-MM-DD HH:mm';
+	
+	/**
+	 * 
+	 * @var string
+	 */
+	const FORMAT_ARG_CLIENT_TIME		= 'HH:mm:ss';
+
+
+	/**
+	 * 
+	 * @var string
+	 */
+	const FORMAT_ARG_DBLIKE_DATE		= 'yyyy-MM-dd';
+	
+	/**
+	 * 
+	 * @var string
+	 */
+	const FORMAT_ARG_DBLIKE_DATE_TIME	= 'yyyy-MM-dd HH:mm';
+	
+	/**
+	 * 
+	 * @var string
+	 */
+	const FORMAT_ARG_DBLIKE_TIME		= 'HH:mm';
+
+
+	/**
+	 * 
 	 * @return void
 	 */
 	public function Init ();
 
 	/**
-	 * @inheritDocs
+	 * 
 	 * @return \string[]|NULL
 	 */
 	public function GetLocaleNumeric ();
 
 	/**
-	 * @inheritDocs
+	 * 
 	 * @param  \string[]|NULL $localeNumeric
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetLocaleNumeric ($localeNumeric);
 
 	/**
-	 * @inheritDocs
+	 * 
 	 * @return \string[]|NULL
 	 */
 	public function GetLocaleMoney ();
 
 	/**
-	 * @inheritDocs
+	 * 
 	 * @param  \string[]|NULL $localeMoney
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetLocaleMoney ($localeMoney);
 	
 	/**
-	 * @inheritDocs
+	 * 
 	 * @return \string[]|NULL
 	 */
 	public function GetLocaleDateTime ();
 
 	/**
-	 * @inheritDocs
+	 * 
 	 * @param  \string[]|NULL $localeDateTime
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetLocaleDateTime ($localeDateTime);
 	
 	/**
-	 * @inheritDocs
+	 * 
 	 * @return string|NULL
 	 */
 	public function GetCurrencyCode ();
 
 	/**
-	 * @inheritDocs
+	 * 
 	 * @param  string|NULL $currencyCode 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencyCode ($currencyCode);
 	
 	/**
-	 * @inheritDocs
+	 * 
 	 * @return string|NULL
 	 */
 	public function GetCurrencySign ();
 
 	/**
-	 * @inheritDocs
+	 * 
 	 * @param  string|NULL $currencyCode 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencySign ($currencySign);
 
 	/**
-	 * @inheritDocs
+	 * 
 	 * @return int|NULL
 	 */
 	public function GetCurrencyFractions ();
 
 	/**
-	 * @inheritDocs
+	 * 
 	 * @param  int|NULL $currencyFractions 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencyFractions ($currencyFractions);
 	
 	/**
-	 * @inheritDocs
+	 * 
 	 * @return int|NULL
 	 */
 	public function GetFloatFractions ();
 
 	/**
-	 * @inheritDocs
+	 * 
 	 * @param  int|NULL $floatFractions 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetFloatFractions ($floatFractions);
 	
 	/**
-	 * @inheritDocs
-	 * @return string|NULL
+	 * 
+	 * @return \string[]
 	 */
-	public function GetFormatPatternDate ();
+	public function GetParserArgsDate ();
 
 	/**
-	 * @inheritDocs
-	 * @param  string|NULL $currencyCode 
+	 * 
+	 * @param  \string[] $parserArgsDate 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
-	public function SetFormatPatternDate ($formatPatternDate);
+	public function SetParserArgsDate ($parserArgsDate);
 	
 	/**
-	 * @inheritDocs
-	 * @return string|NULL
+	 * 
+	 * @return \string[]
 	 */
-	public function GetFormatPatternDateTime ();
+	public function GetParserArgsDateTime ();
 
 	/**
-	 * @inheritDocs
-	 * @param  string|NULL $currencyCode 
+	 * 
+	 * @param  \string[] $parserArgsDateTime 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
-	public function SetFormatPatternDateTime ($formatPatternDateTime);
+	public function SetParserArgsDateTime ($parserArgsDateTime);
 	
 	/**
-	 * @inheritDocs
-	 * @return string|NULL
+	 * 
+	 * @return \string[]
 	 */
-	public function GetFormatPatternTime ();
+	public function GetParserArgsTime ();
 
 	/**
-	 * @inheritDocs
-	 * @param  string|NULL $currencyCode 
+	 * 
+	 * @param  \string[] $parserArgsTime 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
-	public function SetFormatPatternTime ($formatPatternTime);
+	public function SetParserArgsTime ($parserArgsTime);
+
+	/**
+	 * 
+	 * @return \string[]
+	 */
+	public function GetFormatArgsDate ();
+
+	/**
+	 * 
+	 * @param  \string[] $formatArgsDate 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
+	 */
+	public function SetFormatArgsDate ($formatArgsDate);
+	
+	/**
+	 * 
+	 * @return \string[]
+	 */
+	public function GetFormatArgsDateTime ();
+
+	/**
+	 * 
+	 * @param  \string[] $formatArgsDateTime 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
+	 */
+	public function SetFormatArgsDateTime ($formatArgsDateTime);
+	
+	/**
+	 * 
+	 * @return \string[]
+	 */
+	public function GetFormatArgsTime ();
+
+	/**
+	 * 
+	 * @param  \string[] $formatArgsTime 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
+	 */
+	public function SetFormatArgsTime ($formatArgsTime);
 }

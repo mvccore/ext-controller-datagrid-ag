@@ -20,6 +20,8 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 			\JsonSerializable {
 	
 	/**
+	 * Global localization settings - for numeric, money and datetime columns.
+	 * First item is lowercase language code, second item is uppercase country code.
 	 * @var \string[]|NULL
 	 * @jsonSerialize
 	 */
@@ -27,6 +29,8 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	protected $locale					= NULL;
 	
 	/**
+	 * Localization settings for numeric columns (integers and floats).
+	 * First item is lowercase language code, second item is uppercase country code.
 	 * @var \string[]|NULL
 	 * @jsonSerialize
 	 */
@@ -34,6 +38,8 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	protected $localeNumeric			= NULL;
 	
 	/**
+	 * Localization settings for money columns.
+	 * First item is lowercase language code, second item is uppercase country code.
 	 * @var \string[]|NULL
 	 * @jsonSerialize
 	 */
@@ -41,6 +47,8 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	protected $localeMoney				= NULL;
 	
 	/**
+	 * Localization settings for datetime columns.
+	 * First item is lowercase language code, second item is uppercase country code.
 	 * @var \string[]|NULL
 	 * @jsonSerialize
 	 */
@@ -48,6 +56,8 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	protected $localeDateTime			= NULL;
 	
 	/**
+	 * Currency code for money columns, three uppercase letters.
+	 * This settings is used for client javascript `Intl` currency formater.
 	 * @var string|NULL
 	 * @jsonSerialize
 	 */
@@ -55,6 +65,8 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	protected $currencyCode				= NULL;
 	
 	/**
+	 * Currency sign for money columns, not used by default.
+	 * This settings is prepared for any extended money formatter.
 	 * @var string|NULL
 	 * @jsonSerialize
 	 */
@@ -62,6 +74,8 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	protected $currencySign				= NULL;
 
 	/**
+	 * Currency float fractions length for money columns, 2 by default.
+	 * This settings is used for client javascript `Intl` currency formater.
 	 * @var int|NULL
 	 * @jsonSerialize
 	 */
@@ -69,6 +83,8 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	protected $currencyFractions		= self::FRACTIONS_DEFAULT_CURRENCY;
 	
 	/**
+	 * Standard float fractions length for float columns, 2 by default.
+	 * This settings is used for client javascript `Intl` float formater.
 	 * @var int|NULL
 	 * @jsonSerialize
 	 */
@@ -76,25 +92,52 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	protected $floatFractions			= self::FRACTIONS_DEFAULT_FLOAT;
 	
 	/**
-	 * @var string|NULL
+	 * 
+	 * @var \string[]
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
-	protected $formatPatternDate		= self::FORMAT_PATTERN_DATE;
+	protected $parserArgsDate			= [self::PARSER_ARG_DB2CODE_DATE, self::PARSER_ARG_CLIENT_DATE];
 	
 	/**
-	 * @var string|NULL
+	 * 
+	 * @var \string[]
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
-	protected $formatPatternDateTime	= self::FORMAT_PATTERN_DATE_TIME;
+	protected $parserArgsDateTime		= [self::PARSER_ARG_DB2CODE_DATE_TIME, self::PARSER_ARG_CLIENT_DATE_TIME];
 	
 	/**
-	 * @var string|NULL
+	 * 
+	 * @var \string[]
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
-	protected $formatPatternTime		= self::FORMAT_PATTERN_TIME;
+	protected $parserArgsTime			= [self::PARSER_ARG_DB2CODE_TIME, self::PARSER_ARG_CLIENT_TIME];
+	
+	/**
+	 * 
+	 * @var \string[]
+	 * @jsonSerialize
+	 */
+	#[JsonSerialize]
+	protected $formatArgsDate			= [self::FORMAT_ARG_CLIENT_DATE, self::FORMAT_ARG_DBLIKE_DATE];
+	
+	/**
+	 * 
+	 * @var \string[]
+	 * @jsonSerialize
+	 */
+	#[JsonSerialize]
+	protected $formatArgsDateTime		= [self::FORMAT_ARG_CLIENT_DATE_TIME, self::FORMAT_ARG_DBLIKE_DATE_TIME];
+	
+	/**
+	 * 
+	 * @var \string[]
+	 * @jsonSerialize
+	 */
+	#[JsonSerialize]
+	protected $formatArgsTime			= [self::FORMAT_ARG_CLIENT_TIME, self::FORMAT_ARG_DBLIKE_TIME];
 
 	/**
 	 * @return void
@@ -274,52 +317,104 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	
 	/**
 	 * @inheritDocs
-	 * @return string|NULL
+	 * @return \string[]
 	 */
-	public function GetFormatPatternDate () {
-		return $this->formatPatternDate;
+	public function GetParserArgsDate () {
+		return $this->parserArgsDate;
 	}
 	/**
 	 * @inheritDocs
-	 * @param  string|NULL $currencyCode 
+	 * @param  \string[] $parserArgsDate 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
-	public function SetFormatPatternDate ($formatPatternDate) {
-		$this->formatPatternDate = $formatPatternDate;
+	public function SetParserArgsDate ($parserArgsDate) {
+		$this->parserArgsDate = $parserArgsDate;
 		return $this;
 	}
 	
 	/**
 	 * @inheritDocs
-	 * @return string|NULL
+	 * @return \string[]
 	 */
-	public function GetFormatPatternDateTime () {
-		return $this->formatPatternDateTime;
+	public function GetParserArgsDateTime () {
+		return $this->parserArgsDateTime;
 	}
 	/**
 	 * @inheritDocs
-	 * @param  string|NULL $currencyCode 
+	 * @param  \string[] $parserArgsDateTime 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
-	public function SetFormatPatternDateTime ($formatPatternDateTime) {
-		$this->formatPatternDateTime = $formatPatternDateTime;
+	public function SetParserArgsDateTime ($parserArgsDateTime) {
+		$this->parserArgsDateTime = $parserArgsDateTime;
 		return $this;
 	}
 	
 	/**
 	 * @inheritDocs
-	 * @return string|NULL
+	 * @return \string[]
 	 */
-	public function GetFormatPatternTime () {
-		return $this->formatPatternTime;
+	public function GetParserArgsTime () {
+		return $this->parserArgsTime;
 	}
 	/**
 	 * @inheritDocs
-	 * @param  string|NULL $currencyCode 
+	 * @param  \string[] $parserArgsTime 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
-	public function SetFormatPatternTime ($formatPatternTime) {
-		$this->formatPatternTime = $formatPatternTime;
+	public function SetParserArgsTime ($parserArgsTime) {
+		$this->parserArgsTime = $parserArgsTime;
+		return $this;
+	}
+
+	/**
+	 * @inheritDocs
+	 * @return \string[]
+	 */
+	public function GetFormatArgsDate () {
+		return $this->formatArgsDate;
+	}
+	/**
+	 * @inheritDocs
+	 * @param  \string[] $formatArgsDate 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
+	 */
+	public function SetFormatArgsDate ($formatArgsDate) {
+		$this->formatArgsDate = $formatArgsDate;
+		return $this;
+	}
+	
+	/**
+	 * @inheritDocs
+	 * @return \string[]
+	 */
+	public function GetFormatArgsDateTime () {
+		return $this->formatArgsDateTime;
+	}
+	/**
+	 * @inheritDocs
+	 * @param  \string[] $formatArgsDateTime 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
+	 */
+	public function SetFormatArgsDateTime ($formatArgsDateTime) {
+		$this->formatArgsDateTime = $formatArgsDateTime;
+		return $this;
+	}
+	
+	/**
+	 * @inheritDocs
+	 * @return \string[]
+	 */
+	public function GetFormatArgsTime () {
+		return $this->formatArgsTime;
+	}
+
+	/**
+	 * @inheritDocs
+	 * @param  \string[] $formatArgsTime 
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
+	 */
+	public function SetFormatArgsTime ($formatArgsTime) {
+		$this->formatArgsTime = $formatArgsTime;
 		return $this;
 	}
 

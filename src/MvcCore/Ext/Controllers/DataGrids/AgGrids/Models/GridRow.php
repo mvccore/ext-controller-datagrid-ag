@@ -17,7 +17,9 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrids\Models;
  * @mixin \MvcCore\Ext\Models\Db\Model
  */
 trait GridRow {
-	
+
+	use \MvcCore\Ext\Controllers\DataGrids\Models\GridRow;
+
 	/**
 	 * Cache for local instance properties to serialize in JSON data.
 	 * @var array<string, bool>|NULL

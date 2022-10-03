@@ -13,7 +13,7 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrids\Models;
 
-interface IGridRow {
+interface IGridRow extends \MvcCore\Ext\Controllers\DataGrids\Models\IGridRow {
 	
 	/**
 	 * 

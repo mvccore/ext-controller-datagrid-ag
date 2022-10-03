@@ -66,6 +66,7 @@
 		'clientPageMode'		=> $grid->GetClientPageMode(),
 		'urlData'				=> $grid->GetUrlData(),
 		'urlColumnsChanges'		=> $grid->GetUrlColumnsChanges(),
+		'gridUrlParamName'		=> $grid::URL_PARAM_GRID,
 		'gridActionParamName'	=> $grid::URL_PARAM_ACTION,
 		'gridActionColumnStates'=> $grid::GRID_ACTION_COLUMNS_STATES,
 		'ignoreDisabledColumns'	=> $grid->GetIgnoreDisabledColumns(),
@@ -78,6 +79,8 @@
 		'filteringMode'			=> $grid->GetFilteringMode(),
 		'controlsTexts'			=> $grid->GetControlsTexts(),
 		'timeZoneOffset'		=> $grid->GetTimeZoneOffsetSeconds(),
+		'clientChangeHistory'	=> $grid->GetClientChangeHistory(),
+		'clientTitleTemplate'	=> $grid->GetClientTitleTemplate(),
 		'clientRequestBlockSize'=> $grid->GetClientRequestBlockSize(),
 		'clientRowBuffer'		=> $grid->GetClientRowBuffer(),
 		'clientMaxRowsInCache'	=> $grid->GetClientMaxRowsInCache(),
@@ -92,6 +95,8 @@
 		'filtering'			=> $grid->GetAjaxFiltering(),
 		'url'				=> $this->controller->GetRequest()->GetFullUrl(),
 		'path'				=> $grid->GetGridRequest()->GetPath(),
+		'page'				=> $grid->GetPage(),
+		'count'				=> $grid->GetCount(),
 		'dataCount'			=> count($grid->GetPageData()),
 		'data'				=> $grid->GetPageData()
 	]);

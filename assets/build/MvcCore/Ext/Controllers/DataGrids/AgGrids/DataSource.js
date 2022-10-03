@@ -1,14 +1,3 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -50,13 +39,147 @@ var MvcCore;
                         function DataSource(grid) {
                             var _newTarget = this.constructor;
                             this.Static = _newTarget;
-                            this.Static.grid = grid;
                             this.grid = grid;
                             this.optionsManager = grid.GetOptionsManager();
                             this.eventsManager = grid.GetEvents();
                             this.helpers = grid.GetHelpers();
                             this.initialData = grid.GetInitialData();
+                            this.serverConfig = grid.GetServerConfig();
+                            this.docTitleChange = this.serverConfig.clientTitleTemplate != null;
+                            this.docTitlePattern = "<" + this.serverConfig.gridUrlParamName + ">";
                         }
+                        DataSource.prototype.browserHistoryReplace = function (stateData, url, page, count) {
+                            if (this.serverConfig.clientChangeHistory) {
+                                var title = this.docTitleChange
+                                    ? this.completeDocumentTitle(stateData, page, count)
+                                    : document.title;
+                                history.replaceState(stateData, title, url);
+                                if (this.docTitleChange)
+                                    document.title = title;
+                            }
+                            return this;
+                        };
+                        DataSource.prototype.browserHistoryPush = function (stateData, url, page, count) {
+                            if (this.serverConfig.clientChangeHistory) {
+                                var title = this.docTitleChange
+                                    ? this.completeDocumentTitle(stateData, page, count)
+                                    : document.title;
+                                history.pushState(stateData, title, url);
+                                if (this.docTitleChange)
+                                    document.title = title;
+                            }
+                            return this;
+                        };
+                        DataSource.prototype.completeDocumentTitle = function (stateData, page, count) {
+                            var controlsTexts = this.serverConfig.controlsTexts, docTitleReplacements = [
+                                controlsTexts.get(AgGrids.Enums.ControlText.TITLE_PAGE)
+                                    .replace('{0}', page.toString()),
+                                controlsTexts.get(AgGrids.Enums.ControlText.TITLE_SCALE)
+                                    .replace('{0}', count.toString())
+                            ];
+                            this.completeDocumentTitleSorting(stateData.sorting, docTitleReplacements);
+                            this.completeDocumentTitleFiltering(stateData.filtering, docTitleReplacements);
+                            return this.serverConfig.clientTitleTemplate.replace(this.docTitlePattern, docTitleReplacements.join(', '));
+                        };
+                        DataSource.prototype.completeDocumentTitleSorting = function (sorting, docTitleReplacements) {
+                            var e_1, _a;
+                            if (sorting.length > 0) {
+                                var sortingStrItems = [], columns = this.serverConfig.columns, controlsTexts = this.serverConfig.controlsTexts;
+                                try {
+                                    for (var sorting_1 = __values(sorting), sorting_1_1 = sorting_1.next(); !sorting_1_1.done; sorting_1_1 = sorting_1.next()) {
+                                        var _b = __read(sorting_1_1.value, 2), columnUrlName = _b[0], sortDir = _b[1];
+                                        sortingStrItems.push(columns[columnUrlName].headingName + ' ' +
+                                            (sortDir ? '\u2193' : '\u2191'));
+                                    }
+                                }
+                                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                                finally {
+                                    try {
+                                        if (sorting_1_1 && !sorting_1_1.done && (_a = sorting_1.return)) _a.call(sorting_1);
+                                    }
+                                    finally { if (e_1) throw e_1.error; }
+                                }
+                                docTitleReplacements.push(controlsTexts.get(AgGrids.Enums.ControlText.TITLE_SORT)
+                                    .replace('{0}', sortingStrItems.join(', ')));
+                            }
+                            return this;
+                        };
+                        DataSource.prototype.completeDocumentTitleFiltering = function (stateDataFiltering, docTitleReplacements) {
+                            var e_2, _a, e_3, _b;
+                            var filteringColumnsUrlNames = Object.keys(stateDataFiltering), filteringStrItems = [], columns = this.serverConfig.columns, controlsTexts = this.serverConfig.controlsTexts, translator = this.grid.GetTranslator(), urlDelimiterValues = this.serverConfig.urlSegments.urlDelimiterValues, filteringValuesByControlType, controlText;
+                            if (filteringColumnsUrlNames.length > 0) {
+                                try {
+                                    for (var filteringColumnsUrlNames_1 = __values(filteringColumnsUrlNames), filteringColumnsUrlNames_1_1 = filteringColumnsUrlNames_1.next(); !filteringColumnsUrlNames_1_1.done; filteringColumnsUrlNames_1_1 = filteringColumnsUrlNames_1.next()) {
+                                        var columnUrlName = filteringColumnsUrlNames_1_1.value;
+                                        filteringValuesByControlType = this.completeDocumentTitleFilteringItem(columnUrlName, stateDataFiltering[columnUrlName]);
+                                        try {
+                                            for (var _c = (e_3 = void 0, __values(filteringValuesByControlType.entries())), _d = _c.next(); !_d.done; _d = _c.next()) {
+                                                var _e = __read(_d.value, 2), controlType = _e[0], values = _e[1];
+                                                controlText = AgGrids.Columns.FilterOperatorsCfg.CONTROL_TYPES_TEXTS.get(controlType);
+                                                controlText = translator.Translate(controlText);
+                                                controlText = controlText.substring(0, 1).toLocaleLowerCase() + controlText.substring(1);
+                                                filteringStrItems.push(columns[columnUrlName].headingName + ' - ' +
+                                                    controlText + ': ' +
+                                                    values.join(urlDelimiterValues + ' '));
+                                            }
+                                        }
+                                        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                                        finally {
+                                            try {
+                                                if (_d && !_d.done && (_b = _c.return)) _b.call(_c);
+                                            }
+                                            finally { if (e_3) throw e_3.error; }
+                                        }
+                                    }
+                                }
+                                catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                                finally {
+                                    try {
+                                        if (filteringColumnsUrlNames_1_1 && !filteringColumnsUrlNames_1_1.done && (_a = filteringColumnsUrlNames_1.return)) _a.call(filteringColumnsUrlNames_1);
+                                    }
+                                    finally { if (e_2) throw e_2.error; }
+                                }
+                                docTitleReplacements.push(controlsTexts.get(AgGrids.Enums.ControlText.TITLE_FILTER)
+                                    .replace('{0}', filteringStrItems.join(', ')));
+                            }
+                            return this;
+                        };
+                        DataSource.prototype.completeDocumentTitleFilteringItem = function (columnUrlName, filteringItem) {
+                            var e_4, _a;
+                            var result = new Map(), columns = this.serverConfig.columns, operator, filteringValues, serverColumnCfg, serverType, allServerTypesControlTypesOrders, allControlTypes, currentControlType;
+                            for (var operatorRaw in filteringItem) {
+                                operator = operatorRaw;
+                                filteringValues = filteringItem[operatorRaw];
+                                try {
+                                    for (var filteringValues_1 = (e_4 = void 0, __values(filteringValues)), filteringValues_1_1 = filteringValues_1.next(); !filteringValues_1_1.done; filteringValues_1_1 = filteringValues_1.next()) {
+                                        var filteringValue = filteringValues_1_1.value;
+                                        serverColumnCfg = columns[columnUrlName];
+                                        serverType = serverColumnCfg.types[serverColumnCfg.types.length - 1];
+                                        allServerTypesControlTypesOrders = AgGrids.Columns.FilterOperatorsCfg.SERVER_TYPES_CONTROL_TYPES_ORDERS;
+                                        allControlTypes = allServerTypesControlTypesOrders.has(serverType)
+                                            ? allServerTypesControlTypesOrders.get(serverType)
+                                            : allServerTypesControlTypesOrders.get(AgGrids.Enums.ServerType.STRING);
+                                        currentControlType = this.helpers.GetControlTypeByOperatorAndValue(operator, filteringValue, allControlTypes.length > 0
+                                            ? allControlTypes[0]
+                                            : AgGrids.Enums.FilterControlType.UNKNOWN, serverType);
+                                        if (result.has(currentControlType)) {
+                                            result.get(currentControlType).push(filteringValue);
+                                        }
+                                        else {
+                                            result.set(currentControlType, [filteringValue]);
+                                        }
+                                    }
+                                }
+                                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                                finally {
+                                    try {
+                                        if (filteringValues_1_1 && !filteringValues_1_1.done && (_a = filteringValues_1.return)) _a.call(filteringValues_1);
+                                    }
+                                    finally { if (e_4) throw e_4.error; }
+                                }
+                            }
+                            return result;
+                        };
                         DataSource.prototype.handleResponseControls = function (response) {
                             var elms = this.optionsManager.GetElements(), controls = response.controls;
                             if (elms.statusControl != null) {
@@ -69,9 +192,9 @@ var MvcCore;
                             }
                         };
                         DataSource.prototype.initPageReqDataAndCache = function () {
-                            var grid = this.Static.grid;
+                            var grid = this.grid;
                             this.cache = new grid.Static.Classes.DataSources.Cache(grid);
-                            this.pageReqData = this.Static.RetypeRequestMaps2Objects({
+                            this.pageReqData = this.helpers.RetypeRequestMaps2Objects({
                                 offset: grid.GetOffset(),
                                 limit: grid.GetLimit(),
                                 sorting: grid.GetSorting(),
@@ -79,7 +202,7 @@ var MvcCore;
                             });
                         };
                         DataSource.prototype.getReqUrlMethodAndType = function () {
-                            var serverCfg = this.Static.grid.GetServerConfig(), cfgReqMethod = serverCfg.dataRequestMethod, urlData = serverCfg.urlData, reqMethod = 'GET', reqType = 'json';
+                            var serverCfg = this.grid.GetServerConfig(), cfgReqMethod = serverCfg.dataRequestMethod, urlData = serverCfg.urlData, reqMethod = 'GET', reqType = 'json';
                             if ((cfgReqMethod & AgGrids.Enums.AjaxDataRequestMethod.AJAX_DATA_REQUEST_METHOD_POST) != 0) {
                                 reqMethod = 'POST';
                             }
@@ -87,72 +210,6 @@ var MvcCore;
                                 reqType = 'jsonp';
                             }
                             return [urlData, reqMethod, reqType];
-                        };
-                        DataSource.RetypeRawServerResponse = function (serverResponse) {
-                            serverResponse.filtering = this.retypeFilteringObj2Map(serverResponse.filtering);
-                            return serverResponse;
-                        };
-                        DataSource.RetypeRequestObjects2Maps = function (serverRequest) {
-                            var result = __assign({}, serverRequest);
-                            result.filtering = this.retypeFilteringObj2Map(serverRequest.filtering);
-                            return result;
-                        };
-                        DataSource.retypeFilteringObj2Map = function (filtering) {
-                            var e_1, _a;
-                            var columnsIds = Object.keys(filtering);
-                            if (columnsIds.length > 0) {
-                                var filtering = filtering;
-                                var newFiltering = new Map();
-                                try {
-                                    for (var columnsIds_1 = __values(columnsIds), columnsIds_1_1 = columnsIds_1.next(); !columnsIds_1_1.done; columnsIds_1_1 = columnsIds_1.next()) {
-                                        var idColumn = columnsIds_1_1.value;
-                                        newFiltering.set(idColumn, AgGrids.Tools.Helpers.ConvertObject2Map(filtering[idColumn]));
-                                    }
-                                }
-                                catch (e_1_1) { e_1 = { error: e_1_1 }; }
-                                finally {
-                                    try {
-                                        if (columnsIds_1_1 && !columnsIds_1_1.done && (_a = columnsIds_1.return)) _a.call(columnsIds_1);
-                                    }
-                                    finally { if (e_1) throw e_1.error; }
-                                }
-                                return newFiltering;
-                            }
-                            else {
-                                return new Map();
-                            }
-                        };
-                        DataSource.RetypeFilteringMap2Obj = function (filtering) {
-                            var e_2, _a;
-                            var newFiltering = {};
-                            try {
-                                for (var _b = __values(filtering.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-                                    var _d = __read(_c.value, 2), idColumn = _d[0], filterValues = _d[1];
-                                    newFiltering[idColumn] = AgGrids.Tools.Helpers.ConvertMap2Object(filterValues);
-                                }
-                            }
-                            catch (e_2_1) { e_2 = { error: e_2_1 }; }
-                            finally {
-                                try {
-                                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-                                }
-                                finally { if (e_2) throw e_2.error; }
-                            }
-                            return newFiltering;
-                        };
-                        DataSource.RetypeRequestMaps2Objects = function (serverRequest) {
-                            var result = __assign({}, serverRequest);
-                            if (serverRequest.filtering instanceof Map) {
-                                result.filtering = this.RetypeFilteringMap2Obj(serverRequest.filtering);
-                            }
-                            return this.addRequestSystemData(result);
-                        };
-                        DataSource.addRequestSystemData = function (serverRequest) {
-                            var serverConfig = this.grid.GetServerConfig();
-                            serverRequest.id = serverConfig.id;
-                            serverRequest.mode = serverConfig.clientPageMode;
-                            serverRequest.path = this.grid.GetGridPath();
-                            return serverRequest;
                         };
                         return DataSource;
                     }());

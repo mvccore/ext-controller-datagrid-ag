@@ -5,6 +5,13 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Tools {
         protected touchDevice: boolean;
         protected isChromeBrowser: boolean;
         constructor(grid: AgGrid);
+        GetControlTypeByOperatorAndValue(operator: Enums.Operator | null, value: string | null, defaultResult: Enums.FilterControlType, serverType: Enums.ServerType): Enums.FilterControlType;
+        RetypeFilteringMap2Obj(filtering: Map<string, Map<Enums.Operator, string[]>>): any;
+        RetypeRequestMaps2Objects(serverRequest: Interfaces.Ajax.IRequest): Interfaces.Ajax.IReqRawObj;
+        protected addRequestSystemData(serverRequest: Interfaces.Ajax.IReqRawObj): Interfaces.Ajax.IReqRawObj;
+        RetypeRawServerResponse(serverResponse: Interfaces.Ajax.IResponse): Interfaces.Ajax.IResponse;
+        RetypeRequestObjects2Maps(serverRequest: Interfaces.Ajax.IReqRawObj): Interfaces.Ajax.IRequest;
+        protected retypeFilteringObj2Map(filtering: any): Map<string, Map<Enums.Operator, string[]>>;
         IsTouchDevice(): boolean;
         IsChromeBrowser(): boolean;
         GetHtmlElementFromString(htmlCode: string): HTMLElement;

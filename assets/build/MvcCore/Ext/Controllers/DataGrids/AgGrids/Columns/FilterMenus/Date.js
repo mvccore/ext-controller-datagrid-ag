@@ -30,8 +30,14 @@ var MvcCore;
                                 function Date() {
                                     return _super !== null && _super.apply(this, arguments) || this;
                                 }
-                                Date.PARSER_ARGS_DEFAULT = [Columns.ViewHelper.PARSER_PATTERN_DATE];
-                                Date.FORMAT_ARGS_DEFAULT = [Columns.ViewHelper.PARSER_PATTERN_DATE];
+                                Date.prototype.initParserAndFormatArgs = function () {
+                                    this.parserArgs = this.serverColumnCfg.parserArgs;
+                                    this.formatArgs = this.serverColumnCfg.formatArgs;
+                                    if (this.parserArgs == null || this.parserArgs.length === 0)
+                                        this.parserArgs = this.serverConfig.locales.parserArgsDate;
+                                    if (this.formatArgs == null || this.formatArgs.length === 0)
+                                        this.formatArgs = this.serverConfig.locales.formatArgsDate;
+                                };
                                 Date.VALUE_TYPE = 'date';
                                 return Date;
                             }(FilterMenus.DateTime));

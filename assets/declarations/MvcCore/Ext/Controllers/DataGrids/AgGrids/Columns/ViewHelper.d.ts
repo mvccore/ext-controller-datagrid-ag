@@ -1,15 +1,10 @@
 declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
     class ViewHelper {
         Static: typeof ViewHelper;
-        static readonly PARSER_PATTERN_DATE: string;
-        static readonly PARSER_PATTERN_DATE_TIME: string;
-        static readonly PARSER_PATTERN_TIME: string;
-        static readonly FORMAT_PATTERN_DATE: string;
-        static readonly FORMAT_PATTERN_DATE_TIME: string;
-        static readonly FORMAT_PATTERN_TIME: string;
         protected static defaults: Map<Enums.ServerType, Types.ViewHelper>;
         protected grid: AgGrid;
         protected serverConfig: Interfaces.IServerConfig;
+        protected localesConfig: Interfaces.IServerConfigs.ILocales;
         protected localeNumeric: string;
         protected localeMoney: string;
         protected localeDateTime: string;

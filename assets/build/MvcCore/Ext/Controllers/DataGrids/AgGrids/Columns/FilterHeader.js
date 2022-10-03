@@ -105,14 +105,14 @@ var MvcCore;
                                 return this;
                             };
                             FilterHeader.prototype.initElements = function () {
-                                var sels = this.Static.SELECTORS;
-                                var cont = document.createElement('div');
+                                var sels = this.Static.SELECTORS, serverConfig = this.grid.GetServerConfig(), cont = document.createElement('div');
                                 cont.className = sels.CONT_CLS;
                                 var input = document.createElement('input');
                                 input.type = 'text';
                                 input.autocomplete = 'off';
                                 input.name = 'filter_' + this.columnId;
-                                var renderingCfg = this.grid.GetServerConfig().renderConfig;
+                                input.placeholder = serverConfig.controlsTexts.get(AgGrids.Enums.ControlText.FILTER_FORM_PLACEHOLDER);
+                                var renderingCfg = serverConfig.renderConfig;
                                 if (renderingCfg.tableHeadFilteringTitle != null)
                                     input.title = renderingCfg.tableHeadFilteringTitle;
                                 input.className = sels.INPUT_CLS;

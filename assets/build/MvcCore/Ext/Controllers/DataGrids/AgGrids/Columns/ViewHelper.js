@@ -17,9 +17,10 @@ var MvcCore;
                                 this.grid = grid;
                                 this.translator = grid.GetTranslator();
                                 this.serverConfig = grid.GetServerConfig();
-                                this.localeNumeric = this.serverConfig.locales.localeNumeric.join(AgGrids.Options.Manager.SYSTEM_LOCALE_SEPARATOR);
-                                this.localeMoney = this.serverConfig.locales.localeMoney.join(AgGrids.Options.Manager.SYSTEM_LOCALE_SEPARATOR);
-                                this.localeDateTime = this.serverConfig.locales.localeDateTime.join(AgGrids.Options.Manager.SYSTEM_LOCALE_SEPARATOR);
+                                this.localesConfig = this.serverConfig.locales;
+                                this.localeNumeric = this.localesConfig.localeNumeric.join(AgGrids.Options.Manager.SYSTEM_LOCALE_SEPARATOR);
+                                this.localeMoney = this.localesConfig.localeMoney.join(AgGrids.Options.Manager.SYSTEM_LOCALE_SEPARATOR);
+                                this.localeDateTime = this.localesConfig.localeDateTime.join(AgGrids.Options.Manager.SYSTEM_LOCALE_SEPARATOR);
                                 this.formattersInt = new Map([
                                     ['default', new Intl.NumberFormat(this.localeNumeric, {
                                             minimumIntegerDigits: 1
@@ -27,17 +28,17 @@ var MvcCore;
                                 ]);
                                 this.formattersFloat = new Map([
                                     ['default', new Intl.NumberFormat(this.localeNumeric, {
-                                            minimumFractionDigits: this.serverConfig.locales.floatFractions,
-                                            maximumFractionDigits: this.serverConfig.locales.floatFractions
+                                            minimumFractionDigits: this.localesConfig.floatFractions,
+                                            maximumFractionDigits: this.localesConfig.floatFractions
                                         })]
                                 ]);
                                 this.formattersMoney = new Map([
                                     ['default', new Intl.NumberFormat(this.localeMoney, {
                                             style: 'currency',
-                                            currency: this.serverConfig.locales.currencyCode,
+                                            currency: this.localesConfig.currencyCode,
                                             currencySign: 'standard',
-                                            minimumFractionDigits: this.serverConfig.locales.currencyFractions,
-                                            maximumFractionDigits: this.serverConfig.locales.currencyFractions
+                                            minimumFractionDigits: this.localesConfig.currencyFractions,
+                                            maximumFractionDigits: this.localesConfig.currencyFractions
                                         })]
                                 ]);
                                 this.Static.defaults = new Map([
@@ -93,7 +94,7 @@ var MvcCore;
                             ViewHelper.prototype.getFloatFormater = function (formatterKey, formatArgs) {
                                 if (this.formattersFloat.has(formatterKey))
                                     return this.formattersFloat.get(formatterKey);
-                                var minimumFractionDigits = this.serverConfig.locales.floatFractions, maximumFractionDigits = this.serverConfig.locales.floatFractions;
+                                var minimumFractionDigits = this.localesConfig.floatFractions, maximumFractionDigits = this.localesConfig.floatFractions;
                                 if (formatArgs.length > 0) {
                                     minimumFractionDigits = parseInt(formatArgs[0], 10);
                                     if (formatArgs.length > 1)
@@ -110,7 +111,7 @@ var MvcCore;
                             ViewHelper.prototype.getMoneyFormater = function (formatterKey, formatArgs) {
                                 if (this.formattersMoney.has(formatterKey))
                                     return this.formattersMoney.get(formatterKey);
-                                var minimumFractionDigits = this.serverConfig.locales.floatFractions, maximumFractionDigits = this.serverConfig.locales.floatFractions;
+                                var minimumFractionDigits = this.localesConfig.floatFractions, maximumFractionDigits = this.localesConfig.floatFractions;
                                 if (formatArgs.length > 0) {
                                     minimumFractionDigits = parseInt(formatArgs[0], 10);
                                     if (formatArgs.length > 1)
@@ -120,7 +121,7 @@ var MvcCore;
                                     maximumFractionDigits = minimumFractionDigits;
                                 this.formattersMoney.set(formatterKey, new Intl.NumberFormat(this.localeMoney, {
                                     style: 'currency',
-                                    currency: this.serverConfig.locales.currencyCode,
+                                    currency: this.localesConfig.currencyCode,
                                     currencySign: 'standard',
                                     minimumFractionDigits: minimumFractionDigits,
                                     maximumFractionDigits: maximumFractionDigits
@@ -144,37 +145,31 @@ var MvcCore;
                             };
                             ViewHelper.prototype.formatDate = function (params, propName, parserArgs, formatArgs) {
                                 if (parserArgs == null || parserArgs.length === 0)
-                                    parserArgs = [this.Static.PARSER_PATTERN_DATE];
+                                    parserArgs = this.localesConfig.parserArgsDate;
                                 var dateTime = moment(params.data[propName], parserArgs[parserArgs.length - 1]);
                                 dateTime.add(this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
-                                    formatArgs = [this.Static.FORMAT_PATTERN_DATE];
+                                    formatArgs = this.localesConfig.formatArgsDate;
                                 return dateTime.format(formatArgs[0]);
                             };
                             ViewHelper.prototype.formatDateTime = function (params, propName, parserArgs, formatArgs) {
                                 if (parserArgs == null || parserArgs.length === 0)
-                                    parserArgs = [this.Static.PARSER_PATTERN_DATE_TIME];
+                                    parserArgs = this.localesConfig.parserArgsDateTime;
                                 var dateTime = moment(params.data[propName], parserArgs[parserArgs.length - 1]);
                                 dateTime.add(this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
-                                    formatArgs = [this.Static.FORMAT_PATTERN_DATE_TIME];
+                                    formatArgs = this.localesConfig.formatArgsDateTime;
                                 return dateTime.format(formatArgs[0]);
                             };
                             ViewHelper.prototype.formatTime = function (params, propName, parserArgs, formatArgs) {
                                 if (parserArgs == null || parserArgs.length === 0)
-                                    parserArgs = [this.Static.PARSER_PATTERN_TIME];
+                                    parserArgs = this.localesConfig.parserArgsTime;
                                 var dateTime = moment(params.data[propName], parserArgs[parserArgs.length - 1]);
                                 dateTime.add(this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
-                                    formatArgs = [this.Static.FORMAT_PATTERN_TIME];
+                                    formatArgs = this.localesConfig.formatArgsTime;
                                 return dateTime.format(formatArgs[0]);
                             };
-                            ViewHelper.PARSER_PATTERN_DATE = 'YYYY-MM-DD';
-                            ViewHelper.PARSER_PATTERN_DATE_TIME = 'YYYY-MM-DD HH:mm:ss';
-                            ViewHelper.PARSER_PATTERN_TIME = 'HH:mm:ss';
-                            ViewHelper.FORMAT_PATTERN_DATE = 'YYYY-MM-DD';
-                            ViewHelper.FORMAT_PATTERN_DATE_TIME = 'YYYY-MM-DD HH:mm:ss';
-                            ViewHelper.FORMAT_PATTERN_TIME = 'HH:mm:ss';
                             return ViewHelper;
                         }());
                         Columns.ViewHelper = ViewHelper;

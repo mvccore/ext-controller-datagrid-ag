@@ -32,13 +32,17 @@ var MvcCore;
                                 }
                                 DateTime.prototype.init = function (agParams) {
                                     _super.prototype.init.call(this, agParams);
-                                    this.timeZoneOffset = this.grid.GetServerConfig().timeZoneOffset;
+                                    this.serverConfig = this.grid.GetServerConfig();
+                                    this.timeZoneOffset = this.serverConfig.timeZoneOffset;
+                                    this.initParserAndFormatArgs();
+                                };
+                                DateTime.prototype.initParserAndFormatArgs = function () {
                                     this.parserArgs = this.serverColumnCfg.parserArgs;
                                     this.formatArgs = this.serverColumnCfg.formatArgs;
                                     if (this.parserArgs == null || this.parserArgs.length === 0)
-                                        this.parserArgs = this.Static.PARSER_ARGS_DEFAULT;
+                                        this.parserArgs = this.serverConfig.locales.parserArgsDateTime;
                                     if (this.formatArgs == null || this.formatArgs.length === 0)
-                                        this.formatArgs = this.Static.FORMAT_ARGS_DEFAULT;
+                                        this.formatArgs = this.serverConfig.locales.formatArgsDateTime;
                                 };
                                 DateTime.prototype.changeValueInputType = function (index, currentControlType) {
                                     var sectionElms = this.elms.sections[index];
@@ -79,8 +83,6 @@ var MvcCore;
                                 DateTime.prototype.valueIsValid = function (value) {
                                     return value !== '' && value != null;
                                 };
-                                DateTime.PARSER_ARGS_DEFAULT = [Columns.ViewHelper.PARSER_PATTERN_DATE_TIME];
-                                DateTime.FORMAT_ARGS_DEFAULT = [Columns.ViewHelper.PARSER_PATTERN_DATE_TIME];
                                 DateTime.VALUE_TYPE = 'datetime-local';
                                 return DateTime;
                             }(Columns.FilterMenu));

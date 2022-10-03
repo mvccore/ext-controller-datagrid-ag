@@ -495,7 +495,7 @@ var MvcCore;
                                 limit: this.grid.GetLimit(),
                                 sorting: sorting,
                                 filtering: filtering,
-                            }, reqDataRaw = dataSource.Static.RetypeRequestMaps2Objects(reqData), oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(dataSource.Static.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(sorting);
+                            }, reqDataRaw = this.helpers.RetypeRequestMaps2Objects(reqData), oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(this.helpers.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(sorting);
                             this.grid
                                 .SetOffset(offset)
                                 .SetSorting(sorting)
@@ -519,7 +519,7 @@ var MvcCore;
                             }
                         };
                         EventsManager.prototype.HandleUrlChange = function (e) {
-                            var dataSource = this.grid.GetDataSource(), reqDataRaw = e.state, oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(dataSource.Static.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(reqDataRaw.sorting), reqData = dataSource.Static.RetypeRequestObjects2Maps(reqDataRaw);
+                            var dataSource = this.grid.GetDataSource(), reqDataRaw = e.state, oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(this.helpers.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(reqDataRaw.sorting), reqData = this.helpers.RetypeRequestObjects2Maps(reqDataRaw);
                             this.grid
                                 .SetOffset(reqData.offset)
                                 .SetSorting(reqData.sorting)

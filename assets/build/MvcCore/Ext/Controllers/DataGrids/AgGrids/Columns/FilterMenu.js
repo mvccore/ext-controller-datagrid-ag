@@ -92,6 +92,7 @@ var MvcCore;
                                 this.elms = null;
                                 // local props
                                 this.grid = null;
+                                this.helpers = null;
                                 this.translator = null;
                                 this.columnId = null;
                                 this.serverColumnCfg = null;
@@ -116,6 +117,7 @@ var MvcCore;
                             FilterMenu.prototype.initParams = function (agParams) {
                                 this.params = agParams;
                                 this.grid = this.params.grid;
+                                this.helpers = this.grid.GetHelpers();
                                 this.translator = this.grid.GetTranslator();
                                 this.columnId = this.params.columnId;
                                 this.serverColumnCfg = this.params.serverColumnCfg;
@@ -303,9 +305,9 @@ var MvcCore;
                                 var allControlTypes = allServerTypesControlTypesOrders.has(this.serverType)
                                     ? allServerTypesControlTypesOrders.get(this.serverType)
                                     : allServerTypesControlTypesOrders.get(AgGrids.Enums.ServerType.STRING);
-                                var currentControlType = this.getControlTypeByOperatorAndValue(operator, value, allControlTypes.length > 0
+                                var currentControlType = this.helpers.GetControlTypeByOperatorAndValue(operator, value, allControlTypes.length > 0
                                     ? allControlTypes[0]
-                                    : AgGrids.Enums.FilterControlType.UNKNOWN), allowedControlTypes = this.params.controlTypes;
+                                    : AgGrids.Enums.FilterControlType.UNKNOWN, this.serverType), allowedControlTypes = this.params.controlTypes;
                                 try {
                                     for (var allControlTypes_1 = __values(allControlTypes), allControlTypes_1_1 = allControlTypes_1.next(); !allControlTypes_1_1.done; allControlTypes_1_1 = allControlTypes_1.next()) {
                                         var controlType = allControlTypes_1_1.value;
@@ -457,67 +459,6 @@ var MvcCore;
                                     this.hideMenuCallback();
                                 this.hideMenuCallback = null;
                                 return this;
-                            };
-                            FilterMenu.prototype.getControlTypeByOperatorAndValue = function (operator, value, defaultResult) {
-                                var result = AgGrids.Enums.FilterControlType.UNKNOWN;
-                                if (operator == null || value == null)
-                                    return defaultResult;
-                                var isEqual = operator === AgGrids.Enums.Operator.EQUAL, isNotEqual = operator === AgGrids.Enums.Operator.NOT_EQUAL, isLike = operator === AgGrids.Enums.Operator.LIKE, isNotLike = operator === AgGrids.Enums.Operator.NOT_LIKE;
-                                if (isEqual || isNotEqual) {
-                                    if (isEqual && this.serverType === AgGrids.Enums.ServerType.BOOL) {
-                                        result = value === '1'
-                                            ? AgGrids.Enums.FilterControlType.IS_TRUE
-                                            : AgGrids.Enums.FilterControlType.IS_FALSE;
-                                    }
-                                    else if (value === 'null') {
-                                        result = isEqual
-                                            ? AgGrids.Enums.FilterControlType.IS_NULL
-                                            : AgGrids.Enums.FilterControlType.IS_NOT_NULL;
-                                    }
-                                    else {
-                                        result = isEqual
-                                            ? AgGrids.Enums.FilterControlType.EQUAL
-                                            : AgGrids.Enums.FilterControlType.NOT_EQUAL;
-                                    }
-                                }
-                                else if (operator === AgGrids.Enums.Operator.LOWER) {
-                                    result = AgGrids.Enums.FilterControlType.LOWER;
-                                }
-                                else if (operator === AgGrids.Enums.Operator.GREATER) {
-                                    result = AgGrids.Enums.FilterControlType.GREATER;
-                                }
-                                else if (operator === AgGrids.Enums.Operator.LOWER_EQUAL) {
-                                    result = AgGrids.Enums.FilterControlType.LOWER_EQUAL;
-                                }
-                                else if (operator === AgGrids.Enums.Operator.GREATER_EQUAL) {
-                                    result = AgGrids.Enums.FilterControlType.GREATER_EQUAL;
-                                }
-                                else if (isLike || isNotLike) {
-                                    var startsAndEndsRegExp = /^%(.*)%$/g, startsWithRegExp = /([^%_]+)%$/g, endsWithRegExp = /^%([^%_]+)/g;
-                                    if (value.match(startsAndEndsRegExp)) {
-                                        result = isLike
-                                            ? AgGrids.Enums.FilterControlType.CONTAINS
-                                            : AgGrids.Enums.FilterControlType.NOT_CONTAINS;
-                                    }
-                                    else if (value.match(startsWithRegExp)) {
-                                        result = isLike
-                                            ? AgGrids.Enums.FilterControlType.STARTS_WITH
-                                            : AgGrids.Enums.FilterControlType.NOT_STARTS_WITH;
-                                    }
-                                    else if (value.match(endsWithRegExp)) {
-                                        result = isLike
-                                            ? AgGrids.Enums.FilterControlType.ENDS_WITH
-                                            : AgGrids.Enums.FilterControlType.NOT_ENDS_WITH;
-                                    }
-                                    else {
-                                        result = isLike
-                                            ? AgGrids.Enums.FilterControlType.CONTAINS
-                                            : AgGrids.Enums.FilterControlType.NOT_CONTAINS;
-                                    }
-                                }
-                                if (result === AgGrids.Enums.FilterControlType.UNKNOWN)
-                                    result = defaultResult;
-                                return result;
                             };
                             FilterMenu.prototype.stopEvent = function (e) {
                                 if (e == null)

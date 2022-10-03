@@ -30,8 +30,14 @@ var MvcCore;
                                 function Time() {
                                     return _super !== null && _super.apply(this, arguments) || this;
                                 }
-                                Time.PARSER_ARGS_DEFAULT = [Columns.ViewHelper.PARSER_PATTERN_TIME];
-                                Time.FORMAT_ARGS_DEFAULT = [Columns.ViewHelper.PARSER_PATTERN_TIME];
+                                Time.prototype.initParserAndFormatArgs = function () {
+                                    this.parserArgs = this.serverColumnCfg.parserArgs;
+                                    this.formatArgs = this.serverColumnCfg.formatArgs;
+                                    if (this.parserArgs == null || this.parserArgs.length === 0)
+                                        this.parserArgs = this.serverConfig.locales.parserArgsDate;
+                                    if (this.formatArgs == null || this.formatArgs.length === 0)
+                                        this.formatArgs = this.serverConfig.locales.formatArgsDate;
+                                };
                                 Time.VALUE_TYPE = 'time';
                                 return Time;
                             }(FilterMenus.DateTime));

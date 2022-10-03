@@ -240,7 +240,7 @@ var MvcCore;
                         return this;
                     };
                     AgGrid.prototype.initData = function (initialData) {
-                        this.initialData = DataGrids.AgGrids.DataSource.RetypeRawServerResponse(initialData);
+                        this.initialData = this.helpers.RetypeRawServerResponse(initialData);
                         this.sorting = this.initialData.sorting;
                         this.filtering = this.initialData.filtering;
                         this.totalCount = this.initialData.totalCount;

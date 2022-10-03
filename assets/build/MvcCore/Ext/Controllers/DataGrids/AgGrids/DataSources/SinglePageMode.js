@@ -52,7 +52,7 @@ var MvcCore;
                                 _this.requestCounter = 0;
                                 _this.initLocationHref = location.href;
                                 _this.initPageReqDataAndCache();
-                                history.replaceState(_this.pageReqData, document.title, location.href);
+                                _this.browserHistoryReplace(_this.pageReqData, location.href, _this.initialData.page, _this.initialData.count);
                                 //this.pageReqData = null;
                                 _this.changeUrlSwitches = new Map();
                                 return _this;
@@ -99,7 +99,7 @@ var MvcCore;
                                     (params.endRow <= this.initialData.offset + this.initialData.dataCount || totalCount < params.endRow));
                                 if (!result)
                                     return false;
-                                var reqData = this.Static.RetypeRequestMaps2Objects({
+                                var reqData = this.helpers.RetypeRequestMaps2Objects({
                                     offset: this.grid.GetOffset(),
                                     limit: this.grid.GetLimit(),
                                     sorting: this.grid.GetSorting(),
@@ -115,7 +115,7 @@ var MvcCore;
                                 //console.log("resolving by initial data");
                                 params.successCallback(this.initialData.data.slice(params.startRow - this.initialData.offset, params.endRow - this.initialData.offset), totalCount);
                                 if (this.pageLoadedState > 0) {
-                                    var reqData = this.Static.RetypeRequestMaps2Objects({
+                                    var reqData = this.helpers.RetypeRequestMaps2Objects({
                                         offset: this.grid.GetOffset(),
                                         limit: this.grid.GetLimit(),
                                         sorting: this.grid.GetSorting(),
@@ -127,7 +127,7 @@ var MvcCore;
                                     }
                                     else {
                                         //console.log("pushState init data", reqData);
-                                        history.pushState(reqData, document.title, this.initLocationHref);
+                                        this.browserHistoryPush(reqData, this.initLocationHref, this.initialData.page, this.initialData.count);
                                     }
                                     if (this.autoSelectFirstRow)
                                         this.grid.GetEvents().SelectRowByIndex(0);
@@ -162,7 +162,7 @@ var MvcCore;
                                 var agGridApi = this.optionsManager.GetAgOptions().api;
                                 agGridApi.showLoadingOverlay();
                                 var _a = __read(this.getReqUrlMethodAndType(), 3), reqDataUrl = _a[0], reqMethod = _a[1], reqType = _a[2];
-                                var reqData = this.Static.RetypeRequestMaps2Objects({
+                                var reqData = this.helpers.RetypeRequestMaps2Objects({
                                     offset: params.startRow,
                                     limit: params.endRow - params.startRow,
                                     sorting: this.grid.GetSorting(),
@@ -175,7 +175,7 @@ var MvcCore;
                                     type: reqType,
                                     success: function (rawResponse) {
                                         agGridApi.hideOverlay();
-                                        var response = _this.Static.RetypeRawServerResponse(rawResponse);
+                                        var response = _this.helpers.RetypeRawServerResponse(rawResponse);
                                         if (response.controls != null) {
                                             _this.optionsManager.InitBottomControls();
                                             _this.handleResponseControls(response);
@@ -193,7 +193,7 @@ var MvcCore;
                                         }
                                         else {
                                             if (_this.pageLoadedState > 3) {
-                                                history.pushState(reqData, document.title, response.url);
+                                                _this.browserHistoryPush(reqData, response.url, response.page, response.count);
                                                 _this.grid.GetColumnsVisibilityMenu().UpdateFormAction();
                                             }
                                         }

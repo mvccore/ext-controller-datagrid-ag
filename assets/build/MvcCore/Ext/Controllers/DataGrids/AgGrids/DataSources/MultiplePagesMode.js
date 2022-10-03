@@ -45,7 +45,7 @@ var MvcCore;
                                 var _this = _super.call(this, grid) || this;
                                 _this.eventsManager = grid.GetEvents();
                                 _this.initPageReqDataAndCache();
-                                history.replaceState(_this.pageReqData, document.title, location.href);
+                                _this.browserHistoryReplace(_this.pageReqData, location.href, _this.initialData.page, _this.initialData.count);
                                 _this.pageReqData = null;
                                 return _this;
                             }
@@ -64,7 +64,7 @@ var MvcCore;
                                 this.cache.Add(this.cache.Key(this.pageReqData), this.initialData);
                             };
                             MultiplePagesMode.prototype.Load = function () {
-                                var reqData = this.Static.RetypeRequestMaps2Objects({
+                                var reqData = this.helpers.RetypeRequestMaps2Objects({
                                     offset: this.grid.GetOffset(),
                                     limit: this.grid.GetLimit(),
                                     sorting: this.grid.GetSorting(),
@@ -98,7 +98,7 @@ var MvcCore;
                                     response = rawResponse;
                                 }
                                 else {
-                                    response = this.Static.RetypeRawServerResponse(rawResponse);
+                                    response = this.helpers.RetypeRawServerResponse(rawResponse);
                                     this.cache.Add(cacheKey, response);
                                     //this.grid.GetEvents().HandleResponseLoaded(response);
                                 }
@@ -117,7 +117,7 @@ var MvcCore;
                                 }
                                 if (changeUrl) {
                                     reqData.path = response.path;
-                                    history.pushState(reqData, document.title, response.url);
+                                    this.browserHistoryPush(reqData, response.url, response.page, response.count);
                                     this.grid.GetColumnsVisibilityMenu().UpdateFormAction();
                                 }
                             };

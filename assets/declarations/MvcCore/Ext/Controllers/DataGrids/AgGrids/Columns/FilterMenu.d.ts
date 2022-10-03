@@ -17,6 +17,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
         Static: typeof FilterMenu;
         protected params: Interfaces.FilterMenus.IParams<any>;
         protected grid: AgGrid;
+        protected helpers: AgGrids.Tools.Helpers;
         protected translator: Tools.Translator;
         protected columnId: string;
         protected serverColumnCfg: Interfaces.IServerConfigs.IColumn;
@@ -79,7 +80,6 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
         protected handleAddNextValue(index: number, e: MouseEvent): void;
         protected getFilteringFromControls(): Map<Enums.Operator, string[]>;
         protected hide(): this;
-        protected getControlTypeByOperatorAndValue(operator: Enums.Operator | null, value: string | null, defaultResult: Enums.FilterControlType): Enums.FilterControlType;
         protected stopEvent(e: Event): this;
         isFilterActive(): boolean;
         doesFilterPass(params: agGrid.IDoesFilterPassParams): boolean;

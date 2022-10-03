@@ -1,3 +1,25 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -18,17 +40,6 @@ var __spread = (this && this.__spread) || function () {
     for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
     return ar;
 };
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 var MvcCore;
 (function (MvcCore) {
     var Ext;
@@ -47,6 +58,133 @@ var MvcCore;
                                 this.Static = _newTarget;
                                 this.grid = grid;
                             }
+                            Helpers.prototype.GetControlTypeByOperatorAndValue = function (operator, value, defaultResult, serverType) {
+                                var result = AgGrids.Enums.FilterControlType.UNKNOWN;
+                                if (operator == null || value == null)
+                                    return defaultResult;
+                                var isEqual = operator === AgGrids.Enums.Operator.EQUAL, isNotEqual = operator === AgGrids.Enums.Operator.NOT_EQUAL, isLike = operator === AgGrids.Enums.Operator.LIKE, isNotLike = operator === AgGrids.Enums.Operator.NOT_LIKE;
+                                if (isEqual || isNotEqual) {
+                                    if (isEqual && serverType === AgGrids.Enums.ServerType.BOOL) {
+                                        result = value === '1'
+                                            ? AgGrids.Enums.FilterControlType.IS_TRUE
+                                            : AgGrids.Enums.FilterControlType.IS_FALSE;
+                                    }
+                                    else if (value === 'null') {
+                                        result = isEqual
+                                            ? AgGrids.Enums.FilterControlType.IS_NULL
+                                            : AgGrids.Enums.FilterControlType.IS_NOT_NULL;
+                                    }
+                                    else {
+                                        result = isEqual
+                                            ? AgGrids.Enums.FilterControlType.EQUAL
+                                            : AgGrids.Enums.FilterControlType.NOT_EQUAL;
+                                    }
+                                }
+                                else if (operator === AgGrids.Enums.Operator.LOWER) {
+                                    result = AgGrids.Enums.FilterControlType.LOWER;
+                                }
+                                else if (operator === AgGrids.Enums.Operator.GREATER) {
+                                    result = AgGrids.Enums.FilterControlType.GREATER;
+                                }
+                                else if (operator === AgGrids.Enums.Operator.LOWER_EQUAL) {
+                                    result = AgGrids.Enums.FilterControlType.LOWER_EQUAL;
+                                }
+                                else if (operator === AgGrids.Enums.Operator.GREATER_EQUAL) {
+                                    result = AgGrids.Enums.FilterControlType.GREATER_EQUAL;
+                                }
+                                else if (isLike || isNotLike) {
+                                    var startsAndEndsRegExp = /^%(.*)%$/g, startsWithRegExp = /([^%_]+)%$/g, endsWithRegExp = /^%([^%_]+)/g;
+                                    if (value.match(startsAndEndsRegExp)) {
+                                        result = isLike
+                                            ? AgGrids.Enums.FilterControlType.CONTAINS
+                                            : AgGrids.Enums.FilterControlType.NOT_CONTAINS;
+                                    }
+                                    else if (value.match(startsWithRegExp)) {
+                                        result = isLike
+                                            ? AgGrids.Enums.FilterControlType.STARTS_WITH
+                                            : AgGrids.Enums.FilterControlType.NOT_STARTS_WITH;
+                                    }
+                                    else if (value.match(endsWithRegExp)) {
+                                        result = isLike
+                                            ? AgGrids.Enums.FilterControlType.ENDS_WITH
+                                            : AgGrids.Enums.FilterControlType.NOT_ENDS_WITH;
+                                    }
+                                    else {
+                                        result = isLike
+                                            ? AgGrids.Enums.FilterControlType.CONTAINS
+                                            : AgGrids.Enums.FilterControlType.NOT_CONTAINS;
+                                    }
+                                }
+                                if (result === AgGrids.Enums.FilterControlType.UNKNOWN)
+                                    result = defaultResult;
+                                return result;
+                            };
+                            Helpers.prototype.RetypeFilteringMap2Obj = function (filtering) {
+                                var e_1, _a;
+                                var newFiltering = {};
+                                try {
+                                    for (var _b = __values(filtering.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                                        var _d = __read(_c.value, 2), idColumn = _d[0], filterValues = _d[1];
+                                        newFiltering[idColumn] = Tools.Helpers.ConvertMap2Object(filterValues);
+                                    }
+                                }
+                                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                                finally {
+                                    try {
+                                        if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                                    }
+                                    finally { if (e_1) throw e_1.error; }
+                                }
+                                return newFiltering;
+                            };
+                            Helpers.prototype.RetypeRequestMaps2Objects = function (serverRequest) {
+                                var result = __assign({}, serverRequest);
+                                if (serverRequest.filtering instanceof Map) {
+                                    result.filtering = this.RetypeFilteringMap2Obj(serverRequest.filtering);
+                                }
+                                return this.addRequestSystemData(result);
+                            };
+                            Helpers.prototype.addRequestSystemData = function (serverRequest) {
+                                var serverConfig = this.grid.GetServerConfig();
+                                serverRequest.id = serverConfig.id;
+                                serverRequest.mode = serverConfig.clientPageMode;
+                                serverRequest.path = this.grid.GetGridPath();
+                                return serverRequest;
+                            };
+                            Helpers.prototype.RetypeRawServerResponse = function (serverResponse) {
+                                serverResponse.filtering = this.retypeFilteringObj2Map(serverResponse.filtering);
+                                return serverResponse;
+                            };
+                            Helpers.prototype.RetypeRequestObjects2Maps = function (serverRequest) {
+                                var result = __assign({}, serverRequest);
+                                result.filtering = this.retypeFilteringObj2Map(serverRequest.filtering);
+                                return result;
+                            };
+                            Helpers.prototype.retypeFilteringObj2Map = function (filtering) {
+                                var e_2, _a;
+                                var columnsIds = Object.keys(filtering);
+                                if (columnsIds.length > 0) {
+                                    var filtering = filtering;
+                                    var newFiltering = new Map();
+                                    try {
+                                        for (var columnsIds_1 = __values(columnsIds), columnsIds_1_1 = columnsIds_1.next(); !columnsIds_1_1.done; columnsIds_1_1 = columnsIds_1.next()) {
+                                            var idColumn = columnsIds_1_1.value;
+                                            newFiltering.set(idColumn, Tools.Helpers.ConvertObject2Map(filtering[idColumn]));
+                                        }
+                                    }
+                                    catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                                    finally {
+                                        try {
+                                            if (columnsIds_1_1 && !columnsIds_1_1.done && (_a = columnsIds_1.return)) _a.call(columnsIds_1);
+                                        }
+                                        finally { if (e_2) throw e_2.error; }
+                                    }
+                                    return newFiltering;
+                                }
+                                else {
+                                    return new Map();
+                                }
+                            };
                             Helpers.prototype.IsTouchDevice = function () {
                                 var _a;
                                 return (_a = this.touchDevice) !== null && _a !== void 0 ? _a : (this.touchDevice = (('ontouchstart' in window) ||
@@ -78,7 +216,7 @@ var MvcCore;
                                 return serverConfig;
                             };
                             Helpers.prototype.GetAllowedOperators = function (columnFilterFlags) {
-                                var e_1, _a;
+                                var e_3, _a;
                                 var urlFilterOperators = this.grid.GetServerConfig().urlSegments.urlFilterOperators, allowedOperators = new Map(), allowRanges = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_RANGES) != 0, allowLikeRight = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_LIKE_RIGHT_SIDE) != 0, allowLikeLeft = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_LIKE_LEFT_SIDE) != 0, allowLikeAnywhere = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_LIKE_ANYWHERE) != 0, operators = [
                                     AgGrids.Enums.Operator.EQUAL, AgGrids.Enums.Operator.NOT_EQUAL
                                 ]; // equal and not equal are allowed for filtering by default
@@ -120,17 +258,17 @@ var MvcCore;
                                         });
                                     }
                                 }
-                                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                                catch (e_3_1) { e_3 = { error: e_3_1 }; }
                                 finally {
                                     try {
                                         if (operators_1_1 && !operators_1_1.done && (_a = operators_1.return)) _a.call(operators_1);
                                     }
-                                    finally { if (e_1) throw e_1.error; }
+                                    finally { if (e_3) throw e_3.error; }
                                 }
                                 return allowedOperators;
                             };
                             Helpers.prototype.SortConfigColumns = function (serverColumns, columnIndexPropName) {
-                                var e_2, _a, e_3, _b, e_4, _c;
+                                var e_4, _a, e_5, _b, e_6, _c;
                                 var indexedMap = new Map(), notIndexedSet = new Set(), serverColumnCfg, columnIndex;
                                 for (var columnUrlName in serverColumns) {
                                     serverColumnCfg = serverColumns[columnUrlName];
@@ -153,27 +291,27 @@ var MvcCore;
                                     for (var indexedMapKeys_1 = __values(indexedMapKeys), indexedMapKeys_1_1 = indexedMapKeys_1.next(); !indexedMapKeys_1_1.done; indexedMapKeys_1_1 = indexedMapKeys_1.next()) {
                                         var indexedMapKey = indexedMapKeys_1_1.value;
                                         try {
-                                            for (var _d = (e_3 = void 0, __values(indexedMap.get(indexedMapKey))), _e = _d.next(); !_e.done; _e = _d.next()) {
+                                            for (var _d = (e_5 = void 0, __values(indexedMap.get(indexedMapKey))), _e = _d.next(); !_e.done; _e = _d.next()) {
                                                 var serverColumnCfg = _e.value;
                                                 serverColumnCfg[columnIndexPropName] = index++;
                                                 result.push(serverColumnCfg);
                                             }
                                         }
-                                        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                                        catch (e_5_1) { e_5 = { error: e_5_1 }; }
                                         finally {
                                             try {
                                                 if (_e && !_e.done && (_b = _d.return)) _b.call(_d);
                                             }
-                                            finally { if (e_3) throw e_3.error; }
+                                            finally { if (e_5) throw e_5.error; }
                                         }
                                     }
                                 }
-                                catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                                catch (e_4_1) { e_4 = { error: e_4_1 }; }
                                 finally {
                                     try {
                                         if (indexedMapKeys_1_1 && !indexedMapKeys_1_1.done && (_a = indexedMapKeys_1.return)) _a.call(indexedMapKeys_1);
                                     }
-                                    finally { if (e_2) throw e_2.error; }
+                                    finally { if (e_4) throw e_4.error; }
                                 }
                                 try {
                                     for (var notIndexedSet_1 = __values(notIndexedSet), notIndexedSet_1_1 = notIndexedSet_1.next(); !notIndexedSet_1_1.done; notIndexedSet_1_1 = notIndexedSet_1.next()) {
@@ -182,12 +320,12 @@ var MvcCore;
                                         result.push(serverColumnCfg);
                                     }
                                 }
-                                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                                catch (e_6_1) { e_6 = { error: e_6_1 }; }
                                 finally {
                                     try {
                                         if (notIndexedSet_1_1 && !notIndexedSet_1_1.done && (_c = notIndexedSet_1.return)) _c.call(notIndexedSet_1);
                                     }
-                                    finally { if (e_4) throw e_4.error; }
+                                    finally { if (e_6) throw e_6.error; }
                                 }
                                 return result;
                             };
@@ -224,7 +362,7 @@ var MvcCore;
                                 return new Map(data);
                             };
                             Helpers.ConvertMap2Object = function (map) {
-                                var e_5, _a;
+                                var e_7, _a;
                                 var obj = {};
                                 try {
                                     for (var map_1 = __values(map), map_1_1 = map_1.next(); !map_1_1.done; map_1_1 = map_1.next()) {
@@ -232,12 +370,12 @@ var MvcCore;
                                         obj[key] = value;
                                     }
                                 }
-                                catch (e_5_1) { e_5 = { error: e_5_1 }; }
+                                catch (e_7_1) { e_7 = { error: e_7_1 }; }
                                 finally {
                                     try {
                                         if (map_1_1 && !map_1_1.done && (_a = map_1.return)) _a.call(map_1);
                                     }
-                                    finally { if (e_5) throw e_5.error; }
+                                    finally { if (e_7) throw e_7.error; }
                                 }
                                 return obj;
                             };

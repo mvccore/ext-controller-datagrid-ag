@@ -31,6 +31,9 @@
 	top:-3px;
 	z-index:1;*/
 }
+.ag-root .filter-header input.filter-input::placeholder {
+	color:#ccc;
+}
 .ag-root .filter-header .filter-remove {
 	position:absolute;
 	z-index:3;

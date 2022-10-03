@@ -61,6 +61,8 @@ trait ActionMethods {
 			'filtering'		=> $this->GetAjaxFiltering(),
 			'url'			=> $gridUrl,
 			'path'			=> $gridPath,
+			'page'			=> $this->page,
+			'count'			=> $this->count,
 			'dataCount'		=> count($this->pageData),
 			'controls'		=> NULL,
 			'data'			=> $this->pageData,

@@ -50,6 +50,50 @@ trait PreDispatchMethods {
 			$this->preDispatchAssets();
 		}
 	}
+	
+	/**
+	 * Set up model instance and call database for total count.
+	 * @throws \InvalidArgumentException 
+	 * @return void
+	 */
+	public function LoadModel () {
+		if ($this->rowClassIsActiveColumnsModel)
+			$this->setRowModelActiveColumns();
+		parent::LoadModel();
+	}
+	
+	/**
+	 * Set active columns collection into row class.
+	 * @return void
+	 */
+	protected function setRowModelActiveColumns () {
+		$rowFullClassName = $this->GetRowClass();
+		$rowClassPropsFlags = $this->rowClassPropsFlags !== 0
+			? $this->rowClassPropsFlags
+			: $rowFullClassName::GetDefaultPropsFlags();
+		$activeColumns = $this->GetConfigColumns($this->GetEnabledColumnsOnly());
+		list ($metaData, $sourceCodeNamesMap) = $rowFullClassName::GetMetaData(
+			$rowClassPropsFlags, [\MvcCore\Ext\Models\Db\Model\IConstants::METADATA_BY_CODE]
+		);
+		$activeColumnsMap = [];
+		/** @var $activeColumns \MvcCore\Ext\Controllers\DataGrids\Configs\Column[] */
+		foreach ($activeColumns as $configColumn) {
+			$propertyName = $configColumn->GetPropName();
+			if (!isset($sourceCodeNamesMap[$propertyName])) continue;
+			$metaDataIndex = $sourceCodeNamesMap[$propertyName];
+			list($propIsPrivate, $propAllowNulls) = $metaData[$metaDataIndex];
+			$activeColumnsMap[$configColumn->GetDbColumnName()] = [
+				$propIsPrivate, 
+				$propAllowNulls, 
+				$configColumn->GetTypes(), 
+				$propertyName, 
+				$configColumn->GetParserArgs(), 
+				$configColumn->GetFormatArgs()
+			];
+		};
+		$rowFullClassName::SetActiveColumns($activeColumnsMap);
+	}
+
 
 	/**
 	 * 

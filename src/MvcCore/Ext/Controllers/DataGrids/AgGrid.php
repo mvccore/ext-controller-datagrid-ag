@@ -26,14 +26,15 @@ implements	IConstantsAg {
 		\MvcCore\Ext\Controllers\DataGrids\AgGrid\ConfigGettersSetters,
 		\MvcCore\Ext\Controllers\DataGrids\AgGrid\InitMethods,
 		\MvcCore\Ext\Controllers\DataGrids\AgGrid\PreDispatchMethods,
-		\MvcCore\Ext\Controllers\DataGrids\AgGrid\ActionMethods;
+		\MvcCore\Ext\Controllers\DataGrids\AgGrid\ActionMethods,
+		\MvcCore\Ext\Controllers\DataGrids\AgGrid\ColumnsParsingMethods;
 	
 	/**
 	 * MvcCore Extension - Controller - DataGrid - Ag - version:
 	 * Comparison by PHP function version_compare();
 	 * @see http://php.net/manual/en/function.version-compare.php
 	 */
-	const VERSION = '5.1.9';
+	const VERSION = '5.1.10';
 	
 	/**
 	 * Internal datagrid actions.
@@ -49,5 +50,5 @@ implements	IConstantsAg {
 		IConstantsAg::GRID_ACTION_COLUMNS_STATES	=> 'ActionColumnsStates',
 		IConstantsAg::GRID_ACTION_COLUMNS_CHANGES	=> 'ActionColumnsChanges',
 	];
-
+	
 }

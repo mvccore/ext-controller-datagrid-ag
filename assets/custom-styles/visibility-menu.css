@@ -74,7 +74,6 @@ form.columns-menu-form .columns-menu-controls {
 	flex-wrap:nowrap;
 	align-items:center;
 	gap:5px;
-
 }
 .columns-menu-controls label.columns-menu-control span {
 	display:inline-block;
@@ -152,4 +151,13 @@ form.columns-menu-form .columns-menu-buttons button {
 .grid.grid-with-bottom-controls.grid-no-table-head .columns-menu form.columns-menu-form{
 	top:auto;
 	bottom:15px;
+}
+
+
+.grid.grid-with-table-head-sorting.grid-with-table-head-filtering .columns-menu form.columns-menu-form.columns-menu-form-small,
+.grid.grid-no-table-head-sorting.grid-with-table-head-filtering .columns-menu form.columns-menu-form.columns-menu-form-small,
+.grid.grid-with-table-head-sorting.grid-no-table-head-filtering .columns-menu form.columns-menu-form.columns-menu-form-small,
+.grid.grid-no-table-head-sorting.grid-no-table-head-filtering .columns-menu form.columns-menu-form.columns-menu-form-small,
+.grid.grid-with-bottom-controls.grid-no-table-head .columns-menu form.columns-menu-form.columns-menu-form-small{
+	top:-1px;
 }

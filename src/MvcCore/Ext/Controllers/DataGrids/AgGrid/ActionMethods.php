@@ -15,6 +15,7 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 
 use \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn;
 use \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns;
+use \MvcCore\Ext\Controllers\DataGrids\Configs\JsonSerialize;
 
 /**
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
@@ -39,6 +40,67 @@ trait ActionMethods {
 			);
 		}
 		$this->gridPersistentColumnsWrite($persistentColumns);
+	}
+
+	/**
+	 * 
+	 * @return array
+	 */
+	public function GetClientServerConfig () {
+		$gridId = $this->GetId();
+		return [
+			'version'				=> static::VERSION,
+			'contElementSelector'	=> '#' . $gridId,
+			'renderConfig'			=> JsonSerialize::Serialize($this->GetConfigRendering()),
+			'columns'				=> $this->GetConfigColumns(FALSE),
+			'locales'				=> JsonSerialize::Serialize($this->GetConfigLocales()),
+			'urlSegments'			=> JsonSerialize::Serialize($this->GetConfigUrlSegments()),
+			'filterOperatorPrefixes'=> $this->GetFilterOperatorPrefixes(),
+			'ajaxParamsNames'		=> $this->GetAjaxParamsNames(),
+			'id'					=> $gridId,
+			'clientPageMode'		=> $this->GetClientPageMode(),
+			'urlData'				=> $this->GetUrlData(),
+			'urlColumnsChanges'		=> $this->GetUrlColumnsChanges(),
+			'gridUrlParamName'		=> static::URL_PARAM_GRID,
+			'gridActionParamName'	=> static::URL_PARAM_ACTION,
+			'gridActionColumnStates'=> static::GRID_ACTION_COLUMNS_STATES,
+			'ignoreDisabledColumns'	=> $this->GetIgnoreDisabledColumns(),
+			'dataRequestMethod'		=> $this->GetDataRequestMethod(),
+			'rowSelection'			=> $this->GetRowSelection(),
+			'itemsPerPage'			=> $this->GetItemsPerPage(),
+			'page'					=> $this->GetPage(),
+			'count'					=> $this->GetCount(),
+			'sortingMode'			=> $this->GetSortingMode(),
+			'filteringMode'			=> $this->GetFilteringMode(),
+			'controlsTexts'			=> $this->GetControlsTexts(),
+			'timeZoneOffset'		=> $this->GetTimeZoneOffsetSeconds(),
+			'clientChangeHistory'	=> $this->GetClientChangeHistory(),
+			'clientTitleTemplate'	=> $this->GetClientTitleTemplate(),
+			'clientRequestBlockSize'=> $this->GetClientRequestBlockSize(),
+			'clientRowBuffer'		=> $this->GetClientRowBuffer(),
+			'clientMaxRowsInCache'	=> $this->GetClientMaxRowsInCache(),
+			'clientRowBufferMax'	=> static::CLIENT_JS_BUFFER_MAX_SIZE,
+		];
+	}
+
+	/**
+	 * 
+	 * @return array
+	 */
+	public function GetClientInitData () {
+		return [
+			'totalCount'		=> $this->GetTotalCount(),
+			'offset'			=> $this->GetOffset(),
+			'limit'				=> $this->GetLimit(),
+			'sorting'			=> $this->GetAjaxSorting(),
+			'filtering'			=> $this->GetAjaxFiltering(),
+			'url'				=> $this->GetRequest()->GetFullUrl(),
+			'path'				=> $this->GetGridRequest()->GetPath(),
+			'page'				=> $this->GetPage(),
+			'count'				=> $this->GetCount(),
+			'dataCount'			=> count($this->GetPageData()),
+			'data'				=> $this->GetPageData()
+		];
 	}
 
 	/**
@@ -125,10 +187,28 @@ trait ActionMethods {
 	 */
 	public function ActionColumnsStates () {
 		$columnsUrlNamesRaw = $this->request->GetParams(FALSE, [], \MvcCore\IRequest::PARAM_TYPE_INPUT);
+		
+		$persistentColumns = $this->actionColumnsStatesAssemble($columnsUrlNamesRaw);
+		$this->gridPersistentColumnsWrite($persistentColumns);
 
+		$gridParam = rtrim($this->gridRequest->GetPath(), '/');
+		$controllerClass = get_parent_class(get_parent_class(__CLASS__));
+		$redirectUrl = $controllerClass::Url($this->appRouteName, [
+			static::URL_PARAM_GRID		=> $gridParam,
+			static::URL_PARAM_ACTION	=> NULL,
+		]);
+		self::Redirect($redirectUrl, \MvcCore\IResponse::SEE_OTHER);
+	}
+
+	/**
+	 * Complete persisten columns collection from raw post params.
+	 * @param  array $postParams 
+	 * @return array<string, PersistentColumn>
+	 */
+	protected function actionColumnsStatesAssemble (array $postParams) {
 		$persistentColumns = [];
 		foreach ($this->GetConfigColumns(FALSE) as $urlName => $configColumn) {
-			$disabled = !isset($columnsUrlNamesRaw[$urlName]);
+			$disabled = !isset($postParams[$urlName]);
 			if ($this->ignoreDisabledColumns) {
 				$dbColumnName = $configColumn->GetDbColumnName();
 				if (isset($this->filtering[$dbColumnName]) || isset($this->sorting[$dbColumnName]))
@@ -142,16 +222,7 @@ trait ActionMethods {
 				$disabled
 			);
 		}
-
-		$this->gridPersistentColumnsWrite($persistentColumns);
-
-		$gridParam = rtrim($this->gridRequest->GetPath(), '/');
-		$controllerClass = get_parent_class(get_parent_class(__CLASS__));
-		$redirectUrl = $controllerClass::Url($this->appRouteName, [
-			static::URL_PARAM_GRID		=> $gridParam,
-			static::URL_PARAM_ACTION	=> NULL,
-		]);
-		self::Redirect($redirectUrl, \MvcCore\IResponse::SEE_OTHER);
+		return $persistentColumns;
 	}
 
 	/**

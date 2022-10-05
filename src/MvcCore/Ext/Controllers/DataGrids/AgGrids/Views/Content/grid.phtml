@@ -1,7 +1,5 @@
 <?php
 
-	use \MvcCore\Ext\Controllers\DataGrids\Configs\JsonSerialize;
-
 	/** @var \MvcCore\Ext\Controllers\DataGrids\View $this */
 	/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $grid */
 	$renderConf = $grid->GetConfigRendering();
@@ -52,52 +50,7 @@
 	<?php endif; ?>
 </div>
 <script<?php echo $nonceAttr; ?>>new <?php echo $grid->GetJsClassFullName(); ?>(<?php
-	;
-	echo \MvcCore\Tool::JsonEncode([
-		'version'				=> $grid::VERSION,
-		'contElementSelector'	=> '#' . $gridId,
-		'renderConfig'			=> JsonSerialize::Serialize($renderConf),
-		'columns'				=> $grid->GetConfigColumns(FALSE),
-		'locales'				=> JsonSerialize::Serialize($grid->GetConfigLocales()),
-		'urlSegments'			=> JsonSerialize::Serialize($grid->GetConfigUrlSegments()),
-		'filterOperatorPrefixes'=> $grid->GetFilterOperatorPrefixes(),
-		'ajaxParamsNames'		=> $grid->GetAjaxParamsNames(),
-		'id'					=> $gridId,
-		'clientPageMode'		=> $grid->GetClientPageMode(),
-		'urlData'				=> $grid->GetUrlData(),
-		'urlColumnsChanges'		=> $grid->GetUrlColumnsChanges(),
-		'gridUrlParamName'		=> $grid::URL_PARAM_GRID,
-		'gridActionParamName'	=> $grid::URL_PARAM_ACTION,
-		'gridActionColumnStates'=> $grid::GRID_ACTION_COLUMNS_STATES,
-		'ignoreDisabledColumns'	=> $grid->GetIgnoreDisabledColumns(),
-		'dataRequestMethod'		=> $grid->GetDataRequestMethod(),
-		'rowSelection'			=> $grid->GetRowSelection(),
-		'itemsPerPage'			=> $grid->GetItemsPerPage(),
-		'page'					=> $grid->GetPage(),
-		'count'					=> $grid->GetCount(),
-		'sortingMode'			=> $grid->GetSortingMode(),
-		'filteringMode'			=> $grid->GetFilteringMode(),
-		'controlsTexts'			=> $grid->GetControlsTexts(),
-		'timeZoneOffset'		=> $grid->GetTimeZoneOffsetSeconds(),
-		'clientChangeHistory'	=> $grid->GetClientChangeHistory(),
-		'clientTitleTemplate'	=> $grid->GetClientTitleTemplate(),
-		'clientRequestBlockSize'=> $grid->GetClientRequestBlockSize(),
-		'clientRowBuffer'		=> $grid->GetClientRowBuffer(),
-		'clientMaxRowsInCache'	=> $grid->GetClientMaxRowsInCache(),
-		'clientRowBufferMax'	=> $grid::CLIENT_JS_BUFFER_MAX_SIZE,
-	]);
+	echo \MvcCore\Tool::JsonEncode($grid->GetClientServerConfig());
 ?>,<?php
-	echo \MvcCore\Tool::JsonEncode([
-		'totalCount'		=> $grid->GetTotalCount(),
-		'offset'			=> $grid->GetOffset(),
-		'limit'				=> $grid->GetLimit(),
-		'sorting'			=> $grid->GetAjaxSorting(),
-		'filtering'			=> $grid->GetAjaxFiltering(),
-		'url'				=> $this->controller->GetRequest()->GetFullUrl(),
-		'path'				=> $grid->GetGridRequest()->GetPath(),
-		'page'				=> $grid->GetPage(),
-		'count'				=> $grid->GetCount(),
-		'dataCount'			=> count($grid->GetPageData()),
-		'data'				=> $grid->GetPageData()
-	]);
+	echo \MvcCore\Tool::JsonEncode($grid->GetClientInitData());
 ?>);</script>

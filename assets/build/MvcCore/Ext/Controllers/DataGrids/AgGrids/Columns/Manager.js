@@ -56,8 +56,7 @@ var MvcCore;
                                     suppressMenu: true,
                                     resizable: true,
                                     editable: false,
-                                    flex: 1,
-                                    headerComponent: AgGrids.Columns.SortHeader,
+                                    flex: 1
                                 };
                                 this.sortHeaderDefaults = {
                                     renderDirection: true,
@@ -87,7 +86,6 @@ var MvcCore;
                                 this.serverColumnsSortedAll = [];
                                 this.serverColumnsUserSortedAll = [];
                                 this.serverColumnsSortedActive = [];
-                                this.agColumnDefaults.headerComponent = grid.Static.Classes.Columns.SortHeader;
                             }
                             Manager.prototype.SetServerColumnsMapAll = function (serverColumnsMapAll) {
                                 this.serverColumnsMapAll = serverColumnsMapAll;
@@ -144,9 +142,6 @@ var MvcCore;
                                 var renderConfig = this.serverConfig.renderConfig;
                                 this.sortingEnabled = renderConfig.renderTableHead && renderConfig.renderTableHeadSorting;
                                 this.filteringEnabled = renderConfig.renderTableHead && renderConfig.renderTableHeadFiltering;
-                                if (!this.sortingEnabled) {
-                                    delete this.agColumnDefaults.headerComponent;
-                                }
                                 if (!this.filteringEnabled) {
                                     this.agColumnDefaults.floatingFilter = false;
                                 }
@@ -154,10 +149,12 @@ var MvcCore;
                             };
                             Manager.prototype.initColumns = function () {
                                 var e_1, _a, e_2, _b;
+                                var _this = this;
                                 this.agColumnsConfigs = new Map();
-                                var agColumn, serverColumnCfg, columnUrlName;
-                                this.serverColumnsSortedAll = this.helpers.SortConfigColumns(this.serverConfig.columns, 'columnIndex');
-                                this.serverColumnsUserSortedAll = this.helpers.SortConfigColumns(this.serverConfig.columns, 'columnIndexUser');
+                                var agColumn, serverColumnCfg, serverColumnsArr = [], columnUrlName;
+                                Object.keys(this.serverConfig.columns).forEach(function (columnUrlName) { return serverColumnsArr.push(_this.serverConfig.columns[columnUrlName]); });
+                                this.serverColumnsSortedAll = this.helpers.SortConfigColumns(serverColumnsArr, 'columnIndex');
+                                this.serverColumnsUserSortedAll = this.helpers.SortConfigColumns(this.serverColumnsSortedAll, 'columnIndexUser');
                                 this.grid.SetSortHeaders(new Map());
                                 this.grid.SetFilterHeaders(new Map());
                                 this.grid.SetFilterMenus(new Map());
@@ -211,6 +208,8 @@ var MvcCore;
                                     headerName: serverColumnCfg.headingName,
                                     tooltipField: serverColumnCfg.propName
                                 };
+                                if (serverColumnCfg.cssClasses != null && serverColumnCfg.cssClasses.length > 0)
+                                    column.headerClass = column.cellClass = serverColumnCfg.cssClasses.join(' ');
                                 this.initColumnSorting(column, serverColumnCfg);
                                 this.initColumnFiltering(column, serverColumnCfg);
                                 this.viewHelper.SetUpColumnCfg(column, serverColumnCfg);
@@ -226,6 +225,7 @@ var MvcCore;
                                     columnId: serverColumnCfg.urlName,
                                     sortable: column.sortable
                                 });
+                                column.headerComponent = this.grid.Static.Classes.Columns.SortHeader;
                                 column.headerComponentParams = headerComponentParams;
                                 return this;
                             };

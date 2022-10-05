@@ -526,7 +526,7 @@ var MvcCore;
                                 .SetFiltering(reqData.filtering);
                             this.handleUrlChangeSortsFilters(reqData);
                             dataSource.ExecRequest(reqDataRaw, false);
-                            this.grid.GetColumnsVisibilityMenu().UpdateFormAction();
+                            this.grid.GetColumnsVisibilityMenu().UpdateFormAction(reqDataRaw.path);
                             if (oldOffset !== reqData.offset) {
                                 this.FireHandlers("pageChange", {
                                     offset: reqData.offset

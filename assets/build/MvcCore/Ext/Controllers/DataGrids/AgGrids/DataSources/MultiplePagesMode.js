@@ -118,7 +118,7 @@ var MvcCore;
                                 if (changeUrl) {
                                     reqData.path = response.path;
                                     this.browserHistoryPush(reqData, response.url, response.page, response.count);
-                                    this.grid.GetColumnsVisibilityMenu().UpdateFormAction();
+                                    this.grid.GetColumnsVisibilityMenu().UpdateFormAction(response.path);
                                 }
                             };
                             MultiplePagesMode.prototype.handleResponseControls = function (response) {

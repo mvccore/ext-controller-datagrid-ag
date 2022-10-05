@@ -18,9 +18,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Tools {
         IsInstanceOfIServerRequestRaw(obj: any): boolean;
         RetypeRawServerConfig(serverConfig: Interfaces.IServerConfig): Interfaces.IServerConfig;
         GetAllowedOperators(columnFilterFlags: Enums.FilteringMode): Map<Enums.Operator, AgGrids.Interfaces.SortHeaders.IAllowedOperator>;
-        SortConfigColumns(serverColumns: {
-            [columnUrlName: string]: AgGrids.Interfaces.IServerConfigs.IColumn;
-        }, columnIndexPropName: keyof AgGrids.Interfaces.IServerConfigs.IColumnIndexes): AgGrids.Interfaces.IServerConfigs.IColumn[];
+        SortConfigColumns(serverColumns: AgGrids.Interfaces.IServerConfigs.IColumn[], columnIndexPropName: keyof AgGrids.Interfaces.IServerConfigs.IColumnIndexes): AgGrids.Interfaces.IServerConfigs.IColumn[];
         /**
          * Check if given value contains any LIKE/NOT LIKE special
          * character: `%` or `_` or escaped like this: `[%]` or `[_]`.

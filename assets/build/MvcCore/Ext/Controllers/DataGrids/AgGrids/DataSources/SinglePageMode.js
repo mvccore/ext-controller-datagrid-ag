@@ -193,8 +193,9 @@ var MvcCore;
                                         }
                                         else {
                                             if (_this.pageLoadedState > 3) {
+                                                reqData.path = response.path;
                                                 _this.browserHistoryPush(reqData, response.url, response.page, response.count);
-                                                _this.grid.GetColumnsVisibilityMenu().UpdateFormAction();
+                                                _this.grid.GetColumnsVisibilityMenu().UpdateFormAction(response.path);
                                             }
                                         }
                                         var selectFirstRow = !_this.scrolled && _this.pageLoadedState > 3;

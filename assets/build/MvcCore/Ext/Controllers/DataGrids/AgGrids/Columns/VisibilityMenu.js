@@ -57,7 +57,8 @@ var MvcCore;
                                 if (this.elms.form) {
                                     this.displayed = false;
                                     var sels = this.Static.SELECTORS;
-                                    this.elms.form.className = [sels.FORM_CLS, sels.FORM_HIDDEN_CLS].join(' ');
+                                    this.formBaseClasses = [sels.FORM_CLS, sels.FORM_HIDDEN_CLS];
+                                    this.elms.form.className = this.formBaseClasses.join(' ');
                                     this.removeShownEvents();
                                 }
                                 return this;
@@ -67,7 +68,8 @@ var MvcCore;
                                     return this;
                                 if (this.elms.form) {
                                     this.displayed = true;
-                                    this.elms.form.className = this.Static.SELECTORS.FORM_CLS;
+                                    this.formBaseClasses = [this.Static.SELECTORS.FORM_CLS];
+                                    this.elms.form.className = this.formBaseClasses.join(' ');
                                     this
                                         .ResizeControls()
                                         .disableUsedColumns()
@@ -84,12 +86,21 @@ var MvcCore;
                             VisibilityMenu.prototype.ResizeControls = function () {
                                 if (!this.displayed)
                                     return this;
-                                var gridElm = this.grid.GetOptionsManager().GetElements().agGridElement, gridElmParent = gridElm.parentNode, heightDiff = this.elms.heading.offsetHeight + this.elms.buttons.offsetHeight + 20;
-                                var offsetHeight = Math.max((gridElmParent.offsetHeight * 0.75) - heightDiff, 200);
+                                var gridElm = this.grid.GetOptionsManager().GetElements().agGridElement, heightDiff = this.elms.heading.offsetHeight + this.elms.buttons.offsetHeight + 10, sels = this.Static.SELECTORS, pos = this.formBaseClasses.indexOf(sels.FORM_SMALL_CLS), offsetHeight = Math.max((gridElm.offsetHeight * 0.75) - heightDiff);
+                                if (offsetHeight < 300) {
+                                    offsetHeight = Math.max(gridElm.offsetHeight - heightDiff);
+                                    if (pos === -1)
+                                        this.formBaseClasses.push(sels.FORM_SMALL_CLS);
+                                }
+                                else {
+                                    if (pos !== -1)
+                                        this.formBaseClasses.splice(pos, 1);
+                                }
+                                this.elms.form.className = this.formBaseClasses.join(' ');
                                 this.elms.controls.style.maxHeight = offsetHeight + 'px';
                                 return this;
                             };
-                            VisibilityMenu.prototype.UpdateFormAction = function () {
+                            VisibilityMenu.prototype.UpdateFormAction = function (gridPath) {
                                 if (!this.elms.form)
                                     return this;
                                 var formAction = location.href, delim = '?', pos = formAction.indexOf(delim);
@@ -97,6 +108,7 @@ var MvcCore;
                                     delim = (pos == formAction.length - 1) ? '' : '&';
                                 formAction += delim + this.serverConfig.gridActionParamName + '=' + this.serverConfig.gridActionColumnStates;
                                 this.elms.form.action = formAction;
+                                this.elms.hidden.value = gridPath;
                                 return this;
                             };
                             VisibilityMenu.prototype.removeShownEvents = function () {
@@ -180,14 +192,20 @@ var MvcCore;
                                 this.initFormControls();
                                 var btns = this.createElm('div', [sels.FORM_BTNS_CLS]);
                                 this.elms.buttons = form.appendChild(btns);
+                                var hiddenInput = this.createElm('input', [], null, {
+                                    type: 'hidden',
+                                    name: this.serverConfig.gridUrlParamName,
+                                    value: this.grid.GetInitialData().path
+                                });
                                 var btnApply = this.createBtn(this.translator.Translate('applyFilter'), sels.BTN_APPLY_CLS, true);
                                 var btnCancel = this.createBtn(this.translator.Translate('cancelFilter'), sels.BTN_CANCEL_CLS, false);
+                                this.elms.hidden = btns.appendChild(hiddenInput);
                                 this.elms.btnApply = btns.appendChild(btnApply);
                                 this.elms.btnCancel = btns.appendChild(btnCancel);
                                 this.elms.buttons = btns;
                                 this.elms.menuCont.appendChild(form);
                                 this.elms.form = form;
-                                this.UpdateFormAction();
+                                this.UpdateFormAction(this.grid.GetGridPath());
                                 return this;
                             };
                             VisibilityMenu.prototype.initFormControls = function () {
@@ -276,6 +294,7 @@ var MvcCore;
                                 BTN_APPLY_CLS: 'columns-menu-btn-apply',
                                 BTN_CANCEL_CLS: 'columns-menu-btn-cancel',
                                 FORM_CLS: 'columns-menu-form',
+                                FORM_SMALL_CLS: 'columns-menu-form-small',
                                 FORM_HIDDEN_CLS: 'columns-menu-form-hidden',
                                 FORM_HEAD_CLS: 'columns-menu-heading',
                                 FORM_CTRLS_CLS: 'columns-menu-controls',

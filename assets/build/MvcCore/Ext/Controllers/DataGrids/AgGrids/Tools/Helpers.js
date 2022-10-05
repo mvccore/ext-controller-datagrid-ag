@@ -268,22 +268,31 @@ var MvcCore;
                                 return allowedOperators;
                             };
                             Helpers.prototype.SortConfigColumns = function (serverColumns, columnIndexPropName) {
-                                var e_4, _a, e_5, _b, e_6, _c;
+                                var e_4, _a, e_5, _b, e_6, _c, e_7, _d;
                                 var indexedMap = new Map(), notIndexedSet = new Set(), serverColumnCfg, columnIndex;
-                                for (var columnUrlName in serverColumns) {
-                                    serverColumnCfg = serverColumns[columnUrlName];
-                                    columnIndex = serverColumnCfg[columnIndexPropName];
-                                    if (columnIndex == null) {
-                                        notIndexedSet.add(serverColumnCfg);
-                                    }
-                                    else {
-                                        if (indexedMap.has(columnIndex)) {
-                                            indexedMap.get(columnIndex).push(serverColumnCfg);
+                                try {
+                                    for (var serverColumns_1 = __values(serverColumns), serverColumns_1_1 = serverColumns_1.next(); !serverColumns_1_1.done; serverColumns_1_1 = serverColumns_1.next()) {
+                                        var serverColumnCfg = serverColumns_1_1.value;
+                                        columnIndex = serverColumnCfg[columnIndexPropName];
+                                        if (columnIndex == null) {
+                                            notIndexedSet.add(serverColumnCfg);
                                         }
                                         else {
-                                            indexedMap.set(columnIndex, [serverColumnCfg]);
+                                            if (indexedMap.has(columnIndex)) {
+                                                indexedMap.get(columnIndex).push(serverColumnCfg);
+                                            }
+                                            else {
+                                                indexedMap.set(columnIndex, [serverColumnCfg]);
+                                            }
                                         }
                                     }
+                                }
+                                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                                finally {
+                                    try {
+                                        if (serverColumns_1_1 && !serverColumns_1_1.done && (_a = serverColumns_1.return)) _a.call(serverColumns_1);
+                                    }
+                                    finally { if (e_4) throw e_4.error; }
                                 }
                                 var result = [], index = 0, indexedMapKeys = Array.from(indexedMap.keys());
                                 indexedMapKeys.sort(function (a, b) { return a - b; });
@@ -291,27 +300,27 @@ var MvcCore;
                                     for (var indexedMapKeys_1 = __values(indexedMapKeys), indexedMapKeys_1_1 = indexedMapKeys_1.next(); !indexedMapKeys_1_1.done; indexedMapKeys_1_1 = indexedMapKeys_1.next()) {
                                         var indexedMapKey = indexedMapKeys_1_1.value;
                                         try {
-                                            for (var _d = (e_5 = void 0, __values(indexedMap.get(indexedMapKey))), _e = _d.next(); !_e.done; _e = _d.next()) {
-                                                var serverColumnCfg = _e.value;
+                                            for (var _e = (e_6 = void 0, __values(indexedMap.get(indexedMapKey))), _f = _e.next(); !_f.done; _f = _e.next()) {
+                                                var serverColumnCfg = _f.value;
                                                 serverColumnCfg[columnIndexPropName] = index++;
                                                 result.push(serverColumnCfg);
                                             }
                                         }
-                                        catch (e_5_1) { e_5 = { error: e_5_1 }; }
+                                        catch (e_6_1) { e_6 = { error: e_6_1 }; }
                                         finally {
                                             try {
-                                                if (_e && !_e.done && (_b = _d.return)) _b.call(_d);
+                                                if (_f && !_f.done && (_c = _e.return)) _c.call(_e);
                                             }
-                                            finally { if (e_5) throw e_5.error; }
+                                            finally { if (e_6) throw e_6.error; }
                                         }
                                     }
                                 }
-                                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                                catch (e_5_1) { e_5 = { error: e_5_1 }; }
                                 finally {
                                     try {
-                                        if (indexedMapKeys_1_1 && !indexedMapKeys_1_1.done && (_a = indexedMapKeys_1.return)) _a.call(indexedMapKeys_1);
+                                        if (indexedMapKeys_1_1 && !indexedMapKeys_1_1.done && (_b = indexedMapKeys_1.return)) _b.call(indexedMapKeys_1);
                                     }
-                                    finally { if (e_4) throw e_4.error; }
+                                    finally { if (e_5) throw e_5.error; }
                                 }
                                 try {
                                     for (var notIndexedSet_1 = __values(notIndexedSet), notIndexedSet_1_1 = notIndexedSet_1.next(); !notIndexedSet_1_1.done; notIndexedSet_1_1 = notIndexedSet_1.next()) {
@@ -320,12 +329,12 @@ var MvcCore;
                                         result.push(serverColumnCfg);
                                     }
                                 }
-                                catch (e_6_1) { e_6 = { error: e_6_1 }; }
+                                catch (e_7_1) { e_7 = { error: e_7_1 }; }
                                 finally {
                                     try {
-                                        if (notIndexedSet_1_1 && !notIndexedSet_1_1.done && (_c = notIndexedSet_1.return)) _c.call(notIndexedSet_1);
+                                        if (notIndexedSet_1_1 && !notIndexedSet_1_1.done && (_d = notIndexedSet_1.return)) _d.call(notIndexedSet_1);
                                     }
-                                    finally { if (e_6) throw e_6.error; }
+                                    finally { if (e_7) throw e_7.error; }
                                 }
                                 return result;
                             };
@@ -362,7 +371,7 @@ var MvcCore;
                                 return new Map(data);
                             };
                             Helpers.ConvertMap2Object = function (map) {
-                                var e_7, _a;
+                                var e_8, _a;
                                 var obj = {};
                                 try {
                                     for (var map_1 = __values(map), map_1_1 = map_1.next(); !map_1_1.done; map_1_1 = map_1.next()) {
@@ -370,12 +379,12 @@ var MvcCore;
                                         obj[key] = value;
                                     }
                                 }
-                                catch (e_7_1) { e_7 = { error: e_7_1 }; }
+                                catch (e_8_1) { e_8 = { error: e_8_1 }; }
                                 finally {
                                     try {
                                         if (map_1_1 && !map_1_1.done && (_a = map_1.return)) _a.call(map_1);
                                     }
-                                    finally { if (e_7) throw e_7.error; }
+                                    finally { if (e_8) throw e_8.error; }
                                 }
                                 return obj;
                             };

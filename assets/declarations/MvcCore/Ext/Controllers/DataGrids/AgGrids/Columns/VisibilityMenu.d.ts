@@ -8,6 +8,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
             BTN_APPLY_CLS: string;
             BTN_CANCEL_CLS: string;
             FORM_CLS: string;
+            FORM_SMALL_CLS: string;
             FORM_HIDDEN_CLS: string;
             FORM_HEAD_CLS: string;
             FORM_CTRLS_CLS: string;
@@ -23,6 +24,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
         protected elms: Interfaces.ColumnsMenus.IElements;
         protected displayed: boolean;
         protected formClick: boolean;
+        protected formBaseClasses: string[];
         protected handlers: {
             handleDocumentClick?: (e: MouseEvent) => void;
             handleFormClick?: (e: MouseEvent) => void;
@@ -32,7 +34,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
         Show(): this;
         RedrawControls(): this;
         ResizeControls(): this;
-        UpdateFormAction(): this;
+        UpdateFormAction(gridPath: string): this;
         protected removeShownEvents(): this;
         protected disableUsedColumns(): this;
         protected addShownEvents(): this;

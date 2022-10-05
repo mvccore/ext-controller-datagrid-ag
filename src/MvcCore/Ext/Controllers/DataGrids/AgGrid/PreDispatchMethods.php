@@ -79,27 +79,23 @@ trait PreDispatchMethods {
 		/** @var $activeColumns \MvcCore\Ext\Controllers\DataGrids\Configs\Column[] */
 		foreach ($activeColumns as $configColumn) {
 			$propertyName = $configColumn->GetPropName();
-			if (!isset($sourceCodeNamesMap[$propertyName])) {
-				$activeColumnsMap[$configColumn->GetPropName()] = [
-					FALSE, 
-					TRUE, 
-					$configColumn->GetTypes(), 
-					$propertyName, 
-					$configColumn->GetParserArgs(), 
-					$configColumn->GetFormatArgs()
-				];
-			} else {
+			$activeColumnsKey = $configColumn->GetDbColumnName();
+			if ($activeColumnsKey === NULL)
+				$activeColumnsKey = $propertyName;
+			$propIsPrivate = FALSE;
+			$propAllowNulls = TRUE;
+			if (isset($sourceCodeNamesMap[$propertyName])) {
 				$metaDataIndex = $sourceCodeNamesMap[$propertyName];
 				list($propIsPrivate, $propAllowNulls) = $metaData[$metaDataIndex];
-				$activeColumnsMap[$configColumn->GetDbColumnName()] = [
-					$propIsPrivate, 
-					$propAllowNulls, 
-					$configColumn->GetTypes(), 
-					$propertyName, 
-					$configColumn->GetParserArgs(), 
-					$configColumn->GetFormatArgs()
-				];
 			}
+			$activeColumnsMap[$activeColumnsKey] = [
+				$propIsPrivate, 
+				$propAllowNulls, 
+				$configColumn->GetTypes(), 
+				$propertyName, 
+				$configColumn->GetParserArgs(), 
+				$configColumn->GetFormatArgs()
+			];
 		};
 		$rowFullClassName::SetActiveColumns($activeColumnsMap);
 	}

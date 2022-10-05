@@ -173,7 +173,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 					$gridAssetsDir . "/custom-styles/sort-header.css",
 					$gridAssetsDir . "/custom-styles/filter-header.css",
 					$gridAssetsDir . "/custom-styles/filter-menu.css",
-					$gridAssetsDir . "/custom-styles/columns-menu.css",
+					$gridAssetsDir . "/custom-styles/visibility-menu.css",
 					$gridAssetsDir . "/custom-styles/{$agGridCustomStyle}.css",
 				],
 			],

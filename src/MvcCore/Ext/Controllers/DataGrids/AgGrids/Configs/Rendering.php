@@ -20,6 +20,7 @@ extends		\MvcCore\Ext\Controllers\DataGrids\Configs\Rendering
 implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	
 	/**
+	 * AgGrid theme name.
 	 * @var string|NULL
 	 * @jsonSerialize
 	 */
@@ -27,6 +28,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	protected $theme = self::THEME_FRESH;
 	
 	/**
+	 * Custom handler to assign all AgGrid assets response output.
 	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL
 	 */
 	protected $handlerAssets = NULL;
@@ -47,6 +49,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 
 	
 	/**
+	 * Set AgGrid theme name.
 	 * @param  string $theme
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -56,6 +59,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
+	 * Get AgGrid theme name.
 	 * @return string|NULL
 	 */
 	public function GetTheme () {
@@ -63,6 +67,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 	
 	/**
+	 * Set custom handler to assign all AgGrid assets response output.
 	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL $handlerAssets 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -72,6 +77,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
+	 * Get custom handler to assign all AgGrid assets response output.
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL
 	 */
 	public function GetHandlerAssets () {
@@ -79,6 +85,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 	
 	/**
+	 * Set table head filtering html title attribute.
 	 * @param  string|NULL $tableHeadFilteringTitle
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -88,6 +95,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
+	 * Get table head filtering html title attribute.
 	 * @return string|NULL
 	 */
 	public function GetTableHeadFilteringTitle () {
@@ -95,8 +103,6 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	
-
-
 	/**
 	 * @inheritDocs
 	 * @throws \Exception

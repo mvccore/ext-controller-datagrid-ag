@@ -25,7 +25,7 @@ trait ConfigProps {
 	 * and to identificate grid element on current page.
 	 * @var string|NULL
 	 */
-	protected $id = NULL;
+	protected $id							= NULL;
 
 	/**
 	 * Configuration object for datagrid parts, style and controls rendering.
@@ -34,13 +34,13 @@ trait ConfigProps {
 	 * This object is created automatically by default if not provided.
 	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering|NULL
 	 */
-	protected $configRendering = NULL;
+	protected $configRendering				= NULL;
 
 	/**
 	 * Localization properties configuration object.
 	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales|NULL
 	 */
-	protected $configLocales = NULL;
+	protected $configLocales				= NULL;
 
 
 	/**
@@ -48,32 +48,32 @@ trait ConfigProps {
 	 * `MvcCore.Ext.Controllers.DataGrids.AgGrid`.
 	 * @var string
 	 */
-	protected $jsClassFullName = 'MvcCore.Ext.Controllers.DataGrids.AgGrid';
+	protected $jsClassFullName				= 'MvcCore.Ext.Controllers.DataGrids.AgGrid';
 	
 	/**
 	 * `TRUE` to serialize into JSON rows data only enabled columns only,
 	 * `FALSE` to serialize all columns including disabled. `TRUE` by default.
 	 * @var bool
 	 */
-	protected $enabledColumnsOnly = TRUE;
+	protected $enabledColumnsOnly			= TRUE;
 
 	/**
 	 * Grid row selection mode flags.
 	 * @var int
 	 */
-	protected $rowSelection = IConstants::ROW_SELECTION_NONE;
+	protected $rowSelection					= IConstants::ROW_SELECTION_NONE;
 
 	/**
 	 * User time zone offset.
 	 * @var \DateInterval|NULL
 	 */
-	protected $timeZoneOffset = NULL;
+	protected $timeZoneOffset				= NULL;
 
 	/**
 	 * `TRUE` to cache data in client browser.
 	 * @var bool
 	 */
-	protected $clientCache = TRUE;
+	protected $clientCache					= TRUE;
 	
 	/**
 	 * Client page mode:
@@ -83,14 +83,14 @@ trait ConfigProps {
 	 *   Client side rendered with continuous data loading by user scrolling.
 	 * @var int|NULL
 	 */
-	protected $clientPageMode = NULL;
+	protected $clientPageMode				= NULL;
 	
 	/**
 	 * How many rows for each block in the store, i.e. how many 
 	 * rows returned from the server at a time. Default: 100.
 	 * @var int|NULL
 	 */
-	protected $clientRequestBlockSize = NULL;
+	protected $clientRequestBlockSize		= NULL;
 	
 	/**
 	 * AgGrid configuration property. The number of rows rendered 
@@ -99,62 +99,62 @@ trait ConfigProps {
 	 * slowly scrolls vertically. Default: 10.
 	 * @var int|NULL
 	 */
-	protected $clientRowBuffer = NULL;
+	protected $clientRowBuffer				= NULL;
 	
 	/**
 	 * Maximum number of rows in client browser cache.
 	 * @var int|NULL
 	 */
-	protected $clientMaxRowsInCache = NULL;
+	protected $clientMaxRowsInCache			= NULL;
 	
 	/**
 	 * `TRUE` to change client browser URL for each 
 	 * page change, sort change or filter change.
 	 * @var bool
 	 */
-	protected $clientChangeHistory = TRUE;
+	protected $clientChangeHistory			= TRUE;
 	
 	/**
 	 * Client document title template.
 	 * @var string|NULL
 	 */
-	protected $clientTitleTemplate = FALSE;
+	protected $clientTitleTemplate			= FALSE;
 	
 	/**
 	 * Custom AJAX request method to load grid rows data.
 	 * @var int
 	 */
-	protected $dataRequestMethod = IConstants::AJAX_DATA_REQUEST_METHOD_GET;
+	protected $dataRequestMethod			= IConstants::AJAX_DATA_REQUEST_METHOD_GET;
 
 	/**
 	 * Custom URL to load grid rows data by AJAX.
 	 * @var string|NULL
 	 */
-	protected $urlData = NULL;
+	protected $urlData						= NULL;
 	
 	/**
 	 * Custom URL to submit client columns enabled/disabled states.
 	 * @var string|NULL
 	 */
-	protected $urlColumnsStates = NULL;
+	protected $urlColumnsStates				= NULL;
 	
 	/**
 	 * Custom URL to send client columns order changes by AJAX.
 	 * @var string|NULL
 	 */
-	protected $urlColumnsChanges = NULL;
+	protected $urlColumnsChanges			= NULL;
 
 	/**
 	 * Custom handler to read user column configurations from any place.
 	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsRead|callable
 	 */
-	protected $handlerColumnsRead = NULL;
+	protected $handlerColumnsRead			= NULL;
 
 	/**
 	 * Custom handler to write user column configurations into any place.
 	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsWrite|callable
 	 */
-	protected $handlerColumnsWrite = NULL;
+	protected $handlerColumnsWrite			= NULL;
 	
 	/**
 	 * Ajax params for dataset offset, limit, sorting and filtering.

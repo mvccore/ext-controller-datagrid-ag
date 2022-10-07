@@ -1,5 +1,6 @@
 declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
     class ViewHelper {
+        static BOOL_FALSE_VALUES: Set<any>;
         Static: typeof ViewHelper;
         protected static defaults: Map<Enums.ServerType, Types.ViewHelper>;
         protected grid: AgGrid;

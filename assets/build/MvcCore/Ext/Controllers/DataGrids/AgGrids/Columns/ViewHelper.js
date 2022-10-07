@@ -132,7 +132,8 @@ var MvcCore;
                                 return this.formattersMoney.get(formatterKey);
                             };
                             ViewHelper.prototype.formatBool = function (params, propName, parserArgs, formatArgs) {
-                                return this.translator.Translate(params.data[propName] ? 'yes' : 'no');
+                                var boolFalse = this.Static.BOOL_FALSE_VALUES.has(params.data[propName]);
+                                return this.translator.Translate(boolFalse ? 'no' : 'yes');
                             };
                             ViewHelper.prototype.formatInt = function (params, propName, parserArgs, formatArgs) {
                                 var formatterKey = formatArgs == null ? 'default' : formatArgs.join('|');
@@ -173,6 +174,9 @@ var MvcCore;
                                     formatArgs = this.localesConfig.formatArgsTime;
                                 return dateTime.format(formatArgs[0]);
                             };
+                            ViewHelper.BOOL_FALSE_VALUES = new Set([
+                                '0', 0, false, 'false', 'False', 'FALSE', 'n', 'N', 'no', 'No', 'NO'
+                            ]);
                             return ViewHelper;
                         }());
                         Columns.ViewHelper = ViewHelper;

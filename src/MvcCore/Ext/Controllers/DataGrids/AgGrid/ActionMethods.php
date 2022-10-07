@@ -28,6 +28,15 @@ trait ActionMethods {
 	 * @return void
 	 */
 	public function ActionDefault () {
+		$this->writeChangedColumnsConfigsExecute();
+		$this->initDevClientRowModelDefinition();
+	}
+
+	/**
+	 * Write changed columns configs if necessary.
+	 * @return void
+	 */
+	protected function writeChangedColumnsConfigsExecute () {
 		if (!$this->writeChangedColumnsConfigs) return;
 		$persistentColumns = [];
 		foreach ($this->GetConfigColumns(FALSE) as $configColumn) {

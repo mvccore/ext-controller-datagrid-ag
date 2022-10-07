@@ -16,11 +16,12 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrids;
 interface IHandlerColumnsWrite {
 	
 	/**
+	 * Custom handler to write user column configurations into any place.
 	 * @param  string   $idGrid 
 	 * @param  int|NULL $idUser 
 	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns $persistentColumns 
 	 * @return void
 	 */
-	public function __invoike ($idGrid, $idUser, \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns $persistentColumns);
+	public function __invoke ($idGrid, $idUser, \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns $persistentColumns);
 
 }

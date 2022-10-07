@@ -16,10 +16,11 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrids;
 interface IHandlerColumnsRead {
 	
 	/**
+	 * Custom handler to read user column configurations from any place.
 	 * @param  string   $idGrid 
 	 * @param  int|NULL $idUser 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns
 	 */
-	public function __invoike ($idGrid, $idUser);
+	public function __invoke ($idGrid, $idUser);
 
 }

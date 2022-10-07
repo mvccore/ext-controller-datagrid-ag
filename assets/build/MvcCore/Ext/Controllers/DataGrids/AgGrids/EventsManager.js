@@ -1,3 +1,16 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -35,20 +48,18 @@ var MvcCore;
             (function (DataGrids) {
                 var AgGrids;
                 (function (AgGrids) {
-                    var EventsManager = /** @class */ (function () {
+                    var EventsManager = /** @class */ (function (_super) {
+                        __extends(EventsManager, _super);
                         function EventsManager(grid) {
                             var e_1, _a, e_2, _b;
-                            var _newTarget = this.constructor;
-                            this.onLoadSelectionIndex = null;
-                            this.onLoadSelectionCallback = null;
-                            this.Static = _newTarget;
-                            this.grid = grid;
+                            var _this = this;
                             var serverConfig = grid.GetServerConfig();
-                            this.multiSorting = ((serverConfig.sortingMode & AgGrids.Enums.SortingMode.SORT_MULTIPLE_COLUMNS) != 0);
-                            this.multiFiltering = ((serverConfig.filteringMode & AgGrids.Enums.FilteringMode.MULTIPLE_COLUMNS) != 0);
-                            this.helpers = grid.GetHelpers();
-                            this.defaultAllowedOperators = this.helpers.GetAllowedOperators(serverConfig.filteringMode);
-                            this.columnsAllowedOperators = new Map();
+                            _this = _super.call(this, grid, serverConfig) || this;
+                            _this.multiSorting = ((serverConfig.sortingMode & AgGrids.Enums.SortingMode.SORT_MULTIPLE_COLUMNS) != 0);
+                            _this.multiFiltering = ((serverConfig.filteringMode & AgGrids.Enums.FilteringMode.MULTIPLE_COLUMNS) != 0);
+                            _this.helpers = grid.GetHelpers();
+                            _this.defaultAllowedOperators = _this.helpers.GetAllowedOperators(serverConfig.filteringMode);
+                            _this.columnsAllowedOperators = new Map();
                             var columnConfig, columnFilterCfg;
                             try {
                                 for (var _c = __values(Object.keys(serverConfig.columns)), _d = _c.next(); !_d.done; _d = _c.next()) {
@@ -56,7 +67,7 @@ var MvcCore;
                                     columnConfig = serverConfig.columns[columnId];
                                     columnFilterCfg = columnConfig.filter;
                                     if (typeof (columnFilterCfg) === 'number' && columnFilterCfg !== 0)
-                                        this.columnsAllowedOperators.set(columnId, this.helpers.GetAllowedOperators(columnFilterCfg));
+                                        _this.columnsAllowedOperators.set(columnId, _this.helpers.GetAllowedOperators(columnFilterCfg));
                                 }
                             }
                             catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -67,16 +78,16 @@ var MvcCore;
                                 finally { if (e_1) throw e_1.error; }
                             }
                             var likeOperatorsArrFilter = new Set([AgGrids.Enums.Operator.LIKE, AgGrids.Enums.Operator.NOT_LIKE]);
-                            this.likeOperatorsAndPrefixes = new Map();
-                            this.notLikeOperatorsAndPrefixes = new Map();
+                            _this.likeOperatorsAndPrefixes = new Map();
+                            _this.notLikeOperatorsAndPrefixes = new Map();
                             try {
                                 for (var _e = __values(serverConfig.filterOperatorPrefixes.entries()), _f = _e.next(); !_f.done; _f = _e.next()) {
                                     var _g = __read(_f.value, 2), operator = _g[0], prefix = _g[1];
                                     if (likeOperatorsArrFilter.has(operator)) {
-                                        this.likeOperatorsAndPrefixes.set(operator, prefix);
+                                        _this.likeOperatorsAndPrefixes.set(operator, prefix);
                                     }
                                     else {
-                                        this.notLikeOperatorsAndPrefixes.set(operator, prefix);
+                                        _this.notLikeOperatorsAndPrefixes.set(operator, prefix);
                                     }
                                 }
                             }
@@ -87,80 +98,11 @@ var MvcCore;
                                 }
                                 finally { if (e_2) throw e_2.error; }
                             }
-                            this.handlers = new Map();
-                            this.columnsChanges = new Map();
-                            this.columnsChangesSending = false;
-                            this.autoSelectFirstRow = ((serverConfig.rowSelection & AgGrids.Enums.RowSelection.ROW_SELECTION_AUTOSELECT_FIRST) != 0);
+                            _this.handlers = new Map();
+                            _this.columnsChanges = new Map();
+                            _this.columnsChangesSending = false;
+                            return _this;
                         }
-                        EventsManager.prototype.SetAutoSelectFirstRow = function (autoSelectFirstRow) {
-                            this.autoSelectFirstRow = autoSelectFirstRow;
-                            return this;
-                        };
-                        EventsManager.prototype.GetAutoSelectFirstRow = function () {
-                            return this.autoSelectFirstRow;
-                        };
-                        EventsManager.prototype.SetOnLoadSelectionIndex = function (rowIndexToSelectAfterLoad, onLoadSelectionCallback) {
-                            if (onLoadSelectionCallback === void 0) { onLoadSelectionCallback = null; }
-                            this.onLoadSelectionIndex = rowIndexToSelectAfterLoad;
-                            this.onLoadSelectionCallback = onLoadSelectionCallback;
-                            return this;
-                        };
-                        EventsManager.prototype.AddEventListener = function (eventName, handler) {
-                            var handlers = this.handlers.has(eventName)
-                                ? this.handlers.get(eventName)
-                                : [];
-                            handlers.push(handler);
-                            this.handlers.set(eventName, handlers);
-                            return this;
-                        };
-                        EventsManager.prototype.RemoveEventListener = function (eventName, handler) {
-                            var e_3, _a;
-                            var handlers = this.handlers.has(eventName)
-                                ? this.handlers.get(eventName)
-                                : [];
-                            var newHandlers = [];
-                            try {
-                                for (var handlers_1 = __values(handlers), handlers_1_1 = handlers_1.next(); !handlers_1_1.done; handlers_1_1 = handlers_1.next()) {
-                                    var handlersItem = handlers_1_1.value;
-                                    if (handlersItem !== handler)
-                                        newHandlers.push(handlersItem);
-                                }
-                            }
-                            catch (e_3_1) { e_3 = { error: e_3_1 }; }
-                            finally {
-                                try {
-                                    if (handlers_1_1 && !handlers_1_1.done && (_a = handlers_1.return)) _a.call(handlers_1);
-                                }
-                                finally { if (e_3) throw e_3.error; }
-                            }
-                            this.handlers.set(eventName, newHandlers);
-                            return this;
-                        };
-                        EventsManager.prototype.FireHandlers = function (eventName, event) {
-                            var e_4, _a;
-                            if (!this.handlers.has(eventName))
-                                return this;
-                            var handlers = this.handlers.get(eventName);
-                            event.grid = this.grid;
-                            event.eventName = eventName;
-                            try {
-                                for (var handlers_2 = __values(handlers), handlers_2_1 = handlers_2.next(); !handlers_2_1.done; handlers_2_1 = handlers_2.next()) {
-                                    var handler = handlers_2_1.value;
-                                    try {
-                                        handler(event);
-                                    }
-                                    catch (e) { }
-                                }
-                            }
-                            catch (e_4_1) { e_4 = { error: e_4_1 }; }
-                            finally {
-                                try {
-                                    if (handlers_2_1 && !handlers_2_1.done && (_a = handlers_2.return)) _a.call(handlers_2);
-                                }
-                                finally { if (e_4) throw e_4.error; }
-                            }
-                            return this;
-                        };
                         EventsManager.prototype.HandleModelUpdated = function (params) {
                             //console.log("onModelUpdated", this.onLoadSelectionIndex)
                             if (this.onLoadSelectionIndex != null) {
@@ -223,7 +165,6 @@ var MvcCore;
                             if (this.columnsChangesTimeout)
                                 clearTimeout(this.columnsChangesTimeout);
                             var columnId = event.column.getColId(), columnConfig = this.grid.GetServerConfig().columns[columnId], columnsManager = this.grid.GetOptionsManager().GetColumnManager(), activeColumnsSorted = columnsManager.GetServerColumnsSortedActive(), allColumnsSorted = columnsManager.GetServerColumnsUserSortedAll(), activeIndexOld = columnConfig.columnIndexActive, activeIndexNex = event.toIndex, allIndexOld = columnConfig.columnIndexUser, allIndexNew = allColumnsSorted[activeIndexNex].columnIndexUser;
-                            // přehodit reálné all indexy
                             var _a = __read(allColumnsSorted.splice(allIndexOld, 1), 1), allColumnCfg = _a[0];
                             allColumnsSorted.splice(allIndexNew, 0, allColumnCfg);
                             var _b = __read(activeColumnsSorted.splice(activeIndexOld, 1), 1), activeColumnCfg = _b[0];
@@ -246,28 +187,6 @@ var MvcCore;
                             columnsManager.SetServerColumnsSortedActive(activeColumnsSorted);
                             columnsManager.SetServerColumnsSortedAll(allColumnsSorted);
                             this.grid.GetColumnsVisibilityMenu().RedrawControls();
-                            this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
-                        };
-                        EventsManager.prototype.handleColumnChangesSent = function () {
-                            if (this.columnsChangesSending)
-                                return;
-                            var plainObj = AgGrids.Tools.Helpers.ConvertMap2Object(this.columnsChanges);
-                            this.columnsChanges = new Map();
-                            Ajax.load({
-                                url: this.grid.GetServerConfig().urlColumnsChanges,
-                                data: { changes: plainObj },
-                                type: 'json',
-                                method: 'POST',
-                                success: this.handleColumnChangesResponse.bind(this),
-                                error: this.handleColumnChangesResponse.bind(this)
-                            });
-                        };
-                        EventsManager.prototype.handleColumnChangesResponse = function () {
-                            this.columnsChangesSending = false;
-                            if (this.columnsChanges.size === 0)
-                                return;
-                            if (this.columnsChangesTimeout)
-                                clearTimeout(this.columnsChangesTimeout);
                             this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
                         };
                         EventsManager.prototype.HandleFilterMenuChange = function (columnId, filteringItem, clearAllOther) {
@@ -293,7 +212,7 @@ var MvcCore;
                             this.firefiltering(filtering);
                         };
                         EventsManager.prototype.HandleFilterHeaderChange = function (columnId, rawInputValue, clearAllOther) {
-                            var e_5, _a, _b;
+                            var e_3, _a, _b;
                             if (clearAllOther === void 0) { clearAllOther = false; }
                             var rawInputIsNull = rawInputValue == null, rawInputValue = rawInputIsNull ? '' : rawInputValue.trim(), filterRemoving = rawInputValue === '', serverConfig = this.grid.GetServerConfig(), valuesDelimiter = serverConfig.urlSegments.urlDelimiterValues, rawValues = filterRemoving ? [] : rawInputValue.split(valuesDelimiter), serverColumnCfg = serverConfig.columns[columnId], columnFilterCfg = serverColumnCfg.filter, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = columnFilterCfg === columnFilterCfgInt, allowedOperators = (columnFilterCfgIsInt && this.columnsAllowedOperators.has(columnId)
                                 ? this.columnsAllowedOperators.get(columnId)
@@ -307,7 +226,7 @@ var MvcCore;
                                         // complete possible operator prefixes from submitted value
                                         operatorsAndPrefixes = this.getOperatorsAndPrefixesByRawValue(rawValue);
                                         // complete operator value from submitted value
-                                        _b = __read(this.getOperatorByRawValue(rawValue, operatorsAndPrefixes, columnFilterCfg), 2), rawValue = _b[0], operator = _b[1];
+                                        _b = __read(this.Static.getOperatorByRawValue(rawValue, operatorsAndPrefixes, columnFilterCfg), 2), rawValue = _b[0], operator = _b[1];
                                         // check if operator is allowed
                                         if (operator == null || !allowedOperators.has(operator))
                                             continue;
@@ -335,12 +254,12 @@ var MvcCore;
                                             filterValues.set(operator, [filterOperatorValues[0]]);
                                     }
                                 }
-                                catch (e_5_1) { e_5 = { error: e_5_1 }; }
+                                catch (e_3_1) { e_3 = { error: e_3_1 }; }
                                 finally {
                                     try {
                                         if (rawValues_1_1 && !rawValues_1_1.done && (_a = rawValues_1.return)) _a.call(rawValues_1);
                                     }
-                                    finally { if (e_5) throw e_5.error; }
+                                    finally { if (e_3) throw e_3.error; }
                                 }
                                 if (filterValues.size === 0) {
                                     filterRemoving = true;
@@ -369,29 +288,8 @@ var MvcCore;
                             }
                             this.firefiltering(filtering);
                         };
-                        EventsManager.prototype.firefiltering = function (filtering) {
-                            this.grid
-                                .SetOffset(0)
-                                .SetFiltering(filtering)
-                                .SetTotalCount(null);
-                            var pageMode = this.grid.GetPageMode();
-                            if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
-                                var dataSource = this.grid.GetDataSource();
-                                dataSource.SetBodyScrolled(false);
-                                var gridOptionsManager = this.grid.GetOptionsManager().GetAgOptions();
-                                gridOptionsManager.api.onFilterChanged();
-                            }
-                            else if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
-                                var dataSourceMp = this.grid.GetDataSource();
-                                dataSourceMp.Load();
-                            }
-                            this.FireHandlers("filterChange", {
-                                filtering: filtering
-                            });
-                            return this;
-                        };
                         EventsManager.prototype.HandleSortChange = function (columnId, direction) {
-                            var e_6, _a;
+                            var e_4, _a;
                             var sortRemoving = direction == null, sortHeaders = this.grid.GetSortHeaders(), newSorting = [], 
                             //agColumnsState: agGrid.ColumnState[] = [],
                             oldSorting = [];
@@ -411,12 +309,12 @@ var MvcCore;
                                     newSorting.push([sortColId, sortDir]);
                                 }
                             }
-                            catch (e_6_1) { e_6 = { error: e_6_1 }; }
+                            catch (e_4_1) { e_4 = { error: e_4_1 }; }
                             finally {
                                 try {
                                     if (oldSorting_1_1 && !oldSorting_1_1.done && (_a = oldSorting_1.return)) _a.call(oldSorting_1);
                                 }
-                                finally { if (e_6) throw e_6.error; }
+                                finally { if (e_4) throw e_4.error; }
                             }
                             for (var i = 0, sortColId = '', l = newSorting.length; i < l; i++) {
                                 var _c = __read(newSorting[i], 2), sortColId = _c[0], sortDir = _c[1];
@@ -544,7 +442,7 @@ var MvcCore;
                             }
                         };
                         EventsManager.prototype.HandleResponseLoaded = function (response, selectFirstRow) {
-                            var e_7, _a, e_8, _b, e_9, _c;
+                            var e_5, _a, e_6, _b, e_7, _c;
                             if (selectFirstRow === void 0) { selectFirstRow = false; }
                             this.grid
                                 .SetGridPath(response.path)
@@ -563,12 +461,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_7_1) { e_7 = { error: e_7_1 }; }
+                            catch (e_5_1) { e_5 = { error: e_5_1 }; }
                             finally {
                                 try {
                                     if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
                                 }
-                                finally { if (e_7) throw e_7.error; }
+                                finally { if (e_5) throw e_5.error; }
                             }
                             try {
                                 for (var _g = __values(this.grid.GetFilterMenus().entries()), _h = _g.next(); !_h.done; _h = _g.next()) {
@@ -581,12 +479,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_8_1) { e_8 = { error: e_8_1 }; }
+                            catch (e_6_1) { e_6 = { error: e_6_1 }; }
                             finally {
                                 try {
                                     if (_h && !_h.done && (_b = _g.return)) _b.call(_g);
                                 }
-                                finally { if (e_8) throw e_8.error; }
+                                finally { if (e_6) throw e_6.error; }
                             }
                             var sortHeaders = this.grid.GetSortHeaders(), index = 0;
                             try {
@@ -600,18 +498,61 @@ var MvcCore;
                                     index++;
                                 }
                             }
-                            catch (e_9_1) { e_9 = { error: e_9_1 }; }
+                            catch (e_7_1) { e_7 = { error: e_7_1 }; }
                             finally {
                                 try {
                                     if (_l && !_l.done && (_c = _k.return)) _c.call(_k);
                                 }
-                                finally { if (e_9) throw e_9.error; }
+                                finally { if (e_7) throw e_7.error; }
                             }
                             if (selectFirstRow)
                                 this.SelectRowByIndex(0);
                         };
+                        EventsManager.prototype.firefiltering = function (filtering) {
+                            this.grid
+                                .SetOffset(0)
+                                .SetFiltering(filtering)
+                                .SetTotalCount(null);
+                            var pageMode = this.grid.GetPageMode();
+                            if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
+                                var dataSource = this.grid.GetDataSource();
+                                dataSource.SetBodyScrolled(false);
+                                var gridOptionsManager = this.grid.GetOptionsManager().GetAgOptions();
+                                gridOptionsManager.api.onFilterChanged();
+                            }
+                            else if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_MULTI) != 0) {
+                                var dataSourceMp = this.grid.GetDataSource();
+                                dataSourceMp.Load();
+                            }
+                            this.FireHandlers("filterChange", {
+                                filtering: filtering
+                            });
+                            return this;
+                        };
+                        EventsManager.prototype.handleColumnChangesSent = function () {
+                            if (this.columnsChangesSending)
+                                return;
+                            var plainObj = AgGrids.Tools.Helpers.ConvertMap2Object(this.columnsChanges);
+                            this.columnsChanges = new Map();
+                            Ajax.load({
+                                url: this.grid.GetServerConfig().urlColumnsChanges,
+                                data: { changes: plainObj },
+                                type: 'json',
+                                method: 'POST',
+                                success: this.handleColumnChangesResponse.bind(this),
+                                error: this.handleColumnChangesResponse.bind(this)
+                            });
+                        };
+                        EventsManager.prototype.handleColumnChangesResponse = function () {
+                            this.columnsChangesSending = false;
+                            if (this.columnsChanges.size === 0)
+                                return;
+                            if (this.columnsChangesTimeout)
+                                clearTimeout(this.columnsChangesTimeout);
+                            this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
+                        };
                         EventsManager.prototype.handleUrlChangeSortsFilters = function (reqData) {
-                            var e_10, _a, e_11, _b, e_12, _c;
+                            var e_8, _a, e_9, _b, e_10, _c;
                             // set up sort headers:
                             var sortHeaders = this.grid.GetSortHeaders(), activeSortItems = new Map(), sequence = 0;
                             try {
@@ -620,12 +561,12 @@ var MvcCore;
                                     activeSortItems.set(columnId, [sortDir, sequence++]);
                                 }
                             }
-                            catch (e_10_1) { e_10 = { error: e_10_1 }; }
+                            catch (e_8_1) { e_8 = { error: e_8_1 }; }
                             finally {
                                 try {
                                     if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
                                 }
-                                finally { if (e_10) throw e_10.error; }
+                                finally { if (e_8) throw e_8.error; }
                             }
                             try {
                                 for (var _g = __values(sortHeaders.entries()), _h = _g.next(); !_h.done; _h = _g.next()) {
@@ -639,12 +580,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_11_1) { e_11 = { error: e_11_1 }; }
+                            catch (e_9_1) { e_9 = { error: e_9_1 }; }
                             finally {
                                 try {
                                     if (_h && !_h.done && (_b = _g.return)) _b.call(_g);
                                 }
-                                finally { if (e_11) throw e_11.error; }
+                                finally { if (e_9) throw e_9.error; }
                             }
                             // set up filtering inputs:
                             var filterInputs = this.grid.GetFilterHeaders();
@@ -659,12 +600,12 @@ var MvcCore;
                                     }
                                 }
                             }
-                            catch (e_12_1) { e_12 = { error: e_12_1 }; }
+                            catch (e_10_1) { e_10 = { error: e_10_1 }; }
                             finally {
                                 try {
                                     if (_m && !_m.done && (_c = _l.return)) _c.call(_l);
                                 }
-                                finally { if (e_12) throw e_12.error; }
+                                finally { if (e_10) throw e_10.error; }
                             }
                             return this;
                         };
@@ -683,47 +624,8 @@ var MvcCore;
                             }
                             return operatorsAndPrefixes;
                         };
-                        EventsManager.prototype.getOperatorByRawValue = function (rawValue, operatorsAndPrefixes, columnFilterCfg) {
-                            var e_13, _a;
-                            var operator = null, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = columnFilterCfg === columnFilterCfgInt, columnFilterCfgIsBool = !columnFilterCfgIsInt;
-                            try {
-                                for (var _b = __values(operatorsAndPrefixes.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-                                    var _d = __read(_c.value, 2), operatorKey = _d[0], valuePrefix = _d[1];
-                                    var valuePrefixLen = valuePrefix.length;
-                                    if (valuePrefixLen > 0) {
-                                        var valuePrefixChars = rawValue.substring(0, valuePrefixLen);
-                                        if (valuePrefixChars === valuePrefix) {
-                                            operator = operatorKey;
-                                            rawValue = rawValue.substring(valuePrefixLen);
-                                            break;
-                                        }
-                                    }
-                                    else {
-                                        if ((columnFilterCfgIsBool && columnFilterCfg) ||
-                                            (columnFilterCfgIsInt && columnFilterCfgInt & AgGrids.Enums.FilteringMode.ALLOW_EQUALS) != 0) {
-                                            operator = operatorKey;
-                                        }
-                                        else if ((columnFilterCfgInt & AgGrids.Enums.FilteringMode.ALLOW_LIKE_ANYWHERE) != 0 ||
-                                            (columnFilterCfgInt & AgGrids.Enums.FilteringMode.ALLOW_LIKE_RIGHT_SIDE) != 0 ||
-                                            (columnFilterCfgInt & AgGrids.Enums.FilteringMode.ALLOW_LIKE_LEFT_SIDE) != 0) {
-                                            operator = AgGrids.Enums.Operator.LIKE;
-                                        }
-                                        break;
-                                    }
-                                }
-                            }
-                            catch (e_13_1) { e_13 = { error: e_13_1 }; }
-                            finally {
-                                try {
-                                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-                                }
-                                finally { if (e_13) throw e_13.error; }
-                            }
-                            return [rawValue, operator];
-                        };
-                        EventsManager.COLUMN_CHANGES_TIMEOUT = 500;
                         return EventsManager;
-                    }());
+                    }(AgGrids.EventsManagers.Base));
                     AgGrids.EventsManager = EventsManager;
                 })(AgGrids = DataGrids.AgGrids || (DataGrids.AgGrids = {}));
             })(DataGrids = Controllers.DataGrids || (Controllers.DataGrids = {}));

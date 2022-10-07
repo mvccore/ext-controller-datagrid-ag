@@ -16,12 +16,12 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrids;
 interface IHandlerAssets {
 	
 	/**
-	 * 
-	 * @param  array $jsPaths 
-	 * @param  array $cssPaths 
+	 * Custom handler to assign all AgGrid assets response output.
+	 * @param  array|\string[]      $jsPaths 
+	 * @param  array|\string[]      $cssPaths 
 	 * @param  \MvcCore\IController $parentController 
 	 * @return void
 	 */
-	public function __invoike ($jsPaths, $cssPaths, $parentController);
+	public function __invoke ($jsPaths, $cssPaths, $parentController);
 
 }

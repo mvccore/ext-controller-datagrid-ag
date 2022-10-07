@@ -70,7 +70,10 @@ trait PreDispatchMethods {
 		$rowFullClassName = $this->GetRowClass();
 		$rowClassPropsFlags = $this->rowClassPropsFlags !== 0
 			? $this->rowClassPropsFlags
-			: $rowFullClassName::GetDefaultPropsFlags();
+			: ($this->rowClassIsExtendedModel
+				? $rowFullClassName::GetDefaultPropsFlags()
+				: \MvcCore\IModel::PROPS_INHERIT_PROTECTED
+			);
 		$activeColumns = $this->GetConfigColumns($this->GetEnabledColumnsOnly());
 		list ($metaData, $sourceCodeNamesMap) = $rowFullClassName::GetMetaData(
 			$rowClassPropsFlags, [\MvcCore\Ext\Models\Db\Model\IConstants::METADATA_BY_CODE]

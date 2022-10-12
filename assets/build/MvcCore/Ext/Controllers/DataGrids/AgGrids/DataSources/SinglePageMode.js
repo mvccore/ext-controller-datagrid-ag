@@ -52,7 +52,7 @@ var MvcCore;
                                 _this.requestCounter = 0;
                                 _this.initLocationHref = location.href;
                                 _this.initPageReqDataAndCache();
-                                _this.browserHistoryReplace(_this.pageReqData, location.href, _this.initialData.page, _this.initialData.count);
+                                _this.BrowserHistoryReplace(_this.pageReqData, location.href, _this.initialData.page, _this.initialData.count);
                                 //this.pageReqData = null;
                                 _this.changeUrlSwitches = new Map();
                                 return _this;
@@ -127,7 +127,7 @@ var MvcCore;
                                     }
                                     else {
                                         //console.log("pushState init data", reqData);
-                                        this.browserHistoryPush(reqData, this.initLocationHref, this.initialData.page, this.initialData.count);
+                                        this.BrowserHistoryPush(reqData, this.initLocationHref, this.initialData.page, this.initialData.count);
                                     }
                                     if (this.autoSelectFirstRow)
                                         this.grid.GetEvents().SelectRowByIndex(0);
@@ -194,7 +194,7 @@ var MvcCore;
                                         else {
                                             if (_this.pageLoadedState > 3) {
                                                 reqData.path = response.path;
-                                                _this.browserHistoryPush(reqData, response.url, response.page, response.count);
+                                                _this.BrowserHistoryPush(reqData, response.url, response.page, response.count);
                                                 _this.grid.GetColumnsVisibilityMenu().UpdateFormAction(response.path);
                                             }
                                         }

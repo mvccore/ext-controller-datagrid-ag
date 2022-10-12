@@ -1,14 +1,3 @@
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -24,6 +13,17 @@ var __read = (this && this.__read) || function (o, n) {
         finally { if (e) throw e.error; }
     }
     return ar;
+};
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 var MvcCore;
 (function (MvcCore) {
@@ -182,18 +182,25 @@ var MvcCore;
                             };
                             FilterMenu.prototype.handleApply = function (e) {
                                 this.stopEvent(e);
-                                var filtering = this.getFilteringFromControls();
-                                this.grid.GetEvents().HandleFilterMenuChange(this.columnId, filtering);
+                                var eventsManager = this.grid.GetEvents(), filteringBefore = this.grid.GetFiltering(), newFilteringItem = this.getFilteringFromControls(), _a = __read(eventsManager.GetNewFilteringByMenu(this.columnId, newFilteringItem), 2), filterRemoving = _a[0], filteringAfter = _a[1];
+                                var continueToNextEvent = eventsManager.FireHandlers("beforeFilterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
+                                if (continueToNextEvent === false)
+                                    return;
+                                eventsManager.HandleFilterMenuChange(this.columnId, filterRemoving, filteringBefore, filteringAfter);
                                 this.hide();
                             };
                             FilterMenu.prototype.handleClear = function (e) {
                                 this.stopEvent(e);
+                                var eventsManager = this.grid.GetEvents(), filteringBefore = this.grid.GetFiltering(), _a = __read(eventsManager.GetNewFilteringByMenu(this.columnId, null), 2), filterRemoving = _a[0], filteringAfter = _a[1];
+                                var continueToNextEvent = eventsManager.FireHandlers("beforeFilterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
+                                if (continueToNextEvent === false)
+                                    return;
                                 this.filteringStr = '';
                                 this.latestFiltering = null;
                                 this
                                     .destroySections()
                                     .createSections(null);
-                                this.grid.GetEvents().HandleFilterMenuChange(this.columnId, null);
+                                eventsManager.HandleFilterMenuChange(this.columnId, filterRemoving, filteringBefore, filteringAfter);
                                 this.hide();
                             };
                             FilterMenu.prototype.handleCancel = function (e) {

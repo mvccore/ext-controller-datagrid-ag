@@ -45,7 +45,7 @@ var MvcCore;
                                 var _this = _super.call(this, grid) || this;
                                 _this.eventsManager = grid.GetEvents();
                                 _this.initPageReqDataAndCache();
-                                _this.browserHistoryReplace(_this.pageReqData, location.href, _this.initialData.page, _this.initialData.count);
+                                _this.BrowserHistoryReplace(_this.pageReqData, location.href, _this.initialData.page, _this.initialData.count);
                                 _this.pageReqData = null;
                                 return _this;
                             }
@@ -117,7 +117,7 @@ var MvcCore;
                                 }
                                 if (changeUrl) {
                                     reqData.path = response.path;
-                                    this.browserHistoryPush(reqData, response.url, response.page, response.count);
+                                    this.BrowserHistoryPush(reqData, response.url, response.page, response.count);
                                     this.grid.GetColumnsVisibilityMenu().UpdateFormAction(response.path);
                                 }
                             };
@@ -126,22 +126,27 @@ var MvcCore;
                                 var elms = this.optionsManager.GetElements(), controls = response.controls;
                                 if (elms.countScalesControl != null) {
                                     if (controls.countScales == null) {
+                                        this.eventsManager.RemoveCountScalesEvents();
                                         elms.countScalesControl.innerHTML = '';
+                                        this.optionsManager.InitBottomControlsCountScales();
                                     }
                                     else {
+                                        this.eventsManager.RemoveCountScalesEvents();
                                         elms.countScalesControl.parentNode.replaceChild(this.helpers.GetHtmlElementFromString(controls.countScales), elms.countScalesControl);
+                                        this.optionsManager.InitBottomControlsCountScales();
+                                        this.eventsManager.AddCountScalesEvents();
                                     }
                                 }
                                 if (elms.pagingControl != null) {
                                     if (controls.paging == null) {
                                         this.eventsManager.RemovePagingEvents();
                                         elms.pagingControl.innerHTML = '';
-                                        this.optionsManager.InitBottomControls();
+                                        this.optionsManager.InitBottomControlsPaging();
                                     }
                                     else {
                                         this.eventsManager.RemovePagingEvents();
                                         elms.pagingControl.parentNode.replaceChild(this.helpers.GetHtmlElementFromString(controls.paging), elms.pagingControl);
-                                        this.optionsManager.InitBottomControls();
+                                        this.optionsManager.InitBottomControlsPaging();
                                         this.eventsManager.AddPagingEvents();
                                     }
                                 }

@@ -38,6 +38,7 @@ var MvcCore;
                     var DataSource = /** @class */ (function () {
                         function DataSource(grid) {
                             var _newTarget = this.constructor;
+                            this.lastHistory = [null, null, null, null];
                             this.Static = _newTarget;
                             this.grid = grid;
                             this.optionsManager = grid.GetOptionsManager();
@@ -48,23 +49,32 @@ var MvcCore;
                             this.docTitleChange = this.serverConfig.clientTitleTemplate != null;
                             this.docTitlePattern = "<" + this.serverConfig.gridUrlParamName + ">";
                         }
-                        DataSource.prototype.browserHistoryReplace = function (stateData, url, page, count) {
+                        DataSource.prototype.SetLastHistory = function (lastHistory) {
+                            this.lastHistory = lastHistory;
+                            return this;
+                        };
+                        DataSource.prototype.GetLastHistory = function () {
+                            return this.lastHistory;
+                        };
+                        DataSource.prototype.BrowserHistoryReplace = function (stateData, url, page, count) {
                             if (this.serverConfig.clientChangeHistory) {
                                 var title = this.docTitleChange
                                     ? this.completeDocumentTitle(stateData, page, count)
                                     : document.title;
                                 history.replaceState(stateData, title, url);
+                                this.SetLastHistory([stateData, url, page, count]);
                                 if (this.docTitleChange)
                                     document.title = title;
                             }
                             return this;
                         };
-                        DataSource.prototype.browserHistoryPush = function (stateData, url, page, count) {
+                        DataSource.prototype.BrowserHistoryPush = function (stateData, url, page, count) {
                             if (this.serverConfig.clientChangeHistory) {
                                 var title = this.docTitleChange
                                     ? this.completeDocumentTitle(stateData, page, count)
                                     : document.title;
                                 history.pushState(stateData, title, url);
+                                this.SetLastHistory([stateData, url, page, count]);
                                 if (this.docTitleChange)
                                     document.title = title;
                             }

@@ -21,8 +21,10 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         protected offset: number;
         protected limit: number;
         protected gridPath: string;
+        protected selectedRowNodes: agGrid.RowNode<any>[];
         protected pageMode: AgGrids.Enums.ClientPageMode;
         protected columnsVisibilityMenu: AgGrids.Columns.VisibilityMenu;
+        protected internalSelectionChange: boolean;
         constructor(serverConfig: AgGrids.Interfaces.IServerConfig, initialData: AgGrids.Interfaces.Ajax.IResponse);
         SetHelpers(helpers: AgGrids.Tools.Helpers): this;
         GetHelpers(): AgGrids.Tools.Helpers;
@@ -58,6 +60,9 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         GetLimit(): number;
         SetGridPath(gridPath: string): this;
         GetGridPath(): string;
+        SetSelectedRowNodes(selectedRowNodes: agGrid.RowNode<any>[], fireChangeEvent?: boolean): this;
+        GetSelectedRowNodes(): agGrid.RowNode<any>[];
+        GetInternalSelectionChange(): boolean;
         SetSortHeaders(sortHeaders: Map<string, AgGrids.Columns.SortHeader>): this;
         GetSortHeaders(): Map<string, AgGrids.Columns.SortHeader>;
         SetFilterHeaders(filterHeaders: Map<string, AgGrids.Columns.FilterHeader>): this;
@@ -66,8 +71,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         GetFilterMenus(): Map<string, AgGrids.Columns.FilterMenu>;
         SetColumnsVisibilityMenu(columnsVisibilityMenu: AgGrids.Columns.VisibilityMenu): this;
         GetColumnsVisibilityMenu(): AgGrids.Columns.VisibilityMenu;
-        AddEventListener<K extends keyof AgGrids.Interfaces.Events.IHandlersMap>(eventName: K, handler: (a: AgGrids.Interfaces.Events.IHandlersMap[K]) => void): this;
-        RemoveEventListener<K extends keyof AgGrids.Interfaces.Events.IHandlersMap>(eventName: K, handler: (e: AgGrids.Interfaces.Events.IHandlersMap[K]) => void): this;
+        AddEventListener<TEventName extends keyof AgGrids.Interfaces.IHandlersMap>(eventName: TEventName, handler: (a: AgGrids.Interfaces.IHandlersMap[TEventName]) => void): this;
+        RemoveEventListener<TEventName extends keyof AgGrids.Interfaces.IHandlersMap>(eventName: TEventName, handler: (e: AgGrids.Interfaces.IHandlersMap[TEventName]) => void): this;
         ExecChange(offset?: number, sorting?: AgGrids.Types.SortItem[] | false, filtering?: Map<string, Map<AgGrids.Enums.Operator, string[]>> | false): this;
         protected initSubClasses(): this;
         protected initServerConfig(serverConfig: AgGrids.Interfaces.IServerConfig): this;

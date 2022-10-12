@@ -1,3 +1,14 @@
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 var MvcCore;
 (function (MvcCore) {
     var Ext;
@@ -58,7 +69,9 @@ var MvcCore;
                                     countScalesControl: null,
                                     pagingControl: null,
                                     statusControl: null,
-                                    pagingAnchors: []
+                                    pagingAnchors: [],
+                                    pagingAnchorsMaps: new Map(),
+                                    countScalesAnchors: []
                                 };
                                 this.InitBottomControls();
                                 return this;
@@ -67,14 +80,57 @@ var MvcCore;
                                 var bcSels = this.Static.SELECTORS.BOTTOM_CONTROLS, bottomControlsElement = this.elements.bottomControlsElement;
                                 if (bottomControlsElement == null)
                                     return this;
-                                this.elements.countScalesControl = bottomControlsElement.querySelector(bcSels.COUNT_SCALES_SEL);
-                                this.elements.pagingControl = bottomControlsElement.querySelector(bcSels.PAGING_SEL);
                                 this.elements.statusControl = bottomControlsElement.querySelector(bcSels.STATUS_SEL);
+                                this
+                                    .InitBottomControlsCountScales()
+                                    .InitBottomControlsPaging();
+                                return this;
+                            };
+                            Manager.prototype.InitBottomControlsCountScales = function () {
+                                var bcSels = this.Static.SELECTORS.BOTTOM_CONTROLS, bottomControlsElement = this.elements.bottomControlsElement;
+                                if (bottomControlsElement == null)
+                                    return this;
+                                this.elements.countScalesControl = bottomControlsElement.querySelector(bcSels.COUNT_SCALES_SEL);
+                                if (this.elements.countScalesControl != null) {
+                                    var countScalesAnchors = this.elements.countScalesControl.querySelectorAll(this.Static.SELECTORS.BOTTOM_CONTROLS.COUNT_SCALES_ANCHOR_SEL);
+                                    this.elements.countScalesAnchors = (countScalesAnchors.length > 0)
+                                        ? [].slice.apply(countScalesAnchors)
+                                        : [];
+                                }
+                                return this;
+                            };
+                            Manager.prototype.InitBottomControlsPaging = function () {
+                                var e_1, _a;
+                                var bcSels = this.Static.SELECTORS.BOTTOM_CONTROLS, bottomControlsElement = this.elements.bottomControlsElement;
+                                if (bottomControlsElement == null)
+                                    return this;
+                                this.elements.pagingControl = bottomControlsElement.querySelector(bcSels.PAGING_SEL);
                                 if (this.elements.pagingControl != null) {
                                     var paginationAnchors = this.elements.pagingControl.querySelectorAll(this.Static.SELECTORS.BOTTOM_CONTROLS.PAGING_ANCHOR_SEL);
-                                    this.elements.pagingAnchors = (paginationAnchors.length > 0)
-                                        ? [].slice.apply(paginationAnchors)
-                                        : [];
+                                    if (paginationAnchors.length > 0) {
+                                        this.elements.pagingAnchors = [].slice.apply(paginationAnchors);
+                                        var paginationAnchorsMaps = new Map(), pagingAnchorOffset;
+                                        try {
+                                            for (var paginationAnchors_1 = __values(paginationAnchors), paginationAnchors_1_1 = paginationAnchors_1.next(); !paginationAnchors_1_1.done; paginationAnchors_1_1 = paginationAnchors_1.next()) {
+                                                var paginationAnchor = paginationAnchors_1_1.value;
+                                                pagingAnchorOffset = parseInt(paginationAnchor.dataset.offset, 10);
+                                                if (paginationAnchorsMaps.has(pagingAnchorOffset)) {
+                                                    paginationAnchorsMaps.get(pagingAnchorOffset).push(paginationAnchor);
+                                                }
+                                                else {
+                                                    paginationAnchorsMaps.set(pagingAnchorOffset, [paginationAnchor]);
+                                                }
+                                            }
+                                        }
+                                        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                                        finally {
+                                            try {
+                                                if (paginationAnchors_1_1 && !paginationAnchors_1_1.done && (_a = paginationAnchors_1.return)) _a.call(paginationAnchors_1);
+                                            }
+                                            finally { if (e_1) throw e_1.error; }
+                                        }
+                                        this.elements.pagingAnchorsMaps = paginationAnchorsMaps;
+                                    }
                                 }
                                 return this;
                             };
@@ -158,6 +214,7 @@ var MvcCore;
                                     COUNT_SCALES_SEL: '.grid-control-count-scales',
                                     STATUS_SEL: '.grid-control-status',
                                     PAGING_SEL: '.grid-control-paging',
+                                    COUNT_SCALES_ANCHOR_SEL: '.grid-count a',
                                     PAGING_ANCHOR_SEL: '.grid-page a',
                                 }
                             };

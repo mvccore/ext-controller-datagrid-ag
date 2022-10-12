@@ -25,6 +25,8 @@ var MvcCore;
                         this.offset = 0;
                         this.limit = 0;
                         this.gridPath = '';
+                        this.selectedRowNodes = [];
+                        this.internalSelectionChange = false;
                         //console.log("AgGrid.ctor - serverConfig", serverConfig);
                         //console.log("AgGrid.ctor - initialData", initialData);
                         this.Static = _newTarget;
@@ -163,6 +165,30 @@ var MvcCore;
                     AgGrid.prototype.GetGridPath = function () {
                         return this.gridPath;
                     };
+                    AgGrid.prototype.SetSelectedRowNodes = function (selectedRowNodes, fireChangeEvent) {
+                        var _this = this;
+                        if (fireChangeEvent === void 0) { fireChangeEvent = true; }
+                        this.selectedRowNodes = selectedRowNodes;
+                        if (fireChangeEvent === false) {
+                            this.internalSelectionChange = true;
+                            this.agGridApi.deselectAll();
+                            selectedRowNodes.forEach(function (row) { return row.setSelected(true); });
+                            setTimeout(function () {
+                                _this.internalSelectionChange = false;
+                            }, 10);
+                        }
+                        else if (fireChangeEvent === true) {
+                            this.agGridApi.deselectAll();
+                            selectedRowNodes.forEach(function (row) { return row.setSelected(true); });
+                        }
+                        return this;
+                    };
+                    AgGrid.prototype.GetSelectedRowNodes = function () {
+                        return this.selectedRowNodes;
+                    };
+                    AgGrid.prototype.GetInternalSelectionChange = function () {
+                        return this.internalSelectionChange;
+                    };
                     AgGrid.prototype.SetSortHeaders = function (sortHeaders) {
                         this.sortHeaders = sortHeaders;
                         return this;
@@ -233,6 +259,7 @@ var MvcCore;
                             var emMultiplePages = new this.Static.Classes.EventsManager.MultiplePagesMode(this);
                             this.eventsManager = emMultiplePages;
                             emMultiplePages
+                                .AddCountScalesEvents()
                                 .AddPagingEvents()
                                 .AddUrlChangeEvent();
                             this.limit = this.serverConfig.count;

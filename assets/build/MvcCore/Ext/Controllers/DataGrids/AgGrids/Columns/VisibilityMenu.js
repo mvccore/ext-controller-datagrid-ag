@@ -114,6 +114,7 @@ var MvcCore;
                             VisibilityMenu.prototype.removeShownEvents = function () {
                                 document.removeEventListener('click', this.handlers.handleDocumentClick);
                                 this.elms.form.removeEventListener('click', this.handlers.handleFormClick, true);
+                                this.elms.form.removeEventListener('submit', this.handlers.handleFormSubmit);
                                 return this;
                             };
                             VisibilityMenu.prototype.disableUsedColumns = function () {
@@ -156,6 +157,7 @@ var MvcCore;
                                     document.addEventListener('click', _this.handlers.handleDocumentClick = _this.handleDocumentClick.bind(_this));
                                     _this.elms.form.addEventListener('click', _this.handlers.handleFormClick = _this.handleFormClick.bind(_this), true);
                                 });
+                                this.elms.form.addEventListener('submit', this.handlers.handleFormSubmit = this.handleFormSubmit.bind(this));
                                 return this;
                             };
                             VisibilityMenu.prototype.handleDocumentClick = function (e) {
@@ -166,6 +168,14 @@ var MvcCore;
                             };
                             VisibilityMenu.prototype.handleFormClick = function (e) {
                                 this.formClick = true;
+                            };
+                            VisibilityMenu.prototype.handleFormSubmit = function (e) {
+                                var continueToBrowserActions = this.grid.GetEvents().FireHandlers("beforeColumnsVisibilityChange", new AgGrids.EventsManagers.Events.ColumnsVisibilityChange(this.elms.form));
+                                if (continueToBrowserActions === false) {
+                                    e.cancelBubble = true;
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }
                             };
                             VisibilityMenu.prototype.initElements = function () {
                                 var gridElm = this.optionsManager.GetElements().contElement, renderCfg = this.serverConfig.renderConfig, renderTableHead = renderCfg.renderTableHead, sels = this.Static.SELECTORS, placeBeforeElm = gridElm.querySelector(renderTableHead

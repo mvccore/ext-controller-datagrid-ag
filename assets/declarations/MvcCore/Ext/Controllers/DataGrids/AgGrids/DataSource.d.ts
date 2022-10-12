@@ -11,10 +11,13 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected serverConfig: Interfaces.IServerConfig;
         protected docTitleChange: boolean;
         protected docTitlePattern: string;
+        protected lastHistory: [Interfaces.Ajax.IReqRawObj, string, number, number];
         constructor(grid: AgGrid);
         abstract ExecRequest(reqData: Interfaces.Ajax.IReqRawObj, changeUrl: boolean): this;
-        protected browserHistoryReplace(stateData: Interfaces.Ajax.IReqRawObj, url: string, page: number, count: number): this;
-        protected browserHistoryPush(stateData: Interfaces.Ajax.IReqRawObj, url: string, page: number, count: number): this;
+        SetLastHistory(lastHistory: [Interfaces.Ajax.IReqRawObj, string, number, number]): this;
+        GetLastHistory(): [Interfaces.Ajax.IReqRawObj, string, number, number];
+        BrowserHistoryReplace(stateData: Interfaces.Ajax.IReqRawObj, url: string, page: number, count: number): this;
+        BrowserHistoryPush(stateData: Interfaces.Ajax.IReqRawObj, url: string, page: number, count: number): this;
         protected completeDocumentTitle(stateData: Interfaces.Ajax.IReqRawObj, page: number, count: number): string;
         protected completeDocumentTitleSorting(sorting: Types.SortItem[], docTitleReplacements: string[]): this;
         protected completeDocumentTitleFiltering(stateDataFiltering: any, docTitleReplacements: string[]): this;

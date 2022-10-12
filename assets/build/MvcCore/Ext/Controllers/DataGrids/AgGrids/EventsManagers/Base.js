@@ -40,6 +40,7 @@ var MvcCore;
                         var Base = /** @class */ (function () {
                             function Base(grid, serverConfig) {
                                 var _newTarget = this.constructor;
+                                if (serverConfig === void 0) { serverConfig = null; }
                                 this.onLoadSelectionIndex = null;
                                 this.onLoadSelectionCallback = null;
                                 this.Static = _newTarget;
@@ -86,16 +87,23 @@ var MvcCore;
                             };
                             Base.prototype.FireHandlers = function (eventName, event) {
                                 var e_2, _a;
+                                var continueNextEvents = true;
                                 if (!this.handlers.has(eventName))
-                                    return this;
+                                    return continueNextEvents;
                                 var handlers = this.handlers.get(eventName);
-                                event.grid = this.grid;
-                                event.eventName = eventName;
+                                event.SetGrid(this.grid).SetEventName(eventName);
                                 try {
                                     for (var handlers_2 = __values(handlers), handlers_2_1 = handlers_2.next(); !handlers_2_1.done; handlers_2_1 = handlers_2.next()) {
                                         var handler = handlers_2_1.value;
                                         try {
                                             handler(event);
+                                            if (event.GetStopNextEventsPropagation()) {
+                                                continueNextEvents = false;
+                                                break;
+                                            }
+                                            else if (event.GetStopCurrentEventPropagation()) {
+                                                break;
+                                            }
                                         }
                                         catch (e) { }
                                     }
@@ -107,7 +115,7 @@ var MvcCore;
                                     }
                                     finally { if (e_2) throw e_2.error; }
                                 }
-                                return this;
+                                return continueNextEvents;
                             };
                             Base.prototype.SetOnLoadSelectionIndex = function (rowIndexToSelectAfterLoad, onLoadSelectionCallback) {
                                 if (onLoadSelectionCallback === void 0) { onLoadSelectionCallback = null; }

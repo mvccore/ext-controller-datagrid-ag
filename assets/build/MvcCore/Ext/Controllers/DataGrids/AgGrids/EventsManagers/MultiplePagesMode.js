@@ -32,32 +32,64 @@ var MvcCore;
                                 this.SelectRowByIndex(0);
                                 _super.prototype.HandleGridReady.call(this, event);
                             };
+                            MultiplePagesMode.prototype.AddCountScalesEvents = function () {
+                                var _this = this;
+                                this.countScalesHandlers = new Map();
+                                this.grid.GetOptionsManager().GetElements().countScalesAnchors.forEach(function (countScaleAnchor) {
+                                    var countInt = parseInt(countScaleAnchor.dataset.count, 10), handler = _this.handleCountScalesClick.bind(_this, countInt);
+                                    _this.countScalesHandlers.set(countInt, handler);
+                                    countScaleAnchor.addEventListener('click', handler, true);
+                                });
+                                return this;
+                            };
+                            MultiplePagesMode.prototype.RemoveCountScalesEvents = function () {
+                                var _this = this;
+                                this.grid.GetOptionsManager().GetElements().countScalesAnchors.forEach(function (countScaleAnchor) {
+                                    var countInt = parseInt(countScaleAnchor.dataset.count, 10), handler = _this.countScalesHandlers.get(countInt);
+                                    countScaleAnchor.removeEventListener('click', handler, true);
+                                });
+                                this.countScalesHandlers = new Map();
+                                return this;
+                            };
                             MultiplePagesMode.prototype.AddPagingEvents = function () {
                                 var _this = this;
+                                this.pagingHandlers = new Map();
                                 this.grid.GetOptionsManager().GetElements().pagingAnchors.forEach(function (pagingAnchor) {
-                                    var ofsetInt = parseInt(pagingAnchor.dataset.offset, 10);
-                                    pagingAnchor.addEventListener('click', _this.handlePagingClick.bind(_this, ofsetInt), true);
+                                    var ofsetInt = parseInt(pagingAnchor.dataset.offset, 10), handler = _this.handlePagingClick.bind(_this, ofsetInt);
+                                    _this.pagingHandlers.set(ofsetInt, handler);
+                                    pagingAnchor.addEventListener('click', handler, true);
                                 });
                                 return this;
                             };
                             MultiplePagesMode.prototype.RemovePagingEvents = function () {
                                 var _this = this;
                                 this.grid.GetOptionsManager().GetElements().pagingAnchors.forEach(function (pagingAnchor) {
-                                    var ofsetInt = parseInt(pagingAnchor.dataset.offset, 10);
-                                    pagingAnchor.removeEventListener('click', _this.handlePagingClick.bind(_this, ofsetInt), true);
+                                    var ofsetInt = parseInt(pagingAnchor.dataset.offset, 10), handler = _this.pagingHandlers.get(ofsetInt);
+                                    pagingAnchor.removeEventListener('click', handler, true);
                                 });
+                                this.pagingHandlers = new Map();
                                 return this;
                             };
-                            MultiplePagesMode.prototype.handlePagingClick = function (offset, e) {
-                                var dataSource = this.grid.GetDataSource();
-                                this.grid.SetOffset(offset);
-                                dataSource.Load();
+                            MultiplePagesMode.prototype.handleCountScalesClick = function (countAfter, e) {
+                                var continueToBrowserActions = this.FireHandlers("beforeCountScaleChange", new EventsManagers.Events.CountScaleChange(this.grid.GetServerConfig().count, countAfter, e.target));
+                                if (continueToBrowserActions === false) {
+                                    e.cancelBubble = true;
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }
+                            };
+                            MultiplePagesMode.prototype.handlePagingClick = function (offsetAfter, e) {
                                 e.cancelBubble = true;
                                 e.preventDefault();
                                 e.stopPropagation();
-                                this.FireHandlers("pageChange", {
-                                    offset: offset
-                                });
+                                var offsetBefore = this.grid.GetOffset();
+                                var continueToNextEvent = this.FireHandlers("beforePageChange", new EventsManagers.Events.PageChange(offsetBefore, offsetAfter, e.target));
+                                if (continueToNextEvent === false)
+                                    return;
+                                var dataSource = this.grid.GetDataSource();
+                                this.grid.SetOffset(offsetAfter);
+                                dataSource.Load();
+                                this.FireHandlers("pageChange", new EventsManagers.Events.PageChange(offsetBefore, offsetAfter, e.target));
                             };
                             return MultiplePagesMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManager));

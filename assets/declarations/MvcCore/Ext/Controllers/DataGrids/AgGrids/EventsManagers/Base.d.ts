@@ -7,12 +7,12 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManagers {
         protected handlers: Map<Types.GridEventName, Types.GridEventHandler[]>;
         protected onLoadSelectionIndex: number | null;
         protected onLoadSelectionCallback: () => void;
-        constructor(grid: AgGrid, serverConfig: AgGrids.Interfaces.IServerConfig);
+        constructor(grid: AgGrid, serverConfig?: AgGrids.Interfaces.IServerConfig);
         SetAutoSelectFirstRow(autoSelectFirstRow: boolean): this;
         GetAutoSelectFirstRow(): boolean;
-        AddEventListener<K extends keyof Interfaces.Events.IHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.Events.IHandlersMap[K]) => void): this;
-        RemoveEventListener<K extends keyof Interfaces.Events.IHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.Events.IHandlersMap[K]) => void): this;
-        FireHandlers(eventName: Types.GridEventName, event: Interfaces.Events.IBase): this;
+        AddEventListener<K extends keyof Interfaces.IHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.IHandlersMap[K]) => void): this;
+        RemoveEventListener<K extends keyof Interfaces.IHandlersMap>(eventName: Types.GridEventName, handler: (e: Interfaces.IHandlersMap[K]) => void): this;
+        FireHandlers<TGridEventName extends Types.GridEventName>(eventName: TGridEventName, event: DataGrids.AgGrids.Interfaces.IHandlersMap[TGridEventName]): boolean;
         SetOnLoadSelectionIndex(rowIndexToSelectAfterLoad: number, onLoadSelectionCallback?: () => void): this;
         protected static getOperatorByRawValue(rawValue: string, operatorsAndPrefixes: Map<Enums.Operator, string>, columnFilterCfg: number | boolean): [string, Enums.Operator | null];
     }

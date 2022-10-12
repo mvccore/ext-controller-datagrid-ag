@@ -58,6 +58,38 @@ var MvcCore;
                                 this.Static = _newTarget;
                                 this.grid = grid;
                             }
+                            Helpers.prototype.CloneFiltering = function (filtering) {
+                                var e_1, _a, e_2, _b;
+                                var result = new Map(), resultItem;
+                                try {
+                                    for (var filtering_1 = __values(filtering), filtering_1_1 = filtering_1.next(); !filtering_1_1.done; filtering_1_1 = filtering_1.next()) {
+                                        var _c = __read(filtering_1_1.value, 2), columnId = _c[0], filteringItem = _c[1];
+                                        resultItem = new Map();
+                                        try {
+                                            for (var filteringItem_1 = (e_2 = void 0, __values(filteringItem)), filteringItem_1_1 = filteringItem_1.next(); !filteringItem_1_1.done; filteringItem_1_1 = filteringItem_1.next()) {
+                                                var _d = __read(filteringItem_1_1.value, 2), operator = _d[0], filteringValues = _d[1];
+                                                resultItem.set(operator, [].slice.apply(filteringValues));
+                                            }
+                                        }
+                                        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                                        finally {
+                                            try {
+                                                if (filteringItem_1_1 && !filteringItem_1_1.done && (_b = filteringItem_1.return)) _b.call(filteringItem_1);
+                                            }
+                                            finally { if (e_2) throw e_2.error; }
+                                        }
+                                        result.set(columnId, resultItem);
+                                    }
+                                }
+                                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                                finally {
+                                    try {
+                                        if (filtering_1_1 && !filtering_1_1.done && (_a = filtering_1.return)) _a.call(filtering_1);
+                                    }
+                                    finally { if (e_1) throw e_1.error; }
+                                }
+                                return result;
+                            };
                             Helpers.prototype.GetControlTypeByOperatorAndValue = function (operator, value, defaultResult, serverType) {
                                 var result = AgGrids.Enums.FilterControlType.UNKNOWN;
                                 if (operator == null || value == null)
@@ -120,7 +152,7 @@ var MvcCore;
                                 return result;
                             };
                             Helpers.prototype.RetypeFilteringMap2Obj = function (filtering) {
-                                var e_1, _a;
+                                var e_3, _a;
                                 var newFiltering = {};
                                 try {
                                     for (var _b = __values(filtering.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
@@ -128,12 +160,12 @@ var MvcCore;
                                         newFiltering[idColumn] = Tools.Helpers.ConvertMap2Object(filterValues);
                                     }
                                 }
-                                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                                catch (e_3_1) { e_3 = { error: e_3_1 }; }
                                 finally {
                                     try {
                                         if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                                     }
-                                    finally { if (e_1) throw e_1.error; }
+                                    finally { if (e_3) throw e_3.error; }
                                 }
                                 return newFiltering;
                             };
@@ -161,7 +193,7 @@ var MvcCore;
                                 return result;
                             };
                             Helpers.prototype.retypeFilteringObj2Map = function (filtering) {
-                                var e_2, _a;
+                                var e_4, _a;
                                 var columnsIds = Object.keys(filtering);
                                 if (columnsIds.length > 0) {
                                     var filtering = filtering;
@@ -172,12 +204,12 @@ var MvcCore;
                                             newFiltering.set(idColumn, Tools.Helpers.ConvertObject2Map(filtering[idColumn]));
                                         }
                                     }
-                                    catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                                    catch (e_4_1) { e_4 = { error: e_4_1 }; }
                                     finally {
                                         try {
                                             if (columnsIds_1_1 && !columnsIds_1_1.done && (_a = columnsIds_1.return)) _a.call(columnsIds_1);
                                         }
-                                        finally { if (e_2) throw e_2.error; }
+                                        finally { if (e_4) throw e_4.error; }
                                     }
                                     return newFiltering;
                                 }
@@ -216,7 +248,7 @@ var MvcCore;
                                 return serverConfig;
                             };
                             Helpers.prototype.GetAllowedOperators = function (columnFilterFlags) {
-                                var e_3, _a;
+                                var e_5, _a;
                                 var urlFilterOperators = this.grid.GetServerConfig().urlSegments.urlFilterOperators, allowedOperators = new Map(), allowRanges = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_RANGES) != 0, allowLikeRight = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_LIKE_RIGHT_SIDE) != 0, allowLikeLeft = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_LIKE_LEFT_SIDE) != 0, allowLikeAnywhere = (columnFilterFlags & AgGrids.Enums.FilteringMode.ALLOW_LIKE_ANYWHERE) != 0, operators = [
                                     AgGrids.Enums.Operator.EQUAL, AgGrids.Enums.Operator.NOT_EQUAL
                                 ]; // equal and not equal are allowed for filtering by default
@@ -258,17 +290,17 @@ var MvcCore;
                                         });
                                     }
                                 }
-                                catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                                catch (e_5_1) { e_5 = { error: e_5_1 }; }
                                 finally {
                                     try {
                                         if (operators_1_1 && !operators_1_1.done && (_a = operators_1.return)) _a.call(operators_1);
                                     }
-                                    finally { if (e_3) throw e_3.error; }
+                                    finally { if (e_5) throw e_5.error; }
                                 }
                                 return allowedOperators;
                             };
                             Helpers.prototype.SortConfigColumns = function (serverColumns, columnIndexPropName) {
-                                var e_4, _a, e_5, _b, e_6, _c, e_7, _d;
+                                var e_6, _a, e_7, _b, e_8, _c, e_9, _d;
                                 var indexedMap = new Map(), notIndexedSet = new Set(), serverColumnCfg, columnIndex;
                                 try {
                                     for (var serverColumns_1 = __values(serverColumns), serverColumns_1_1 = serverColumns_1.next(); !serverColumns_1_1.done; serverColumns_1_1 = serverColumns_1.next()) {
@@ -287,12 +319,12 @@ var MvcCore;
                                         }
                                     }
                                 }
-                                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                                catch (e_6_1) { e_6 = { error: e_6_1 }; }
                                 finally {
                                     try {
                                         if (serverColumns_1_1 && !serverColumns_1_1.done && (_a = serverColumns_1.return)) _a.call(serverColumns_1);
                                     }
-                                    finally { if (e_4) throw e_4.error; }
+                                    finally { if (e_6) throw e_6.error; }
                                 }
                                 var result = [], index = 0, indexedMapKeys = Array.from(indexedMap.keys());
                                 indexedMapKeys.sort(function (a, b) { return a - b; });
@@ -300,27 +332,27 @@ var MvcCore;
                                     for (var indexedMapKeys_1 = __values(indexedMapKeys), indexedMapKeys_1_1 = indexedMapKeys_1.next(); !indexedMapKeys_1_1.done; indexedMapKeys_1_1 = indexedMapKeys_1.next()) {
                                         var indexedMapKey = indexedMapKeys_1_1.value;
                                         try {
-                                            for (var _e = (e_6 = void 0, __values(indexedMap.get(indexedMapKey))), _f = _e.next(); !_f.done; _f = _e.next()) {
+                                            for (var _e = (e_8 = void 0, __values(indexedMap.get(indexedMapKey))), _f = _e.next(); !_f.done; _f = _e.next()) {
                                                 var serverColumnCfg = _f.value;
                                                 serverColumnCfg[columnIndexPropName] = index++;
                                                 result.push(serverColumnCfg);
                                             }
                                         }
-                                        catch (e_6_1) { e_6 = { error: e_6_1 }; }
+                                        catch (e_8_1) { e_8 = { error: e_8_1 }; }
                                         finally {
                                             try {
                                                 if (_f && !_f.done && (_c = _e.return)) _c.call(_e);
                                             }
-                                            finally { if (e_6) throw e_6.error; }
+                                            finally { if (e_8) throw e_8.error; }
                                         }
                                     }
                                 }
-                                catch (e_5_1) { e_5 = { error: e_5_1 }; }
+                                catch (e_7_1) { e_7 = { error: e_7_1 }; }
                                 finally {
                                     try {
                                         if (indexedMapKeys_1_1 && !indexedMapKeys_1_1.done && (_b = indexedMapKeys_1.return)) _b.call(indexedMapKeys_1);
                                     }
-                                    finally { if (e_5) throw e_5.error; }
+                                    finally { if (e_7) throw e_7.error; }
                                 }
                                 try {
                                     for (var notIndexedSet_1 = __values(notIndexedSet), notIndexedSet_1_1 = notIndexedSet_1.next(); !notIndexedSet_1_1.done; notIndexedSet_1_1 = notIndexedSet_1.next()) {
@@ -329,12 +361,12 @@ var MvcCore;
                                         result.push(serverColumnCfg);
                                     }
                                 }
-                                catch (e_7_1) { e_7 = { error: e_7_1 }; }
+                                catch (e_9_1) { e_9 = { error: e_9_1 }; }
                                 finally {
                                     try {
                                         if (notIndexedSet_1_1 && !notIndexedSet_1_1.done && (_d = notIndexedSet_1.return)) _d.call(notIndexedSet_1);
                                     }
-                                    finally { if (e_7) throw e_7.error; }
+                                    finally { if (e_9) throw e_9.error; }
                                 }
                                 return result;
                             };
@@ -371,7 +403,7 @@ var MvcCore;
                                 return new Map(data);
                             };
                             Helpers.ConvertMap2Object = function (map) {
-                                var e_8, _a;
+                                var e_10, _a;
                                 var obj = {};
                                 try {
                                     for (var map_1 = __values(map), map_1_1 = map_1.next(); !map_1_1.done; map_1_1 = map_1.next()) {
@@ -379,12 +411,12 @@ var MvcCore;
                                         obj[key] = value;
                                     }
                                 }
-                                catch (e_8_1) { e_8 = { error: e_8_1 }; }
+                                catch (e_10_1) { e_10 = { error: e_10_1 }; }
                                 finally {
                                     try {
                                         if (map_1_1 && !map_1_1.done && (_a = map_1.return)) _a.call(map_1);
                                     }
-                                    finally { if (e_8) throw e_8.error; }
+                                    finally { if (e_10) throw e_10.error; }
                                 }
                                 return obj;
                             };

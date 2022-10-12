@@ -7,6 +7,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Options {
                 COUNT_SCALES_SEL: string;
                 STATUS_SEL: string;
                 PAGING_SEL: string;
+                COUNT_SCALES_ANCHOR_SEL: string;
                 PAGING_ANCHOR_SEL: string;
             };
         };
@@ -34,6 +35,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Options {
         GetColumnManager(): AgGrids.Columns.Manager;
         InitElements(): this;
         InitBottomControls(): this;
+        InitBottomControlsCountScales(): this;
+        InitBottomControlsPaging(): this;
         InitAgBases(): this;
         InitAgColumns(): this;
         InitAgPageModeSpecifics(): this;

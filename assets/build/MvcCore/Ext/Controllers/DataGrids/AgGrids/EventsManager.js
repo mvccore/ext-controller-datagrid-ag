@@ -50,11 +50,11 @@ var MvcCore;
                 (function (AgGrids) {
                     var EventsManager = /** @class */ (function (_super) {
                         __extends(EventsManager, _super);
-                        function EventsManager(grid) {
+                        function EventsManager(grid, serverConfig) {
                             var e_1, _a, e_2, _b;
-                            var _this = this;
-                            var serverConfig = grid.GetServerConfig();
-                            _this = _super.call(this, grid, serverConfig) || this;
+                            if (serverConfig === void 0) { serverConfig = null; }
+                            var _this = _super.call(this, grid, serverConfig = grid.GetServerConfig()) || this;
+                            _this.automaticSelectionChange = false;
                             _this.multiSorting = ((serverConfig.sortingMode & AgGrids.Enums.SortingMode.SORT_MULTIPLE_COLUMNS) != 0);
                             _this.multiFiltering = ((serverConfig.filteringMode & AgGrids.Enums.FilteringMode.MULTIPLE_COLUMNS) != 0);
                             _this.helpers = grid.GetHelpers();
@@ -108,11 +108,13 @@ var MvcCore;
                             if (this.onLoadSelectionIndex != null) {
                                 var nextIndex = this.onLoadSelectionIndex;
                                 var nextRow = params.api.getDisplayedRowAtIndex(nextIndex);
+                                this.grid.SetSelectedRowNodes([nextRow], null);
                                 if (nextRow.data == null) {
                                     //console.log("onModelUpdated1", nextIndex, nextRow.data);
                                 }
                                 else {
                                     //console.log("onModelUpdated2", nextIndex, nextRow.data);
+                                    this.automaticSelectionChange = true;
                                     nextRow.setSelected(true);
                                     if (this.onLoadSelectionCallback) {
                                         this.onLoadSelectionCallback();
@@ -124,26 +126,53 @@ var MvcCore;
                         };
                         EventsManager.prototype.SelectRowByIndex = function (rowIndex, onLoadSelectionCallback) {
                             if (onLoadSelectionCallback === void 0) { onLoadSelectionCallback = null; }
+                            var gridApi = this.grid.GetGridApi();
                             if (this.autoSelectFirstRow) {
-                                var row = this.grid.GetGridApi().getDisplayedRowAtIndex(rowIndex);
+                                var row = gridApi.getDisplayedRowAtIndex(rowIndex);
                                 if (row != null) {
+                                    this.grid.SetSelectedRowNodes([row], null);
                                     if (row.data == null) {
                                         this.SetOnLoadSelectionIndex(rowIndex, onLoadSelectionCallback);
                                     }
                                     else {
+                                        this.automaticSelectionChange = true;
                                         row.setSelected(true);
                                     }
+                                }
+                                else {
+                                    var selectedRowNodesBefore = this.grid.GetSelectedRowNodes();
+                                    if (selectedRowNodesBefore.length > 0) {
+                                        this.grid.SetSelectedRowNodes([], null);
+                                        this.FireHandlers("selectionChange", new AgGrids.EventsManagers.Events.SelectionChange(false, selectedRowNodesBefore, []));
+                                    }
+                                }
+                            }
+                            else {
+                                var selectedRowNodesBefore = this.grid.GetSelectedRowNodes();
+                                if (selectedRowNodesBefore.length > 0) {
+                                    this.grid.SetSelectedRowNodes([], null);
+                                    this.FireHandlers("selectionChange", new AgGrids.EventsManagers.Events.SelectionChange(false, selectedRowNodesBefore, []));
                                 }
                             }
                             return this;
                         };
                         EventsManager.prototype.HandleGridReady = function (event) {
-                            this.FireHandlers("gridReady", {});
+                            this.FireHandlers("gridReady", new AgGrids.EventsManagers.Events.Base());
                         };
                         EventsManager.prototype.HandleSelectionChange = function (event) {
-                            this.FireHandlers("selectionChange", {
-                                selectedRows: this.grid.GetGridApi().getSelectedRows()
-                            });
+                            if (this.grid.GetInternalSelectionChange())
+                                return;
+                            var userChange = !this.automaticSelectionChange;
+                            this.automaticSelectionChange = false;
+                            var gridApi = this.grid.GetGridApi(), selectedRowsBefore = this.grid.GetSelectedRowNodes(), selectedRowsAfter = gridApi.getSelectedNodes();
+                            var continueToNextEvent = this.FireHandlers("beforeSelectionChange", new AgGrids.EventsManagers.Events.SelectionChange(userChange, selectedRowsBefore, selectedRowsAfter));
+                            if (continueToNextEvent) {
+                                this.grid.SetSelectedRowNodes(selectedRowsAfter, null);
+                                this.FireHandlers("selectionChange", new AgGrids.EventsManagers.Events.SelectionChange(userChange, selectedRowsBefore, selectedRowsAfter));
+                            }
+                            else {
+                                this.grid.SetSelectedRowNodes(selectedRowsBefore, false);
+                            }
                         };
                         EventsManager.prototype.HandleColumnResized = function (event) {
                             if (event.source !== 'uiColumnDragged' || !event.finished)
@@ -189,34 +218,43 @@ var MvcCore;
                             this.grid.GetColumnsVisibilityMenu().RedrawControls();
                             this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
                         };
-                        EventsManager.prototype.HandleFilterMenuChange = function (columnId, filteringItem, clearAllOther) {
+                        EventsManager.prototype.GetNewFilteringByMenu = function (columnId, filteringItem, clearAllOther) {
                             if (clearAllOther === void 0) { clearAllOther = false; }
-                            var filtering = this.grid.GetFiltering(), filterRemoving = filteringItem == null || filteringItem.size === 0, filterHeader = this.grid.GetFilterHeaders().get(columnId), filterMenu = this.grid.GetFilterMenus().get(columnId);
+                            var filteringBefore = this.grid.GetFiltering(), filteringAfter = this.helpers.CloneFiltering(filteringBefore), filterRemoving = filteringItem == null || filteringItem.size === 0;
                             if (filterRemoving) {
                                 if (clearAllOther) {
-                                    filtering = new Map();
+                                    filteringAfter = new Map();
                                 }
                                 else {
-                                    filtering.delete(columnId);
+                                    filteringAfter.delete(columnId);
                                 }
+                            }
+                            else {
+                                if (!this.multiFiltering || clearAllOther)
+                                    filteringAfter = new Map();
+                                filteringAfter.set(columnId, filteringItem);
+                            }
+                            return [filterRemoving, filteringAfter];
+                        };
+                        EventsManager.prototype.HandleFilterMenuChange = function (columnId, filterRemoving, filteringBefore, filteringAfter) {
+                            var filterHeader = this.grid.GetFilterHeaders().get(columnId), filterMenu = this.grid.GetFilterMenus().get(columnId);
+                            if (filterRemoving) {
                                 filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(null);
                                 filterMenu === null || filterMenu === void 0 ? void 0 : filterMenu.SetUpControls(null);
                             }
                             else {
-                                if (!this.multiFiltering || clearAllOther)
-                                    filtering = new Map();
-                                filtering.set(columnId, filteringItem);
-                                filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(filtering.get(columnId));
+                                var filteringItem = filteringAfter.get(columnId);
+                                filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(filteringItem);
                                 filterMenu === null || filterMenu === void 0 ? void 0 : filterMenu.SetUpControls(filteringItem);
                             }
-                            this.firefiltering(filtering);
+                            this.firefiltering(filteringBefore, filteringAfter);
                         };
-                        EventsManager.prototype.HandleFilterHeaderChange = function (columnId, rawInputValue, clearAllOther) {
+                        EventsManager.prototype.GetNewFilteringByHeader = function (columnId, rawInputValue, clearAllOther) {
                             var e_3, _a, _b;
                             if (clearAllOther === void 0) { clearAllOther = false; }
                             var rawInputIsNull = rawInputValue == null, rawInputValue = rawInputIsNull ? '' : rawInputValue.trim(), filterRemoving = rawInputValue === '', serverConfig = this.grid.GetServerConfig(), valuesDelimiter = serverConfig.urlSegments.urlDelimiterValues, rawValues = filterRemoving ? [] : rawInputValue.split(valuesDelimiter), serverColumnCfg = serverConfig.columns[columnId], columnFilterCfg = serverColumnCfg.filter, columnFilterCfgInt = Number(columnFilterCfg), columnFilterCfgIsInt = columnFilterCfg === columnFilterCfgInt, allowedOperators = (columnFilterCfgIsInt && this.columnsAllowedOperators.has(columnId)
                                 ? this.columnsAllowedOperators.get(columnId)
-                                : this.defaultAllowedOperators), columnAllowNullFilter = columnFilterCfgIsInt && ((columnFilterCfgInt & AgGrids.Enums.FilteringMode.ALLOW_NULL) != 0), filterValues, filterOperatorValues, operatorsAndPrefixes, filtering = this.grid.GetFiltering(), valueIsStringNull, operator, operatorCfg;
+                                : this.defaultAllowedOperators), columnAllowNullFilter = columnFilterCfgIsInt && ((columnFilterCfgInt & AgGrids.Enums.FilteringMode.ALLOW_NULL) != 0), filterValues, filterOperatorValues, operatorsAndPrefixes, filteringBefore = this.grid.GetFiltering(), filteringAfter = this.helpers.CloneFiltering(filteringBefore), valueIsStringNull, operator, operatorCfg;
                             if (!filterRemoving) {
                                 filterValues = new Map();
                                 try {
@@ -266,33 +304,36 @@ var MvcCore;
                                 }
                                 else {
                                     if (!this.multiFiltering || clearAllOther)
-                                        filtering = new Map();
-                                    filtering.set(columnId, filterValues);
+                                        filteringAfter = new Map();
+                                    filteringAfter.set(columnId, filterValues);
                                 }
                             }
-                            var filterHeader = this.grid.GetFilterHeaders().get(columnId), filterMenu = this.grid.GetFilterMenus().get(columnId), filteringItem;
                             if (filterRemoving) {
                                 if (clearAllOther) {
-                                    filtering = new Map();
+                                    filteringAfter = new Map();
                                 }
                                 else {
-                                    filtering.delete(columnId);
+                                    filteringAfter.delete(columnId);
                                 }
+                            }
+                            return [filterRemoving, filteringAfter];
+                        };
+                        EventsManager.prototype.HandleFilterHeaderChange = function (columnId, filterRemoving, filteringBefore, filteringAfter) {
+                            var filterHeader = this.grid.GetFilterHeaders().get(columnId), filterMenu = this.grid.GetFilterMenus().get(columnId), filteringItem;
+                            if (filterRemoving) {
                                 filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(null);
                                 filterMenu === null || filterMenu === void 0 ? void 0 : filterMenu.SetUpControls(null);
                             }
                             else {
-                                filteringItem = filtering.get(columnId);
+                                filteringItem = filteringAfter.get(columnId);
                                 filterHeader === null || filterHeader === void 0 ? void 0 : filterHeader.SetText(filteringItem);
                                 filterMenu === null || filterMenu === void 0 ? void 0 : filterMenu.SetUpControls(filteringItem);
                             }
-                            this.firefiltering(filtering);
+                            this.firefiltering(filteringBefore, filteringAfter);
                         };
-                        EventsManager.prototype.HandleSortChange = function (columnId, direction) {
+                        EventsManager.prototype.GetNewSorting = function (columnId, direction) {
                             var e_4, _a;
-                            var sortRemoving = direction == null, sortHeaders = this.grid.GetSortHeaders(), newSorting = [], 
-                            //agColumnsState: agGrid.ColumnState[] = [],
-                            oldSorting = [];
+                            var sortRemoving = direction == null, newSorting = [], oldSorting = [];
                             if (sortRemoving) {
                                 oldSorting = this.grid.GetSorting();
                             }
@@ -316,13 +357,17 @@ var MvcCore;
                                 }
                                 finally { if (e_4) throw e_4.error; }
                             }
-                            for (var i = 0, sortColId = '', l = newSorting.length; i < l; i++) {
-                                var _c = __read(newSorting[i], 2), sortColId = _c[0], sortDir = _c[1];
+                            return newSorting;
+                        };
+                        EventsManager.prototype.HandleSortChange = function (sortingBefore, sortingAfter) {
+                            var sortHeaders = this.grid.GetSortHeaders(), columnId;
+                            for (var i = 0, sortColId = '', l = sortingAfter.length; i < l; i++) {
+                                var _a = __read(sortingAfter[i], 1), sortColId = _a[0];
                                 if (sortColId === columnId)
                                     continue;
                                 sortHeaders.get(sortColId).SetSequence(i);
                             }
-                            this.grid.SetSorting(newSorting);
+                            this.grid.SetSorting(sortingAfter);
                             var pageMode = this.grid.GetPageMode();
                             if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
                                 var gridOptionsManager = this.grid.GetOptionsManager().GetAgOptions();
@@ -332,9 +377,7 @@ var MvcCore;
                                 var dataSourceMp = this.grid.GetDataSource();
                                 dataSourceMp.Load();
                             }
-                            this.FireHandlers("sortChange", {
-                                sorting: newSorting
-                            });
+                            this.FireHandlers("sortChange", new AgGrids.EventsManagers.Events.SortChange(sortingBefore, sortingAfter));
                         };
                         EventsManager.prototype.HandleGridSizeChanged = function (viewPort, event) {
                             // get the current grids width
@@ -370,76 +413,114 @@ var MvcCore;
                             window.addEventListener('popstate', function (e) {
                                 if (_this.grid.GetHelpers().IsInstanceOfIServerRequestRaw(e.state))
                                     _this.HandleUrlChange(e);
-                            });
+                            }, true);
                             return this;
                         };
                         EventsManager.prototype.HandleExecChange = function (offset, sorting, filtering) {
                             if (offset === void 0) { offset = 0; }
-                            var dataSource = this.grid.GetDataSource();
+                            var dataSource = this.grid.GetDataSource(), sortingBefore = this.grid.GetSorting(), sortingAfter, filteringBefore = this.grid.GetFiltering(), filteringAfter;
                             if (sorting === false) {
-                                sorting = [];
+                                sortingAfter = [];
                             }
                             else if (sorting == null) {
-                                sorting = this.grid.GetSorting();
+                                sortingAfter = [].slice.apply(sortingBefore);
+                            }
+                            else {
+                                sortingAfter = sorting;
                             }
                             if (filtering === false) {
-                                filtering = new Map();
+                                filteringAfter = new Map();
                             }
                             else if (filtering == null) {
-                                filtering = this.grid.GetFiltering();
+                                filteringAfter = this.helpers.CloneFiltering(filteringBefore);
+                            }
+                            else {
+                                filteringAfter = filtering;
                             }
                             var reqData = {
                                 offset: offset,
                                 limit: this.grid.GetLimit(),
-                                sorting: sorting,
-                                filtering: filtering,
-                            }, reqDataRaw = this.helpers.RetypeRequestMaps2Objects(reqData), oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(this.helpers.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(sorting);
+                                sorting: sortingAfter,
+                                filtering: filteringAfter,
+                            }, reqDataRaw = this.helpers.RetypeRequestMaps2Objects(reqData), offsetBefore = this.grid.GetOffset(), oldFilteringStr = JSON.stringify(this.helpers.RetypeFilteringMap2Obj(filteringBefore)), oldSortingStr = JSON.stringify(sortingBefore), newFilteringStr = JSON.stringify(reqDataRaw.filtering), newSortingStr = JSON.stringify(sortingAfter), offsetChange = offsetBefore !== offset, filteringChange = oldFilteringStr !== newFilteringStr, sortingChange = oldSortingStr !== newSortingStr;
+                            if (offsetChange) {
+                                var pagingAnchorsMaps = this.grid.GetOptionsManager().GetElements().pagingAnchorsMaps;
+                                var offsetPagingAnchor = pagingAnchorsMaps.has(offset)
+                                    ? pagingAnchorsMaps.get(offset)[0]
+                                    : null;
+                                var continueToNextEvents = this.FireHandlers("beforePageChange", new AgGrids.EventsManagers.Events.PageChange(offsetBefore, offset, offsetPagingAnchor));
+                                if (continueToNextEvents === false)
+                                    return;
+                            }
+                            if (filteringChange) {
+                                var continueToNextEvents = this.FireHandlers("beforeFilterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
+                                if (continueToNextEvents === false)
+                                    return;
+                            }
+                            if (sortingChange) {
+                                var continueToNextEvents = this.FireHandlers("beforeSortChange", new AgGrids.EventsManagers.Events.SortChange(sortingBefore, sortingAfter));
+                                if (continueToNextEvents === false)
+                                    return;
+                            }
                             this.grid
                                 .SetOffset(offset)
-                                .SetSorting(sorting)
-                                .SetFiltering(filtering);
+                                .SetSorting(sortingAfter)
+                                .SetFiltering(filteringAfter);
                             this.handleUrlChangeSortsFilters(reqData);
                             dataSource.ExecRequest(reqDataRaw, true);
-                            if (oldOffset !== reqData.offset) {
-                                this.FireHandlers("pageChange", {
-                                    offset: reqData.offset
-                                });
-                            }
-                            if (oldFiltering !== newFiltering) {
-                                this.FireHandlers("filterChange", {
-                                    filtering: reqData.filtering
-                                });
-                            }
-                            if (oldSorting !== newSorting) {
-                                this.FireHandlers("sortChange", {
-                                    sorting: reqData.sorting
-                                });
-                            }
+                            if (offsetChange)
+                                this.FireHandlers("pageChange", new AgGrids.EventsManagers.Events.PageChange(offsetBefore, offset, offsetPagingAnchor));
+                            if (filteringChange)
+                                this.FireHandlers("filterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
+                            if (sortingChange)
+                                this.FireHandlers("sortChange", new AgGrids.EventsManagers.Events.SortChange(sortingBefore, sortingAfter));
                         };
                         EventsManager.prototype.HandleUrlChange = function (e) {
-                            var dataSource = this.grid.GetDataSource(), reqDataRaw = e.state, oldOffset = this.grid.GetOffset(), oldFiltering = JSON.stringify(this.helpers.RetypeFilteringMap2Obj(this.grid.GetFiltering())), oldSorting = JSON.stringify(this.grid.GetSorting()), newFiltering = JSON.stringify(reqDataRaw.filtering), newSorting = JSON.stringify(reqDataRaw.sorting), reqData = this.helpers.RetypeRequestObjects2Maps(reqDataRaw);
+                            var dataSource = this.grid.GetDataSource(), sortingBefore = this.grid.GetSorting(), filteringBefore = this.grid.GetFiltering(), reqDataRaw = e.state, reqData = this.helpers.RetypeRequestObjects2Maps(reqDataRaw), offsetBefore = this.grid.GetOffset(), offsetAfter = reqData.offset, oldFilteringStr = JSON.stringify(this.helpers.RetypeFilteringMap2Obj(filteringBefore)), oldSortingStr = JSON.stringify(sortingBefore), sortingAfter = reqData.sorting, filteringAfter = reqData.filtering, newFilteringStr = JSON.stringify(reqDataRaw.filtering), newSortingStr = JSON.stringify(sortingAfter), offsetChange = offsetBefore !== offsetAfter, filteringChange = oldFilteringStr !== newFilteringStr, sortingChange = oldSortingStr !== newSortingStr;
+                            var continueToNextEvents = this.FireHandlers("beforeHistoryChange", new AgGrids.EventsManagers.Events.HistoryChange(offsetBefore, offsetAfter, sortingBefore, sortingAfter, filteringBefore, filteringAfter));
+                            if (continueToNextEvents === false) {
+                                var dataSource = this.grid.GetDataSource();
+                                var _a = __read(dataSource.GetLastHistory(), 4), stateData = _a[0], url = _a[1], page = _a[2], count = _a[3];
+                                dataSource.BrowserHistoryPush(stateData, url, page, count);
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return;
+                            }
+                            if (offsetChange) {
+                                var pagingAnchorsMaps = this.grid.GetOptionsManager().GetElements().pagingAnchorsMaps;
+                                var offsetPagingAnchor = pagingAnchorsMaps.has(offsetAfter)
+                                    ? pagingAnchorsMaps.get(offsetAfter)[0]
+                                    : null;
+                                var continueToNextEvents = this.FireHandlers("beforePageChange", new AgGrids.EventsManagers.Events.PageChange(offsetBefore, offsetAfter, offsetPagingAnchor));
+                                if (continueToNextEvents === false)
+                                    return;
+                            }
+                            if (filteringChange) {
+                                var continueToNextEvents = this.FireHandlers("beforeFilterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
+                                if (continueToNextEvents === false)
+                                    return;
+                            }
+                            if (sortingChange) {
+                                var continueToNextEvents = this.FireHandlers("beforeSortChange", new AgGrids.EventsManagers.Events.SortChange(sortingBefore, sortingAfter));
+                                if (continueToNextEvents === false)
+                                    return;
+                            }
                             this.grid
-                                .SetOffset(reqData.offset)
-                                .SetSorting(reqData.sorting)
-                                .SetFiltering(reqData.filtering);
+                                .SetOffset(offsetAfter)
+                                .SetSorting(sortingAfter)
+                                .SetFiltering(filteringAfter);
                             this.handleUrlChangeSortsFilters(reqData);
                             dataSource.ExecRequest(reqDataRaw, false);
                             this.grid.GetColumnsVisibilityMenu().UpdateFormAction(reqDataRaw.path);
-                            if (oldOffset !== reqData.offset) {
-                                this.FireHandlers("pageChange", {
-                                    offset: reqData.offset
-                                });
-                            }
-                            if (oldFiltering !== newFiltering) {
-                                this.FireHandlers("filterChange", {
-                                    filtering: reqData.filtering
-                                });
-                            }
-                            if (oldSorting !== newSorting) {
-                                this.FireHandlers("sortChange", {
-                                    sorting: reqData.sorting
-                                });
-                            }
+                            var continueToNextEvents = this.FireHandlers("historyChange", new AgGrids.EventsManagers.Events.HistoryChange(offsetBefore, offsetAfter, sortingBefore, sortingAfter, filteringBefore, filteringAfter));
+                            if (continueToNextEvents === false)
+                                return;
+                            if (offsetChange)
+                                this.FireHandlers("pageChange", new AgGrids.EventsManagers.Events.PageChange(offsetBefore, offsetAfter, offsetPagingAnchor));
+                            if (filteringChange)
+                                this.FireHandlers("filterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
+                            if (sortingChange)
+                                this.FireHandlers("sortChange", new AgGrids.EventsManagers.Events.SortChange(sortingBefore, sortingAfter));
                         };
                         EventsManager.prototype.HandleResponseLoaded = function (response, selectFirstRow) {
                             var e_5, _a, e_6, _b, e_7, _c;
@@ -508,10 +589,10 @@ var MvcCore;
                             if (selectFirstRow)
                                 this.SelectRowByIndex(0);
                         };
-                        EventsManager.prototype.firefiltering = function (filtering) {
+                        EventsManager.prototype.firefiltering = function (filteringBefore, filteringAfter) {
                             this.grid
                                 .SetOffset(0)
-                                .SetFiltering(filtering)
+                                .SetFiltering(filteringAfter)
                                 .SetTotalCount(null);
                             var pageMode = this.grid.GetPageMode();
                             if ((pageMode & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
@@ -524,9 +605,7 @@ var MvcCore;
                                 var dataSourceMp = this.grid.GetDataSource();
                                 dataSourceMp.Load();
                             }
-                            this.FireHandlers("filterChange", {
-                                filtering: filtering
-                            });
+                            this.FireHandlers("filterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
                             return this;
                         };
                         EventsManager.prototype.handleColumnChangesSent = function () {

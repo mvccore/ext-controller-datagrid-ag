@@ -145,23 +145,42 @@ var MvcCore;
                                 this.direction = null;
                             };
                             SortHeader.prototype.handleContClick = function (e) {
-                                this.grid.GetColumnsVisibilityMenu().Hide();
                                 if (this.params.renderRemove) {
                                     this.switchDirectionByTwoStates();
                                 }
                                 else {
                                     this.switchDirectionByThreeStates();
                                 }
-                                this.grid.GetEvents().HandleSortChange(this.columnId, this.direction);
+                                var eventsManager = this.grid.GetEvents(), sortingBefore = this.grid.GetSorting(), sortingAfter = eventsManager.GetNewSorting(this.columnId, this.direction);
+                                var continueToNextEvent = eventsManager.FireHandlers("beforeSortChange", new AgGrids.EventsManagers.Events.SortChange(sortingBefore, sortingAfter));
+                                if (continueToNextEvent === false)
+                                    return;
+                                this.grid.GetColumnsVisibilityMenu().Hide();
+                                if (this.params.renderRemove) {
+                                    this.setSortActive();
+                                }
+                                else {
+                                    if (this.direction == null) {
+                                        this.setSortInactive();
+                                    }
+                                    else {
+                                        this.setSortActive();
+                                    }
+                                }
+                                eventsManager.HandleSortChange(sortingBefore, sortingAfter);
                             };
                             SortHeader.prototype.handleRemoveClick = function (e) {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 e.cancelBubble = true;
+                                var eventsManager = this.grid.GetEvents(), sortingBefore = this.grid.GetSorting(), sortingAfter = eventsManager.GetNewSorting(this.columnId, null);
+                                var continueToNextEvent = eventsManager.FireHandlers("beforeSortChange", new AgGrids.EventsManagers.Events.SortChange(sortingBefore, sortingAfter));
+                                if (continueToNextEvent === false)
+                                    return;
                                 this.grid.GetColumnsVisibilityMenu().Hide();
                                 this.direction = null;
                                 this.setSortInactive();
-                                this.grid.GetEvents().HandleSortChange(this.columnId, this.direction);
+                                this.grid.GetEvents().HandleSortChange(sortingBefore, sortingAfter);
                             };
                             SortHeader.prototype.switchDirectionByTwoStates = function () {
                                 if (this.direction == null || this.direction === 0) {
@@ -170,13 +189,11 @@ var MvcCore;
                                 else if (this.direction === 1) {
                                     this.direction = 0;
                                 }
-                                this.setSortActive();
                                 return this;
                             };
                             SortHeader.prototype.switchDirectionByThreeStates = function () {
                                 if (this.direction === 0) {
                                     this.direction = null;
-                                    this.setSortInactive();
                                 }
                                 else {
                                     if (this.direction === 1) {
@@ -185,7 +202,6 @@ var MvcCore;
                                     else {
                                         this.direction = 1;
                                     }
-                                    this.setSortActive();
                                 }
                                 return this;
                             };

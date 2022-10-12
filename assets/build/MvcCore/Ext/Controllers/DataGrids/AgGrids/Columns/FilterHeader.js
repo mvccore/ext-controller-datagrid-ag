@@ -145,7 +145,11 @@ var MvcCore;
                                 this.stopEvent(e);
                                 var value = this.elms.input.value;
                                 if (e.key === 'Enter') {
-                                    this.grid.GetEvents().HandleFilterHeaderChange(this.columnId, value);
+                                    var eventsManager = this.grid.GetEvents(), filteringBefore = this.grid.GetFiltering(), _a = __read(eventsManager.GetNewFilteringByHeader(this.columnId, value), 2), filterRemoving = _a[0], filteringAfter = _a[1];
+                                    var continueToNextEvent = eventsManager.FireHandlers("beforeFilterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
+                                    if (continueToNextEvent === false)
+                                        return;
+                                    eventsManager.HandleFilterHeaderChange(this.columnId, filterRemoving, filteringBefore, filteringAfter);
                                 }
                                 else {
                                     if (value == null || (value.trim() === '')) {
@@ -170,16 +174,24 @@ var MvcCore;
                             };
                             FilterHeader.prototype.handleRemove = function (e) {
                                 this.stopEvent(e);
+                                var eventsManager = this.grid.GetEvents(), filteringBefore = this.grid.GetFiltering(), _a = __read(eventsManager.GetNewFilteringByHeader(this.columnId, null), 2), filterRemoving = _a[0], filteringAfter = _a[1];
+                                var continueToNextEvent = eventsManager.FireHandlers("beforeFilterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
+                                if (continueToNextEvent === false)
+                                    return;
                                 this.elms.input.value = '';
-                                this.grid.GetEvents().HandleFilterHeaderChange(this.columnId, null);
+                                eventsManager.HandleFilterHeaderChange(this.columnId, filterRemoving, filteringBefore, filteringAfter);
                             };
                             FilterHeader.prototype.handleChange = function (e) {
                                 var _this = this;
                                 this.stopEvent(e);
                                 if (this.handlers.changeDelayTimeout)
                                     clearTimeout(this.handlers.changeDelayTimeout);
-                                setTimeout(function () {
-                                    _this.grid.GetEvents().HandleFilterHeaderChange(_this.columnId, _this.elms.input.value.trim());
+                                this.handlers.changeDelayTimeout = setTimeout(function () {
+                                    var eventsManager = _this.grid.GetEvents(), filteringBefore = _this.grid.GetFiltering(), _a = __read(eventsManager.GetNewFilteringByHeader(_this.columnId, _this.elms.input.value.trim()), 2), filterRemoving = _a[0], filteringAfter = _a[1];
+                                    var continueToNextEvent = eventsManager.FireHandlers("beforeFilterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
+                                    if (continueToNextEvent === false)
+                                        return;
+                                    eventsManager.HandleFilterHeaderChange(_this.columnId, filterRemoving, filteringBefore, filteringAfter);
                                 }, this.params.submitDelayMs);
                             };
                             FilterHeader.prototype.stopEvent = function (e) {

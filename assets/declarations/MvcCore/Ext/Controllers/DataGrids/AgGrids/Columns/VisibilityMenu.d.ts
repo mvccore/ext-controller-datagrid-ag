@@ -28,6 +28,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
         protected handlers: {
             handleDocumentClick?: (e: MouseEvent) => void;
             handleFormClick?: (e: MouseEvent) => void;
+            handleFormSubmit?: (e: MouseEvent) => void;
         };
         constructor(grid: AgGrid);
         Hide(): this;
@@ -40,6 +41,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
         protected addShownEvents(): this;
         protected handleDocumentClick(e: MouseEvent): void;
         protected handleFormClick(e: MouseEvent): void;
+        protected handleFormSubmit(e: Event): void;
         protected initElements(): this;
         protected initFormElements(): this;
         protected initFormControls(): this;

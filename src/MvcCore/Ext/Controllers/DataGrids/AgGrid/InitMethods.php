@@ -193,6 +193,12 @@ trait InitMethods {
 						$reqParams[$this->ajaxParamsNames[self::AJAX_PARAM_FILTERING]],
 						$reqParams[$this->ajaxParamsNames[self::AJAX_PARAM_CACHE_BUSTER]]
 					);
+					if ($this->router instanceof \MvcCore\Ext\Routers\IExtended) {
+						$router = $this->router;
+						unset($reqParams[$router::URL_PARAM_ADMIN_REQUEST]);
+						unset($dataUrlParsedParams[$router::URL_PARAM_ADMIN_REQUEST]);
+						$dataUrlParsedParamsCount = count($dataUrlParsedParams);
+					}
 					if (($this->dataRequestMethod & static::AJAX_DATA_REQUEST_METHOD_JSONP) != 0)
 						unset($reqParams[$this->ajaxParamsNames[self::AJAX_PARAM_CALLBACK]]);
 					if (count($reqParams) > 0) {
@@ -477,6 +483,9 @@ trait InitMethods {
 					} else {
 						continue;
 					}
+				} else {
+					if ($configColumn->GetDisabled())
+						$this->enableColumn($configColumn);
 				}
 				$columnDbName = $configColumn->GetDbColumnName();
 				$columnFilterCfg = $configColumn->GetFilter();

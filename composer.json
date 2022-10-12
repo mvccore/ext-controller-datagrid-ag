@@ -25,12 +25,13 @@
 	"require": {
 		"php": ">=5.4.0",
 		"mvccore/mvccore": "^5.1.38",
-		"mvccore/ext-controller-datagrid": "^5.1.28",
+		"mvccore/ext-controller-datagrid": "^5.1.29",
 		"mvccore/ext-tool-locale": "^5.0.2",
 		"mvccore/ext-tool-collections": "^5.0.1"
 	},
 	"suggest": {
 		"mvccore/ext-model-db-*": "MvcCore model extension to work with database SQL queries in more comfortable API.",
+		"mvccore/ext-tool-ts-generator": "MvcCore tools extension to easilly generate TypeScript classes, interfaces or enums from PHP equivalents.",
 		"mvccore/ext-cache-*": "MvcCore cache extensions to speed up operations driven by class anotations."
 	},
 	"autoload": {

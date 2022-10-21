@@ -217,8 +217,9 @@ var MvcCore;
                     AgGrid.prototype.GetColumnsVisibilityMenu = function () {
                         return this.columnsVisibilityMenu;
                     };
-                    AgGrid.prototype.AddEventListener = function (eventName, handler) {
-                        this.eventsManager.AddEventListener(eventName, handler);
+                    AgGrid.prototype.AddEventListener = function (eventName, handler, useTryCatch) {
+                        if (useTryCatch === void 0) { useTryCatch = false; }
+                        this.eventsManager.AddEventListener(eventName, handler, useTryCatch);
                         return this;
                     };
                     AgGrid.prototype.RemoveEventListener = function (eventName, handler) {

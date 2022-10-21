@@ -54,11 +54,12 @@ var MvcCore;
                             Base.prototype.GetAutoSelectFirstRow = function () {
                                 return this.autoSelectFirstRow;
                             };
-                            Base.prototype.AddEventListener = function (eventName, handler) {
+                            Base.prototype.AddEventListener = function (eventName, handler, useTryCatch) {
+                                if (useTryCatch === void 0) { useTryCatch = false; }
                                 var handlers = this.handlers.has(eventName)
                                     ? this.handlers.get(eventName)
                                     : [];
-                                handlers.push(handler);
+                                handlers.push([handler, useTryCatch]);
                                 this.handlers.set(eventName, handlers);
                                 return this;
                             };
@@ -70,9 +71,9 @@ var MvcCore;
                                 var newHandlers = [];
                                 try {
                                     for (var handlers_1 = __values(handlers), handlers_1_1 = handlers_1.next(); !handlers_1_1.done; handlers_1_1 = handlers_1.next()) {
-                                        var handlersItem = handlers_1_1.value;
+                                        var _b = __read(handlers_1_1.value, 2), handlersItem = _b[0], useTryCatchLocal = _b[1];
                                         if (handlersItem !== handler)
-                                            newHandlers.push(handlersItem);
+                                            newHandlers.push([handlersItem, useTryCatchLocal]);
                                     }
                                 }
                                 catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -94,8 +95,21 @@ var MvcCore;
                                 event.SetGrid(this.grid).SetEventName(eventName);
                                 try {
                                     for (var handlers_2 = __values(handlers), handlers_2_1 = handlers_2.next(); !handlers_2_1.done; handlers_2_1 = handlers_2.next()) {
-                                        var handler = handlers_2_1.value;
-                                        try {
+                                        var _b = __read(handlers_2_1.value, 2), handler = _b[0], useTryCatch = _b[1];
+                                        if (useTryCatch) {
+                                            try {
+                                                handler(event);
+                                                if (event.GetStopNextEventsPropagation()) {
+                                                    continueNextEvents = false;
+                                                    break;
+                                                }
+                                                else if (event.GetStopCurrentEventPropagation()) {
+                                                    break;
+                                                }
+                                            }
+                                            catch (e) { }
+                                        }
+                                        else {
                                             handler(event);
                                             if (event.GetStopNextEventsPropagation()) {
                                                 continueNextEvents = false;
@@ -105,7 +119,6 @@ var MvcCore;
                                                 break;
                                             }
                                         }
-                                        catch (e) { }
                                     }
                                 }
                                 catch (e_2_1) { e_2 = { error: e_2_1 }; }

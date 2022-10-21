@@ -40,6 +40,9 @@ trait InitMethods {
 				.'by first `\MvcCore\Ext\Controllers\DataGrid::__construct($controller);` argument.'
 			);
 		}
+		$backtraceItems = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+		if (count($backtraceItems) === 2)
+			$this->creationPlaceImprint = hash('crc32b', serialize($backtraceItems[1]));
 		$controller->AddChildController($this, $childControllerIndex);
 	}
 

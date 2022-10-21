@@ -161,7 +161,7 @@ trait InternalGettersSetters {
 	 */
 	public function GetGridCacheKeyAndTags () {
 		$localization = $this->GetConfigLocales()->GetLocale(TRUE);
-		$cacheKey = "grid_{$this->id}_{$localization}";
+		$cacheKey = "grid_{$this->id}_{$this->creationPlaceImprint}_{$localization}";
 		$cacheTags = ['grid', "grid-{$this->id}"];
 		return [$cacheKey, $cacheTags];
 	}

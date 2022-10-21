@@ -58,7 +58,7 @@ trait PreDispatchMethods {
 	 */
 	public function LoadModel () {
 		if ($this->rowClassIsActiveColumnsModel)
-			$this->setRowModelActiveColumns();
+			$this->SetUpRowModelActiveColumns();
 		parent::LoadModel();
 	}
 	
@@ -66,7 +66,7 @@ trait PreDispatchMethods {
 	 * Set active columns collection into row class.
 	 * @return void
 	 */
-	protected function setRowModelActiveColumns () {
+	public function SetUpRowModelActiveColumns () {
 		$rowFullClassName = $this->GetRowClass();
 		$rowClassPropsFlags = $this->rowClassPropsFlags !== 0
 			? $this->rowClassPropsFlags

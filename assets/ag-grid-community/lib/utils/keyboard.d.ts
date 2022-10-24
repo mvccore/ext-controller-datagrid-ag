@@ -15,3 +15,4 @@ export declare function isEventFromPrintableCharacter(event: KeyboardEvent): boo
 export declare function isUserSuppressingKeyboardEvent(gridOptionsWrapper: GridOptionsWrapper, keyboardEvent: KeyboardEvent, rowNode: RowNode, column: Column, editing: boolean): boolean;
 export declare function isUserSuppressingHeaderKeyboardEvent(gridOptionsWrapper: GridOptionsWrapper, keyboardEvent: KeyboardEvent, headerRowIndex: number, column: Column | ColumnGroup): boolean;
 export declare function normaliseQwertyAzerty(keyboardEvent: KeyboardEvent): string;
+export declare function isDeleteKey(key: string, alwaysReturnFalseOnBackspace?: boolean): boolean;

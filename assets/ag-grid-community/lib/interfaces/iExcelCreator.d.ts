@@ -190,8 +190,6 @@ export interface ExcelColumn {
     bestFit?: boolean;
 }
 export interface ExcelRow {
-    /** Row index. */
-    index?: number;
     /** Collapsed state. */
     collapsed?: boolean;
     /** Hidden state. */

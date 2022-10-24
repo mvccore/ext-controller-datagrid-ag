@@ -304,7 +304,8 @@ export interface ColDef<TData = any> extends AbstractColDef<TData>, IFilterDef {
     rowDrag?: boolean | RowDragCallback<TData>;
     /**
      * A callback that should return a string to be displayed by the `rowDragComp` while dragging a row.
-     * If this callback is not set, the current cell value will be used.
+     * If this callback is not set, the `rowDragText` callback in the `gridOptions` will be used and
+     * if there is no callback in the `gridOptions` the current cell value will be used.
      */
     rowDragText?: (params: IRowDragItem, dragItemCount: number) => string;
     /** `boolean` or `Function`. Set to `true` (or return `true` from function) to allow dragging for native drag and drop. Default: `false` */
@@ -364,7 +365,18 @@ export interface ColDef<TData = any> extends AbstractColDef<TData>, IFilterDef {
     initialSortIndex?: number;
     /**  Array defining the order in which sorting occurs (if sorting is enabled). An array with any of the following in any order `['asc','desc',null]` */
     sortingOrder?: ('asc' | 'desc' | null)[];
-    /** Comparator function for custom sorting. */
+    /**
+     * Override the default sorting order by providing a custom sort comparator.
+     *
+     * - `valueA`, `valueB` are the values to compare.
+     * - `nodeA`,  `nodeB` are the corresponding RowNodes. Useful if additional details are required by the sort.
+     * - `isDescending` - `true` if sort direction is `desc`. Not to be used for inverting the return value as the grid already applies `asc` or `desc` ordering.
+     *
+     * Return:
+     *  - `0`  valueA is the same as valueB
+     *  - `> 0` Sort valueA after valueB
+     *  - `< 0` Sort valueA before valueB
+     */
     comparator?: (valueA: any, valueB: any, nodeA: RowNode<TData>, nodeB: RowNode<TData>, isDescending: boolean) => number;
     /** Set to `true` if you want the unsorted icon to be shown when no sort is applied to this column. Default: `false` */
     unSortIcon?: boolean;

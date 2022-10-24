@@ -90,6 +90,7 @@ export declare class ColumnModel extends BeanStub {
     private displayedColumns;
     private displayedColumnsAndGroupsMap;
     private viewportColumns;
+    private viewportColumnsHash;
     private headerViewportColumns;
     private viewportColumnsCenter;
     private headerViewportColumnsCenter;
@@ -340,6 +341,10 @@ export declare class ColumnModel extends BeanStub {
     isDisplayed(item: IHeaderColumn): boolean;
     private updateOpenClosedVisibilityInColumnGroups;
     getGroupAutoColumns(): Column[] | null;
+    /**
+     * Creates new auto group columns if required
+     * @returns whether auto cols have changed
+     */
     private createGroupAutoColumnsIfNeeded;
     private autoColsEqual;
     private getWidthOfColsInList;

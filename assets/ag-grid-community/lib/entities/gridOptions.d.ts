@@ -2,12 +2,12 @@
  * If you change the GridOptions interface, you must also update PropertyKeys to be consistent. *
  ************************************************************************************************/
 import { ColumnApi } from "../columns/columnApi";
-import { AsyncTransactionsFlushed, BodyScrollEndEvent, BodyScrollEvent, CellClickedEvent, CellContextMenuEvent, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellEditRequestEvent, CellFocusedEvent, CellKeyDownEvent, CellKeyPressEvent, CellMouseDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellValueChangedEvent, ChartCreated, ChartDestroyed, ChartOptionsChanged, ChartRangeSelectionChanged, ColumnAggFuncChangeRequestEvent, ColumnEverythingChangedEvent, ColumnGroupOpenedEvent, ColumnMovedEvent, ColumnPinnedEvent, ColumnPivotChangedEvent, ColumnPivotChangeRequestEvent, ColumnPivotModeChangedEvent, ColumnResizedEvent, ColumnRowGroupChangedEvent, ColumnRowGroupChangeRequestEvent, ColumnValueChangedEvent, ColumnValueChangeRequestEvent, ColumnVisibleEvent, ComponentStateChangedEvent, DisplayedColumnsChangedEvent, DragStartedEvent, DragStoppedEvent, ExpandCollapseAllEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, FirstDataRenderedEvent, FullWidthCellKeyDownEvent, FullWidthCellKeyPressEvent, GridColumnsChangedEvent, GridReadyEvent, GridSizeChangedEvent, ModelUpdatedEvent, NewColumnsLoadedEvent, PaginationChangedEvent, PasteEndEvent, PasteStartEvent, PinnedRowDataChangedEvent, RangeSelectionChangedEvent, RowClickedEvent, RowDataChangedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowDragEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowGroupOpenedEvent, RowSelectedEvent, RowValueChangedEvent, SelectionChangedEvent, SortChangedEvent, ToolPanelVisibleChangedEvent, ViewportChangedEvent, VirtualColumnsChangedEvent, VirtualRowRemovedEvent } from "../events";
+import { AsyncTransactionsFlushed, BodyScrollEndEvent, BodyScrollEvent, CellClickedEvent, CellContextMenuEvent, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellEditRequestEvent, CellFocusedEvent, CellKeyDownEvent, CellKeyPressEvent, CellMouseDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellValueChangedEvent, ChartCreated, ChartDestroyed, ChartOptionsChanged, ChartRangeSelectionChanged, ColumnAggFuncChangeRequestEvent, ColumnEverythingChangedEvent, ColumnGroupOpenedEvent, ColumnMovedEvent, ColumnPinnedEvent, ColumnPivotChangedEvent, ColumnPivotChangeRequestEvent, ColumnPivotModeChangedEvent, ColumnResizedEvent, ColumnRowGroupChangedEvent, ColumnRowGroupChangeRequestEvent, ColumnValueChangedEvent, ColumnValueChangeRequestEvent, ColumnVisibleEvent, ComponentStateChangedEvent, DisplayedColumnsChangedEvent, DragStartedEvent, DragStoppedEvent, ExpandCollapseAllEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, FirstDataRenderedEvent, FullWidthCellKeyDownEvent, FullWidthCellKeyPressEvent, GridColumnsChangedEvent, GridReadyEvent, GridSizeChangedEvent, ModelUpdatedEvent, NewColumnsLoadedEvent, PaginationChangedEvent, PasteEndEvent, PasteStartEvent, PinnedRowDataChangedEvent, RangeSelectionChangedEvent, RowClickedEvent, RowDataChangedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowDragEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowGroupOpenedEvent, RowSelectedEvent, RowValueChangedEvent, SelectionChangedEvent, SortChangedEvent, ToolPanelSizeChangedEvent, ToolPanelVisibleChangedEvent, ViewportChangedEvent, VirtualColumnsChangedEvent, VirtualRowRemovedEvent } from "../events";
 import { GridApi } from "../gridApi";
 import { HeaderPosition } from "../headerRendering/common/headerPosition";
 import { CsvExportParams, ProcessCellForExportParams, ProcessGroupHeaderForExportParams, ProcessHeaderForExportParams } from "../interfaces/exportParams";
 import { AgChartTheme, AgChartThemeOverrides } from "../interfaces/iAgChartOptions";
-import { ChartMenuOptions } from "../interfaces/iChartOptions";
+import { ChartMenuOptions, ChartToolPanelsDef } from "../interfaces/iChartOptions";
 import { AgGridCommon } from "../interfaces/iCommon";
 import { IDatasource } from "../interfaces/iDatasource";
 import { ExcelExportParams, ExcelStyle } from "../interfaces/iExcelCreator";
@@ -15,6 +15,7 @@ import { RowModelType } from "../interfaces/iRowModel";
 import { IServerSideDatasource } from "../interfaces/iServerSideDatasource";
 import { StatusPanelDef } from "../interfaces/iStatusPanel";
 import { IViewportDatasource } from "../interfaces/iViewportDatasource";
+import { IRowDragItem } from "../rendering/row/rowDragComp";
 import { ILoadingCellRendererParams } from "../rendering/cellRenderers/loadingCellRenderer";
 import { CellPosition } from "./cellPosition";
 import { ColDef, ColGroupDef, IAggFunc, SuppressKeyboardEventParams } from "./colDef";
@@ -57,7 +58,7 @@ export interface GridOptions<TData = any> {
     /** Set to `true` to have tooltips follow the cursor once they are displayed. Default: `false`  */
     tooltipMouseTrack?: boolean;
     /** DOM element to use as the popup parent for grid popups (context menu, column menu etc). */
-    popupParent?: HTMLElement;
+    popupParent?: HTMLElement | null;
     /** Set to `true` to also include headers when copying to clipboard using `Ctrl + C` clipboard. Default: `false` */
     copyHeadersToClipboard?: boolean;
     /** Set to `true` to also include group headers when copying to clipboard using `Ctrl + C` clipboard. Default: `false` */
@@ -183,6 +184,8 @@ export interface GridOptions<TData = any> {
      * Default: `false`
      */
     enterMovesDownAfterEdit?: boolean;
+    /** Forces Cell Editing to start when backspace is pressed. This is only relevant for MacOS users. */
+    enableCellEditingOnBackspace?: boolean;
     /** Set to `true` to enable Undo / Redo while editing. */
     undoRedoCellEditing?: boolean;
     /** Set the size of the undo / redo stack. Default: `10` */
@@ -217,6 +220,10 @@ export interface GridOptions<TData = any> {
     };
     /** Chart theme overrides applied to all themes. */
     chartThemeOverrides?: AgChartThemeOverrides;
+    /** Set to `true` to show the Chart Tool Panels button. Note this will also remove the 'hamburger' menu option from the Chart Toolbar and always display the remaining toolbar buttons. Default: `false` */
+    enableChartToolPanelsButton?: boolean;
+    /** Allows customisation of the Chart Tool Panels, such as changing the tool panels visibility and order, as well as choosing which charts should be displayed in the settings panel. */
+    chartToolPanelsDef?: ChartToolPanelsDef;
     /**
     * Provide your own loading cell renderer to use when data is loading via a DataSource.
     * See [Loading Cell Renderer](https://www.ag-grid.com/javascript-data-grid/component-loading-cell-renderer/) for framework specific implementation details.
@@ -251,8 +258,6 @@ export interface GridOptions<TData = any> {
     detailRowHeight?: number;
     /** Set to `true` to have the detail grid dynamically change it's height to fit it's rows. */
     detailRowAutoHeight?: boolean;
-    /** Set to `true` to keep open Group Rows visible at the top of the grid. Default: `false`.*/
-    groupRowsSticky?: boolean;
     /** Provides a context object that is provided to different callbacks the grid uses. Used for passing additional information to the callbacks by your application. */
     context?: any;
     /** A list of grids to treat as Aligned Grids. If grids are aligned then the columns and horizontal scrolling will be kept in sync. */
@@ -409,6 +414,13 @@ export interface GridOptions<TData = any> {
     /** Set to `true` to enable dragging multiple rows at the same time. Default: `false` */
     rowDragMultiRow?: boolean;
     /**
+     * A callback that should return a string to be displayed by the `rowDragComp` while dragging a row.
+     * If this callback is not set, the current cell value will be used.
+     * If the `rowDragText` callback is set in the ColDef it will take precedence over this, except when
+     * `rowDragEntireRow=true`.
+     */
+    rowDragText?: (params: IRowDragItem, dragItemCount: number) => string;
+    /**
     * Provide your own cell renderer component to use for full width rows.
     * See [Full Width Rows](https://www.ag-grid.com/javascript-data-grid/full-width-rows/) for framework specific implementation details.
     */
@@ -479,6 +491,10 @@ export interface GridOptions<TData = any> {
     suppressMakeColumnVisibleAfterUnGroup?: boolean;
     /** Set to `true` to enable the Grid to work with Tree Data. You must also implement the `getDataPath(data)` callback. */
     treeData?: boolean;
+    /** Set to `true` to suppress sort indicators and actions from the row group panel. Default: `false`. */
+    rowGroupPanelSuppressSort?: boolean;
+    /** Set to `true` to keep open Group Rows visible at the top of the grid. Default: `false`.*/
+    groupRowsSticky?: boolean;
     /** @deprecated - this is now groupRowRendererParams.innerRenderer */
     groupRowInnerRenderer?: any;
     /** @deprecated - this is now groupRowRendererParams.innerRenderer */
@@ -673,7 +689,9 @@ export interface GridOptions<TData = any> {
     columnHoverHighlight?: boolean;
     deltaSort?: boolean;
     treeDataDisplayType?: TreeDataDisplayType;
+    /** @deprecated  */
     angularCompileRows?: boolean;
+    /** @deprecated  */
     angularCompileFilters?: boolean;
     functionsPassive?: boolean;
     enableGroupEdit?: boolean;
@@ -794,6 +812,8 @@ export interface GridOptions<TData = any> {
     isFullWidthRow?: (params: IsFullWidthRowParams<TData>) => boolean;
     /** The tool panel was hidden or shown. Use `api.isToolPanelShowing()` to get status. */
     onToolPanelVisibleChanged?(event: ToolPanelVisibleChangedEvent<TData>): void;
+    /** The tool panel size has been changed. */
+    onToolPanelSizeChanged?(event: ToolPanelSizeChangedEvent<TData>): void;
     /** Paste operation has started. */
     onPasteStart?(event: PasteStartEvent<TData>): void;
     /** Paste operation has ended. */

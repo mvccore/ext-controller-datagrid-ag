@@ -15,11 +15,13 @@ import { CsvExportParams, ProcessCellForExportParams } from "./interfaces/export
 import { AgChartThemeOverrides } from "./interfaces/iAgChartOptions";
 import { ICellEditor } from "./interfaces/iCellEditor";
 import { ChartType, CrossFilterChartType, SeriesChartType } from "./interfaces/iChartOptions";
-import { ChartModel, GetChartImageDataUrlParams } from "./interfaces/IChartService";
+import { ChartDownloadParams, OpenChartToolPanelParams, CloseChartToolPanelParams, ChartModel, GetChartImageDataUrlParams } from './interfaces/IChartService';
 import { IClipboardCopyParams, IClipboardCopyRowsParams } from "./interfaces/iClipboardService";
+import { IColumnToolPanel } from "./interfaces/iColumnToolPanel";
 import { IDatasource } from "./interfaces/iDatasource";
 import { ExcelExportMultipleSheetParams, ExcelExportParams } from "./interfaces/iExcelCreator";
 import { IFilter } from "./interfaces/iFilter";
+import { IFiltersToolPanel } from "./interfaces/iFiltersToolPanel";
 import { CellRange, CellRangeParams } from "./interfaces/IRangeService";
 import { IRowModel } from "./interfaces/iRowModel";
 import { IServerSideDatasource } from "./interfaces/iServerSideDatasource";
@@ -205,7 +207,7 @@ export declare class GridApi<TData = any> {
     getMultipleSheetsAsExcel(params: ExcelExportMultipleSheetParams): Blob | undefined;
     /** Downloads an Excel export of multiple sheets in one file. */
     exportMultipleSheetsAsExcel(params: ExcelExportMultipleSheetParams): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: since version 18.x, api.setEnterpriseDatasource() should be replaced with api.setServerSideDatasource() */
     setEnterpriseDatasource(datasource: IServerSideDatasource): void;
     /**
      * Sets an ARIA property in the grid panel (element with `role=\"grid\"`), and removes an ARIA property when the value is null.
@@ -229,17 +231,17 @@ export declare class GridApi<TData = any> {
     setViewportDatasource(viewportDatasource: IViewportDatasource): void;
     /** Set the row data. */
     setRowData(rowData: TData[]): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.setFloatingTopRowData() is now api.setPinnedTopRowData() */
     setFloatingTopRowData(rows: any[]): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.setFloatingBottomRowData() is now api.setPinnedBottomRowData() */
     setFloatingBottomRowData(rows: any[]): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.getFloatingTopRowCount() is now api.getPinnedTopRowCount() */
     getFloatingTopRowCount(): number;
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.getFloatingBottomRowCount() is now api.getPinnedBottomRowCount() */
     getFloatingBottomRowCount(): number;
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.getFloatingTopRow() is now api.getPinnedTopRow() */
     getFloatingTopRow(index: number): RowNode | undefined;
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.getFloatingBottomRow() is now api.getPinnedBottomRow() */
     getFloatingBottomRow(index: number): RowNode | undefined;
     /** Set the top pinned rows. Call with no rows / undefined to clear top pinned rows. */
     setPinnedTopRowData(rows?: any[]): void;
@@ -314,6 +316,7 @@ export declare class GridApi<TData = any> {
      *  It will work out the final set of 'to be displayed' rows again (i.e. expand or collapse the group visually).
      */
     onGroupExpandedOrCollapsed(deprecated_refreshFromIndex?: any): void;
+    /** @deprecated AG Grid: since version 18.x, api.refreshInMemoryRowModel() should be replaced with api.refreshClientSideRowModel() */
     refreshInMemoryRowModel(step?: string): any;
     /** Gets the Client-Side Row Model to refresh, executing the grouping, filtering and sorting again. */
     refreshClientSideRowModel(step?: string): any;
@@ -339,23 +342,27 @@ export declare class GridApi<TData = any> {
     expandAll(): void;
     /** Collapse all groups. */
     collapseAll(): void;
-    /** Gets the tool panel instance corresponding to the supplied `id`. */
-    getToolPanelInstance(id: string): IToolPanel | undefined;
+    getToolPanelInstance(id: 'columns'): IColumnToolPanel | undefined;
+    getToolPanelInstance(id: 'filters'): IFiltersToolPanel | undefined;
+    getToolPanelInstance<TToolPanel = IToolPanel>(id: string): TToolPanel | undefined;
     addVirtualRowListener(eventName: string, rowIndex: number, callback: Function): void;
     /**
      * Registers a callback to a virtual row.
      * A virtual row is a row that is visually rendered on the screen (rows that are not visible because of the scroll position are not rendered).
      * Unlike normal events, you do not need to unregister rendered row listeners.
      * When the rendered row is removed from the grid, all associated rendered row listeners will also be removed.
-     * Currently supports only one event, `virtualRowRemoved`;
      * listen for this event if your `cellRenderer` needs to do cleanup when the row no longer exists.
      */
     addRenderedRowListener(eventName: string, rowIndex: number, callback: Function): void;
     /** Pass a quick filter text into the grid for filtering. */
     setQuickFilter(newFilter: string): void;
+    /** @deprecated AG Grid: do not use api for selection, call rowNode.setSelected(value) instead */
     selectIndex(index: any, tryMulti: any, suppressEvents: any): void;
+    /** @deprecated AG Grid: do not use api for selection, call rowNode.setSelected(value) instead. */
     deselectIndex(index: number, suppressEvents?: boolean): void;
+    /** @deprecated AG Grid: API for selection is deprecated, call rowNode.setSelected(value) instead. */
     selectNode(node: RowNode, tryMulti?: boolean, suppressEvents?: boolean): void;
+    /** @deprecated AG Grid: API for selection is deprecated, call rowNode.setSelected(value) instead. */
     deselectNode(node: RowNode, suppressEvents?: boolean): void;
     /** Select all rows, regardless of filtering and rows that are not visible due to grouping being enabled and their groups not expanded. */
     selectAll(): void;
@@ -365,6 +372,7 @@ export declare class GridApi<TData = any> {
     selectAllFiltered(): void;
     /** Clear all filtered selections. */
     deselectAllFiltered(): void;
+    /** @deprecated recomputeAggregates is deprecated, please call api.refreshClientSideRowModel('aggregate') instead */
     recomputeAggregates(): void;
     /**
      * Sets columns to adjust in size to fit the grid horizontally.
@@ -377,6 +385,7 @@ export declare class GridApi<TData = any> {
     /** Hides the overlay if showing. */
     hideOverlay(): void;
     isNodeSelected(node: any): any;
+    /** @deprecated Use getSelectedNodesById no longer exists, use getSelectedNodes(). */
     getSelectedNodesById(): {
         [nodeId: number]: RowNode<TData>;
     } | null;
@@ -396,6 +405,7 @@ export declare class GridApi<TData = any> {
     getBestCostNodeSelection(): RowNode<TData>[] | undefined;
     /** Retrieve rendered nodes. Due to virtualisation this will contain only the current visible rows and those in the buffer. */
     getRenderedNodes(): RowNode<TData>[];
+    /** @deprecated ensureColIndexVisible(index) no longer supported, use ensureColumnVisible(colKey) instead. */
     ensureColIndexVisible(index: any): void;
     /**
      *  Ensures the column is visible by scrolling the table if needed.
@@ -445,12 +455,12 @@ export declare class GridApi<TData = any> {
      * `key` can be a string field name or a ColDef object (matches on object reference, useful if field names are not unique).
      * If your filter is created asynchronously, `getFilterInstance` will return `null` so you will need to use the `callback` to access the filter instance instead.
      */
-    getFilterInstance(key: string | Column, callback?: (filter: IFilter | null) => void): IFilter | null | undefined;
+    getFilterInstance<TFilter extends IFilter>(key: string | Column, callback?: (filter: TFilter | null) => void): TFilter | null | undefined;
     private getFilterInstanceImpl;
     /** Destroys a filter. Useful to force a particular filter to be created from scratch again. */
     destroyFilter(key: string | Column): void;
     /** Gets the status panel instance corresponding to the supplied `id`. */
-    getStatusPanel(key: string): IStatusPanel | undefined;
+    getStatusPanel<TStatusPanel = IStatusPanel>(key: string): TStatusPanel | undefined;
     getColumnDef(key: string | Column): ColDef<TData> | null;
     /**
      * Returns the current column definitions.
@@ -545,9 +555,7 @@ export declare class GridApi<TData = any> {
     setInitialGroupOrderComparator(initialGroupOrderComparatorFunc: (params: InitialGroupOrderComparatorParams) => number): void;
     setGetChartToolbarItems(getChartToolbarItemsFunc: GetChartToolbarItems): void;
     setPaginationNumberFormatter(paginationNumberFormatterFunc: (params: PaginationNumberFormatterParams) => string): void;
-    /** @deprecated
-     * use setGetServerSideGroupLevelParams instead
-     */
+    /** @deprecated use setGetServerSideGroupLevelParams instead */
     setGetServerSideStoreParams(getServerSideStoreParamsFunc: (params: GetServerSideGroupLevelParamsParams) => ServerSideGroupLevelParams): void;
     setGetServerSideGroupLevelParams(getServerSideGroupLevelParamsFunc: (params: GetServerSideGroupLevelParamsParams) => ServerSideGroupLevelParams): void;
     setIsServerSideGroupOpenByDefault(isServerSideGroupOpenByDefaultFunc: (params: IsServerSideGroupOpenByDefaultParams) => boolean): void;
@@ -575,6 +583,7 @@ export declare class GridApi<TData = any> {
     setSuppressClipboardPaste(value: boolean): void;
     /** Returns `true` if the tool panel is showing, otherwise `false`. */
     isToolPanelShowing(): boolean;
+    /** @deprecated AG Grid - since version 25.1, doLayout was taken out, as it's not needed. The grid responds to grid size changes automatically. */
     doLayout(): void;
     /** Tells the grid to recalculate the row heights. */
     resetRowHeights(): void;
@@ -603,10 +612,12 @@ export declare class GridApi<TData = any> {
     private warnIfDestroyed;
     /** Reset the quick filter cache text on every rowNode. */
     resetQuickFilter(): void;
+    /** @deprecated AG Grid: in v20.1.x, api.getRangeSelections() is gone, please use getCellRanges() instead. */
     getRangeSelections(): any;
     /** Returns the list of selected cell ranges. */
     getCellRanges(): CellRange[] | null;
     camelCaseToHumanReadable(camelCase: string): string | null;
+    /** @deprecated AG Grid: As of version 21.x, range selection changed slightly to allow charting integration. Please call api.addCellRange() instead of api.addRangeSelection() */
     addRangeSelection(deprecatedNoLongerUsed: any): void;
     /** Adds the provided cell range to the selected ranges. */
     addCellRange(params: CellRangeParams): void;
@@ -626,6 +637,12 @@ export declare class GridApi<TData = any> {
     getChartRef(chartId: string): ChartRef | undefined;
     /** Returns a string containing the requested data URL which contains a representation of the chart image. */
     getChartImageDataURL(params: GetChartImageDataUrlParams): string | undefined;
+    /** Downloads the chart image in the browser. */
+    downloadChart(params: ChartDownloadParams): void;
+    /** Open the Chart Tool Panel. */
+    openChartToolPanel(params: OpenChartToolPanelParams): void;
+    /** Close the Chart Tool Panel. */
+    closeChartToolPanel(params: CloseChartToolPanelParams): void;
     /** Used to programmatically create charts from a range. */
     createRangeChart(params: CreateRangeChartParams): ChartRef | undefined;
     /** Used to programmatically create cross filter charts from a range. */
@@ -634,6 +651,8 @@ export declare class GridApi<TData = any> {
     restoreChart(chartModel: ChartModel, chartContainer?: HTMLElement): ChartRef | undefined;
     /** Used to programmatically create pivot charts from a grid. */
     createPivotChart(params: CreatePivotChartParams): ChartRef | undefined;
+    /** Copies data to clipboard by following the same rules as pressing Ctrl+C. */
+    copyToClipboard(params?: IClipboardCopyParams): void;
     /** Copies the selected rows to the clipboard. */
     copySelectedRowsToClipboard(params?: IClipboardCopyRowsParams): void;
     /** Copies the selected ranges to the clipboard. */
@@ -680,23 +699,23 @@ export declare class GridApi<TData = any> {
     applyTransaction(rowDataTransaction: RowDataTransaction<TData>): RowNodeTransaction<TData> | null | undefined;
     /** Sets the `deltaSort` property */
     setDeltaSort(enable: boolean): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: as of v23.1, grid API updateRowData(transaction) is now called applyTransaction(transaction). */
     updateRowData(rowDataTransaction: RowDataTransaction<TData>): RowNodeTransaction<TData> | null | undefined;
     /** Same as `applyTransaction` except executes asynchronously for efficiency. */
     applyTransactionAsync(rowDataTransaction: RowDataTransaction<TData>, callback?: (res: RowNodeTransaction<TData>) => void): void;
     /** Executes any remaining asynchronous grid transactions, if any are waiting to be executed. */
     flushAsyncTransactions(): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: as of v23.1, grid API batchUpdateRowData(transaction, callback) is now called applyTransactionAsync(transaction, callback). */
     batchUpdateRowData(rowDataTransaction: RowDataTransaction<TData>, callback?: (res: RowNodeTransaction<TData>) => void): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: insertItemsAtIndex() is deprecated, use updateRowData(transaction) instead.*/
     insertItemsAtIndex(index: number, items: any[], skipRefresh?: boolean): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: removeItems() is deprecated, use updateRowData(transaction) instead. */
     removeItems(rowNodes: RowNode[], skipRefresh?: boolean): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: addItems() is deprecated, use updateRowData(transaction) instead. */
     addItems(items: any[], skipRefresh?: boolean): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: refreshVirtualPageCache() is now called refreshInfiniteCache(), please call refreshInfiniteCache() instead */
     refreshVirtualPageCache(): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: refreshInfinitePageCache() is now called refreshInfiniteCache(), please call refreshInfiniteCache() instead */
     refreshInfinitePageCache(): void;
     /**
      * Marks all the currently loaded blocks in the cache for reload.
@@ -704,9 +723,9 @@ export declare class GridApi<TData = any> {
      * The old data will continue to be displayed until the new data is loaded.
      */
     refreshInfiniteCache(): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: purgeVirtualPageCache() is now called purgeInfiniteCache(), please call purgeInfiniteCache() instead */
     purgeVirtualPageCache(): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: purgeInfinitePageCache() is now called purgeInfiniteCache(), please call purgeInfiniteCache() instead */
     purgeInfinitePageCache(): void;
     /**
      * Purges the cache.
@@ -715,9 +734,9 @@ export declare class GridApi<TData = any> {
      * Use this to immediately remove the old data from the user.
      */
     purgeInfiniteCache(): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: since version 18.x, api.purgeEnterpriseCache() should be replaced with api.refreshServerSide({purge: true}) */
     purgeEnterpriseCache(route?: string[]): void;
-    /** @deprecated */
+    /** @deprecated AG Grid: since v25.0, api.purgeServerSideCache is deprecated. Please use api.refreshServerSide({purge: true}) instead. */
     purgeServerSideCache(route?: string[]): void;
     /**
      * Refresh a server-side level.
@@ -731,13 +750,17 @@ export declare class GridApi<TData = any> {
     getServerSideStoreState(): ServerSideGroupLevelState[];
     /** Returns info on all server side group levels. */
     getServerSideGroupLevelState(): ServerSideGroupLevelState[];
+    /** @deprecated AG Grid: getVirtualRowCount() is now called getInfiniteRowCount(), please call getInfiniteRowCount() instead */
     getVirtualRowCount(): number | null | undefined;
     /** The row count defines how many rows the grid allows scrolling to. */
     getInfiniteRowCount(): number | undefined;
+    /** @deprecated AG Grid: api.isMaxRowFound is deprecated, please use api.isLastRowIndexKnown() */
     isMaxRowFound(): boolean | undefined;
     /** Returns `true` if grid allows for scrolling past the last row to load more rows, thus providing infinite scroll. */
     isLastRowIndexKnown(): boolean | undefined;
+    /** @deprecated AG Grid: setVirtualRowCount() is now called setInfiniteRowCount(), please call setInfiniteRowCount() instead */
     setVirtualRowCount(rowCount: number, maxRowFound?: boolean): void;
+    /** @deprecated AG Grid: setInfiniteRowCount() is now called setRowCount(), please call setRowCount() instead */
     setInfiniteRowCount(rowCount: number, maxRowFound?: boolean): void;
     /**
      * Sets the `rowCount` and `lastRowIndexKnown` properties.
@@ -747,16 +770,21 @@ export declare class GridApi<TData = any> {
      * Use this method if you add or remove rows into the dataset and need to reset the number of rows or put the data back into 'look for data' mode.
      */
     setRowCount(rowCount: number, maxRowFound?: boolean): void;
+    /** @deprecated AG Grid: getVirtualPageState() is now called getCacheBlockState(), please call getCacheBlockState() instead */
     getVirtualPageState(): any;
+    /** @deprecated getInfinitePageState() is now called getCacheBlockState(), please call getCacheBlockState() instead */
     getInfinitePageState(): any;
     /**
      * Returns an object representing the state of the cache. This is useful for debugging and understanding how the cache is working.
      */
     getCacheBlockState(): any;
+    /** @deprecated  In AG Grid v25.2.0, checkGridSize() was removed, as it was legacy and didn't do anything useful. */
     checkGridSize(): void;
+    /** @deprecated  In AG Grid v12, getFirstRenderedRow() was renamed to getFirstDisplayedRow() */
     getFirstRenderedRow(): number;
     /** Get the index of the first displayed row due to scrolling (includes invisible rendered rows in the buffer). */
     getFirstDisplayedRow(): number;
+    /** @deprecated In AG Grid v12, getLastRenderedRow() was renamed to getLastDisplayedRow() */
     getLastRenderedRow(): number;
     /** Get the index of the last displayed row due to scrolling (includes invisible rendered rows in the buffer). */
     getLastDisplayedRow(): number;

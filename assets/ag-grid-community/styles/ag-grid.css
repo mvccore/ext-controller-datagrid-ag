@@ -15,6 +15,11 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   visibility: hidden !important;
 }
 
+.ag-no-transition {
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
 .ag-drag-handle {
   cursor: -webkit-grab;
   cursor: grab;
@@ -1933,6 +1938,7 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
           flex-direction: row-reverse;
 }
 .ag-rtl .ag-icon-contracted,
+.ag-rtl .ag-icon-expanded,
 .ag-rtl .ag-icon-tree-closed {
   display: block;
   -webkit-transform: rotate(180deg);
@@ -2242,14 +2248,55 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
           justify-content: center;
 }
 
-.ag-chart .ag-chart-menu {
-  opacity: 0;
-  pointer-events: none;
+.ag-chart-menu-hidden:hover .ag-chart-menu {
+  display: block;
 }
 
-.ag-chart-menu-hidden:hover .ag-chart-menu {
-  opacity: 1;
-  pointer-events: all;
+.ag-chart-menu-close {
+  display: none;
+}
+
+.ag-chart .ag-chart-tool-panel-button-enable .ag-chart-menu {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  overflow: auto;
+  top: 5px;
+  gap: 7px;
+  width: auto;
+}
+.ag-ltr .ag-chart .ag-chart-tool-panel-button-enable .ag-chart-menu {
+  right: 10px;
+  -webkit-box-pack: right;
+          justify-content: right;
+}
+.ag-rtl .ag-chart .ag-chart-tool-panel-button-enable .ag-chart-menu {
+  left: 10px;
+  -webkit-box-pack: left;
+          justify-content: left;
+}
+
+.ag-chart-tool-panel-button-enable .ag-chart-menu-close {
+  position: absolute;
+  top: 45%;
+  padding: 0;
+  display: block;
+  cursor: pointer;
+  border: none;
+}
+.ag-ltr .ag-chart-tool-panel-button-enable .ag-chart-menu-close {
+  right: 0px;
+}
+.ag-rtl .ag-chart-tool-panel-button-enable .ag-chart-menu-close {
+  left: 0px;
+}
+.ag-chart-tool-panel-button-enable .ag-chart-menu-close .ag-icon {
+  padding: 9px 0 9px 0;
+}
+.ag-chart-tool-panel-button-enable .ag-icon-menu {
+  display: none;
 }
 
 .ag-charts-font-size-color {

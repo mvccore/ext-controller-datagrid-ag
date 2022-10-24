@@ -13,6 +13,8 @@ import { IDatasource } from './interfaces/iDatasource';
 import { ExcelExportParams } from './interfaces/iExcelCreator';
 import { IServerSideDatasource } from './interfaces/iServerSideDatasource';
 import { IViewportDatasource } from './interfaces/iViewportDatasource';
+import { Column } from './entities/column';
+import { ChartToolPanelsDef } from './interfaces/iChartOptions';
 export interface PropertyChangedEvent extends AgEvent {
     currentValue: any;
     previousValue: any;
@@ -139,6 +141,7 @@ export declare class GridOptionsWrapper {
     isColumnsSortingCoupledToGroup(): boolean;
     isGroupMultiAutoColumn(): boolean;
     isGroupUseEntireRow(pivotMode: boolean): boolean;
+    isRowGroupPanelSuppressSort(): boolean;
     isGroupRowsSticky(): boolean;
     isGroupSuppressAutoColumn(): boolean;
     isGroupRemoveSingleChildren(): boolean;
@@ -157,6 +160,7 @@ export declare class GridOptionsWrapper {
     isSuppressScrollOnNewData(): boolean;
     isSuppressScrollWhenPopupsAreOpen(): boolean;
     isRowDragEntireRow(): boolean;
+    getRowDragText(column?: Column): ((params: import("./main").IRowDragItem, dragItemCount: number) => string) | undefined;
     isSuppressRowDrag(): boolean;
     isRowDragManaged(): boolean;
     isSuppressMoveWhenRowDragging(): boolean;
@@ -184,6 +188,7 @@ export declare class GridOptionsWrapper {
     isEnterMovesDown(): boolean;
     isUndoRedoCellEditing(): boolean;
     getUndoRedoCellEditingLimit(): number | undefined;
+    isEnableCellEditingOnBackspace(): boolean;
     getRowStyle(): import("./entities/gridOptions").RowStyle | undefined;
     getRowClass(): string | string[] | undefined;
     getRowStyleFunc(): ((params: Pick<import("./entities/gridOptions").RowClassParams<any>, "data" | "rowIndex" | "node">) => import("./entities/gridOptions").RowStyle | undefined) | undefined;
@@ -192,7 +197,7 @@ export declare class GridOptionsWrapper {
     isServerSideInfiniteScroll(): boolean;
     getServerSideGroupLevelParamsFunc(): ((params: Pick<import("./entities/iCallbackParams").GetServerSideGroupLevelParamsParams, "level" | "pivotMode" | "parentRowNode" | "rowGroupColumns" | "pivotColumns">) => import("./entities/gridOptions").ServerSideGroupLevelParams) | undefined;
     getCreateChartContainerFunc(): ((params: Pick<import("./entities/gridOptions").ChartRefParams<any>, "chart" | "chartId" | "chartElement" | "destroyChart">) => void) | undefined;
-    getPopupParent(): HTMLElement | undefined;
+    getPopupParent(): HTMLElement | null | undefined;
     getBlockLoadDebounceMillis(): number | undefined;
     getPostProcessPopupFunc(): ((params: Pick<import("./entities/iCallbackParams").PostProcessPopupParams<any>, "type" | "column" | "ePopup" | "rowNode" | "eventSource" | "mouseEvent">) => void) | undefined;
     getPaginationNumberFormatterFunc(): ((params: Pick<import("./entities/iCallbackParams").PaginationNumberFormatterParams<any>, "value">) => string) | undefined;
@@ -211,6 +216,7 @@ export declare class GridOptionsWrapper {
     isImmutableData(): boolean;
     isEnsureDomOrder(): boolean;
     isEnableCharts(): boolean;
+    isEnableChartToolPanelsButton(): boolean;
     getColResizeDefault(): string | undefined;
     isSingleClickEdit(): boolean;
     isSuppressClickEdit(): boolean;
@@ -347,12 +353,13 @@ export declare class GridOptionsWrapper {
     isServerSideSortOnServer(): boolean;
     isServerSideFilterOnServer(): boolean;
     getPostSortFunc(): ((params: Pick<PostSortRowsParams<any>, "nodes">) => void) | undefined;
-    getChartToolbarItemsFunc(): ((params: Pick<import("./entities/iCallbackParams").GetChartToolbarItemsParams<any>, "defaultItems">) => import("./main").ChartMenuOptions[]) | undefined;
+    getChartToolbarItemsFunc(): ((params: Pick<import("./entities/iCallbackParams").GetChartToolbarItemsParams<any>, "defaultItems">) => import("./interfaces/iChartOptions").ChartMenuOptions[]) | undefined;
     getChartThemeOverrides(): AgChartThemeOverrides | undefined;
     getCustomChartThemes(): {
         [name: string]: AgChartTheme;
     } | undefined;
     getChartThemes(): string[];
+    getChartToolPanelsDef(): ChartToolPanelsDef | undefined;
     getClipboardDelimiter(): string;
     setProperty<K extends keyof GridOptions>(key: K, value: GridOptions[K], force?: boolean): void;
     addEventListener(key: string, listener: Function): void;

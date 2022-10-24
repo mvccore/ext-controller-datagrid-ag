@@ -36,9 +36,14 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 var MvcCore;
 (function (MvcCore) {
@@ -253,17 +258,17 @@ var MvcCore;
                                     AgGrids.Enums.Operator.EQUAL, AgGrids.Enums.Operator.NOT_EQUAL
                                 ]; // equal and not equal are allowed for filtering by default
                                 if (allowRanges)
-                                    operators = __spread(operators, [
+                                    operators = __spreadArray(__spreadArray([], __read(operators), false), [
                                         AgGrids.Enums.Operator.LOWER,
                                         AgGrids.Enums.Operator.GREATER,
                                         AgGrids.Enums.Operator.LOWER_EQUAL,
                                         AgGrids.Enums.Operator.GREATER_EQUAL
-                                    ]);
+                                    ], false);
                                 if (allowLikeRight || allowLikeLeft || allowLikeAnywhere)
-                                    operators = __spread(operators, [
+                                    operators = __spreadArray(__spreadArray([], __read(operators), false), [
                                         AgGrids.Enums.Operator.LIKE,
                                         AgGrids.Enums.Operator.NOT_LIKE
-                                    ]);
+                                    ], false);
                                 var urlSegment, multipleValues, likeOperator, regex;
                                 try {
                                     for (var operators_1 = __values(operators), operators_1_1 = operators_1.next(); !operators_1_1.done; operators_1_1 = operators_1.next()) {
@@ -441,7 +446,7 @@ var MvcCore;
                                         }
                                     }
                                 }
-                                return this.MergeObjectsRecursively.apply(this, __spread([target], sources));
+                                return this.MergeObjectsRecursively.apply(this, __spreadArray([target], __read(sources), false));
                             };
                             Helpers.prototype.isObject = function (item) {
                                 return (item && typeof item === 'object' && !Array.isArray(item));

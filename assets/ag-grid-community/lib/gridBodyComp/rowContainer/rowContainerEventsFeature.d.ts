@@ -29,4 +29,6 @@ export declare class RowContainerEventsFeature extends BeanStub {
     private onCtrlAndC;
     private onCtrlAndV;
     private onCtrlAndD;
+    private onCtrlAndZ;
+    private onCtrlAndY;
 }

@@ -143,7 +143,7 @@ export { PopupService, AgPopup } from "./widgets/popupService";
 export { TouchListener, TapEvent, LongTapEvent } from "./widgets/touchListener";
 export { VirtualList, VirtualListModel } from "./widgets/virtualList";
 export { CellRange, CellRangeParams, CellRangeType, RangeSelection, AddRangeSelectionParams, IRangeService, ISelectionHandle, SelectionHandleType, ISelectionHandleFactory } from "./interfaces/IRangeService";
-export { IChartService, ChartModel, GetChartImageDataUrlParams, ChartModelType } from "./interfaces/IChartService";
+export { IChartService, ChartDownloadParams, OpenChartToolPanelParams, CloseChartToolPanelParams, ChartModel, GetChartImageDataUrlParams, ChartModelType, } from './interfaces/IChartService';
 export { IDetailCellRendererParams, GetDetailRowData, GetDetailRowDataParams, IDetailCellRenderer, IDetailCellRendererCtrl } from './interfaces/masterDetail';
 export { CsvExportParams, CsvCell, CsvCellData, CsvCustomContent, ExportParams, PackageFileParams, ProcessCellForExportParams, ProcessHeaderForExportParams, ProcessGroupHeaderForExportParams, ProcessRowGroupForExportParams, ShouldRowBeSkippedParams, BaseExportParams } from "./interfaces/exportParams";
 export { HeaderElement, PrefixedXmlAttributes, XmlElement } from "./interfaces/iXmlFactory";

@@ -5,7 +5,7 @@ import { CellCtrl } from "../rendering/cell/cellCtrl";
 import { RowPinnedType } from "../entities/rowNode";
 export interface IRangeService {
     isEmpty(): boolean;
-    removeAllCellRanges(): void;
+    removeAllCellRanges(silent?: boolean): void;
     getCellRangeCount(cell: CellPosition): number;
     isCellInAnyRange(cell: CellPosition): boolean;
     isCellInSpecificRange(cell: CellPosition, range: CellRange): boolean;
@@ -28,6 +28,7 @@ export interface IRangeService {
     getRangeEndRow(cellRange: CellRange): RowPosition;
     createCellRangeFromCellRangeParams(params: CellRangeParams): CellRange | undefined;
     setCellRanges(cellRanges: CellRange[]): void;
+    clearCellRangeCellValues(): void;
 }
 export interface ISelectionHandle {
     getGui(): HTMLElement;

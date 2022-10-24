@@ -45,6 +45,15 @@ export interface AgGridEvent<TData> extends AgGridCommon<TData>, AgEvent {
 export interface ToolPanelVisibleChangedEvent<TData = any> extends AgGridEvent<TData> {
     source: string | undefined;
 }
+export interface ToolPanelSizeChangedEvent<TData = any> extends AgGridEvent<TData> {
+    type: 'toolPanelSizeChanged';
+    /** True if this is the first change to the Tool Panel size. */
+    started: boolean;
+    /** True if this is the last change to the Tool Panel size. */
+    ended: boolean;
+    /** New width of the ToolPanel component. */
+    width: number;
+}
 export interface ColumnPivotModeChangedEvent<TData = any> extends AgGridEvent<TData> {
 }
 export interface VirtualColumnsChangedEvent<TData = any> extends AgGridEvent<TData> {
@@ -114,14 +123,14 @@ export interface ColumnPanelItemDragStartEvent<TData = any> extends AgGridEvent<
 export interface ColumnPanelItemDragEndEvent<TData = any> extends AgGridEvent<TData> {
 }
 export interface DragEvent<TData = any> extends AgGridEvent<TData> {
-    /** One of {'cell','row','headerCell','toolPanel'} */
-    type: string;
     /** The DOM element that started the event. */
     target: HTMLElement;
 }
 export interface DragStartedEvent<TData = any> extends DragEvent<TData> {
+    type: 'dragStarted';
 }
 export interface DragStoppedEvent<TData = any> extends DragEvent<TData> {
+    type: 'dragStopped';
 }
 export interface CheckboxChangedEvent extends AgEvent {
     id: string;
@@ -391,6 +400,8 @@ export interface CellEditingStoppedEvent<TData = any, TValue = any> extends Cell
     oldValue: any;
     /** The new value after editing */
     newValue: any;
+    /** Property indicating if the value of the editor has changed */
+    valueChanged: boolean;
 }
 export interface CellValueChangedEvent<TData = any, TValue = any> extends CellWithDataEvent<TData, TValue> {
     oldValue: any;

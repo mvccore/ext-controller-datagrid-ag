@@ -4,12 +4,12 @@ export declare const _: {
     camelCaseToHyphen(str: string): string | null;
     hyphenToCamelCase(str: string): string | null;
     capitalise(str: string): string;
-    escapeString(toEscape?: string | null | undefined): string | null;
+    escapeString(toEscape?: string | null | undefined, skipEscapingHtmlChars?: boolean | undefined): string | null;
     camelCaseToHumanText(camelCase: string | undefined): string | null;
     convertToSet<T>(list: T[]): Set<T>;
     sortRowNodesByOrder(rowNodes: import("../main").RowNode<any>[], rowNodeOrder: {
         [id: string]: number;
-    }): void;
+    }): boolean;
     traverseNodesWithKey(nodes: import("../main").RowNode<any>[] | null, callback: (node: import("../main").RowNode<any>, key: string) => void): void;
     iterateObject<T_1>(object: {
         [p: string]: T_1;
@@ -47,6 +47,7 @@ export declare const _: {
     isUserSuppressingKeyboardEvent(gridOptionsWrapper: import("../gridOptionsWrapper").GridOptionsWrapper, keyboardEvent: KeyboardEvent, rowNode: import("../main").RowNode<any>, column: import("../main").Column, editing: boolean): boolean;
     isUserSuppressingHeaderKeyboardEvent(gridOptionsWrapper: import("../gridOptionsWrapper").GridOptionsWrapper, keyboardEvent: KeyboardEvent, headerRowIndex: number, column: import("../main").Column | import("../main").ColumnGroup): boolean;
     normaliseQwertyAzerty(keyboardEvent: KeyboardEvent): string;
+    isDeleteKey(key: string, alwaysReturnFalseOnBackspace?: boolean): boolean;
     createIcon(iconName: string, gridOptionsWrapper: import("../gridOptionsWrapper").GridOptionsWrapper, column: import("../main").Column | null): HTMLElement;
     createIconNoSpan(iconName: string, gridOptionsWrapper: import("../gridOptionsWrapper").GridOptionsWrapper, column?: import("../main").Column | null | undefined, forceCreate?: boolean | undefined): HTMLElement | undefined;
     iconNameClassMap: {

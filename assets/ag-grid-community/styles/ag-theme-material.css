@@ -403,7 +403,9 @@
 }
 
 .ag-theme-material .ag-cell-wrapper > *:not(.ag-cell-value):not(.ag-group-value) {
-  height: min(var(--ag-line-height, 46px), 46px);
+  --ag-internal-calculated-line-height: var(--ag-line-height, ag-param(row-height) - 2px);
+  --ag-internal-padded-row-height: ag-param(row-height) - 2px;
+  height: min(var(--ag-internal-calculated-line-height), var(--ag-internal-padded-row-height));
   display: -webkit-box;
   display: flex;
   -webkit-box-align: center;
@@ -3308,8 +3310,10 @@
 }
 
 .ag-theme-material .ag-cell, .ag-theme-material .ag-full-width-row .ag-cell-wrapper.ag-row-group {
+  --ag-internal-calculated-line-height: var(--ag-line-height, ag-param(row-height) - 2px);
+  --ag-internal-padded-row-height: ag-param(row-height) - 2px;
   border: 1px solid transparent;
-  line-height: min(var(--ag-line-height, 46px), 46px);
+  line-height: min(var(--ag-internal-calculated-line-height), var(--ag-internal-padded-row-height));
   padding-left: 23px;
   padding-right: 23px;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -4506,6 +4510,19 @@
 .ag-theme-material .ag-chart-menu-icon:hover {
   opacity: 1;
 }
+.ag-theme-material .ag-chart-menu-close {
+  background: #fff;
+  background: var(--ag-background-color, #fff);
+}
+.ag-theme-material .ag-chart-menu-close .ag-icon {
+  background: none;
+  border: 1px solid #e2e2e2;
+  border-right: none;
+}
+.ag-theme-material .ag-chart-menu-close .ag-icon:hover {
+  background: #fff;
+  background: var(--ag-header-background-color, #fff);
+}
 .ag-theme-material .ag-chart-mini-thumbnail {
   border: 1px solid;
   border-color: #e2e2e2;
@@ -5015,6 +5032,9 @@
 .ag-theme-material .ag-chart-format-section {
   padding-bottom: 4px;
 }
+.ag-theme-material .ag-chart-menu-close .ag-icon {
+  border: none;
+}
 .ag-theme-material .ag-group-toolbar {
   background-color: rgba(238, 238, 238, 0.5);
 }
@@ -5124,6 +5144,14 @@
 .ag-theme-material .ag-filter-toolpanel-group-level-0-header {
   height: 56px;
 }
+.ag-theme-material .ag-ltr .ag-filter-apply-panel-button {
+  margin-left: var(--ag-grid-size);
+}
+
+.ag-theme-material .ag-rtl .ag-filter-apply-panel-button {
+  margin-right: var(--ag-grid-size);
+}
+
 .ag-theme-material .ag-layout-auto-height .ag-center-cols-clipper, .ag-theme-material .ag-layout-auto-height .ag-center-cols-container, .ag-theme-material .ag-layout-print .ag-center-cols-clipper, .ag-theme-material .ag-layout-print .ag-center-cols-container {
   min-height: 150px;
 }

@@ -1,6 +1,8 @@
 @cd ..
 
-@rmdir .\assets\build /s /q
+@if exist .\assets\build (
+	@rmdir .\assets\build /s /q
+)
 
 call npm update --dev
 @timeout 1
@@ -9,8 +11,12 @@ call npm update --dev
 call npm update --dev
 @timeout 1
 
-@rmdir ..\..\..\assets\build /s /q
-@rmdir ..\..\..\assets\declarations /s /q
+@if exist ..\..\..\assets\build (
+	@rmdir ..\..\..\assets\build /s /q
+)
+@if exist ..\..\..\assets\declarations (
+	@rmdir ..\..\..\assets\declarations /s /q
+)
 
 call npm run build
 @timeout 1

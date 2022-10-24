@@ -1,5 +1,5 @@
 /**
- * ag-grid-community - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue * @version v28.1.1
+ * ag-grid-community - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue * @version v28.2.0
  * @link https://www.ag-grid.com/
 ' * @license MIT
  */
@@ -10,7 +10,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -163,7 +163,7 @@ var GenericUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -209,7 +209,7 @@ var ColumnKeyCreator = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -464,7 +464,7 @@ var ObjectUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -641,7 +641,7 @@ var FunctionUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -954,7 +954,7 @@ function getOrCreateProps(target) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -1134,7 +1134,7 @@ var EventService = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -1173,7 +1173,7 @@ var Constants = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -1221,7 +1221,7 @@ var Constants = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -1284,7 +1284,7 @@ var ModuleRegistry = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -1984,7 +1984,7 @@ var Column = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -2118,7 +2118,7 @@ var ArrayUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -2405,7 +2405,7 @@ var ColumnGroup = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -2572,7 +2572,7 @@ var ProvidedColumnGroup = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -2589,7 +2589,7 @@ var DefaultColumnTypes = {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -2728,7 +2728,7 @@ var EventUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -2866,7 +2866,7 @@ var BeanStub = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -3282,7 +3282,7 @@ var ColumnFactory = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -3342,6 +3342,7 @@ var Events = /** @class */ (function () {
     Events.EVENT_CHART_DESTROYED = 'chartDestroyed';
     /** For when the tool panel is shown / hidden */
     Events.EVENT_TOOL_PANEL_VISIBLE_CHANGED = 'toolPanelVisibleChanged';
+    Events.EVENT_TOOL_PANEL_SIZE_CHANGED = 'toolPanelSizeChanged';
     Events.EVENT_COLUMN_PANEL_ITEM_DRAG_START = 'columnPanelItemDragStart';
     Events.EVENT_COLUMN_PANEL_ITEM_DRAG_END = 'columnPanelItemDragEnd';
     /** Model was updated - grid updates the drawn rows when this happens */
@@ -3350,6 +3351,8 @@ var Events = /** @class */ (function () {
     Events.EVENT_PASTE_END = 'pasteEnd';
     Events.EVENT_FILL_START = 'fillStart';
     Events.EVENT_FILL_END = 'fillEnd';
+    Events.EVENT_KEY_SHORTCUT_CHANGED_CELL_START = 'keyShortcutChangedCellStart';
+    Events.EVENT_KEY_SHORTCUT_CHANGED_CELL_END = 'keyShortcutChangedCellEnd';
     Events.EVENT_CELL_CLICKED = 'cellClicked';
     Events.EVENT_CELL_DOUBLE_CLICKED = 'cellDoubleClicked';
     Events.EVENT_CELL_MOUSE_DOWN = 'cellMouseDown';
@@ -3444,7 +3447,7 @@ var Events = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -3481,7 +3484,7 @@ var GroupInstanceIdCreator = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -3607,11 +3610,19 @@ function hyphenToCamelCase(str) {
 function capitalise(str) {
     return str[0].toUpperCase() + str.substr(1).toLowerCase();
 }
-function escapeString(toEscape) {
+function escapeString(toEscape, skipEscapingHtmlChars) {
+    if (toEscape == null) {
+        return null;
+    }
     // we call toString() twice, in case value is an object, where user provides
     // a toString() method, and first call to toString() returns back something other
     // than a string (eg a number to render)
-    return toEscape == null ? null : toEscape.toString().toString().replace(reUnescapedHtml, function (chr) { return HTML_ESCAPES[chr]; });
+    var stringResult = toEscape.toString().toString();
+    if (skipEscapingHtmlChars) {
+        return stringResult;
+    }
+    // in react we don't need to escape html characters, as it's done by the framework
+    return stringResult.replace(reUnescapedHtml, function (chr) { return HTML_ESCAPES[chr]; });
 }
 /**
  * Converts a camelCase string into regular text
@@ -3639,7 +3650,7 @@ var StringUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -3668,7 +3679,7 @@ var MapUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -3866,7 +3877,7 @@ var ColDefUtil = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -3909,7 +3920,7 @@ var PropertyKeys = /** @class */ (function () {
         'defaultColGroupDef', 'defaultColDef', 'defaultExportParams', 'defaultCsvExportParams', 'defaultExcelExportParams', 'columnTypes',
         'rowClassRules', 'detailCellRendererParams', 'loadingCellRendererParams', 'loadingOverlayComponentParams',
         'noRowsOverlayComponentParams', 'popupParent', 'colResizeDefault', 'statusBar', 'sideBar', 'chartThemeOverrides',
-        'customChartThemes'
+        'customChartThemes', 'chartToolPanelsDef'
     ];
     PropertyKeys.ARRAY_PROPERTIES = [
         'alignedGrids', 'rowData', 'columnDefs', 'excelStyles', 'pinnedTopRowData', 'pinnedBottomRowData', 'chartThemes'
@@ -3944,7 +3955,7 @@ var PropertyKeys = /** @class */ (function () {
         'suppressCsvExport', 'treeData', 'masterDetail', 'suppressMultiRangeSelection', 'enterMovesDownAfterEdit', 'enterMovesDown',
         'suppressPropertyNamesCheck', 'rowMultiSelectWithClick', 'suppressEnterpriseResetOnNewColumns',
         'suppressRowHoverHighlight', 'suppressRowTransform', 'suppressClipboardPaste', 'suppressLastEmptyLineOnPaste',
-        'suppressSetColumnStateEvents', 'suppressColumnStateEvents', 'enableCharts', 'deltaColumnMode',
+        'suppressSetColumnStateEvents', 'suppressColumnStateEvents', 'enableCharts', 'enableChartToolPanelsButton', 'deltaColumnMode',
         'suppressMaintainUnsortedOrder', 'enableCellTextSelection', 'suppressBrowserResizeObserver', 'suppressMaxRenderedRowRestriction',
         'excludeChildrenWhenTreeDataFiltering', 'tooltipMouseTrack', 'keepDetailRows', 'paginateChildRows', 'preventDefaultOnContextMenu',
         'undoRedoCellEditing', 'allowDragFromColumnsToolPanel', 'immutableData', 'immutableColumns', 'pivotSuppressAutoColumn',
@@ -3952,27 +3963,24 @@ var PropertyKeys = /** @class */ (function () {
         'serverSideFilteringAlwaysResets', 'serverSideSortingAlwaysResets', 'serverSideSortAllLevels', 'serverSideFilterAllLevels',
         'serverSideSortOnServer', 'serverSideFilterOnServer', 'suppressAggFilteredOnly', 'showOpenedGroup', 'suppressClipboardApi',
         'suppressModelUpdateAfterUpdateTransaction', 'stopEditingWhenCellsLoseFocus', 'maintainColumnOrder', 'groupMaintainOrder',
-        'columnHoverHighlight', 'reactUi', 'suppressReactUi', 'readOnlyEdit', 'suppressRowVirtualisation',
+        'columnHoverHighlight', 'reactUi', 'suppressReactUi', 'readOnlyEdit', 'suppressRowVirtualisation', 'enableCellEditingOnBackspace',
         'resetRowDataOnUpdate', 'removePivotHeaderRowWhenSingleValueColumn', 'suppressCopySingleCellRanges',
-        'groupRowsSticky', 'serverSideInfiniteScroll'
+        'groupRowsSticky', 'serverSideInfiniteScroll', 'rowGroupPanelSuppressSort',
     ];
     /** You do not need to include event callbacks in this list, as they are generated automatically. */
     PropertyKeys.FUNCTION_PROPERTIES = [
-        'localeTextFunc', 'getLocaleText', 'groupRowInnerRenderer', 'groupRowInnerRendererFramework',
-        'groupRowRenderer', 'groupRowRendererFramework', 'isExternalFilterPresent', 'getRowHeight', 'doesExternalFilterPass',
-        'getRowClass', 'getRowStyle', 'getContextMenuItems', 'getMainMenuItems', 'processRowPostCreate', 'processCellForClipboard',
-        'groupRowAggNodes', 'getGroupRowAgg', 'getRowNodeId', 'isFullWidthCell', 'isFullWidthRow', 'fullWidthCellRenderer', 'fullWidthCellRendererFramework',
-        'processSecondaryColDef', 'processSecondaryColGroupDef', 'processPivotResultColDef', 'processPivotResultColGroupDef',
-        'getBusinessKeyForNode', 'sendToClipboard', 'navigateToNextHeader',
-        'tabToNextHeader', 'navigateToNextCell', 'tabToNextCell', 'processCellFromClipboard', 'getDocument', 'postProcessPopup',
-        'getChildCount', 'getDataPath', 'loadingCellRenderer', 'loadingCellRendererFramework', 'loadingOverlayComponent',
-        'loadingOverlayComponentFramework', 'noRowsOverlayComponent', 'noRowsOverlayComponentFramework', 'detailCellRenderer',
-        'detailCellRendererFramework', 'isRowMaster', 'isRowSelectable', 'postSort', 'postSortRows', 'processHeaderForClipboard', 'processGroupHeaderForClipboard',
-        'paginationNumberFormatter', 'processDataFromClipboard', 'getServerSideGroupKey', 'isServerSideGroup', 'suppressKeyboardEvent',
-        'createChartContainer', 'getChartToolbarItems', 'fillOperation', 'isApplyServerSideTransaction', 'getServerSideStoreParams',
-        'getServerSideGroupLevelParams',
+        'localeTextFunc', 'getLocaleText', 'groupRowInnerRenderer', 'groupRowInnerRendererFramework', 'groupRowRenderer', 'groupRowRendererFramework',
+        'isExternalFilterPresent', 'getRowHeight', 'doesExternalFilterPass', 'getRowClass', 'getRowStyle', 'getContextMenuItems', 'getMainMenuItems',
+        'processRowPostCreate', 'processCellForClipboard', 'groupRowAggNodes', 'getGroupRowAgg', 'getRowNodeId', 'isFullWidthCell', 'isFullWidthRow',
+        'fullWidthCellRenderer', 'fullWidthCellRendererFramework', 'processSecondaryColDef', 'processSecondaryColGroupDef', 'processPivotResultColDef',
+        'processPivotResultColGroupDef', 'getBusinessKeyForNode', 'sendToClipboard', 'navigateToNextHeader', 'tabToNextHeader', 'navigateToNextCell',
+        'tabToNextCell', 'processCellFromClipboard', 'getDocument', 'postProcessPopup', 'getChildCount', 'getDataPath', 'loadingCellRenderer',
+        'loadingCellRendererFramework', 'loadingOverlayComponent', 'loadingOverlayComponentFramework', 'noRowsOverlayComponent', 'noRowsOverlayComponentFramework',
+        'detailCellRenderer', 'detailCellRendererFramework', 'isRowMaster', 'isRowSelectable', 'postSort', 'postSortRows', 'processHeaderForClipboard',
+        'processGroupHeaderForClipboard', 'paginationNumberFormatter', 'processDataFromClipboard', 'getServerSideGroupKey', 'isServerSideGroup', 'suppressKeyboardEvent',
+        'createChartContainer', 'getChartToolbarItems', 'fillOperation', 'isApplyServerSideTransaction', 'getServerSideStoreParams', 'getServerSideGroupLevelParams',
         'isServerSideGroupOpenByDefault', 'isGroupOpenByDefault', 'defaultGroupSortComparator', 'defaultGroupOrderComparator', 'initialGroupOrderComparator',
-        'loadingCellRendererSelector', 'getRowId', 'groupAggFiltering'
+        'loadingCellRendererSelector', 'getRowId', 'groupAggFiltering', 'rowDragText'
     ];
     PropertyKeys.ALL_PROPERTIES = __spread$1(PropertyKeys.ARRAY_PROPERTIES, PropertyKeys.OBJECT_PROPERTIES, PropertyKeys.STRING_PROPERTIES, PropertyKeys.NUMBER_PROPERTIES, PropertyKeys.FUNCTION_PROPERTIES, PropertyKeys.BOOLEAN_PROPERTIES);
     /**
@@ -3987,7 +3995,7 @@ var PropertyKeys = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -4231,6 +4239,8 @@ ComponentUtil.EXCLUDED_INTERNAL_EVENTS = [
     Events.EVENT_COLUMN_PANEL_ITEM_DRAG_END,
     Events.EVENT_FILL_START,
     Events.EVENT_FILL_END,
+    Events.EVENT_KEY_SHORTCUT_CHANGED_CELL_START,
+    Events.EVENT_KEY_SHORTCUT_CHANGED_CELL_END,
     Events.EVENT_FULL_WIDTH_ROW_FOCUSED,
     Events.EVENT_HEADER_HEIGHT_CHANGED,
     Events.EVENT_COLUMN_HEADER_HEIGHT_CHANGED
@@ -4240,7 +4250,7 @@ ComponentUtil.PUBLIC_EVENTS = ComponentUtil.EVENTS.filter(function (e) { return 
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -4334,7 +4344,7 @@ var SideBarDefParser = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -4619,7 +4629,7 @@ var BrowserUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -4721,7 +4731,7 @@ var FuzzyMatchUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -4797,7 +4807,7 @@ var NumberUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -5151,6 +5161,9 @@ var GridOptionsWrapper = /** @class */ (function () {
         return this.gridOptions.groupDisplayType ?
             this.matchesGroupDisplayType('groupRows', this.gridOptions.groupDisplayType) : false;
     };
+    GridOptionsWrapper.prototype.isRowGroupPanelSuppressSort = function () {
+        return isTrue(this.gridOptions.rowGroupPanelSuppressSort);
+    };
     GridOptionsWrapper.prototype.isGroupRowsSticky = function () {
         return isTrue(this.gridOptions.groupRowsSticky);
     };
@@ -5210,6 +5223,15 @@ var GridOptionsWrapper = /** @class */ (function () {
     };
     GridOptionsWrapper.prototype.isRowDragEntireRow = function () {
         return isTrue(this.gridOptions.rowDragEntireRow);
+    };
+    GridOptionsWrapper.prototype.getRowDragText = function (column) {
+        if (column) {
+            var colDef = column.getColDef();
+            if (colDef.rowDragText) {
+                return colDef.rowDragText;
+            }
+        }
+        return this.gridOptions.rowDragText;
     };
     GridOptionsWrapper.prototype.isSuppressRowDrag = function () {
         return isTrue(this.gridOptions.suppressRowDrag);
@@ -5304,6 +5326,9 @@ var GridOptionsWrapper = /** @class */ (function () {
     };
     GridOptionsWrapper.prototype.getUndoRedoCellEditingLimit = function () {
         return toNumber(this.gridOptions.undoRedoCellEditingLimit);
+    };
+    GridOptionsWrapper.prototype.isEnableCellEditingOnBackspace = function () {
+        return isTrue(this.gridOptions.enableCellEditingOnBackspace);
     };
     GridOptionsWrapper.prototype.getRowStyle = function () {
         return this.gridOptions.rowStyle;
@@ -5412,6 +5437,9 @@ var GridOptionsWrapper = /** @class */ (function () {
             return ModuleRegistry.assertRegistered(exports.ModuleNames.GridChartsModule, 'enableCharts');
         }
         return false;
+    };
+    GridOptionsWrapper.prototype.isEnableChartToolPanelsButton = function () {
+        return isTrue(this.gridOptions.enableChartToolPanelsButton);
     };
     GridOptionsWrapper.prototype.getColResizeDefault = function () {
         return this.gridOptions.colResizeDefault;
@@ -5913,6 +5941,9 @@ var GridOptionsWrapper = /** @class */ (function () {
     GridOptionsWrapper.prototype.getChartThemes = function () {
         // return default themes if user hasn't supplied any
         return this.gridOptions.chartThemes || ['ag-default', 'ag-material', 'ag-pastel', 'ag-vivid', 'ag-solar'];
+    };
+    GridOptionsWrapper.prototype.getChartToolPanelsDef = function () {
+        return this.gridOptions.chartToolPanelsDef;
     };
     GridOptionsWrapper.prototype.getClipboardDelimiter = function () {
         return exists(this.gridOptions.clipboardDelimiter) ? this.gridOptions.clipboardDelimiter : '\t';
@@ -6491,7 +6522,7 @@ var GridOptionsWrapper = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -6578,6 +6609,8 @@ var ColumnModel = /** @class */ (function (_super) {
         _this.displayedColumnsAndGroupsMap = {};
         // all columns to be rendered
         _this.viewportColumns = [];
+        // A hash key to keep track of changes in viewport columns
+        _this.viewportColumnsHash = '';
         // same as viewportColumns, except we always include columns with headerAutoHeight
         _this.headerViewportColumns = [];
         // all columns to be rendered in the centre
@@ -7096,7 +7129,7 @@ var ColumnModel = /** @class */ (function (_super) {
         return this.getAllGridColumns().indexOf(col) + 1;
     };
     ColumnModel.prototype.isColumnInHeaderViewport = function (col) {
-        // for headers, we never filter out autoHeaderHeight columns, if calculating 
+        // for headers, we never filter out autoHeaderHeight columns, if calculating
         if (col.isAutoHeaderHeight()) {
             return true;
         }
@@ -9079,6 +9112,7 @@ var ColumnModel = /** @class */ (function (_super) {
         else {
             this.lastSecondaryOrder = this.gridColumns;
         }
+        var sortOrderToRecover = undefined;
         if (this.secondaryColumns && this.secondaryBalancedTree) {
             var hasSameColumns = this.secondaryColumns.every(function (col) {
                 return _this.gridColumnsMap[col.getColId()] !== undefined;
@@ -9091,7 +9125,7 @@ var ColumnModel = /** @class */ (function (_super) {
             // we keep the previous order, otherwise we go back to the order the pivot
             // cols are generated in
             if (hasSameColumns) {
-                this.orderGridColsLike(this.lastSecondaryOrder);
+                sortOrderToRecover = this.lastSecondaryOrder;
             }
         }
         else if (this.primaryColumns) {
@@ -9102,9 +9136,20 @@ var ColumnModel = /** @class */ (function (_super) {
             // updateGridColumns gets called after user adds a row group. we want to maintain the order of the columns
             // when this happens (eg if user moved a column) rather than revert back to the original column order.
             // likewise if changing in/out of pivot mode, we want to maintain the order of the cols
-            this.orderGridColsLike(this.lastPrimaryOrder);
+            sortOrderToRecover = this.lastPrimaryOrder;
+        }
+        // create the new auto columns
+        var areAutoColsChanged = this.createGroupAutoColumnsIfNeeded();
+        // if auto group cols have changed, and we have a sort order, we need to move auto cols to the start
+        if (areAutoColsChanged && sortOrderToRecover) {
+            var groupAutoColsMap_1 = convertToMap(this.groupAutoColumns.map(function (col) { return [col, true]; }));
+            // if group columns has changed, we don't preserve the group column order, so remove them from the old order
+            sortOrderToRecover = sortOrderToRecover.filter(function (col) { return groupAutoColsMap_1.has(col); });
+            // and add them to the start of the order
+            sortOrderToRecover = __spread$4(this.groupAutoColumns, sortOrderToRecover);
         }
         this.addAutoGroupToGridColumns();
+        this.orderGridColsLike(sortOrderToRecover);
         this.gridColumns = this.placeLockedColumns(this.gridColumns);
         this.setupQuickFilterColumns();
         this.clearDisplayedAndViewportColumns();
@@ -9223,8 +9268,6 @@ var ColumnModel = /** @class */ (function (_super) {
         return __spread$4(left, normal, right);
     };
     ColumnModel.prototype.addAutoGroupToGridColumns = function () {
-        // add in auto-group here
-        this.createGroupAutoColumnsIfNeeded();
         if (missing(this.groupAutoColumns)) {
             return;
         }
@@ -9250,6 +9293,7 @@ var ColumnModel = /** @class */ (function (_super) {
         this.displayedColumns = [];
         this.viewportColumns = [];
         this.headerViewportColumns = [];
+        this.viewportColumnsHash = '';
     };
     ColumnModel.prototype.updateGroupsAndDisplayedColumns = function (source) {
         this.updateOpenClosedVisibilityInColumnGroups();
@@ -9434,11 +9478,12 @@ var ColumnModel = /** @class */ (function (_super) {
         testGroup(this.displayedTreeCentre, this.viewportRowCenter, 0);
     };
     ColumnModel.prototype.extractViewport = function () {
-        var hashBefore = this.viewportColumns.map(function (column) { return column.getId(); }).join('#');
+        var hashColumn = function (c) { return c.getId() + "-" + (c.getPinned() || 'normal'); };
         this.extractViewportColumns();
-        var hashAfter = this.viewportColumns.map(function (column) { return column.getId(); }).join('#');
-        var changed = hashBefore !== hashAfter;
+        var newHash = this.viewportColumns.map(hashColumn).join('#');
+        var changed = this.viewportColumnsHash !== newHash;
         if (changed) {
+            this.viewportColumnsHash = newHash;
             this.calculateHeaderRows();
         }
         return changed;
@@ -9687,9 +9732,13 @@ var ColumnModel = /** @class */ (function (_super) {
     ColumnModel.prototype.getGroupAutoColumns = function () {
         return this.groupAutoColumns;
     };
+    /**
+     * Creates new auto group columns if required
+     * @returns whether auto cols have changed
+     */
     ColumnModel.prototype.createGroupAutoColumnsIfNeeded = function () {
         if (!this.autoGroupsNeedBuilding) {
-            return;
+            return false;
         }
         this.autoGroupsNeedBuilding = false;
         var groupFullWidthRow = this.gridOptionsWrapper.isGroupUseEntireRow(this.pivotMode);
@@ -9711,11 +9760,13 @@ var ColumnModel = /** @class */ (function (_super) {
             // definitions. otherwise we could ignore the new cols because they appear to be the same.
             if (autoColsDifferent || this.forceRecreateAutoGroups) {
                 this.groupAutoColumns = newAutoGroupCols;
+                return true;
             }
         }
         else {
             this.groupAutoColumns = null;
         }
+        return false;
     };
     ColumnModel.prototype.autoColsEqual = function (colsA, colsB) {
         return areEqual(colsA, colsB, function (a, b) { return a.getColId() === b.getColId(); });
@@ -9836,7 +9887,7 @@ var ColumnModel = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -9957,7 +10008,7 @@ var ColumnUtils = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -10127,7 +10178,7 @@ var DisplayedGroupCreator = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -10185,7 +10236,7 @@ var AgStackComponentsRegistry = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -10656,7 +10707,7 @@ var Color = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -10746,7 +10797,7 @@ var CsvUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -11196,7 +11247,7 @@ var DomUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -11311,7 +11362,7 @@ var GeneralUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -11478,7 +11529,7 @@ var AriaUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -11617,7 +11668,7 @@ var DateUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -11815,7 +11866,7 @@ var IconUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -11850,7 +11901,7 @@ var KeyCode = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -11967,17 +12018,28 @@ function normaliseQwertyAzerty(keyboardEvent) {
     }
     return code;
 }
+function isDeleteKey(key, alwaysReturnFalseOnBackspace) {
+    if (alwaysReturnFalseOnBackspace === void 0) { alwaysReturnFalseOnBackspace = false; }
+    if (key === KeyCode.DELETE) {
+        return true;
+    }
+    if (!alwaysReturnFalseOnBackspace && key === KeyCode.BACKSPACE) {
+        return isMacOsUserAgent();
+    }
+    return false;
+}
 
 var KeyboardUtils = /*#__PURE__*/Object.freeze({
     isEventFromPrintableCharacter: isEventFromPrintableCharacter,
     isUserSuppressingKeyboardEvent: isUserSuppressingKeyboardEvent,
     isUserSuppressingHeaderKeyboardEvent: isUserSuppressingHeaderKeyboardEvent,
-    normaliseQwertyAzerty: normaliseQwertyAzerty
+    normaliseQwertyAzerty: normaliseQwertyAzerty,
+    isDeleteKey: isDeleteKey
 });
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12005,7 +12067,7 @@ var MouseUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12016,10 +12078,12 @@ var MouseUtils = /*#__PURE__*/Object.freeze({
  * don't have order id's
  * @param {RowNode[]} rowNodes
  * @param {Object} rowNodeOrder
+ *
+ * @returns a boolean representing whether nodes were reordered
  */
 function sortRowNodesByOrder(rowNodes, rowNodeOrder) {
     if (!rowNodes) {
-        return;
+        return false;
     }
     var comparator = function (nodeA, nodeB) {
         var positionA = rowNodeOrder[nodeA.id];
@@ -12064,7 +12128,9 @@ function sortRowNodesByOrder(rowNodes, rowNodeOrder) {
     }
     if (atLeastOneOutOfOrder) {
         rowNodes.sort(comparator);
+        return true;
     }
+    return false;
 }
 function traverseNodesWithKey(nodes, callback) {
     var keyParts = [];
@@ -12093,7 +12159,7 @@ var RowNodeUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12109,7 +12175,7 @@ var SetUtils = /*#__PURE__*/Object.freeze({
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12129,7 +12195,7 @@ var _ = utils;
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12156,7 +12222,7 @@ var NumberSequence = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12218,7 +12284,7 @@ var AgPromise = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12239,7 +12305,7 @@ var Timer = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12463,7 +12529,7 @@ var CustomTooltipFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12528,7 +12594,7 @@ var CssClassManager = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12835,7 +12901,7 @@ var Component = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12896,7 +12962,7 @@ function getOrCreateProps$1(target, instanceName) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -12968,7 +13034,7 @@ var ReadOnlyFloatingFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -13059,7 +13125,7 @@ var DateCompWrapper = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -13161,7 +13227,7 @@ var OptionsFactory = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -13198,7 +13264,7 @@ var DEFAULT_FILTER_LOCALE_TEXT = {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -13292,7 +13358,7 @@ var ManagedFocusFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -13582,7 +13648,7 @@ var ProvidedFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -13708,7 +13774,7 @@ var AgAbstractLabel = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -13773,7 +13839,7 @@ var AgAbstractField = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -13893,7 +13959,7 @@ var AgPickerField = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -14071,7 +14137,7 @@ var AgList = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -14203,7 +14269,7 @@ var AgSelect = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -14316,7 +14382,7 @@ var AgAbstractInputField = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -14811,7 +14877,7 @@ var SimpleFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -14905,7 +14971,7 @@ var ScalarFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -15125,7 +15191,7 @@ var DateFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -15166,12 +15232,12 @@ var SimpleFloatingFilter = /** @class */ (function (_super) {
         if (isCombined) {
             var combinedModel = model;
             var _a = combinedModel || {}, condition1 = _a.condition1, condition2 = _a.condition2;
-            var customOption1 = this.optionsFactory.getCustomOption(condition1.type);
-            var customOption2 = this.optionsFactory.getCustomOption(condition2.type);
+            var customOption1 = this.getTextFromModel(condition1);
+            var customOption2 = this.getTextFromModel(condition2);
             return [
-                this.conditionToString(condition1, customOption1),
+                customOption1,
                 combinedModel.operator,
-                this.conditionToString(condition2, customOption2),
+                customOption2,
             ].join(' ');
         }
         else {
@@ -15260,7 +15326,7 @@ var SimpleFloatingFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -15384,7 +15450,7 @@ var DateFloatingFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -15479,7 +15545,7 @@ var DefaultDateComponent = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -15640,7 +15706,7 @@ var NumberFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -15844,7 +15910,7 @@ var TextFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -15963,7 +16029,7 @@ var TextInputFloatingFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -15993,7 +16059,7 @@ var NumberFloatingFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -16023,7 +16089,7 @@ var TextFloatingFilter = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -16153,7 +16219,7 @@ var TouchListener = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -16309,7 +16375,7 @@ var SortIndicatorComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -16580,7 +16646,7 @@ var HeaderComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -16710,7 +16776,7 @@ var HeaderGroupComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -16752,7 +16818,7 @@ var PopupComponent = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -16821,7 +16887,7 @@ var LargeTextCellEditor = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -16908,7 +16974,7 @@ var SelectCellEditor = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -16940,7 +17006,7 @@ var PopupSelectCellEditor = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -17059,7 +17125,7 @@ var TextCellEditor = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -17091,7 +17157,7 @@ var PopupTextCellEditor = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -17205,7 +17271,7 @@ var AnimateShowChangeCellRenderer = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -17305,7 +17371,7 @@ var AnimateSlideCellRenderer = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -17342,7 +17408,6 @@ var RowNode = /** @class */ (function () {
         this.alreadyRendered = false;
         this.highlighted = null;
         this.selected = false;
-        this.onRowHeightChangedDebounced = debounce(this.onRowHeightChanged.bind(this), 100);
         this.beans = beans;
     }
     /** Replaces the data on the `rowNode`. When complete, the grid will refresh the the entire rendered row if it is showing. */
@@ -17663,18 +17728,9 @@ var RowNode = /** @class */ (function () {
             return;
         }
         this.setRowHeight(newRowHeight);
-        this.onRowHeightChangedDebounced();
-    };
-    /** This method is debounced. It is used for row auto-height. If we don't debounce,
-     * then the Row Models will end up recalculating each row position
-     * for each row height change and result in the Row Renderer laying out rows.
-     * This is particularly bad if using print layout, and showing eg 1,000 rows,
-     * each row will change it's height, causing Row Model to update 1,000 times.
-     */
-    RowNode.prototype.onRowHeightChanged = function () {
         var rowModel = this.beans.rowModel;
-        if (rowModel.onRowHeightChanged) {
-            rowModel.onRowHeightChanged();
+        if (rowModel.onRowHeightChangedDebounced) {
+            rowModel.onRowHeightChangedDebounced();
         }
     };
     RowNode.prototype.setRowIndex = function (rowIndex) {
@@ -18152,7 +18208,7 @@ var RowNode = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -18233,12 +18289,14 @@ var CheckboxSelectionComponent = /** @class */ (function (_super) {
         this.column = params.column;
         this.overrides = params.overrides;
         this.onSelectionChanged();
-        // we don't want the row clicked event to fire when selecting the checkbox, otherwise the row
-        // would possibly get selected twice
-        this.addGuiEventListener('click', function (event) { return stopPropagationForAgGrid(event); });
-        // likewise we don't want double click on this icon to open a group
-        this.addGuiEventListener('dblclick', function (event) { return stopPropagationForAgGrid(event); });
+        // we don't want double click on this icon to open a group
+        this.addManagedListener(this.eCheckbox.getInputElement(), 'dblclick', function (event) {
+            stopPropagationForAgGrid(event);
+        });
         this.addManagedListener(this.eCheckbox.getInputElement(), 'click', function (event) {
+            // we don't want the row clicked event to fire when selecting the checkbox, otherwise the row
+            // would possibly get selected twice
+            stopPropagationForAgGrid(event);
             var isSelected = _this.eCheckbox.getValue();
             var previousValue = _this.eCheckbox.getPreviousValue();
             if (previousValue === undefined || isSelected === undefined) {
@@ -18319,7 +18377,7 @@ var CheckboxSelectionComponent = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -18792,7 +18850,7 @@ var DragAndDropService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -18885,7 +18943,7 @@ var RowDragComp = /** @class */ (function (_super) {
         if (this.dragSource) {
             this.removeDragSource();
         }
-        var rowDragText = this.column && this.column.getColDef().rowDragText;
+        var rowDragText = this.gridOptionsWrapper.getRowDragText(this.column);
         var translate = this.gridOptionsWrapper.getLocaleTextFunc();
         this.dragSource = {
             type: exports.DragSourceType.RowDrag,
@@ -19028,7 +19086,7 @@ var ManagedVisibilityStrategy = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -19592,7 +19650,7 @@ var GroupCellRendererCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -19693,7 +19751,7 @@ var GroupCellRenderer = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -19755,7 +19813,7 @@ var LoadingCellRenderer = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -19795,7 +19853,7 @@ var LoadingOverlayComponent = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -19835,7 +19893,7 @@ var NoRowsOverlayComponent = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -19867,7 +19925,7 @@ var TooltipComponent = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -20077,7 +20135,7 @@ var UserComponentRegistry = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -20152,7 +20210,7 @@ var FullWidthDetail = {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -20179,7 +20237,7 @@ var FloatingFilterMapper = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -20470,7 +20528,7 @@ var UserComponentFactory = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -20481,7 +20539,7 @@ var UserComponentFactory = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -20551,6 +20609,9 @@ var DragService = /** @class */ (function (_super) {
         var suppressTouch = this.gridOptionsWrapper.isSuppressTouch();
         if (includeTouch && !suppressTouch) {
             touchListener = function (touchEvent) {
+                if (isFocusableFormField(touchEvent.target)) {
+                    return;
+                }
                 if (touchEvent.cancelable) {
                     touchEvent.preventDefault();
                 }
@@ -20780,7 +20841,7 @@ var DragService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -21391,7 +21452,7 @@ var FilterManager = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -21423,7 +21484,7 @@ var AbstractHeaderCellComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -21503,7 +21564,7 @@ var HeaderFilterCellComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -21564,7 +21625,7 @@ var LayoutFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -22054,7 +22115,7 @@ var GridBodyScrollFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -22142,7 +22203,7 @@ var AutoScrollService = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -22564,7 +22625,7 @@ var RowDragFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -22943,7 +23004,7 @@ var GridBodyCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -22958,7 +23019,7 @@ var GridBodyCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -23137,7 +23198,7 @@ var CellRangeFeature = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -23287,7 +23348,7 @@ var CellPositionFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -23394,7 +23455,7 @@ var CellCustomStyleFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -23481,7 +23542,7 @@ var TooltipFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -23642,7 +23703,7 @@ var Beans = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -23830,7 +23891,7 @@ var CellMouseListenerFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -23913,9 +23974,24 @@ var CellKeyboardListenerFeature = /** @class */ (function (_super) {
         this.beans.navigationService.onTabKeyDown(this.cellCtrl, event);
     };
     CellKeyboardListenerFeature.prototype.onBackspaceOrDeleteKeyPressed = function (key, event) {
-        if (!this.cellCtrl.isEditing()) {
-            this.cellCtrl.startRowOrCellEdit(key, undefined, event);
+        var _a = this, cellCtrl = _a.cellCtrl, beans = _a.beans, rowNode = _a.rowNode;
+        var gridOptionsWrapper = beans.gridOptionsWrapper, rangeService = beans.rangeService, eventService = beans.eventService;
+        if (cellCtrl.isEditing()) {
+            return;
         }
+        eventService.dispatchEvent({ type: Events.EVENT_KEY_SHORTCUT_CHANGED_CELL_START });
+        if (isDeleteKey(key, gridOptionsWrapper.isEnableCellEditingOnBackspace())) {
+            if (rangeService && gridOptionsWrapper.isEnableRangeSelection()) {
+                rangeService.clearCellRangeCellValues();
+            }
+            else if (cellCtrl.isCellEditable()) {
+                rowNode.setDataValue(cellCtrl.getColumn(), null, 'cellKeyboardListenerFeature');
+            }
+        }
+        else {
+            cellCtrl.startRowOrCellEdit(key, undefined, event);
+        }
+        eventService.dispatchEvent({ type: Events.EVENT_KEY_SHORTCUT_CHANGED_CELL_END });
     };
     CellKeyboardListenerFeature.prototype.onEnterKeyDown = function (e) {
         if (this.cellCtrl.isEditing() || this.rowCtrl.isEditing()) {
@@ -24002,7 +24078,7 @@ var CellKeyboardListenerFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -24088,7 +24164,7 @@ var DndSourceComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -24134,6 +24210,7 @@ var CellCtrl = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this.suppressRefreshCell = false;
         _this.onCellCompAttachedFuncs = [];
+        _this.removeAutoHeightListeners = null;
         _this.column = column;
         _this.rowNode = rowNode;
         _this.beans = beans;
@@ -24205,7 +24282,6 @@ var CellCtrl = /** @class */ (function (_super) {
         this.cellComp = comp;
         this.gow = this.beans.gridOptionsWrapper;
         this.eGui = eGui;
-        this.eCellWrapper = eCellWrapper;
         this.printLayout = printLayout;
         // we force to make sure formatter gets called at least once,
         // even if value has not changed (is is undefined)
@@ -24218,7 +24294,9 @@ var CellCtrl = /** @class */ (function (_super) {
         this.onLastLeftPinnedChanged();
         this.onColumnHover();
         this.setupControlComps();
-        this.setupAutoHeight();
+        if (eCellWrapper) {
+            this.refreshAutoHeight(eCellWrapper);
+        }
         this.setAriaColIndex();
         if (!this.gow.isSuppressCellFocus()) {
             this.cellComp.setTabIndex(-1);
@@ -24244,13 +24322,12 @@ var CellCtrl = /** @class */ (function (_super) {
             this.onCellCompAttachedFuncs = [];
         }
     };
-    CellCtrl.prototype.setupAutoHeight = function () {
+    CellCtrl.prototype.refreshAutoHeight = function (eCellWrapper) {
         var _this = this;
         if (!this.column.isAutoHeight()) {
             return;
         }
-        var eAutoHeightContainer = this.eCellWrapper;
-        var eParentCell = eAutoHeightContainer.parentElement;
+        var eParentCell = eCellWrapper.parentElement;
         // taking minRowHeight from getRowHeightForNode means the getRowHeight() callback is used,
         // thus allowing different min heights for different rows.
         var minRowHeight = this.beans.gridOptionsWrapper.getRowHeightForNode(this.rowNode).height;
@@ -24264,13 +24341,13 @@ var CellCtrl = /** @class */ (function (_super) {
                 return;
             }
             var _a = getElementSize(eParentCell), paddingTop = _a.paddingTop, paddingBottom = _a.paddingBottom;
-            var wrapperHeight = eAutoHeightContainer.offsetHeight;
+            var wrapperHeight = eCellWrapper.offsetHeight;
             var autoHeight = wrapperHeight + paddingTop + paddingBottom;
             if (timesCalled < 5) {
                 // if not in doc yet, means framework not yet inserted, so wait for next VM turn,
                 // maybe it will be ready next VM turn
                 var doc = _this.beans.gridOptionsWrapper.getDocument();
-                var notYetInDom = !doc || !doc.contains(eAutoHeightContainer);
+                var notYetInDom = !doc || !doc.contains(eCellWrapper);
                 // this happens in React, where React hasn't put any content in. we say 'possibly'
                 // as a) may not be React and b) the cell could be empty anyway
                 var possiblyNoContentYet = autoHeight == 0;
@@ -24285,11 +24362,15 @@ var CellCtrl = /** @class */ (function (_super) {
         var listener = function () { return measureHeight(0); };
         // do once to set size in case size doesn't change, common when cell is blank
         listener();
-        var destroyResizeObserver = this.beans.resizeObserverService.observeResize(eAutoHeightContainer, listener);
-        this.addDestroyFunc(function () {
+        var destroyResizeObserver = this.beans.resizeObserverService.observeResize(eCellWrapper, listener);
+        if (this.removeAutoHeightListeners) {
+            this.removeAutoHeightListeners();
+            this.removeAutoHeightListeners = null;
+        }
+        this.removeAutoHeightListeners = function () {
             destroyResizeObserver();
             _this.rowNode.setRowAutoHeight(undefined, _this.column);
-        });
+        };
     };
     CellCtrl.prototype.getInstanceId = function () {
         return this.instanceId;
@@ -24466,12 +24547,13 @@ var CellCtrl = /** @class */ (function (_super) {
         this.cellComp.setEditDetails(); // passing nothing stops editing
         this.updateAndFormatValue();
         this.refreshCell({ forceRefresh: true, suppressFlash: true });
-        this.dispatchEditingStoppedEvent(oldValue, newValue);
+        this.dispatchEditingStoppedEvent(oldValue, newValue, !cancel && !!valueChanged);
         return valueChanged;
     };
-    CellCtrl.prototype.dispatchEditingStoppedEvent = function (oldValue, newValue) {
+    CellCtrl.prototype.dispatchEditingStoppedEvent = function (oldValue, newValue, valueChanged) {
         var editingStoppedEvent = __assign$d(__assign$d({}, this.createEvent(null, Events.EVENT_CELL_EDITING_STOPPED)), { oldValue: oldValue,
-            newValue: newValue });
+            newValue: newValue,
+            valueChanged: valueChanged });
         this.beans.eventService.dispatchEvent(editingStoppedEvent);
     };
     // if we are editing inline, then we don't have the padding in the cell (set in the themes)
@@ -24761,9 +24843,10 @@ var CellCtrl = /** @class */ (function (_super) {
         return valuesDifferent;
     };
     CellCtrl.prototype.valuesAreEqual = function (val1, val2) {
+        var _a, _b;
         // if the user provided an equals method, use that, otherwise do simple comparison
         var colDef = this.column.getColDef();
-        return colDef.equals ? colDef.equals(val1, val2) : val1 === val2;
+        return colDef.equals ? colDef.equals(val1, val2) : typeof val1 === typeof val2 && ((_a = val1) === null || _a === void 0 ? void 0 : _a.toString()) === ((_b = val2) === null || _b === void 0 ? void 0 : _b.toString());
     };
     CellCtrl.prototype.getComp = function () {
         return this.cellComp;
@@ -25029,6 +25112,10 @@ var CellCtrl = /** @class */ (function (_super) {
     };
     CellCtrl.prototype.destroy = function () {
         this.onCellCompAttachedFuncs = [];
+        if (this.removeAutoHeightListeners) {
+            this.removeAutoHeightListeners();
+            this.removeAutoHeightListeners = null;
+        }
         _super.prototype.destroy.call(this);
     };
     CellCtrl.prototype.createSelectionCheckbox = function () {
@@ -25083,7 +25170,7 @@ var CellCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -25289,7 +25376,8 @@ var RowCtrl = /** @class */ (function (_super) {
             }, 'rowDragAndRangeSelectionEnabled');
             return;
         }
-        var rowDragComp = new RowDragComp(function () { return '1 row'; }, this.rowNode, undefined, gui.element, undefined, true);
+        var translate = gow.getLocaleTextFunc();
+        var rowDragComp = new RowDragComp(function () { return "1 " + translate('rowDragRow', 'row'); }, this.rowNode, undefined, gui.element, undefined, true);
         this.createManagedBean(rowDragComp, this.beans.context);
     };
     RowCtrl.prototype.setupFullWidth = function (gui) {
@@ -25974,7 +26062,7 @@ var RowCtrl = /** @class */ (function (_super) {
         if (this.editingRow) {
             return;
         }
-        this.getAllCellCtrls().forEach(function (cellCtrl) {
+        var atLeastOneEditing = this.getAllCellCtrls().reduce(function (prev, cellCtrl) {
             var cellStartedEdit = cellCtrl === sourceRenderedCell;
             if (cellStartedEdit) {
                 cellCtrl.startEditing(key, charPress, cellStartedEdit, event);
@@ -25982,8 +26070,14 @@ var RowCtrl = /** @class */ (function (_super) {
             else {
                 cellCtrl.startEditing(null, null, cellStartedEdit, event);
             }
-        });
-        this.setEditingRow(true);
+            if (prev) {
+                return true;
+            }
+            return cellCtrl.isEditing();
+        }, false);
+        if (atLeastOneEditing) {
+            this.setEditingRow(true);
+        }
     };
     RowCtrl.prototype.getAllCellCtrls = function () {
         var res = __spread$6(this.centerCellCtrls.list, this.leftCellCtrls.list, this.rightCellCtrls.list);
@@ -26382,7 +26476,7 @@ var RowCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -26613,10 +26707,10 @@ var RowContainerEventsFeature = /** @class */ (function (_super) {
             return this.onCtrlAndD(keyboardEvent);
         }
         if (keyCode === KeyCode.Z) {
-            return keyboardEvent.shiftKey ? this.undoRedoService.redo() : this.undoRedoService.undo();
+            return this.onCtrlAndZ(keyboardEvent);
         }
         if (keyCode === KeyCode.Y) {
-            return this.undoRedoService.redo();
+            return this.onCtrlAndY();
         }
     };
     RowContainerEventsFeature.prototype.onCtrlAndA = function (event) {
@@ -26671,6 +26765,21 @@ var RowContainerEventsFeature = /** @class */ (function (_super) {
         }
         event.preventDefault();
     };
+    RowContainerEventsFeature.prototype.onCtrlAndZ = function (event) {
+        if (!this.gridOptionsWrapper.isUndoRedoCellEditing()) {
+            return;
+        }
+        event.preventDefault();
+        if (event.shiftKey) {
+            this.undoRedoService.redo();
+        }
+        else {
+            this.undoRedoService.undo();
+        }
+    };
+    RowContainerEventsFeature.prototype.onCtrlAndY = function () {
+        this.undoRedoService.redo();
+    };
     __decorate$Q([
         Autowired('mouseEventService')
     ], RowContainerEventsFeature.prototype, "mouseEventService", void 0);
@@ -26715,7 +26824,7 @@ var RowContainerEventsFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -26853,7 +26962,7 @@ var ViewportSizeFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -26905,7 +27014,7 @@ var SetPinnedLeftWidthFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -26957,7 +27066,7 @@ var SetPinnedRightWidthFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -27010,7 +27119,7 @@ var SetHeightFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -27070,7 +27179,7 @@ var DragListenerFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -27127,7 +27236,7 @@ var CenterWidthFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -27542,7 +27651,7 @@ var RowContainerCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -27655,7 +27764,7 @@ var GridBodyComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -27748,7 +27857,7 @@ var ScrollVisibleService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -27847,7 +27956,7 @@ var MouseEventService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -28618,7 +28727,7 @@ var NavigationService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -28672,7 +28781,7 @@ var PopupEditorWrapper = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -29108,7 +29217,7 @@ var CellComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -29258,7 +29367,7 @@ var RowComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -29409,7 +29518,7 @@ var RowContainerComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -29500,7 +29609,7 @@ var BodyDropPivotTarget = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -29978,7 +30087,7 @@ var MoveColumnFeature = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -30100,7 +30209,7 @@ var BodyDropTarget = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -30177,7 +30286,7 @@ var CssClassApplier = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -30277,7 +30386,7 @@ var HeaderCellComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -30352,7 +30461,7 @@ var HeaderGroupCellComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -30469,7 +30578,7 @@ var HeaderRowComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -30576,7 +30685,7 @@ var AbstractHeaderCellCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -30593,7 +30702,7 @@ var AbstractHeaderCellCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -30729,7 +30838,7 @@ var GridApi = /** @class */ (function () {
             return this.excelCreator.exportMultipleSheetsAsExcel(params);
         }
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: since version 18.x, api.setEnterpriseDatasource() should be replaced with api.setServerSideDatasource() */
     GridApi.prototype.setEnterpriseDatasource = function (datasource) {
         console.warn("AG Grid: since version 18.x, api.setEnterpriseDatasource() should be replaced with api.setServerSideDatasource()");
         this.setServerSideDatasource(datasource);
@@ -30815,32 +30924,32 @@ var GridApi = /** @class */ (function () {
             this.clientSideRowModel.setRowData(rowData);
         }
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.setFloatingTopRowData() is now api.setPinnedTopRowData() */
     GridApi.prototype.setFloatingTopRowData = function (rows) {
         console.warn('AG Grid: since v12, api.setFloatingTopRowData() is now api.setPinnedTopRowData()');
         this.setPinnedTopRowData(rows);
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.setFloatingBottomRowData() is now api.setPinnedBottomRowData() */
     GridApi.prototype.setFloatingBottomRowData = function (rows) {
         console.warn('AG Grid: since v12, api.setFloatingBottomRowData() is now api.setPinnedBottomRowData()');
         this.setPinnedBottomRowData(rows);
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.getFloatingTopRowCount() is now api.getPinnedTopRowCount() */
     GridApi.prototype.getFloatingTopRowCount = function () {
         console.warn('AG Grid: since v12, api.getFloatingTopRowCount() is now api.getPinnedTopRowCount()');
         return this.getPinnedTopRowCount();
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.getFloatingBottomRowCount() is now api.getPinnedBottomRowCount() */
     GridApi.prototype.getFloatingBottomRowCount = function () {
         console.warn('AG Grid: since v12, api.getFloatingBottomRowCount() is now api.getPinnedBottomRowCount()');
         return this.getPinnedBottomRowCount();
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.getFloatingTopRow() is now api.getPinnedTopRow() */
     GridApi.prototype.getFloatingTopRow = function (index) {
         console.warn('AG Grid: since v12, api.getFloatingTopRow() is now api.getPinnedTopRow()');
         return this.getPinnedTopRow(index);
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: since v12, api.getFloatingBottomRow() is now api.getPinnedBottomRow() */
     GridApi.prototype.getFloatingBottomRow = function (index) {
         console.warn('AG Grid: since v12, api.getFloatingBottomRow() is now api.getPinnedBottomRow()');
         return this.getPinnedBottomRow(index);
@@ -30989,8 +31098,9 @@ var GridApi = /** @class */ (function () {
         // and thus the expand icon in the group cell won't get 'opened' or 'closed'.
         this.clientSideRowModel.refreshModel({ step: exports.ClientSideRowModelSteps.MAP });
     };
+    /** @deprecated AG Grid: since version 18.x, api.refreshInMemoryRowModel() should be replaced with api.refreshClientSideRowModel() */
     GridApi.prototype.refreshInMemoryRowModel = function (step) {
-        console.warn("ag-grid: since version 18.x, api.refreshInMemoryRowModel() should be replaced with api.refreshClientSideRowModel()");
+        console.warn("AG Grid: since version 18.x, api.refreshInMemoryRowModel() should be replaced with api.refreshClientSideRowModel()");
         this.refreshClientSideRowModel(step);
     };
     /** Gets the Client-Side Row Model to refresh, executing the grouping, filtering and sorting again. */
@@ -31093,7 +31203,6 @@ var GridApi = /** @class */ (function () {
      * A virtual row is a row that is visually rendered on the screen (rows that are not visible because of the scroll position are not rendered).
      * Unlike normal events, you do not need to unregister rendered row listeners.
      * When the rendered row is removed from the grid, all associated rendered row listeners will also be removed.
-     * Currently supports only one event, `virtualRowRemoved`;
      * listen for this event if your `cellRenderer` needs to do cleanup when the row no longer exists.
      */
     GridApi.prototype.addRenderedRowListener = function (eventName, rowIndex, callback) {
@@ -31106,33 +31215,37 @@ var GridApi = /** @class */ (function () {
     GridApi.prototype.setQuickFilter = function (newFilter) {
         this.filterManager.setQuickFilter(newFilter);
     };
+    /** @deprecated AG Grid: do not use api for selection, call rowNode.setSelected(value) instead */
     GridApi.prototype.selectIndex = function (index, tryMulti, suppressEvents) {
-        console.warn('AG Grid: do not use api for selection, call node.setSelected(value) instead');
+        console.warn('AG Grid: do not use api for selection, call rowNode.setSelected(value) instead');
         if (suppressEvents) {
             console.warn('AG Grid: suppressEvents is no longer supported, stop listening for the event if you no longer want it');
         }
         this.selectionService.selectIndex(index, tryMulti);
     };
+    /** @deprecated AG Grid: do not use api for selection, call rowNode.setSelected(value) instead. */
     GridApi.prototype.deselectIndex = function (index, suppressEvents) {
         if (suppressEvents === void 0) { suppressEvents = false; }
-        console.warn('AG Grid: do not use api for selection, call node.setSelected(value) instead');
+        console.warn('AG Grid: do not use api for selection, call rowNode.setSelected(value) instead');
         if (suppressEvents) {
             console.warn('AG Grid: suppressEvents is no longer supported, stop listening for the event if you no longer want it');
         }
         this.selectionService.deselectIndex(index);
     };
+    /** @deprecated AG Grid: API for selection is deprecated, call rowNode.setSelected(value) instead. */
     GridApi.prototype.selectNode = function (node, tryMulti, suppressEvents) {
         if (tryMulti === void 0) { tryMulti = false; }
         if (suppressEvents === void 0) { suppressEvents = false; }
-        console.warn('AG Grid: API for selection is deprecated, call node.setSelected(value) instead');
+        console.warn('AG Grid: API for selection is deprecated, call rowNode.setSelected(value) instead');
         if (suppressEvents) {
             console.warn('AG Grid: suppressEvents is no longer supported, stop listening for the event if you no longer want it');
         }
         node.setSelectedParams({ newValue: true, clearSelection: !tryMulti });
     };
+    /** @deprecated AG Grid: API for selection is deprecated, call rowNode.setSelected(value) instead. */
     GridApi.prototype.deselectNode = function (node, suppressEvents) {
         if (suppressEvents === void 0) { suppressEvents = false; }
-        console.warn('AG Grid: API for selection is deprecated, call node.setSelected(value) instead');
+        console.warn('AG Grid: API for selection is deprecated, call rowNode.setSelected(value) instead');
         if (suppressEvents) {
             console.warn('AG Grid: suppressEvents is no longer supported, stop listening for the event if you no longer want it');
         }
@@ -31154,6 +31267,7 @@ var GridApi = /** @class */ (function () {
     GridApi.prototype.deselectAllFiltered = function () {
         this.selectionService.deselectAllRowNodes(true);
     };
+    /** @deprecated recomputeAggregates is deprecated, please call api.refreshClientSideRowModel('aggregate') instead */
     GridApi.prototype.recomputeAggregates = function () {
         if (missing(this.clientSideRowModel)) {
             console.warn('cannot call recomputeAggregates unless using normal row model');
@@ -31183,6 +31297,7 @@ var GridApi = /** @class */ (function () {
         console.warn('AG Grid: no need to call api.isNodeSelected(), just call node.isSelected() instead');
         return node.isSelected();
     };
+    /** @deprecated Use getSelectedNodesById no longer exists, use getSelectedNodes(). */
     GridApi.prototype.getSelectedNodesById = function () {
         console.error('AG Grid: since version 3.4, getSelectedNodesById no longer exists, use getSelectedNodes() instead');
         return null;
@@ -31211,6 +31326,7 @@ var GridApi = /** @class */ (function () {
     GridApi.prototype.getRenderedNodes = function () {
         return this.rowRenderer.getRenderedNodes();
     };
+    /** @deprecated ensureColIndexVisible(index) no longer supported, use ensureColumnVisible(colKey) instead. */
     GridApi.prototype.ensureColIndexVisible = function (index) {
         console.warn('AG Grid: ensureColIndexVisible(index) no longer supported, use ensureColumnVisible(colKey) instead.');
     };
@@ -31543,9 +31659,7 @@ var GridApi = /** @class */ (function () {
     GridApi.prototype.setPaginationNumberFormatter = function (paginationNumberFormatterFunc) {
         this.gridOptionsWrapper.setProperty(GridOptionsWrapper.PROP_PAGINATION_NUMBER_FORMATTER, paginationNumberFormatterFunc);
     };
-    /** @deprecated
-     * use setGetServerSideGroupLevelParams instead
-     */
+    /** @deprecated use setGetServerSideGroupLevelParams instead */
     GridApi.prototype.setGetServerSideStoreParams = function (getServerSideStoreParamsFunc) {
         this.setGetServerSideGroupLevelParams(getServerSideStoreParamsFunc);
     };
@@ -31627,6 +31741,7 @@ var GridApi = /** @class */ (function () {
     GridApi.prototype.isToolPanelShowing = function () {
         return this.sideBarComp.isToolPanelShowing();
     };
+    /** @deprecated AG Grid - since version 25.1, doLayout was taken out, as it's not needed. The grid responds to grid size changes automatically. */
     GridApi.prototype.doLayout = function () {
         var message = "AG Grid - since version 25.1, doLayout was taken out, as it's not needed. The grid responds to grid size changes automatically";
         doOnce(function () { return console.warn(message); }, 'doLayoutDeprecated');
@@ -31734,6 +31849,7 @@ var GridApi = /** @class */ (function () {
         }
         this.rowModel.forEachNode(function (node) { return node.quickFilterAggregateText = null; });
     };
+    /** @deprecated AG Grid: in v20.1.x, api.getRangeSelections() is gone, please use getCellRanges() instead. */
     GridApi.prototype.getRangeSelections = function () {
         console.warn("AG Grid: in v20.1.x, api.getRangeSelections() is gone, please use getCellRanges() instead.\n        We had to change how cell selections works a small bit to allow charting to integrate. The return type of\n        getCellRanges() is a bit different, please check the AG Grid documentation.");
         return null;
@@ -31749,6 +31865,7 @@ var GridApi = /** @class */ (function () {
     GridApi.prototype.camelCaseToHumanReadable = function (camelCase) {
         return camelCaseToHumanText(camelCase);
     };
+    /** @deprecated AG Grid: As of version 21.x, range selection changed slightly to allow charting integration. Please call api.addCellRange() instead of api.addRangeSelection() */
     GridApi.prototype.addRangeSelection = function (deprecatedNoLongerUsed) {
         console.warn('AG Grid: As of version 21.x, range selection changed slightly to allow charting integration. Please call api.addCellRange() instead of api.addRangeSelection()');
     };
@@ -31798,9 +31915,26 @@ var GridApi = /** @class */ (function () {
     };
     /** Returns a string containing the requested data URL which contains a representation of the chart image. */
     GridApi.prototype.getChartImageDataURL = function (params) {
-        if (ModuleRegistry.assertRegistered(exports.ModuleNames.RangeSelectionModule, 'api.getChartImageDataURL') &&
-            ModuleRegistry.assertRegistered(exports.ModuleNames.GridChartsModule, 'api.getChartImageDataURL')) {
+        if (ModuleRegistry.assertRegistered(exports.ModuleNames.GridChartsModule, 'api.getChartImageDataURL')) {
             return this.chartService.getChartImageDataURL(params);
+        }
+    };
+    /** Downloads the chart image in the browser. */
+    GridApi.prototype.downloadChart = function (params) {
+        if (ModuleRegistry.assertRegistered(exports.ModuleNames.GridChartsModule, 'api.downloadChart')) {
+            return this.chartService.downloadChart(params);
+        }
+    };
+    /** Open the Chart Tool Panel. */
+    GridApi.prototype.openChartToolPanel = function (params) {
+        if (ModuleRegistry.assertRegistered(exports.ModuleNames.GridChartsModule, 'api.openChartToolPanel')) {
+            return this.chartService.openChartToolPanel(params);
+        }
+    };
+    /** Close the Chart Tool Panel. */
+    GridApi.prototype.closeChartToolPanel = function (params) {
+        if (ModuleRegistry.assertRegistered(exports.ModuleNames.GridChartsModule, 'api.closeChartToolPanel')) {
+            return this.chartService.closeChartToolPanel(params.chartId);
         }
     };
     /** Used to programmatically create charts from a range. */
@@ -31830,6 +31964,13 @@ var GridApi = /** @class */ (function () {
             ModuleRegistry.assertRegistered(exports.ModuleNames.GridChartsModule, 'api.createPivotChart')) {
             return this.chartService.createPivotChart(params);
         }
+    };
+    /** Copies data to clipboard by following the same rules as pressing Ctrl+C. */
+    GridApi.prototype.copyToClipboard = function (params) {
+        if (!this.clipboardService) {
+            console.warn('AG Grid: clipboard is only available in AG Grid Enterprise');
+        }
+        this.clipboardService.copyToClipboard(params);
     };
     /** Copies the selected rows to the clipboard. */
     GridApi.prototype.copySelectedRowsToClipboard = function (params) {
@@ -32004,7 +32145,7 @@ var GridApi = /** @class */ (function () {
     GridApi.prototype.setDeltaSort = function (enable) {
         this.gridOptionsWrapper.setProperty('deltaSort', enable);
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: as of v23.1, grid API updateRowData(transaction) is now called applyTransaction(transaction). */
     GridApi.prototype.updateRowData = function (rowDataTransaction) {
         var message = 'AG Grid: as of v23.1, grid API updateRowData(transaction) is now called applyTransaction(transaction). updateRowData is deprecated and will be removed in a future major release.';
         doOnce(function () { return console.warn(message); }, 'updateRowData deprecated');
@@ -32026,34 +32167,34 @@ var GridApi = /** @class */ (function () {
         }
         this.clientSideRowModel.flushAsyncTransactions();
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: as of v23.1, grid API batchUpdateRowData(transaction, callback) is now called applyTransactionAsync(transaction, callback). */
     GridApi.prototype.batchUpdateRowData = function (rowDataTransaction, callback) {
         var message = 'AG Grid: as of v23.1, grid API batchUpdateRowData(transaction, callback) is now called applyTransactionAsync(transaction, callback). batchUpdateRowData is deprecated and will be removed in a future major release.';
         doOnce(function () { return console.warn(message); }, 'batchUpdateRowData deprecated');
         this.applyTransactionAsync(rowDataTransaction, callback);
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: insertItemsAtIndex() is deprecated, use updateRowData(transaction) instead.*/
     GridApi.prototype.insertItemsAtIndex = function (index, items, skipRefresh) {
         console.warn('AG Grid: insertItemsAtIndex() is deprecated, use updateRowData(transaction) instead.');
         this.updateRowData({ add: items, addIndex: index, update: null, remove: null });
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: removeItems() is deprecated, use updateRowData(transaction) instead. */
     GridApi.prototype.removeItems = function (rowNodes, skipRefresh) {
         console.warn('AG Grid: removeItems() is deprecated, use updateRowData(transaction) instead.');
         var dataToRemove = rowNodes.map(function (rowNode) { return rowNode.data; });
         this.updateRowData({ add: null, addIndex: null, update: null, remove: dataToRemove });
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: addItems() is deprecated, use updateRowData(transaction) instead. */
     GridApi.prototype.addItems = function (items, skipRefresh) {
         console.warn('AG Grid: addItems() is deprecated, use updateRowData(transaction) instead.');
         this.updateRowData({ add: items, addIndex: null, update: null, remove: null });
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: refreshVirtualPageCache() is now called refreshInfiniteCache(), please call refreshInfiniteCache() instead */
     GridApi.prototype.refreshVirtualPageCache = function () {
         console.warn('AG Grid: refreshVirtualPageCache() is now called refreshInfiniteCache(), please call refreshInfiniteCache() instead');
         this.refreshInfiniteCache();
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: refreshInfinitePageCache() is now called refreshInfiniteCache(), please call refreshInfiniteCache() instead */
     GridApi.prototype.refreshInfinitePageCache = function () {
         console.warn('AG Grid: refreshInfinitePageCache() is now called refreshInfiniteCache(), please call refreshInfiniteCache() instead');
         this.refreshInfiniteCache();
@@ -32071,12 +32212,12 @@ var GridApi = /** @class */ (function () {
             console.warn("AG Grid: api.refreshInfiniteCache is only available when rowModelType='infinite'.");
         }
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: purgeVirtualPageCache() is now called purgeInfiniteCache(), please call purgeInfiniteCache() instead */
     GridApi.prototype.purgeVirtualPageCache = function () {
         console.warn('AG Grid: purgeVirtualPageCache() is now called purgeInfiniteCache(), please call purgeInfiniteCache() instead');
         this.purgeInfinitePageCache();
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: purgeInfinitePageCache() is now called purgeInfiniteCache(), please call purgeInfiniteCache() instead */
     GridApi.prototype.purgeInfinitePageCache = function () {
         console.warn('AG Grid: purgeInfinitePageCache() is now called purgeInfiniteCache(), please call purgeInfiniteCache() instead');
         this.purgeInfiniteCache();
@@ -32095,12 +32236,12 @@ var GridApi = /** @class */ (function () {
             console.warn("AG Grid: api.purgeInfiniteCache is only available when rowModelType='infinite'.");
         }
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: since version 18.x, api.purgeEnterpriseCache() should be replaced with api.refreshServerSide({purge: true}) */
     GridApi.prototype.purgeEnterpriseCache = function (route) {
-        console.warn("ag-grid: since version 18.x, api.purgeEnterpriseCache() should be replaced with api.purgeServerSideCache()");
+        console.warn("AG Grid: since version 18.x, api.purgeEnterpriseCache() should be replaced with api.refreshServerSide({purge: true})");
         this.purgeServerSideCache(route);
     };
-    /** @deprecated */
+    /** @deprecated AG Grid: since v25.0, api.purgeServerSideCache is deprecated. Please use api.refreshServerSide({purge: true}) instead. */
     GridApi.prototype.purgeServerSideCache = function (route) {
         if (route === void 0) { route = []; }
         if (this.serverSideRowModel) {
@@ -32122,6 +32263,7 @@ var GridApi = /** @class */ (function () {
     GridApi.prototype.refreshServerSide = function (params) {
         if (!this.serverSideRowModel) {
             console.warn("AG Grid: api.refreshServerSide is only available when rowModelType='serverSide'.");
+            return;
         }
         this.serverSideRowModel.refreshStore(params);
     };
@@ -32145,6 +32287,7 @@ var GridApi = /** @class */ (function () {
         }
         return this.serverSideRowModel.getStoreState();
     };
+    /** @deprecated AG Grid: getVirtualRowCount() is now called getInfiniteRowCount(), please call getInfiniteRowCount() instead */
     GridApi.prototype.getVirtualRowCount = function () {
         console.warn('AG Grid: getVirtualRowCount() is now called getInfiniteRowCount(), please call getInfiniteRowCount() instead');
         return this.getInfiniteRowCount();
@@ -32158,8 +32301,9 @@ var GridApi = /** @class */ (function () {
             console.warn("AG Grid: api.getVirtualRowCount is only available when rowModelType='virtual'.");
         }
     };
+    /** @deprecated AG Grid: api.isMaxRowFound is deprecated, please use api.isLastRowIndexKnown() */
     GridApi.prototype.isMaxRowFound = function () {
-        console.warn("AG Grid: api.isLastRowIndexKnown is deprecated, please use api.isLastRowIndexKnown()");
+        console.warn("AG Grid: api.isMaxRowFound is deprecated, please use api.isLastRowIndexKnown()");
         return this.isLastRowIndexKnown();
     };
     /** Returns `true` if grid allows for scrolling past the last row to load more rows, thus providing infinite scroll. */
@@ -32171,10 +32315,12 @@ var GridApi = /** @class */ (function () {
             console.warn("AG Grid: api.isMaxRowFound is only available when rowModelType='virtual'.");
         }
     };
+    /** @deprecated AG Grid: setVirtualRowCount() is now called setInfiniteRowCount(), please call setInfiniteRowCount() instead */
     GridApi.prototype.setVirtualRowCount = function (rowCount, maxRowFound) {
         console.warn('AG Grid: setVirtualRowCount() is now called setInfiniteRowCount(), please call setInfiniteRowCount() instead');
         this.setRowCount(rowCount, maxRowFound);
     };
+    /** @deprecated AG Grid: setInfiniteRowCount() is now called setRowCount(), please call setRowCount() instead */
     GridApi.prototype.setInfiniteRowCount = function (rowCount, maxRowFound) {
         console.warn('AG Grid: setInfiniteRowCount() is now called setRowCount(), please call setRowCount() instead');
         this.setRowCount(rowCount, maxRowFound);
@@ -32194,10 +32340,12 @@ var GridApi = /** @class */ (function () {
             console.warn("AG Grid: api.setRowCount is only available for Infinite Row Model.");
         }
     };
+    /** @deprecated AG Grid: getVirtualPageState() is now called getCacheBlockState(), please call getCacheBlockState() instead */
     GridApi.prototype.getVirtualPageState = function () {
         console.warn('AG Grid: getVirtualPageState() is now called getCacheBlockState(), please call getCacheBlockState() instead');
         return this.getCacheBlockState();
     };
+    /** @deprecated getInfinitePageState() is now called getCacheBlockState(), please call getCacheBlockState() instead */
     GridApi.prototype.getInfinitePageState = function () {
         console.warn('AG Grid: getInfinitePageState() is now called getCacheBlockState(), please call getCacheBlockState() instead');
         return this.getCacheBlockState();
@@ -32208,17 +32356,20 @@ var GridApi = /** @class */ (function () {
     GridApi.prototype.getCacheBlockState = function () {
         return this.rowNodeBlockLoader.getBlockState();
     };
+    /** @deprecated  In AG Grid v25.2.0, checkGridSize() was removed, as it was legacy and didn't do anything useful. */
     GridApi.prototype.checkGridSize = function () {
-        console.warn("in AG Grid v25.2.0, checkGridSize() was removed, as it was legacy and didn't do anything uesful.");
+        console.warn("In AG Grid v25.2.0, checkGridSize() was removed, as it was legacy and didn't do anything useful.");
     };
+    /** @deprecated  In AG Grid v12, getFirstRenderedRow() was renamed to getFirstDisplayedRow() */
     GridApi.prototype.getFirstRenderedRow = function () {
-        console.warn('in AG Grid v12, getFirstRenderedRow() was renamed to getFirstDisplayedRow()');
+        console.warn('In AG Grid v12, getFirstRenderedRow() was renamed to getFirstDisplayedRow()');
         return this.getFirstDisplayedRow();
     };
     /** Get the index of the first displayed row due to scrolling (includes invisible rendered rows in the buffer). */
     GridApi.prototype.getFirstDisplayedRow = function () {
         return this.rowRenderer.getFirstVirtualRenderedRow();
     };
+    /** @deprecated In AG Grid v12, getLastRenderedRow() was renamed to getLastDisplayedRow() */
     GridApi.prototype.getLastRenderedRow = function () {
         console.warn('in AG Grid v12, getLastRenderedRow() was renamed to getLastDisplayedRow()');
         return this.getLastDisplayedRow();
@@ -32399,7 +32550,7 @@ var GridApi = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -32539,7 +32690,7 @@ var SetLeftFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -32596,7 +32747,7 @@ var HoverFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -32864,7 +33015,7 @@ var HeaderFilterCellCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -32997,7 +33148,7 @@ var ResizeFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -33119,7 +33270,7 @@ var AgCheckbox = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -33338,7 +33489,7 @@ var SelectAllFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -33741,7 +33892,9 @@ var HeaderCellCtrl = /** @class */ (function (_super) {
         };
         var stopMeasuring = function () {
             isMeasuring = false;
-            stopResizeObserver && stopResizeObserver();
+            if (stopResizeObserver) {
+                stopResizeObserver();
+            }
             stopResizeObserver = undefined;
         };
         checkMeasuring();
@@ -33753,7 +33906,9 @@ var HeaderCellCtrl = /** @class */ (function (_super) {
         // Displaying the sort icon changes the available area for text, so sort changes can affect height
         this.addManagedListener(this.column, Column.EVENT_SORT_CHANGED, function () {
             // Rendering changes for sort, happen after the event... not ideal
-            isMeasuring && _this.beans.frameworkOverrides.setTimeout(function () { return measureHeight(0); });
+            if (isMeasuring) {
+                _this.beans.frameworkOverrides.setTimeout(function () { return measureHeight(0); });
+            }
         });
         this.addRefreshFunction(checkMeasuring);
     };
@@ -33858,7 +34013,7 @@ var HeaderCellCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -34029,7 +34184,7 @@ var GroupResizeFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -34107,7 +34262,7 @@ var GroupWidthFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -34360,7 +34515,7 @@ var HeaderGroupCellCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -34606,7 +34761,7 @@ var HeaderRowCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -34842,7 +34997,7 @@ var HeaderRowContainerCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -34956,7 +35111,7 @@ var HeaderRowContainerComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -35145,7 +35300,7 @@ var HeaderNavigationService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -35297,7 +35452,7 @@ var GridHeaderCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -35353,7 +35508,7 @@ var GridHeaderComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -35436,7 +35591,7 @@ var HorizontalResizeService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -35574,7 +35729,7 @@ var StandardMenuFactory = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -35762,7 +35917,7 @@ var TabbedLayout = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -35784,7 +35939,7 @@ function simpleHttpRequest(params) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -35885,7 +36040,7 @@ var ResizeObserverService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -36094,7 +36249,7 @@ var AnimationFrameService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -36750,7 +36905,7 @@ var PositionableFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -36908,7 +37063,7 @@ var AutoWidthCalculator = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -37096,7 +37251,7 @@ var StickyRowFeature = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -38273,7 +38428,7 @@ var RowCtrlCache = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -38348,7 +38503,7 @@ var ValueFormatterService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -38494,7 +38649,7 @@ var PinnedRowModel = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -38531,7 +38686,7 @@ var PinnedRowModel = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -38595,9 +38750,10 @@ var ChangedPath = /** @class */ (function () {
     };
     // traverseLeafNodes -> used when NOT doing changed path, ie traversing everything. the callback
     // will be called for child nodes in addition to parent nodes.
-    ChangedPath.prototype.forEachChangedNodeDepthFirst = function (callback, traverseLeafNodes) {
+    ChangedPath.prototype.forEachChangedNodeDepthFirst = function (callback, traverseLeafNodes, includeUnchangedNodes) {
         if (traverseLeafNodes === void 0) { traverseLeafNodes = false; }
-        if (this.active) {
+        if (includeUnchangedNodes === void 0) { includeUnchangedNodes = false; }
+        if (this.active && !includeUnchangedNodes) {
             // if we are active, then use the change path to callback
             // only for updated groups
             this.depthFirstSearchChangedPath(this.pathRoot, callback);
@@ -38694,7 +38850,7 @@ var ChangedPath = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -38793,7 +38949,7 @@ var RowNodeBlock = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -38917,7 +39073,7 @@ var RowNodeBlockLoader = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -39230,7 +39386,7 @@ var PaginationProxy = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -39334,7 +39490,7 @@ var StylingService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -39393,7 +39549,7 @@ var AgRadioButton = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -39425,7 +39581,7 @@ var AgToggleButton = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -39483,7 +39639,7 @@ var AgInputTextField = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -39523,7 +39679,7 @@ var AgInputTextArea = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -39628,7 +39784,7 @@ var AgInputNumberField = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -39698,7 +39854,7 @@ var AgInputRange = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -39799,7 +39955,7 @@ var AgSlider = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -40017,7 +40173,7 @@ var AgAngleSelect = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -40285,7 +40441,7 @@ var AgColorPanel = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -40473,7 +40629,7 @@ var AgPanel = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -40643,7 +40799,7 @@ var AgDialog = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -40735,7 +40891,7 @@ var AgColorPicker = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -40964,7 +41120,7 @@ var AgGroupComponent = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -41126,7 +41282,7 @@ var TabGuardCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -41228,7 +41384,7 @@ var TabGuardComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -41445,7 +41601,7 @@ var AgMenuList = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -41508,7 +41664,7 @@ var AgMenuPanel = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -41825,7 +41981,7 @@ var AgMenuItemComponent = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -42327,7 +42483,7 @@ var FocusService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -42890,7 +43046,7 @@ var PopupService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -43181,7 +43337,7 @@ var VirtualList = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -43221,7 +43377,7 @@ var VanillaFrameworkOverrides = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -43597,7 +43753,7 @@ var CellNavigationService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -43850,7 +44006,7 @@ var AlignedGridsService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -44181,7 +44337,7 @@ var SelectionService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -44484,7 +44640,7 @@ var ColumnApi = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -44822,7 +44978,7 @@ var ValueService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -44928,7 +45084,7 @@ var ExpressionService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -45013,7 +45169,7 @@ var TemplateService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -45080,7 +45236,7 @@ var Logger = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -45225,7 +45381,7 @@ var GridCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -45342,7 +45498,7 @@ var GridComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -45611,7 +45767,7 @@ var SortController = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -45664,7 +45820,7 @@ var ColumnHoverService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -45782,7 +45938,7 @@ var ColumnAnimationService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -45924,7 +46080,7 @@ var AutoGroupColService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -45995,7 +46151,7 @@ var PaginationAutoPageSizeService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -46064,7 +46220,7 @@ var ValueCache = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -46141,7 +46297,7 @@ var ChangeDetectionService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -46220,7 +46376,7 @@ var AgComponentUtils = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -46318,11 +46474,11 @@ var ComponentMetadataProvider = /** @class */ (function (_super) {
             },
             filter: {
                 mandatoryMethodList: ['isFilterActive', 'doesFilterPass', 'getModel', 'setModel'],
-                optionalMethodList: ['afterGuiAttached', 'onNewRowsLoaded', 'getModelAsString', 'onFloatingFilterChanged']
+                optionalMethodList: ['afterGuiAttached', 'onNewRowsLoaded', 'getModelAsString', 'onFloatingFilterChanged', 'onAnyFilterChanged']
             },
             filterComponent: {
                 mandatoryMethodList: ['isFilterActive', 'doesFilterPass', 'getModel', 'setModel'],
-                optionalMethodList: ['afterGuiAttached', 'onNewRowsLoaded', 'getModelAsString', 'onFloatingFilterChanged']
+                optionalMethodList: ['afterGuiAttached', 'onNewRowsLoaded', 'getModelAsString', 'onFloatingFilterChanged', 'onAnyFilterChanged']
             },
             statusPanel: {
                 mandatoryMethodList: [],
@@ -46355,7 +46511,7 @@ var ComponentMetadataProvider = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -46517,7 +46673,7 @@ var Environment = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -46663,7 +46819,7 @@ var RowContainerHeightService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -46737,7 +46893,7 @@ var SelectableService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -46985,7 +47141,7 @@ var PaginationComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -47151,7 +47307,7 @@ var OverlayWrapperComponent = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -47296,7 +47452,7 @@ var RowPositionUtils = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -47345,7 +47501,7 @@ var CellPositionUtils = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -47368,15 +47524,16 @@ var UndoRedoAction = /** @class */ (function () {
     }
     return UndoRedoAction;
 }());
-var FillUndoRedoAction = /** @class */ (function (_super) {
-    __extends$2z(FillUndoRedoAction, _super);
-    function FillUndoRedoAction(cellValueChanges, initialRange, finalRange) {
+var RangeUndoRedoAction = /** @class */ (function (_super) {
+    __extends$2z(RangeUndoRedoAction, _super);
+    function RangeUndoRedoAction(cellValueChanges, initialRange, finalRange, ranges) {
         var _this = _super.call(this, cellValueChanges) || this;
         _this.initialRange = initialRange;
         _this.finalRange = finalRange;
+        _this.ranges = ranges;
         return _this;
     }
-    return FillUndoRedoAction;
+    return RangeUndoRedoAction;
 }(UndoRedoAction));
 var UndoRedoStack = /** @class */ (function () {
     function UndoRedoStack(maxStackSize) {
@@ -47409,7 +47566,7 @@ var UndoRedoStack = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -47426,11 +47583,42 @@ var __extends$2A = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign$i = (undefined && undefined.__assign) || function () {
+    __assign$i = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$i.apply(this, arguments);
+};
 var __decorate$2e = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __read$m = (undefined && undefined.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread$h = (undefined && undefined.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$m(arguments[i]));
+    return ar;
 };
 var UndoRedoService = /** @class */ (function (_super) {
     __extends$2A(UndoRedoService, _super);
@@ -47440,12 +47628,12 @@ var UndoRedoService = /** @class */ (function (_super) {
         _this.activeCellEdit = null;
         _this.activeRowEdit = null;
         _this.isPasting = false;
-        _this.isFilling = false;
+        _this.isRangeInAction = false;
         _this.onCellValueChanged = function (event) {
             var eventCell = { column: event.column, rowIndex: event.rowIndex, rowPinned: event.rowPinned };
             var isCellEditing = _this.activeCellEdit !== null && _this.cellPositionUtils.equals(_this.activeCellEdit, eventCell);
             var isRowEditing = _this.activeRowEdit !== null && _this.rowPositionUtils.sameRow(_this.activeRowEdit, eventCell);
-            var shouldCaptureAction = isCellEditing || isRowEditing || _this.isPasting || _this.isFilling;
+            var shouldCaptureAction = isCellEditing || isRowEditing || _this.isPasting || _this.isRangeInAction;
             if (!shouldCaptureAction) {
                 return;
             }
@@ -47480,6 +47668,7 @@ var UndoRedoService = /** @class */ (function (_super) {
         this.addCellEditingListeners();
         this.addPasteListeners();
         this.addFillListeners();
+        this.addCellKeyListeners();
         this.addManagedListener(this.eventService, Events.EVENT_CELL_VALUE_CHANGED, this.onCellValueChanged);
         // undo / redo is restricted to actual editing so we clear the stacks when other operations are
         // performed that change the order of the row / cols.
@@ -47496,6 +47685,9 @@ var UndoRedoService = /** @class */ (function (_super) {
         this.addManagedListener(this.eventService, Events.EVENT_COLUMN_PINNED, this.clearStacks);
         this.addManagedListener(this.eventService, Events.EVENT_COLUMN_VISIBLE, this.clearStacks);
         this.addManagedListener(this.eventService, Events.EVENT_ROW_DRAG_END, this.clearStacks);
+        this.ctrlsService.whenReady(function () {
+            _this.gridBodyCtrl = _this.ctrlsService.getGridBodyCtrl();
+        });
     };
     UndoRedoService.prototype.getCurrentUndoStackSize = function () {
         return this.undoStack ? this.undoStack.getCurrentStackSize() : 0;
@@ -47512,11 +47704,11 @@ var UndoRedoService = /** @class */ (function (_super) {
             return;
         }
         this.processAction(undoAction, function (cellValueChange) { return cellValueChange.oldValue; });
-        if (undoAction instanceof FillUndoRedoAction) {
-            this.processRangeAndCellFocus(undoAction.cellValueChanges, undoAction.initialRange);
+        if (undoAction instanceof RangeUndoRedoAction) {
+            this.processRange(undoAction.ranges || [undoAction.initialRange]);
         }
         else {
-            this.processRangeAndCellFocus(undoAction.cellValueChanges);
+            this.processCell(undoAction.cellValueChanges);
         }
         this.redoStack.push(undoAction);
     };
@@ -47529,11 +47721,11 @@ var UndoRedoService = /** @class */ (function (_super) {
             return;
         }
         this.processAction(redoAction, function (cellValueChange) { return cellValueChange.newValue; });
-        if (redoAction instanceof FillUndoRedoAction) {
-            this.processRangeAndCellFocus(redoAction.cellValueChanges, redoAction.finalRange);
+        if (redoAction instanceof RangeUndoRedoAction) {
+            this.processRange(redoAction.ranges || [redoAction.finalRange]);
         }
         else {
-            this.processRangeAndCellFocus(redoAction.cellValueChanges);
+            this.processCell(redoAction.cellValueChanges);
         }
         this.undoStack.push(redoAction);
     };
@@ -47547,20 +47739,30 @@ var UndoRedoService = /** @class */ (function (_super) {
             if (!currentRow.displayed) {
                 return;
             }
-            currentRow.setDataValue(columnId, valueExtractor(cellValueChange));
+            var extractedValue = valueExtractor(cellValueChange);
+            // when values are 'complex objects' we need to invoke their `toString()` to obtain value
+            var value = (typeof extractedValue.toString === 'function') ? extractedValue.toString() : extractedValue;
+            currentRow.setDataValue(columnId, value);
         });
     };
-    UndoRedoService.prototype.processRangeAndCellFocus = function (cellValueChanges, range) {
+    UndoRedoService.prototype.processRange = function (ranges) {
+        var _this = this;
         var lastFocusedCell;
-        if (range) {
+        this.rangeService.removeAllCellRanges(true);
+        ranges.forEach(function (range, idx) {
+            if (!range) {
+                return;
+            }
             var startRow = range.startRow;
             var endRow = range.endRow;
-            lastFocusedCell = {
-                rowPinned: startRow.rowPinned,
-                rowIndex: startRow.rowIndex,
-                columnId: range.startColumn.getColId()
-            };
-            this.setLastFocusedCell(lastFocusedCell);
+            if (idx === ranges.length - 1) {
+                lastFocusedCell = {
+                    rowPinned: startRow.rowPinned,
+                    rowIndex: startRow.rowIndex,
+                    columnId: range.startColumn.getColId()
+                };
+                _this.setLastFocusedCell(lastFocusedCell);
+            }
             var cellRangeParams = {
                 rowStartIndex: startRow.rowIndex,
                 rowStartPinned: startRow.rowPinned,
@@ -47569,28 +47771,35 @@ var UndoRedoService = /** @class */ (function (_super) {
                 columnStart: range.startColumn,
                 columns: range.columns
             };
-            this.gridApi.addCellRange(cellRangeParams);
-            return;
-        }
+            _this.rangeService.addCellRange(cellRangeParams);
+        });
+    };
+    UndoRedoService.prototype.processCell = function (cellValueChanges) {
         var cellValueChange = cellValueChanges[0];
         var rowIndex = cellValueChange.rowIndex, rowPinned = cellValueChange.rowPinned;
         var rowPosition = { rowIndex: rowIndex, rowPinned: rowPinned };
         var row = this.getRowNode(rowPosition);
-        lastFocusedCell = {
+        var lastFocusedCell = {
             rowPinned: cellValueChange.rowPinned,
             rowIndex: row.rowIndex,
             columnId: cellValueChange.columnId
         };
-        this.setLastFocusedCell(lastFocusedCell);
+        this.setLastFocusedCell(lastFocusedCell, true);
     };
-    UndoRedoService.prototype.setLastFocusedCell = function (lastFocusedCell) {
+    UndoRedoService.prototype.setLastFocusedCell = function (lastFocusedCell, setRangeToCell) {
         var rowIndex = lastFocusedCell.rowIndex, columnId = lastFocusedCell.columnId, rowPinned = lastFocusedCell.rowPinned;
-        this.gridApi.ensureIndexVisible(rowIndex);
-        this.gridApi.ensureColumnVisible(columnId);
-        if (ModuleRegistry.isRegistered(exports.ModuleNames.RangeSelectionModule)) {
-            this.gridApi.clearRangeSelection();
+        var scrollFeature = this.gridBodyCtrl.getScrollFeature();
+        var column = this.columnModel.getGridColumn(columnId);
+        if (!column) {
+            return;
         }
-        this.focusService.setFocusedCell({ rowIndex: rowIndex, column: columnId, rowPinned: rowPinned, forceBrowserFocus: true });
+        scrollFeature.ensureIndexVisible(rowIndex);
+        scrollFeature.ensureColumnVisible(column);
+        var cellPosition = { rowIndex: rowIndex, column: column, rowPinned: rowPinned };
+        this.focusService.setFocusedCell(__assign$i(__assign$i({}, cellPosition), { forceBrowserFocus: true }));
+        if (setRangeToCell) {
+            this.rangeService.setRangeToCell(cellPosition);
+        }
     };
     UndoRedoService.prototype.addRowEditingListeners = function () {
         var _this = this;
@@ -47608,9 +47817,9 @@ var UndoRedoService = /** @class */ (function (_super) {
         this.addManagedListener(this.eventService, Events.EVENT_CELL_EDITING_STARTED, function (e) {
             _this.activeCellEdit = { column: e.column, rowIndex: e.rowIndex, rowPinned: e.rowPinned };
         });
-        this.addManagedListener(this.eventService, Events.EVENT_CELL_EDITING_STOPPED, function () {
+        this.addManagedListener(this.eventService, Events.EVENT_CELL_EDITING_STOPPED, function (e) {
             _this.activeCellEdit = null;
-            var shouldPushAction = !_this.activeRowEdit && !_this.isPasting && !_this.isFilling;
+            var shouldPushAction = e.valueChanged && !_this.activeRowEdit && !_this.isPasting && !_this.isRangeInAction;
             if (shouldPushAction) {
                 var action = new UndoRedoAction(_this.cellValueChanges);
                 _this.pushActionsToUndoStack(action);
@@ -47631,12 +47840,29 @@ var UndoRedoService = /** @class */ (function (_super) {
     UndoRedoService.prototype.addFillListeners = function () {
         var _this = this;
         this.addManagedListener(this.eventService, Events.EVENT_FILL_START, function () {
-            _this.isFilling = true;
+            _this.isRangeInAction = true;
         });
         this.addManagedListener(this.eventService, Events.EVENT_FILL_END, function (event) {
-            var action = new FillUndoRedoAction(_this.cellValueChanges, event.initialRange, event.finalRange);
+            var action = new RangeUndoRedoAction(_this.cellValueChanges, event.initialRange, event.finalRange);
             _this.pushActionsToUndoStack(action);
-            _this.isFilling = false;
+            _this.isRangeInAction = false;
+        });
+    };
+    UndoRedoService.prototype.addCellKeyListeners = function () {
+        var _this = this;
+        this.addManagedListener(this.eventService, Events.EVENT_KEY_SHORTCUT_CHANGED_CELL_START, function () {
+            _this.isRangeInAction = true;
+        });
+        this.addManagedListener(this.eventService, Events.EVENT_KEY_SHORTCUT_CHANGED_CELL_END, function () {
+            var action;
+            if (_this.rangeService && _this.gridOptionsWrapper.isEnableRangeSelection()) {
+                action = new RangeUndoRedoAction(_this.cellValueChanges, undefined, undefined, __spread$h(_this.rangeService.getCellRanges()));
+            }
+            else {
+                action = new UndoRedoAction(_this.cellValueChanges);
+            }
+            _this.pushActionsToUndoStack(action);
+            _this.isRangeInAction = false;
         });
     };
     UndoRedoService.prototype.pushActionsToUndoStack = function (action) {
@@ -47658,8 +47884,8 @@ var UndoRedoService = /** @class */ (function (_super) {
         Autowired('focusService')
     ], UndoRedoService.prototype, "focusService", void 0);
     __decorate$2e([
-        Autowired('gridApi')
-    ], UndoRedoService.prototype, "gridApi", void 0);
+        Autowired('ctrlsService')
+    ], UndoRedoService.prototype, "ctrlsService", void 0);
     __decorate$2e([
         Autowired('rowModel')
     ], UndoRedoService.prototype, "rowModel", void 0);
@@ -47673,6 +47899,12 @@ var UndoRedoService = /** @class */ (function (_super) {
         Autowired('rowPositionUtils')
     ], UndoRedoService.prototype, "rowPositionUtils", void 0);
     __decorate$2e([
+        Autowired('columnModel')
+    ], UndoRedoService.prototype, "columnModel", void 0);
+    __decorate$2e([
+        Optional('rangeService')
+    ], UndoRedoService.prototype, "rangeService", void 0);
+    __decorate$2e([
         PostConstruct
     ], UndoRedoService.prototype, "init", null);
     UndoRedoService = __decorate$2e([
@@ -47683,7 +47915,7 @@ var UndoRedoService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -47765,7 +47997,7 @@ var HeaderPositionUtils = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -47850,7 +48082,7 @@ var ColumnDefFactory = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -47991,7 +48223,7 @@ var RowCssClassCalculator = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -48113,7 +48345,7 @@ var RowNodeSorter = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -48325,7 +48557,7 @@ var CtrlsService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -48373,7 +48605,7 @@ var CtrlsFactory = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -48498,6 +48730,7 @@ var FakeHScrollCtrl = /** @class */ (function (_super) {
         this.view.setHeight(scrollContainerSize);
         this.view.setViewportHeight(scrollContainerSize);
         this.view.setContainerHeight(scrollContainerSize);
+        this.view.addOrRemoveCssClass('ag-hidden', !hScrollShowing);
     };
     FakeHScrollCtrl.prototype.getViewport = function () {
         return this.eViewport;
@@ -48522,7 +48755,7 @@ var FakeHScrollCtrl = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -48592,7 +48825,7 @@ var FakeHScrollComp = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -48659,7 +48892,7 @@ var PinnedWidthService = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -48742,11 +48975,11 @@ var RowNodeEventThrottle = /** @class */ (function (_super) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
-var __read$m = (undefined && undefined.__read) || function (o, n) {
+var __read$n = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -48762,8 +48995,8 @@ var __read$m = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread$h = (undefined && undefined.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$m(arguments[i]));
+var __spread$i = (undefined && undefined.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$n(arguments[i]));
     return ar;
 };
 // creates JavaScript vanilla Grid, including JavaScript (ag-stack) components, which can
@@ -48937,7 +49170,7 @@ var GridCoreCreator = /** @class */ (function () {
             PinnedWidthService, RowNodeEventThrottle, CtrlsFactory
         ];
         var moduleBeans = this.extractModuleEntity(registeredModules, function (module) { return module.beans ? module.beans : []; });
-        beans.push.apply(beans, __spread$h(moduleBeans));
+        beans.push.apply(beans, __spread$i(moduleBeans));
         // check for duplicates, as different modules could include the same beans that
         // they depend on, eg ClientSideRowModel in enterprise, and ClientSideRowModel in community
         var beansNoDuplicates = [];
@@ -48949,7 +49182,7 @@ var GridCoreCreator = /** @class */ (function () {
         return beansNoDuplicates;
     };
     GridCoreCreator.prototype.extractModuleEntity = function (moduleEntities, extractor) {
-        return [].concat.apply([], __spread$h(moduleEntities.map(extractor)));
+        return [].concat.apply([], __spread$i(moduleEntities.map(extractor)));
     };
     GridCoreCreator.prototype.setColumnsAndData = function (beans) {
         var columnDefs = beans.gridOptionsWrapper.getColumnDefs();
@@ -49009,7 +49242,7 @@ var GridCoreCreator = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -49034,7 +49267,7 @@ function defaultGroupComparator(valueA, valueB, nodeA, nodeB, accentedCompare) {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -49075,7 +49308,68 @@ var BaseComponentWrapper = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
+ * @link https://www.ag-grid.com/
+ * @license MIT
+ */
+/************************************************************************************************
+ * If you update these, then also update the `integrated-charts-toolbar` docs. *
+ ************************************************************************************************/
+var DEFAULT_CHART_GROUPS = {
+    columnGroup: [
+        'column',
+        'stackedColumn',
+        'normalizedColumn'
+    ],
+    barGroup: [
+        'bar',
+        'stackedBar',
+        'normalizedBar'
+    ],
+    pieGroup: [
+        'pie',
+        'doughnut'
+    ],
+    lineGroup: [
+        'line'
+    ],
+    scatterGroup: [
+        'scatter',
+        'bubble'
+    ],
+    areaGroup: [
+        'area',
+        'stackedArea',
+        'normalizedArea'
+    ],
+    histogramGroup: [
+        'histogram'
+    ],
+    combinationGroup: [
+        'columnLineCombo',
+        'areaColumnCombo',
+        'customCombo'
+    ]
+};
+var CHART_TOOL_PANEL_ALLOW_LIST = [
+    'chartSettings',
+    'chartData',
+    'chartFormat'
+];
+var CHART_TOOLBAR_ALLOW_LIST = [
+    'chartUnlink',
+    'chartLink',
+    'chartDownload'
+];
+var CHART_TOOL_PANEL_MENU_OPTIONS = {
+    settings: "chartSettings",
+    data: "chartData",
+    format: "chartFormat"
+};
+
+/**
+ * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -49088,7 +49382,7 @@ var BaseComponentWrapper = /** @class */ (function () {
 
 /**
  * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
- * @version v28.1.1
+ * @version v28.2.0
  * @link https://www.ag-grid.com/
  * @license MIT
  */
@@ -49100,7 +49394,7 @@ globalObj.HTMLInputElement = typeof HTMLInputElement === 'undefined' ? {} : HTML
 globalObj.Node = typeof Node === 'undefined' ? {} : Node;
 globalObj.MouseEvent = typeof MouseEvent === 'undefined' ? {} : MouseEvent;
 
-var __read$n = (undefined && undefined.__read) || function (o, n) {
+var __read$o = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -49116,8 +49410,8 @@ var __read$n = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread$i = (undefined && undefined.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$n(arguments[i]));
+var __spread$j = (undefined && undefined.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$o(arguments[i]));
     return ar;
 };
 var ClientSideNodeManager = /** @class */ (function () {
@@ -49260,7 +49554,7 @@ var ClientSideNodeManager = /** @class */ (function () {
             nodesBeforeIndex = this.rootNode.allLeafChildren;
             nodesAfterIndex = [];
         }
-        this.rootNode.allLeafChildren = __spread$i(nodesBeforeIndex, newNodes, nodesAfterIndex);
+        this.rootNode.allLeafChildren = __spread$j(nodesBeforeIndex, newNodes, nodesAfterIndex);
         if (this.rootNode.sibling) {
             this.rootNode.sibling.allLeafChildren = this.rootNode.allLeafChildren;
         }
@@ -49429,6 +49723,7 @@ var ClientSideRowModel = /** @class */ (function (_super) {
     __extends$2I(ClientSideRowModel, _super);
     function ClientSideRowModel() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.onRowHeightChanged_debounced = _.debounce(_this.onRowHeightChanged.bind(_this), 100);
         _this.rowsToDisplay = []; // the rows mapped to rows to display
         return _this;
     }
@@ -50190,6 +50485,15 @@ var ClientSideRowModel = /** @class */ (function (_super) {
     ClientSideRowModel.prototype.onRowHeightChanged = function () {
         this.refreshModel({ step: exports.ClientSideRowModelSteps.MAP, keepRenderedRows: true, keepEditingRows: true, keepUndoRedoStack: true });
     };
+    /** This method is debounced. It is used for row auto-height. If we don't debounce,
+     * then the Row Models will end up recalculating each row position
+     * for each row height change and result in the Row Renderer laying out rows.
+     * This is particularly bad if using print layout, and showing eg 1,000 rows,
+     * each row will change it's height, causing Row Model to update 1,000 times.
+     */
+    ClientSideRowModel.prototype.onRowHeightChangedDebounced = function () {
+        this.onRowHeightChanged_debounced();
+    };
     ClientSideRowModel.prototype.resetRowHeights = function () {
         var atLeastOne = false;
         this.forEachNode(function (rowNode) {
@@ -50861,7 +51165,7 @@ var __decorate$2v = (undefined && undefined.__decorate) || function (decorators,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __read$o = (undefined && undefined.__read) || function (o, n) {
+var __read$p = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -50895,7 +51199,7 @@ var ImmutableService = /** @class */ (function (_super) {
         if (!transactionAndMap) {
             return;
         }
-        var _a = __read$o(transactionAndMap, 2), transaction = _a[0], orderIdMap = _a[1];
+        var _a = __read$p(transactionAndMap, 2), transaction = _a[0], orderIdMap = _a[1];
         var nodeTransaction = this.clientSideRowModel.updateRowData(transaction, orderIdMap);
         // need to force updating of full width rows - note this wouldn't be necessary the full width cell comp listened
         // to the data change event on the row node and refreshed itself.
@@ -51770,7 +52074,8 @@ var BaseGridSerializingSession = /** @class */ (function () {
     };
     BaseGridSerializingSession.prototype.extractRowCellValue = function (column, index, accumulatedRowIndex, type, node) {
         // we render the group summary text e.g. "-> Parent -> Child"...
-        var value = this.shouldRenderGroupSummaryCell(node, column, index)
+        var hideOpenParents = this.gridOptionsWrapper.isGroupHideOpenParents();
+        var value = (!hideOpenParents && this.shouldRenderGroupSummaryCell(node, column, index))
             ? this.createValueForGroupNode(node)
             : this.valueService.getValue(column, node);
         var processedValue = this.processCell({
@@ -51934,7 +52239,7 @@ var CsvSerializingSession = /** @class */ (function (_super) {
             onColumn: this.onNewHeaderGroupingRowColumn.bind(this)
         };
     };
-    CsvSerializingSession.prototype.onNewHeaderGroupingRowColumn = function (header, index, span) {
+    CsvSerializingSession.prototype.onNewHeaderGroupingRowColumn = function (columnGroup, header, index, span) {
         if (index != 0) {
             this.result += this.columnSeparator;
         }
@@ -52271,6 +52576,7 @@ var GridSerializer = /** @class */ (function (_super) {
             var usingSsrm = rowModelType === Constants.ROW_MODEL_TYPE_SERVER_SIDE;
             var onlySelectedNonStandardModel = !usingCsrm && params.onlySelected;
             var processRow = _this.processRow.bind(_this, gridSerializingSession, params, columnsToExport);
+            var _a = params.exportedRows, exportedRows = _a === void 0 ? 'filteredAndSorted' : _a;
             if (params.rowPositions) {
                 params.rowPositions
                     // pinnedRows are processed by `processPinnedTopRows` and `processPinnedBottomsRows`
@@ -52302,7 +52608,10 @@ var GridSerializer = /** @class */ (function (_super) {
                     // here is everything else - including standard row model and selected. we don't use
                     // the selection model even when just using selected, so that the result is the order
                     // of the rows appearing on the screen.
-                    if (usingCsrm) {
+                    if (exportedRows === 'all') {
+                        rowModel.forEachNode(processRow);
+                    }
+                    else if (usingCsrm) {
                         rowModel.forEachNodeAfterFilterAndSort(processRow);
                     }
                     else if (usingSsrm) {
@@ -52400,7 +52709,7 @@ var GridSerializer = /** @class */ (function (_super) {
                 }
                 return collapsibleGroups;
             }, []);
-            gridRowIterator.onColumn(name || '', columnIndex++, columnGroup.getLeafColumns().length - 1, collapsibleGroupRanges);
+            gridRowIterator.onColumn(columnGroup, name || '', columnIndex++, columnGroup.getLeafColumns().length - 1, collapsibleGroupRanges);
         });
     };
     __decorate$2A([
@@ -52766,6 +53075,9 @@ exports.BeanStub = BeanStub;
 exports.Beans = Beans;
 exports.BodyDropPivotTarget = BodyDropPivotTarget;
 exports.BodyDropTarget = BodyDropTarget;
+exports.CHART_TOOLBAR_ALLOW_LIST = CHART_TOOLBAR_ALLOW_LIST;
+exports.CHART_TOOL_PANEL_ALLOW_LIST = CHART_TOOL_PANEL_ALLOW_LIST;
+exports.CHART_TOOL_PANEL_MENU_OPTIONS = CHART_TOOL_PANEL_MENU_OPTIONS;
 exports.CellComp = CellComp;
 exports.CellCtrl = CellCtrl;
 exports.CellNavigationService = CellNavigationService;
@@ -52791,6 +53103,7 @@ exports.CsvCreator = CsvCreator;
 exports.CsvExportModule = CsvExportModule;
 exports.CtrlsService = CtrlsService;
 exports.CustomTooltipFeature = CustomTooltipFeature;
+exports.DEFAULT_CHART_GROUPS = DEFAULT_CHART_GROUPS;
 exports.DateFilter = DateFilter;
 exports.DisplayedGroupCreator = DisplayedGroupCreator;
 exports.Downloader = Downloader;

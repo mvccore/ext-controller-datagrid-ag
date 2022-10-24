@@ -188,7 +188,6 @@ export declare class RowNode<TData = any> implements IEventEmitter {
     private eventService;
     private beans;
     private checkAutoHeightsDebounced;
-    private onRowHeightChangedDebounced;
     constructor(beans: Beans);
     /** Replaces the data on the `rowNode`. When complete, the grid will refresh the the entire rendered row if it is showing. */
     setData(data: TData): void;
@@ -223,13 +222,6 @@ export declare class RowNode<TData = any> implements IEventEmitter {
     setRowHeight(rowHeight: number | undefined | null, estimated?: boolean): void;
     setRowAutoHeight(cellHeight: number | undefined, column: Column): void;
     checkAutoHeights(): void;
-    /** This method is debounced. It is used for row auto-height. If we don't debounce,
-     * then the Row Models will end up recalculating each row position
-     * for each row height change and result in the Row Renderer laying out rows.
-     * This is particularly bad if using print layout, and showing eg 1,000 rows,
-     * each row will change it's height, causing Row Model to update 1,000 times.
-     */
-    private onRowHeightChanged;
     setRowIndex(rowIndex: number | null): void;
     setUiLevel(uiLevel: number): void;
     /**

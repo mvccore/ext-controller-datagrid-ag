@@ -10,6 +10,8 @@ export declare type CssColor = string;
 export declare type Opacity = number;
 /** Alias to denote that a value is a measurement in pixels. */
 export declare type PixelSize = number;
+/** Alias to denote that a value is a ratio, usually in the range [0, 1]. */
+export declare type Ratio = number;
 /** Alias to denote that a value is a data value. */
 export declare type DataValue = any;
 export interface AgChartThemePalette {
@@ -123,7 +125,10 @@ export interface AgCartesianSeriesTheme {
     histogram?: AgHistogramSeriesOptions;
 }
 export interface AgPolarSeriesTheme {
-    pie?: AgPieSeriesOptions;
+    pie?: AgPieSeriesTheme;
+}
+export interface AgPieSeriesTheme extends Omit<AgPieSeriesOptions, 'innerLabels'> {
+    innerLabels?: AgDoughnutInnerLabelThemeOptions;
 }
 export interface AgHierarchySeriesTheme {
     treemap?: AgTreemapSeriesOptions;
@@ -311,7 +316,7 @@ export interface AgChartBackground {
     fill?: CssColor;
 }
 export interface AgBaseChartListeners {
-    /** The listener to call when a node (marker, column, bar, tile or a pie slice) in any series is clicked. In case a chart has multiple series, the chart's `seriesNodeClick` event can be used to listen to `nodeClick` events of all the series at once. */
+    /** The listener to call when a node (marker, column, bar, tile or a pie sector) in any series is clicked. In case a chart has multiple series, the chart's `seriesNodeClick` event can be used to listen to `nodeClick` events of all the series at once. */
     seriesNodeClick: (event: {
         type: 'seriesNodeClick';
         series: any;
@@ -510,8 +515,18 @@ export interface AgLogAxisOptions extends AgBaseCartesianAxisOptions {
 }
 export interface AgCategoryAxisOptions extends AgBaseCartesianAxisOptions {
     type: 'category';
+    /** The size of the gap between the categories as a proportion, between 0 and 1. This value is a fraction of the “step”, which is the interval between the start of a band and the start of the next band.
+     * Default: `0.2`
+     */
     paddingInner?: number;
+    /** The padding on the outside i.e. left and right of the first and last category. In association with `paddingInner`, this value can be between 0 and 1.
+     * Default: `0.3`
+     */
     paddingOuter?: number;
+    /** This property is for grouped column/bar series plotted on a category axis. It is a proportion between 0 and 1 which determines the size of the gap between the bars or columns within a single group along the axis.
+     * Default: `0.2`
+     */
+    groupPaddingInner?: number;
     /** Configuration for the axis ticks. */
     tick?: AgAxisNumberTickOptions;
 }
@@ -526,6 +541,10 @@ export interface AgTimeAxisOptions extends AgBaseCartesianAxisOptions {
     nice?: boolean;
     /** Configuration for the axis ticks. */
     tick?: AgAxisTimeTickOptions;
+    /** User override for the automatically determined min value (based on series data). */
+    min?: Date;
+    /** User override for the automatically determined max value (based on series data). */
+    max?: Date;
 }
 export declare type AgCartesianAxisOptions = AgNumberAxisOptions | AgLogAxisOptions | AgCategoryAxisOptions | AgGroupedCategoryAxisOptions | AgTimeAxisOptions;
 export interface AgSeriesHighlightMarkerStyle {
@@ -570,7 +589,7 @@ export interface AgSeriesHighlightStyle {
     series?: AgSeriesHighlightSeriesStyle;
 }
 export interface AgBaseSeriesListeners<DatumType> {
-    /** The listener to call when a node (marker, column, bar, tile or a pie slice) in the series is clicked. */
+    /** The listener to call when a node (marker, column, bar, tile or a pie sector) in the series is clicked. */
     nodeClick: (params: {
         type: 'nodeClick';
         series: any;
@@ -988,7 +1007,7 @@ export interface AgHistogramSeriesOptions<DatumType = any> extends AgBaseSeriesO
     yName?: string;
     /** For variable width bins, if true the histogram will represent the aggregated `yKey` values using the area of the bar. Otherwise, the height of the var represents the value as per a normal bar chart. This is useful for keeping an undistorted curve displayed when using variable-width bins. */
     areaPlot?: boolean;
-    /** Set the bins explicitly. The bins need not be of equal width. Clashes with the `binCount` setting. */
+    /** Set the bins explicitly. The bins need not be of equal width. Note that `bins` is ignored if `binCount` is also supplied. */
     bins?: [number, number][];
     /** The number of bins to try to split the x axis into. Clashes with the `bins` setting. */
     binCount?: number;
@@ -1004,11 +1023,22 @@ export interface AgHistogramSeriesOptions<DatumType = any> extends AgBaseSeriesO
 export interface AgPieSeriesLabelOptions<DatumType> extends AgChartLabelOptions {
     /** Distance in pixels between the callout line and the label text. */
     offset?: PixelSize;
-    /** Minimum angle in degrees required for a segment to show a label. */
+    /** Minimum angle in degrees required for a sector to show a label. */
     minAngle?: number;
-    formatter?: (params: {
-        value: DatumType;
-    }) => string;
+    /** A function that allows the modification of the label text based on input parameters. */
+    formatter?: (params: AgPieSeriesLabelFormatterParams<DatumType>) => string;
+}
+export interface AgPieSeriesSectorLabelOptions<DatumType> extends AgChartLabelOptions {
+    /** Distance in pixels, used to make the label text closer to or further from the center. This offset is applied after positionRatio.
+     * Default: `0`
+     */
+    positionOffset?: PixelSize;
+    /** Position of labels as a ratio proportional to pie radius (or doughnut thickness). Additional offset in pixels can be applied by using positionOffset.
+     * Default: `0.5`
+     */
+    positionRatio?: Ratio;
+    /** A function that allows the modification of the label text based on input parameters. */
+    formatter?: (params: AgPieSeriesLabelFormatterParams<DatumType>) => string;
 }
 export interface AgPieSeriesFormatterParams<DatumType> {
     readonly datum: DatumType;
@@ -1018,6 +1048,7 @@ export interface AgPieSeriesFormatterParams<DatumType> {
     readonly highlighted: boolean;
     readonly angleKey: string;
     readonly radiusKey?: string;
+    readonly sectorLabelKey?: string;
 }
 export interface AgPieSeriesFormat {
     fill?: CssColor;
@@ -1039,14 +1070,40 @@ export interface AgPieSeriesCalloutOptions {
     /** The width in pixels of the stroke for callout lines. */
     strokeWidth?: PixelSize;
 }
+export interface AgDoughnutInnerLabel {
+    /** The text to show in the inner label. */
+    text: string;
+    /** The font style to use for the inner label. */
+    fontStyle?: FontStyle;
+    /** The font weight to use for the inner label. */
+    fontWeight?: FontWeight;
+    /** The font size in pixels to use for the inner label. */
+    fontSize?: FontSize;
+    /** The font family to use for the inner label. */
+    fontFamily?: FontFamily;
+    /** The colour to use for the inner label. */
+    color?: CssColor;
+    /** The margin in pixels before and after the inner label. */
+    margin?: PixelSize;
+}
+export interface AgDoughnutInnerLabelThemeOptions extends Omit<AgDoughnutInnerLabel, 'text'> {
+}
+export interface AgDoughnutInnerCircle {
+    /** The colour of the fill for the inner circle. */
+    fill: CssColor;
+    /** The opacity of the fill for the inner circle. */
+    fillOpacity?: Opacity;
+}
 /** Configuration for pie/doughnut series. */
 export interface AgPieSeriesOptions<DatumType = any> extends AgBaseSeriesOptions<DatumType> {
     type?: 'pie';
     /** Configuration for the series title. */
     title?: AgPieTitleOptions;
-    /** Configuration for the labels used for the segments. */
+    /** Configuration for the labels used outside of the sectors. */
     label?: AgPieSeriesLabelOptions<DatumType>;
-    /** Configuration for the callouts used with the labels for the segments. */
+    /** Configuration for the labels used inside the sectors. */
+    sectorLabel?: AgPieSeriesSectorLabelOptions<DatumType>;
+    /** Configuration for the callouts used with the labels for the sectors. */
     callout?: AgPieSeriesCalloutOptions;
     /** The key to use to retrieve angle values from the data. */
     angleKey?: string;
@@ -1060,15 +1117,19 @@ export interface AgPieSeriesOptions<DatumType = any> extends AgBaseSeriesOptions
     labelKey?: string;
     /** A human-readable description of the label values. If supplied, this will be passed to the tooltip renderer as one of the parameters. */
     labelName?: string;
-    /** The colours to cycle through for the fills of the segments. */
+    /** The key to use to retrieve sector label values from the data. */
+    sectorLabelKey?: string;
+    /** A human-readable description of the sector label values. If supplied, this will be passed to the tooltip renderer as one of the parameters. */
+    sectorLabelName?: string;
+    /** The colours to cycle through for the fills of the sectors. */
     fills?: CssColor[];
-    /** The colours to cycle through for the strokes of the segments. */
+    /** The colours to cycle through for the strokes of the sectors. */
     strokes?: CssColor[];
-    /** The opacity of the fill for the segments. */
+    /** The opacity of the fill for the sectors. */
     fillOpacity?: Opacity;
-    /** The opacity of the stroke for the segments. */
+    /** The opacity of the stroke for the sectors. */
     strokeOpacity?: Opacity;
-    /** The width in pixels of the stroke for the segments. */
+    /** The width in pixels of the stroke for the sectors. */
     strokeWidth?: PixelSize;
     /** Defines how the pie sector strokes are rendered. Every number in the array specifies the length in pixels of alternating dashes and gaps. For example, `[6, 3]` means dashes with a length of `6` pixels with gaps between of `3` pixels. */
     lineDash?: PixelSize[];
@@ -1078,8 +1139,12 @@ export interface AgPieSeriesOptions<DatumType = any> extends AgBaseSeriesOptions
     rotation?: number;
     /** The offset in pixels of the outer radius of the series. Used to construct doughnut charts. */
     outerRadiusOffset?: PixelSize;
-    /** The offset in pixels of the inner radius of the series. Used to construct doughnut charts. If this is not given, or a value of zero is given, a pie chart will be rendered. */
+    /** The ratio of the outer radius of the series. Used to adjust the outer radius proportionally to the automatically calculated value. */
+    outerRadiusRatio?: Ratio;
+    /** The offset in pixels of the inner radius of the series. Used to construct doughnut charts. If this is not provided, or innerRadiusRatio is unset, or a value of zero is given, a pie chart will be rendered. */
     innerRadiusOffset?: PixelSize;
+    /** The ratio of the inner radius of the series. Used to construct doughnut charts. If this is not provided, or innerRadiusOffset is unset, or a value of zero or one is given, a pie chart will be rendered. */
+    innerRadiusRatio?: Ratio;
     /** Override of the automatically determined minimum radiusKey value from the data. */
     radiusMin?: number;
     /** Override of the automatically determined maximum radiusKey value from the data. */
@@ -1088,6 +1153,10 @@ export interface AgPieSeriesOptions<DatumType = any> extends AgBaseSeriesOptions
     shadow?: AgDropShadowOptions;
     /** Series-specific tooltip configuration. */
     tooltip?: AgPieSeriesTooltip;
+    /** Configuration for the text lines to display inside the series, typically used when rendering a doughnut chart */
+    innerLabels?: AgDoughnutInnerLabel[];
+    /** Configuration for the area inside the series, only visible when rendering a doughnut chart by using innerRadiusOffset or innerRadiusRatio */
+    innerCircle?: AgDoughnutInnerCircle;
     formatter?: (params: AgPieSeriesFormatterParams<DatumType>) => AgPieSeriesFormat;
 }
 export interface AgPieSeriesTooltipRendererParams extends AgPolarSeriesTooltipRendererParams {
@@ -1095,6 +1164,44 @@ export interface AgPieSeriesTooltipRendererParams extends AgPolarSeriesTooltipRe
     labelKey?: string;
     /** labelName as specified on series options. */
     labelName?: string;
+    /** sectorLabelKey as specified on series options. */
+    sectorLabelKey?: string;
+    /** sectorLabelName as specified on series options. */
+    sectorLabelName?: string;
+}
+export interface AgPieSeriesLabelFormatterParams<DatumType> {
+    /** Datum from the series data array that the label is being rendered for. */
+    readonly datum: DatumType;
+    /** labelKey as specified on series options. */
+    readonly labelKey?: string;
+    /** labelValue as read from series data via the labelKey property. */
+    readonly labelValue?: string;
+    /** labelName as specified on series options. */
+    readonly labelName?: string;
+    /** sectorLabelKey as specified on series options. */
+    readonly sectorLabelKey?: string;
+    /** sectorLabelValue as read from series data via the sectorLabelKey property. */
+    readonly sectorLabelValue?: string;
+    /** sectorLabelName as specified on series options. */
+    readonly sectorLabelName?: string;
+    /** angleKey as specified on series options. */
+    readonly angleKey: string;
+    /** angleValue as read from series data via the angleKey property. */
+    readonly angleValue?: any;
+    /** angleName as specified on series options. */
+    readonly angleName?: string;
+    /** radiusKey as specified on series options. */
+    readonly radiusKey?: string;
+    /** radiusValue as read from series data via the radiusKey property. */
+    readonly radiusValue?: any;
+    /** radiusName as specified on series options. */
+    readonly radiusName?: string;
+    /**
+     * The value of labelKey as specified on series options.
+     *
+     * @deprecated Use item.datum instead.
+     */
+    readonly value?: any;
 }
 export interface AgTreemapSeriesLabelOptions extends AgChartLabelOptions {
     /** The amount of the tile's vertical space to reserve for the label. */
@@ -1158,6 +1265,48 @@ export interface AgTreemapSeriesOptions<DatumType = any> extends AgBaseSeriesOpt
     nodePadding?: PixelSize;
     /** Whether or not to use gradients for treemap tiles. */
     gradient?: boolean;
+    /** A callback function for adjusting the styles of a particular treemap tile based on the input parameters */
+    formatter?: (params: AgTreemapSeriesFormatterParams<DataValue>) => AgTreemapSeriesFormat;
+}
+/** The parameters of the treemap series formatter function */
+export interface AgTreemapSeriesFormatterParams<DataValue = any> {
+    /** Datum from the series data array that the treemap tile is being rendered for. */
+    readonly datum: DataValue;
+    /** labelKey as specified on series options. */
+    readonly labelKey: string;
+    /** sizeKey as specified on series options. */
+    readonly sizeKey?: string;
+    /** colorKey as specified on series options. */
+    readonly colorKey?: string;
+    /** The colour of the fill for the treemap tile. */
+    readonly fill?: string;
+    /** The opacity of the fill for the treemap tile. */
+    readonly fillOpacity?: string;
+    /** The colour of the stroke for the treemap tile. */
+    readonly stroke?: string;
+    /** The opacity of the stroke for the treemap tile. */
+    readonly strokeOpacity?: number;
+    /** The width in pixels of the stroke for the treemap tile. */
+    readonly strokeWidth?: number;
+    /** Whether or not the gradients are used for treemap tiles. */
+    readonly gradient?: boolean;
+    /** `true` if the tile is highlighted by hovering */
+    readonly highlighted: boolean;
+}
+/** The formatted style of a treemap tile */
+export interface AgTreemapSeriesFormat {
+    /** The colour of the fill for the treemap tile. */
+    readonly fill?: string;
+    /** The opacity of the fill for the treemap tile. */
+    readonly fillOpacity?: string;
+    /** The colour of the stroke for the treemap tile. */
+    readonly stroke?: string;
+    /** The opacity of the stroke for the treemap tile. */
+    readonly strokeOpacity?: number;
+    /** The width in pixels of the stroke for the treemap tile. */
+    readonly strokeWidth?: number;
+    /** Whether or not the gradient is used for the treemap tile. */
+    readonly gradient?: boolean;
 }
 export declare type AgCartesianSeriesOptions = AgLineSeriesOptions | AgScatterSeriesOptions | AgAreaSeriesOptions | AgBarSeriesOptions | AgHistogramSeriesOptions;
 export declare type AgPolarSeriesOptions = AgPieSeriesOptions;

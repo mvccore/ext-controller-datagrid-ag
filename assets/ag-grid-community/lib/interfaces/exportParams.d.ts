@@ -21,6 +21,11 @@ export interface BaseExportParams {
      */
     fileName?: string;
     /**
+     * Determines whether rows are exported before being filtered and sorted.
+     * Default: `filteredAndSorted`
+     */
+    exportedRows?: 'all' | 'filteredAndSorted';
+    /**
      * Export only selected rows.
      * Default: `false`
      */

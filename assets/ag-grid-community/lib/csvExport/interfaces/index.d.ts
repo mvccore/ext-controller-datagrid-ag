@@ -1,4 +1,4 @@
-import { Column, ColumnModel, GridOptionsWrapper, ProcessCellForExportParams, ProcessGroupHeaderForExportParams, ProcessHeaderForExportParams, ProcessRowGroupForExportParams, RowNode, ValueService } from "../../main";
+import { Column, ColumnGroup, ColumnModel, GridOptionsWrapper, ProcessCellForExportParams, ProcessGroupHeaderForExportParams, ProcessHeaderForExportParams, ProcessRowGroupForExportParams, RowNode, ValueService } from "../../main";
 import { GridSerializer } from "../gridSerializer";
 export interface BaseCreatorBeans {
     gridSerializer: GridSerializer;
@@ -8,7 +8,7 @@ export interface RowAccumulator {
     onColumn(column: Column, index: number, node?: RowNode): void;
 }
 export interface RowSpanningAccumulator {
-    onColumn(header: string, index: number, span: number, collapsibleGroupRanges: number[][]): void;
+    onColumn(columnGroup: ColumnGroup, header: string, index: number, span: number, collapsibleGroupRanges: number[][]): void;
 }
 export interface GridSerializingParams {
     columnModel: ColumnModel;

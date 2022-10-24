@@ -128,7 +128,7 @@ var MvcCore;
                                 [AgGrids.Enums.FilterControlType.NOT_STARTS_WITH, AgGrids.Enums.Operator.NOT_LIKE],
                                 [AgGrids.Enums.FilterControlType.NOT_ENDS_WITH, AgGrids.Enums.Operator.NOT_LIKE],
                                 [AgGrids.Enums.FilterControlType.IS_TRUE, AgGrids.Enums.Operator.EQUAL],
-                                [AgGrids.Enums.FilterControlType.IS_FALSE, AgGrids.Enums.Operator.EQUAL],
+                                [AgGrids.Enums.FilterControlType.IS_FALSE, AgGrids.Enums.Operator.EQUAL], // column = 0
                             ]);
                             FilterOperatorsCfg.CONTROL_TYPES_TEXTS = new Map([
                                 [AgGrids.Enums.FilterControlType.EQUAL, 'equals'],
@@ -146,7 +146,7 @@ var MvcCore;
                                 [AgGrids.Enums.FilterControlType.NOT_STARTS_WITH, 'notStartsWith'],
                                 [AgGrids.Enums.FilterControlType.NOT_ENDS_WITH, 'notEndsWith'],
                                 [AgGrids.Enums.FilterControlType.IS_TRUE, 'yes'],
-                                [AgGrids.Enums.FilterControlType.IS_FALSE, 'no'],
+                                [AgGrids.Enums.FilterControlType.IS_FALSE, 'no'], // column = 0
                             ]);
                             FilterOperatorsCfg.CONTROL_TYPES_VALUE_PATTERNS = new Map([
                                 [AgGrids.Enums.FilterControlType.EQUAL, '<value>'],
@@ -164,7 +164,7 @@ var MvcCore;
                                 [AgGrids.Enums.FilterControlType.NOT_STARTS_WITH, '<value>%'],
                                 [AgGrids.Enums.FilterControlType.NOT_ENDS_WITH, '%<value>'],
                                 [AgGrids.Enums.FilterControlType.IS_TRUE, '1'],
-                                [AgGrids.Enums.FilterControlType.IS_FALSE, '0'],
+                                [AgGrids.Enums.FilterControlType.IS_FALSE, '0'], // column = 0
                             ]);
                             return FilterOperatorsCfg;
                         }());

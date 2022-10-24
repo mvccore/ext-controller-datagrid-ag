@@ -57,9 +57,7 @@ trait InitMethods {
 		
 		$this->initConfigRenderingByClientPageMode();
 		
-		/** @var \MvcCore\Controller $parentOfParentClass */
-		$parentOfParentClass = get_parent_class(get_parent_class(__CLASS__));
-		$parentOfParentClass::Init();
+		\MvcCore\Controller::Init();
 		
 		$this->initModelClasses();
 		$this->GetConfigUrlSegments();

@@ -30,9 +30,7 @@ trait PreDispatchMethods {
 				$this->view = $this->createView(TRUE);
 			$this->view->grid = $this;
 				
-			/** @var \MvcCore\Controller $parentOfParentClass */
-			$parentOfParentClass = get_parent_class(get_parent_class(__CLASS__));
-			$parentOfParentClass::PreDispatch();
+			\MvcCore\Controller::PreDispatch();
 				
 			$this->LoadModel();
 			$this->preDispatchPage();

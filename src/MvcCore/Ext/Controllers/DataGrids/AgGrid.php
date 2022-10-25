@@ -34,7 +34,7 @@ implements	IConstantsAg {
 	 * Comparison by PHP function version_compare();
 	 * @see http://php.net/manual/en/function.version-compare.php
 	 */
-	const VERSION = '5.1.15';
+	const VERSION = '5.1.16';
 	
 	/**
 	 * Internal datagrid actions.

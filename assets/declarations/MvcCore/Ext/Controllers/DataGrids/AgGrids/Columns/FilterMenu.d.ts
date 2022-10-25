@@ -65,7 +65,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
         protected destroySections(): this;
         protected destroySection(index: number, sectionElms: Interfaces.FilterMenus.Sections.IElements): this;
         protected createSections(filteringItem: Map<Enums.Operator, string[]> | null): this;
-        protected createSectionElements(operator: Enums.Operator | null, value: string | null, index?: number, filteringItemsCount?: number): this;
+        protected createSectionElements(operator: Enums.Operator | null, value: string | null, index: number, filteringItemsCount: number): this;
         protected changeValueInputType(index: number, currentControlType: Enums.FilterControlType): this;
         protected createSectionElementTypeSelect(section: HTMLDivElement, operator: Enums.Operator | null, value: string | null): [HTMLSelectElement, Enums.FilterControlType];
         protected createSectionElementValueInput(section: HTMLDivElement, operator: Enums.Operator | null, value: string | null, currentControlType: Enums.FilterControlType): HTMLInputElement;

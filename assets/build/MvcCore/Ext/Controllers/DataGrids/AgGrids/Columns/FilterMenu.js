@@ -278,14 +278,12 @@ var MvcCore;
                                 }
                                 else {
                                     this
-                                        .createSectionElements(null, null)
+                                        .createSectionElements(null, null, 0, 1)
                                         .initSectionEvents(index);
                                 }
                                 return this;
                             };
                             FilterMenu.prototype.createSectionElements = function (operator, value, index, filteringItemsCount) {
-                                if (index === void 0) { index = 0; }
-                                if (filteringItemsCount === void 0) { filteringItemsCount = 1; }
                                 var section = document.createElement('div');
                                 section.className = this.Static.SELECTORS.SECTION_CLS;
                                 var _a = __read(this.createSectionElementTypeSelect(section, operator, value), 2), typeSelect = _a[0], currentControlType = _a[1];
@@ -305,19 +303,41 @@ var MvcCore;
                                 return this;
                             };
                             FilterMenu.prototype.createSectionElementTypeSelect = function (section, operator, value) {
-                                var e_4, _a;
+                                var e_4, _a, e_5, _b;
                                 var typeSelect = document.createElement('select');
                                 typeSelect.className = this.Static.SELECTORS.TYPE_CLS;
                                 var allServerTypesControlTypesOrders = Columns.FilterOperatorsCfg.SERVER_TYPES_CONTROL_TYPES_ORDERS;
                                 var allControlTypes = allServerTypesControlTypesOrders.has(this.serverType)
                                     ? allServerTypesControlTypesOrders.get(this.serverType)
                                     : allServerTypesControlTypesOrders.get(AgGrids.Enums.ServerType.STRING);
-                                var currentControlType = this.helpers.GetControlTypeByOperatorAndValue(operator, value, allControlTypes.length > 0
-                                    ? allControlTypes[0]
-                                    : AgGrids.Enums.FilterControlType.UNKNOWN, this.serverType), allowedControlTypes = this.params.controlTypes;
+                                var currentControlType;
+                                var allowedControlTypes = this.params.controlTypes;
+                                if (operator == null && value == null) {
+                                    try {
+                                        for (var allControlTypes_1 = __values(allControlTypes), allControlTypes_1_1 = allControlTypes_1.next(); !allControlTypes_1_1.done; allControlTypes_1_1 = allControlTypes_1.next()) {
+                                            var controlType = allControlTypes_1_1.value;
+                                            if ((allowedControlTypes & controlType) != 0) {
+                                                currentControlType = controlType;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                                    finally {
+                                        try {
+                                            if (allControlTypes_1_1 && !allControlTypes_1_1.done && (_a = allControlTypes_1.return)) _a.call(allControlTypes_1);
+                                        }
+                                        finally { if (e_4) throw e_4.error; }
+                                    }
+                                }
+                                else {
+                                    currentControlType = this.helpers.GetControlTypeByOperatorAndValue(operator, value, allControlTypes.length > 0
+                                        ? allControlTypes[0]
+                                        : AgGrids.Enums.FilterControlType.UNKNOWN, this.serverType);
+                                }
                                 try {
-                                    for (var allControlTypes_1 = __values(allControlTypes), allControlTypes_1_1 = allControlTypes_1.next(); !allControlTypes_1_1.done; allControlTypes_1_1 = allControlTypes_1.next()) {
-                                        var controlType = allControlTypes_1_1.value;
+                                    for (var allControlTypes_2 = __values(allControlTypes), allControlTypes_2_1 = allControlTypes_2.next(); !allControlTypes_2_1.done; allControlTypes_2_1 = allControlTypes_2.next()) {
+                                        var controlType = allControlTypes_2_1.value;
                                         if ((allowedControlTypes & controlType) != 0) {
                                             var option = document.createElement('option');
                                             if (controlType === currentControlType) {
@@ -334,12 +354,12 @@ var MvcCore;
                                         }
                                     }
                                 }
-                                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                                catch (e_5_1) { e_5 = { error: e_5_1 }; }
                                 finally {
                                     try {
-                                        if (allControlTypes_1_1 && !allControlTypes_1_1.done && (_a = allControlTypes_1.return)) _a.call(allControlTypes_1);
+                                        if (allControlTypes_2_1 && !allControlTypes_2_1.done && (_b = allControlTypes_2.return)) _b.call(allControlTypes_2);
                                     }
-                                    finally { if (e_4) throw e_4.error; }
+                                    finally { if (e_5) throw e_5.error; }
                                 }
                                 return [section.appendChild(typeSelect), currentControlType];
                             };
@@ -434,7 +454,7 @@ var MvcCore;
                                     .initSectionEvents(nextIndex);
                             };
                             FilterMenu.prototype.getFilteringFromControls = function () {
-                                var e_5, _a;
+                                var e_6, _a;
                                 var filtering = new Map(), operator, filteringControlType, valuePattern, rawValue, value;
                                 try {
                                     for (var _b = __values(this.elms.sections), _c = _b.next(); !_c.done; _c = _b.next()) {
@@ -452,12 +472,12 @@ var MvcCore;
                                         }
                                     }
                                 }
-                                catch (e_5_1) { e_5 = { error: e_5_1 }; }
+                                catch (e_6_1) { e_6 = { error: e_6_1 }; }
                                 finally {
                                     try {
                                         if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                                     }
-                                    finally { if (e_5) throw e_5.error; }
+                                    finally { if (e_6) throw e_6.error; }
                                 }
                                 return filtering;
                             };

@@ -18,7 +18,7 @@ var MvcCore;
             var DataGrids;
             (function (DataGrids) {
                 var AgGrid = /** @class */ (function () {
-                    function AgGrid(serverConfig, initialData) {
+                    function AgGrid(serverConfig, initialData, viewHelpers) {
                         var _newTarget = this.constructor;
                         var _this = this;
                         this.totalCount = null;
@@ -29,10 +29,12 @@ var MvcCore;
                         this.internalSelectionChange = false;
                         //console.log("AgGrid.ctor - serverConfig", serverConfig);
                         //console.log("AgGrid.ctor - initialData", initialData);
+                        console.log("AgGrid.ctor - viewHelpers", viewHelpers);
                         this.Static = _newTarget;
                         this
                             .initSubClasses()
                             .initServerConfig(serverConfig)
+                            .SetViewHelpers(viewHelpers)
                             .initTranslator();
                         this.optionsManager.InitElements();
                         this
@@ -87,6 +89,15 @@ var MvcCore;
                     };
                     AgGrid.prototype.GetServerConfig = function () {
                         return this.serverConfig;
+                    };
+                    AgGrid.prototype.SetViewHelpers = function (viewHelpers) {
+                        this.viewHelpers = new Map();
+                        for (var columnUrlName in viewHelpers)
+                            this.viewHelpers.set(columnUrlName, viewHelpers[columnUrlName]);
+                        return this;
+                    };
+                    AgGrid.prototype.GetViewHelpers = function () {
+                        return this.viewHelpers;
                     };
                     AgGrid.prototype.SetInitialData = function (initialData) {
                         this.initialData = initialData;

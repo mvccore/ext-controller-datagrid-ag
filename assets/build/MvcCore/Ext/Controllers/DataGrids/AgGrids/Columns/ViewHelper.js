@@ -55,13 +55,9 @@ var MvcCore;
                                 var _this = this;
                                 var viewHelper = null;
                                 if (serverColumnCfg.viewHelper != null) {
-                                    try {
-                                        var formatter = eval(serverColumnCfg.viewHelper);
-                                        if (typeof formatter === 'function')
-                                            viewHelper = formatter;
-                                    }
-                                    catch (e) {
-                                    }
+                                    var allViewHelpers = this.grid.GetViewHelpers(), viewHelperName = serverColumnCfg.viewHelper;
+                                    if (allViewHelpers.has(viewHelperName))
+                                        viewHelper = allViewHelpers.get(viewHelperName);
                                 }
                                 if (viewHelper == null) {
                                     var serverType = serverColumnCfg.types[serverColumnCfg.types.length - 1];

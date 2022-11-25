@@ -4,6 +4,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         Static: typeof AgGrid;
         protected serverConfig: AgGrids.Interfaces.IServerConfig;
         protected initialData: AgGrids.Interfaces.Ajax.IResponse;
+        protected viewHelpers: Map<string, AgGrids.Types.ViewHelper>;
         protected grid: agGrid.Grid;
         protected agGridApi: agGrid.GridApi<any>;
         protected agColumnApi: agGrid.ColumnApi;
@@ -25,7 +26,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         protected pageMode: AgGrids.Enums.ClientPageMode;
         protected columnsVisibilityMenu: AgGrids.Columns.VisibilityMenu;
         protected internalSelectionChange: boolean;
-        constructor(serverConfig: AgGrids.Interfaces.IServerConfig, initialData: AgGrids.Interfaces.Ajax.IResponse);
+        constructor(serverConfig: AgGrids.Interfaces.IServerConfig, initialData: AgGrids.Interfaces.Ajax.IResponse, viewHelpers: AgGrids.Interfaces.IViewHelpers);
         SetHelpers(helpers: AgGrids.Tools.Helpers): this;
         GetHelpers(): AgGrids.Tools.Helpers;
         SetEvents(events: AgGrids.EventsManager): this;
@@ -38,6 +39,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         GetDataSource(): AgGrids.DataSource;
         SetServerConfig(serverConfig: AgGrids.Interfaces.IServerConfig): this;
         GetServerConfig(): AgGrids.Interfaces.IServerConfig;
+        SetViewHelpers(viewHelpers: AgGrids.Interfaces.IViewHelpers): this;
+        GetViewHelpers(): Map<string, AgGrids.Types.ViewHelper>;
         SetInitialData(initialData: AgGrids.Interfaces.Ajax.IResponse): this;
         GetInitialData(): AgGrids.Interfaces.Ajax.IResponse;
         SetGrid(grid: agGrid.Grid): this;

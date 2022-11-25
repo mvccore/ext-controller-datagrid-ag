@@ -517,9 +517,10 @@ trait InitMethods {
 						$rawValue = ltrim($rawValue, '!<=>');
 						if ($rawValue === '') continue;
 						if ($useViewHelper) {
+							x($configColumn);
 							$rawValue = call_user_func_array(
 								[$viewHelper, 'Unformat'],
-								array_merge([$rawValue], $configColumn->GetFormat() ?: [])
+								array_merge([$rawValue], $configColumn->GetFormatArgs() ?: [])
 							);
 							if ($rawValue === NULL) continue;
 						}

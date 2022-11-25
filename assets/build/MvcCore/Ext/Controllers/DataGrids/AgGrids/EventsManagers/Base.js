@@ -39,8 +39,8 @@ var MvcCore;
                     (function (EventsManagers) {
                         var Base = /** @class */ (function () {
                             function Base(grid, serverConfig) {
-                                if (serverConfig === void 0) { serverConfig = null; }
                                 var _newTarget = this.constructor;
+                                if (serverConfig === void 0) { serverConfig = null; }
                                 this.onLoadSelectionIndex = null;
                                 this.onLoadSelectionCallback = null;
                                 this.Static = _newTarget;

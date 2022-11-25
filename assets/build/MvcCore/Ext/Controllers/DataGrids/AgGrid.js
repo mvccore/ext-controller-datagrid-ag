@@ -29,7 +29,7 @@ var MvcCore;
                         this.internalSelectionChange = false;
                         //console.log("AgGrid.ctor - serverConfig", serverConfig);
                         //console.log("AgGrid.ctor - initialData", initialData);
-                        console.log("AgGrid.ctor - viewHelpers", viewHelpers);
+                        //console.log("AgGrid.ctor - viewHelpers", viewHelpers);
                         this.Static = _newTarget;
                         this
                             .initSubClasses()

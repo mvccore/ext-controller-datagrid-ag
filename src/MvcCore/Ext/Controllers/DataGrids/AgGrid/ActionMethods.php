@@ -13,6 +13,7 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 
+use \MvcCore\Ext\Controllers\DataGrids\AgGrids;
 use \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn;
 use \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns;
 use \MvcCore\Ext\Controllers\DataGrids\Configs\JsonSerialize;
@@ -90,6 +91,32 @@ trait ActionMethods {
 			'clientMaxRowsInCache'	=> $this->GetClientMaxRowsInCache(),
 			'clientRowBufferMax'	=> static::CLIENT_JS_BUFFER_MAX_SIZE,
 		];
+	}
+
+	/**
+	 * 
+	 * @return string
+	 */
+	public function GetClientHelpersJson () {
+		$viewHelpers = [];
+		$configColumns = $this->GetConfigColumns(FALSE);
+		$toolClass = $this->application->GetToolClass();
+		$phpClassNameRegExp = "#^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$#";
+		foreach ($configColumns as $urlName => $configColumn) {
+			$viewHelperName = $configColumn->GetViewHelper();
+			if ($viewHelperName === NULL) continue;
+			// @see https://www.php.net/manual/en/language.oop5.basic.php#language.oop5.basic.class
+			if (!preg_match($phpClassNameRegExp, $viewHelperName)) continue;
+			if ($this->view === NULL)
+				$this->view = $this->createView(TRUE);
+			$viewHelper = $this->view->GetHelper($viewHelperName, FALSE);
+			if (!($viewHelper instanceof AgGrids\Views\IReverseHelper)) continue;
+			$viewHelperNameJson = $toolClass::JsonEncode($viewHelperName);
+			/** @var AgGrids\Views\IReverseHelper $viewHelper */
+			$viewHelpers[] = $viewHelperNameJson . ':' . $viewHelper->GetJsFormatter();
+			
+		}
+		return '{'.implode(',', $viewHelpers).'}';
 	}
 
 	/**

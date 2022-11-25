@@ -39,6 +39,7 @@
 	$controlsWrapperCssClass = count($controlsWrapperCssClasses) > 0
 		? implode(' ', $controlsWrapperCssClasses)
 		: '';
+	$toolClass = $this->controller->GetApplication()->GetToolClass();
 ?><div id="<?php echo $gridId; ?>"<?php echo $gridContClassAttr; ?>>
 	<div class="grid-table-component <?php echo $themeCssClass; ?>"></div>
 	<?php if ($renderBottomControls): ?>
@@ -50,7 +51,9 @@
 	<?php endif; ?>
 </div>
 <script<?php echo $nonceAttr; ?>>new <?php echo $grid->GetJsClassFullName(); ?>(<?php
-	echo \MvcCore\Tool::JsonEncode($grid->GetClientServerConfig());
+	echo $toolClass::JsonEncode($grid->GetClientServerConfig());
 ?>,<?php
-	echo \MvcCore\Tool::JsonEncode($grid->GetClientInitData());
+	echo $toolClass::JsonEncode($grid->GetClientInitData());
+?>,<?php
+	echo $grid->GetClientHelpersJson();
 ?>);</script>

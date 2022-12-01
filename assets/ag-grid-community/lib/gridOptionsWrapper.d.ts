@@ -109,8 +109,8 @@ export declare class GridOptionsWrapper {
     getContext(): any;
     isPivotMode(): boolean;
     isSuppressExpandablePivotGroups(): boolean;
-    getPivotColumnGroupTotals(): string | undefined;
-    getPivotRowTotals(): string | undefined;
+    getPivotColumnGroupTotals(): "before" | "after" | undefined;
+    getPivotRowTotals(): "before" | "after" | undefined;
     isRowModelInfinite(): boolean;
     isRowModelViewport(): boolean;
     isRowModelServerSide(): boolean;
@@ -217,7 +217,7 @@ export declare class GridOptionsWrapper {
     isEnsureDomOrder(): boolean;
     isEnableCharts(): boolean;
     isEnableChartToolPanelsButton(): boolean;
-    getColResizeDefault(): string | undefined;
+    getColResizeDefault(): "shift" | undefined;
     isSingleClickEdit(): boolean;
     isSuppressClickEdit(): boolean;
     isStopEditingWhenCellsLoseFocus(): boolean;
@@ -234,8 +234,8 @@ export declare class GridOptionsWrapper {
     isSuppressPaginationPanel(): boolean;
     getRowData(): any[] | undefined | null;
     isEnableRtl(): boolean;
-    getRowGroupPanelShow(): string | undefined;
-    getPivotPanelShow(): string | undefined;
+    getRowGroupPanelShow(): "always" | "onlyWhenGrouping" | "never" | undefined;
+    getPivotPanelShow(): "always" | "onlyWhenPivoting" | "never" | undefined;
     isAngularCompileRows(): boolean;
     isAngularCompileFilters(): boolean;
     isDebug(): boolean;

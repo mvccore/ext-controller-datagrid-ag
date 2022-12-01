@@ -207,7 +207,7 @@ export declare class ColumnModel extends BeanStub {
         finished: boolean;
         source: ColumnEventType;
     }): void;
-    setColumnAggFunc(key: string | Column | null | undefined, aggFunc: string, source?: ColumnEventType): void;
+    setColumnAggFunc(key: string | Column | null | undefined, aggFunc: string | IAggFunc | null | undefined, source?: ColumnEventType): void;
     private fireColumnEvent;
     moveRowGroupColumn(fromIndex: number, toIndex: number, source?: ColumnEventType): void;
     moveColumns(columnsToMoveKeys: (string | Column)[], toIndex: number, source?: ColumnEventType): void;
@@ -257,7 +257,7 @@ export declare class ColumnModel extends BeanStub {
     getColumnState(): ColumnState[];
     private orderColumnStateList;
     resetColumnState(source?: ColumnEventType): void;
-    applyColumnState(params: ApplyColumnStateParams, source?: ColumnEventType): boolean;
+    applyColumnState(params: ApplyColumnStateParams, source: ColumnEventType): boolean;
     private applyOrderAfterApplyState;
     private compareColumnStatesAndRaiseEvents;
     private raiseColumnPinnedEvent;
@@ -276,8 +276,8 @@ export declare class ColumnModel extends BeanStub {
     private getAutoColumn;
     private columnsMatch;
     getDisplayNameForColumn(column: Column | null, location: string | null, includeAggFunc?: boolean): string | null;
-    getDisplayNameForProvidedColumnGroup(columnGroup: ColumnGroup | null, providedColumnGroup: ProvidedColumnGroup | null, location: string): string | null;
-    getDisplayNameForColumnGroup(columnGroup: ColumnGroup, location: string): string | null;
+    getDisplayNameForProvidedColumnGroup(columnGroup: ColumnGroup | null, providedColumnGroup: ProvidedColumnGroup | null, location: string | null): string | null;
+    getDisplayNameForColumnGroup(columnGroup: ColumnGroup, location: string | null): string | null;
     private getHeaderName;
     private wrapHeaderNameWithAggFunc;
     getColumnGroup(colId: string | ColumnGroup, instanceId?: number): ColumnGroup | null;

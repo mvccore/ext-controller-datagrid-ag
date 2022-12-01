@@ -15,6 +15,7 @@ export declare class ProvidedColumnGroup implements IProvidedColumn, IEventEmitt
     private padding;
     private level;
     constructor(colGroupDef: ColGroupDef | null, groupId: string, padding: boolean, level: number);
+    reset(colGroupDef: ColGroupDef | null, level: number): void;
     setOriginalParent(originalParent: ProvidedColumnGroup | null): void;
     getOriginalParent(): ProvidedColumnGroup | null;
     getLevel(): number;

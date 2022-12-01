@@ -159,7 +159,7 @@ export interface ColDef<TData = any> extends AbstractColDef<TData>, IFilterDef {
     initialHide?: boolean;
     /** Set to `true` to block making column visible / hidden via the UI (API will still work). Default: `false` */
     lockVisible?: boolean;
-    /** Lock a column to position to `'left'` or`'right'` to always have this column displayed in that position. true is treated as `'left'` */
+    /** Lock a column to position to `'left'` or`'right'` to always have this column displayed in that position. `true` is treated as `'left'` */
     lockPosition?: boolean | 'left' | 'right';
     /** Set to `true` if you do not want this column to be movable via dragging. Default: `false` */
     suppressMovable?: boolean;
@@ -229,7 +229,7 @@ export interface ColDef<TData = any> extends AbstractColDef<TData>, IFilterDef {
      * Set to an array containing zero, one or many of the following options: `'filterMenuTab' | 'generalMenuTab' | 'columnsMenuTab'`.
      * This is used to figure out which menu tabs are present and in which order the tabs are shown.
      */
-    menuTabs?: string[];
+    menuTabs?: ColumnMenuTab[];
     /** Params used to change the behaviour and appearance of the Columns Menu tab. */
     columnsMenuParams?: ColumnsMenuParams;
     /** Set to `true` if no menu should be shown for this column header. Default: `false` */
@@ -336,7 +336,7 @@ export interface ColDef<TData = any> extends AbstractColDef<TData>, IFilterDef {
      * Default: `false`
      */
     enableValue?: boolean;
-    /** Name of function to use for aggregation. You can also provide your own agg function. */
+    /** Name of function to use for aggregation. In-built options are: `sum`, `min`, `max`, `count`, `avg`, `first`, `last`. Also accepts a custom aggregation name or an aggregation function. */
     aggFunc?: string | IAggFunc<TData> | null;
     /** Same as `aggFunc`, except only applied when creating a new column. Not applied when updating column definitions. */
     initialAggFunc?: string | IAggFunc<TData>;
@@ -487,6 +487,7 @@ export interface GetQuickFilterTextParams<TData = any, TValue = any> extends AgG
     /** ColDef provided for this column */
     colDef: ColDef<TData>;
 }
+export declare type ColumnMenuTab = 'filterMenuTab' | 'generalMenuTab' | 'columnsMenuTab';
 export interface ColumnsMenuParams {
     /** To suppress updating the layout of columns as they are rearranged in the grid */
     suppressSyncLayoutWithGrid?: boolean;

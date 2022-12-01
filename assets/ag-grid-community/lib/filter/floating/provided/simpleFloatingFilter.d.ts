@@ -1,7 +1,7 @@
 import { Component } from '../../../widgets/component';
 import { IFloatingFilterComp, IFloatingFilterParams } from '../floatingFilter';
 import { IFilterOptionDef, ProvidedFilterModel } from '../../../interfaces/iFilter';
-import { ISimpleFilter } from '../../provided/simpleFilter';
+import { ISimpleFilter, ISimpleFilterModel } from '../../provided/simpleFilter';
 import { FilterChangedEvent } from '../../../events';
 export declare abstract class SimpleFloatingFilter extends Component implements IFloatingFilterComp<ISimpleFilter> {
     abstract onParentModelChanged(model: ProvidedFilterModel, event: FilterChangedEvent): void;
@@ -13,7 +13,7 @@ export declare abstract class SimpleFloatingFilter extends Component implements 
     private readOnly;
     protected getDefaultDebounceMs(): number;
     destroy(): void;
-    protected getTextFromModel(model: ProvidedFilterModel): string | null;
+    protected getTextFromModel(model: ISimpleFilterModel): string | null;
     protected isEventFromFloatingFilter(event: FilterChangedEvent): boolean | undefined;
     protected getLastType(): string | null | undefined;
     protected isReadOnly(): boolean;

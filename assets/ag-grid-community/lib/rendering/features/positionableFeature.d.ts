@@ -73,6 +73,7 @@ export declare class PositionableFeature extends BeanStub {
     private getSiblings;
     private getMinSizeOfSiblings;
     private applySizeToSiblings;
+    isResizable(): boolean;
     private onResize;
     private onResizeEnd;
     private refreshSize;

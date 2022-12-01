@@ -71,6 +71,7 @@ export declare class GridBodyCtrl extends BeanStub {
     private setupRowAnimationCssClass;
     getGridBodyElement(): HTMLElement;
     private addBodyViewportListener;
+    private mockContextMenuForIPad;
     private onBodyViewportWheel;
     private onStickyTopWheel;
     getGui(): HTMLElement;

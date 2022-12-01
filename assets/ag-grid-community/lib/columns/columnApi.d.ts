@@ -1,4 +1,4 @@
-import { ColDef, ColGroupDef } from "../entities/colDef";
+import { ColDef, ColGroupDef, IAggFunc } from "../entities/colDef";
 import { IHeaderColumn } from "../entities/iHeaderColumn";
 import { ColumnState, ApplyColumnStateParams } from "./columnModel";
 import { ProvidedColumnGroup } from "../entities/providedColumnGroup";
@@ -18,7 +18,7 @@ export declare class ColumnApi {
     /** Returns the display name for a column. Useful if you are doing your own header rendering and want the grid to work out if `headerValueGetter` is used, or if you are doing your own column management GUI, to know what to show as the column name. */
     getDisplayNameForColumn(column: Column, location: string | null): string;
     /** Returns the display name for a column group (when grouping columns). */
-    getDisplayNameForColumnGroup(columnGroup: ColumnGroup, location: string): string;
+    getDisplayNameForColumnGroup(columnGroup: ColumnGroup, location: string | null): string;
     /** Returns the column with the given `colKey`, which can either be the `colId` (a string) or the `colDef` (an object). */
     getColumn(key: any): Column | null;
     /** Returns all the columns, regardless of visible or not. */
@@ -85,8 +85,8 @@ export declare class ColumnApi {
     moveColumns(columnsToMoveKeys: (string | Column)[], toIndex: number): void;
     /** Move the column to a new position in the row grouping order. */
     moveRowGroupColumn(fromIndex: number, toIndex: number): void;
-    /** Sets the agg function for a column. `aggFunc` can be one of `'min' | 'max' | 'sum'`. */
-    setColumnAggFunc(key: string | Column, aggFunc: string): void;
+    /** Sets the agg function for a column. `aggFunc` can be one of the built-in aggregations or a custom aggregation by name or direct function. */
+    setColumnAggFunc(key: string | Column, aggFunc: string | IAggFunc | null | undefined): void;
     /** Sets the column width on a single column. The finished flag gets included in the resulting event and not used internally by the grid. The finished flag is intended for dragging, where a dragging action will produce many `columnWidth` events, so the consumer of events knows when it receives the last event in a stream. The finished parameter is optional, and defaults to `true`. */
     setColumnWidth(key: string | Column, newWidth: number, finished?: boolean, source?: ColumnEventType): void;
     /** Sets the column widths on multiple columns. This method offers better performance than calling `setColumnWidth` multiple times. The finished flag gets included in the resulting event and not used internally by the grid. The finished flag is intended for dragging, where a dragging action will produce many `columnWidth` events, so the consumer of events knows when it receives the last event in a stream. The finished parameter is optional, and defaults to `true`. */
@@ -102,17 +102,17 @@ export declare class ColumnApi {
     getSecondaryPivotColumn(pivotKeys: string[], valueColKey: string | Column): Column | null;
     /** Returns the pivot result column for the given `pivotKeys` and `valueColId`. Useful to then call operations on the pivot column. */
     getPivotResultColumn(pivotKeys: string[], valueColKey: string | Column): Column | null;
-    /** Set the value columns. */
+    /** Set the value columns to the provided list of columns. */
     setValueColumns(colKeys: (string | Column)[]): void;
-    /** Get value columns. */
+    /** Get a list of the existing value columns. */
     getValueColumns(): Column[];
-    /** Remove a value column. */
+    /** Remove the given column from the existing set of value columns. */
     removeValueColumn(colKey: (string | Column)): void;
-    /** Same as `removeValueColumns` but provide a list. */
+    /** Like `removeValueColumn` but remove the given list of columns from the existing set of value columns. */
     removeValueColumns(colKeys: (string | Column)[]): void;
-    /** Add a value column. */
+    /** Add the given column to the set of existing value columns. */
     addValueColumn(colKey: (string | Column)): void;
-    /** Same as `addValueColumn` but provide a list. */
+    /** Like `addValueColumn` but add the given list of columns to the existing set of value columns. */
     addValueColumns(colKeys: (string | Column)[]): void;
     /** Set the row group columns. */
     setRowGroupColumns(colKeys: (string | Column)[]): void;

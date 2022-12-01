@@ -1,6 +1,6 @@
 import { IHeaderColumn } from "./iHeaderColumn";
 import { IProvidedColumn } from "./iProvidedColumn";
-import { AbstractColDef, ColDef, IAggFunc, ColumnFunctionCallbackParams } from "./colDef";
+import { AbstractColDef, ColDef, IAggFunc, ColumnFunctionCallbackParams, ColumnMenuTab } from "./colDef";
 import { RowNode } from "./rowNode";
 import { IEventEmitter } from "../interfaces/iEventEmitter";
 import { ColumnEventType } from "../events";
@@ -186,7 +186,7 @@ export declare class Column implements IHeaderColumn, IProvidedColumn, IEventEmi
     isAllowPivot(): boolean;
     isAllowValue(): boolean;
     isAllowRowGroup(): boolean;
-    getMenuTabs(defaultValues: string[]): string[];
+    getMenuTabs(defaultValues: ColumnMenuTab[]): ColumnMenuTab[];
     isLockPosition(): boolean;
     isLockVisible(): boolean;
     isLockPinned(): boolean;

@@ -10,7 +10,7 @@ export declare class CsvCreator extends BaseCreator<CsvCustomContent, CsvSeriali
     protected getMergedParams(params?: CsvExportParams): CsvExportParams;
     export(userParams?: CsvExportParams): string;
     exportDataAsCsv(params?: CsvExportParams): string;
-    getDataAsCsv(params?: CsvExportParams): string;
+    getDataAsCsv(params?: CsvExportParams, skipDefaultParams?: boolean): string;
     getDefaultFileName(): string;
     getDefaultFileExtension(): string;
     createSerializingSession(params?: CsvExportParams): CsvSerializingSession;

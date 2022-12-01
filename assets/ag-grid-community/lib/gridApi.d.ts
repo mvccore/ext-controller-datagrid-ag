@@ -318,8 +318,11 @@ export declare class GridApi<TData = any> {
     onGroupExpandedOrCollapsed(deprecated_refreshFromIndex?: any): void;
     /** @deprecated AG Grid: since version 18.x, api.refreshInMemoryRowModel() should be replaced with api.refreshClientSideRowModel() */
     refreshInMemoryRowModel(step?: string): any;
-    /** Gets the Client-Side Row Model to refresh, executing the grouping, filtering and sorting again. */
-    refreshClientSideRowModel(step?: string): any;
+    /**
+     * Refresh the Client-Side Row Model, executing the grouping, filtering and sorting again.
+     * Optionally provide the step you wish the refresh to apply from. Defaults to `everything`.
+     */
+    refreshClientSideRowModel(step?: 'everything' | 'group' | 'filter' | 'pivot' | 'aggregate' | 'sort' | 'map'): any;
     /** Returns `true` when there are no more animation frames left to process. */
     isAnimationFrameQueueEmpty(): boolean;
     flushAllAnimationFrames(): void;
@@ -522,6 +525,7 @@ export declare class GridApi<TData = any> {
     setTabToNextCell(tabToNextCellFunc: (params: TabToNextCellParams) => (CellPosition | null)): void;
     setTabToNextHeader(tabToNextHeaderFunc: (params: TabToNextHeaderParams) => (HeaderPosition | null)): void;
     setNavigateToNextHeader(navigateToNextHeaderFunc: (params: NavigateToNextHeaderParams) => (HeaderPosition | null)): void;
+    setRowGroupPanelShow(rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never'): void;
     setGroupRowAggNodes(groupRowAggNodesFunc: (nodes: RowNode[]) => any): void;
     setGetGroupRowAgg(getGroupRowAggFunc: (params: GetGroupRowAggParams) => any): void;
     setGetBusinessKeyForNode(getBusinessKeyForNodeFunc: (nodes: RowNode) => string): void;

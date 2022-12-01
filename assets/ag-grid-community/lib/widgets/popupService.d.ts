@@ -4,6 +4,8 @@ import { BeanStub } from "../context/beanStub";
 import { IAfterGuiAttachedParams } from "../interfaces/iAfterGuiAttachedParams";
 import { AgPromise } from "../utils";
 import { CtrlsService } from "../ctrlsService";
+import { ResizeObserverService } from "../misc/resizeObserverService";
+import { GridOptionsWrapper } from "../gridOptionsWrapper";
 export interface PopupEventParams {
     originalMouseEvent?: MouseEvent | Touch | null;
     mouseEvent?: MouseEvent;
@@ -38,8 +40,11 @@ export declare class PopupService extends BeanStub {
     private environment;
     private focusService;
     ctrlsService: CtrlsService;
+    resizeObserverService: ResizeObserverService;
+    protected readonly gridOptionsWrapper: GridOptionsWrapper;
     private gridCtrl;
     private popupList;
+    private static WAIT_FOR_POPUP_CONTENT_RESIZE;
     private postConstruct;
     getPopupParent(): HTMLElement;
     positionPopupForMenu(params: {
@@ -54,6 +59,7 @@ export declare class PopupService extends BeanStub {
         nudgeX?: number;
         nudgeY?: number;
         ePopup: HTMLElement;
+        skipObserver?: boolean;
     }): void;
     private calculatePointerAlign;
     positionPopupUnderComponent(params: {
@@ -85,6 +91,7 @@ export declare class PopupService extends BeanStub {
         x: number;
         y: number;
         keepWithinBounds?: boolean;
+        skipObserver?: boolean;
     }): void;
     getActivePopups(): HTMLElement[];
     getPopupList(): AgPopup[];

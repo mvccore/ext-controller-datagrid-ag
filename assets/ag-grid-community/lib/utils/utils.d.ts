@@ -198,12 +198,13 @@ export declare const _: {
     getAriaLevel(element: HTMLElement): number;
     getAriaPosInSet(element: HTMLElement): number;
     getAriaDescribedBy(element: HTMLElement): string;
-    setAriaLabel(element: HTMLElement, label?: string | undefined): void;
+    setAriaLabel(element: HTMLElement, label?: string | null | undefined): void;
     setAriaLabelledBy(element: HTMLElement, labelledBy: string): void;
     setAriaDescription(element: HTMLElement, description?: string | undefined): void;
     setAriaDescribedBy(element: HTMLElement, describedby: string | undefined): void;
     setAriaLevel(element: HTMLElement, level: number): void;
     setAriaDisabled(element: HTMLElement, disabled: boolean): void;
+    setAriaHidden(element: HTMLElement, hidden: boolean): void;
     setAriaExpanded(element: HTMLElement, expanded: boolean): void;
     removeAriaExpanded(element: HTMLElement): void;
     setAriaSetSize(element: HTMLElement, setsize: number): void;

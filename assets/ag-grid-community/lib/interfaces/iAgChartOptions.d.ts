@@ -241,7 +241,9 @@ export interface AgChartLegendMarkerOptions {
     strokeWidth?: PixelSize;
 }
 export interface AgChartLegendLabelFormatterParams {
+    /** @deprecated Use seriesId. */
     id: string;
+    seriesId: string;
     itemId: any;
     value: string;
 }
@@ -315,15 +317,37 @@ export interface AgChartBackground {
     /** Colour of the chart background. */
     fill?: CssColor;
 }
+export interface AgNodeClickEvent {
+    /** Event type. */
+    type: 'seriesNodeClick';
+    /** @deprecated Use seriesId to get the series ID. */
+    series: any;
+    /** Series ID, as specified in series.id (or generated if not specified) */
+    seriesId: string;
+    /** Datum from the chart or series data array. */
+    datum: any;
+    /** xKey as specified on series options */
+    xKey?: string;
+    /** yKey as specified on series options */
+    yKey?: string;
+    /** sizeKey as specified on series options */
+    sizeKey?: string;
+    /** labelKey as specified on series options */
+    labelKey?: string;
+    /** colorKey as specified on series options */
+    colorKey?: string;
+    /** angleKey as specified on series options */
+    angleKey?: string;
+    /** calloutLabelKey as specified on series options */
+    calloutLabelKey?: string;
+    /** sectorLabelKey as specified on series options */
+    sectorLabelKey?: string;
+    /** radiusKey as specified on series options */
+    radiusKey?: string;
+}
 export interface AgBaseChartListeners {
     /** The listener to call when a node (marker, column, bar, tile or a pie sector) in any series is clicked. In case a chart has multiple series, the chart's `seriesNodeClick` event can be used to listen to `nodeClick` events of all the series at once. */
-    seriesNodeClick: (event: {
-        type: 'seriesNodeClick';
-        series: any;
-        datum: any;
-        xKey: string;
-        yKey: string;
-    }) => any;
+    seriesNodeClick: (event: AgNodeClickEvent) => any;
     /** Generic listeners. */
     [key: string]: Function;
 }
@@ -542,9 +566,9 @@ export interface AgTimeAxisOptions extends AgBaseCartesianAxisOptions {
     /** Configuration for the axis ticks. */
     tick?: AgAxisTimeTickOptions;
     /** User override for the automatically determined min value (based on series data). */
-    min?: Date;
+    min?: Date | number;
     /** User override for the automatically determined max value (based on series data). */
-    max?: Date;
+    max?: Date | number;
 }
 export declare type AgCartesianAxisOptions = AgNumberAxisOptions | AgLogAxisOptions | AgCategoryAxisOptions | AgGroupedCategoryAxisOptions | AgTimeAxisOptions;
 export interface AgSeriesHighlightMarkerStyle {
@@ -588,17 +612,47 @@ export interface AgSeriesHighlightStyle {
     /** Highlight style used for whole series when one of its markers is tapped or hovered over. */
     series?: AgSeriesHighlightSeriesStyle;
 }
-export interface AgBaseSeriesListeners<DatumType> {
-    /** The listener to call when a node (marker, column, bar, tile or a pie sector) in the series is clicked. */
-    nodeClick: (params: {
-        type: 'nodeClick';
-        series: any;
-        datum: DatumType;
-        xKey: string;
-        yKey: string;
-    }) => any;
+export interface AgSeriesNodeClickParams<DatumType> {
+    /** Event type. */
+    type: 'nodeClick';
+    /** @deprecated Use seriesId to get the series ID. */
+    series: any;
+    /** Series ID, as specified in series.id (or generated if not specified) */
+    seriesId: string;
+    /** Datum from the series data array. */
+    datum: DatumType;
+    /** xKey as specified on series options */
+    xKey?: string;
+    /** yKey as specified on series options */
+    yKey?: string;
+    /** sizeKey as specified on series options */
+    sizeKey?: string;
+    /** labelKey as specified on series options */
+    labelKey?: string;
+    /** colorKey as specified on series options */
+    colorKey?: string;
+    /** angleKey as specified on series options */
+    angleKey?: string;
+    /** calloutLabelKey as specified on series options */
+    calloutLabelKey?: string;
+    /** sectorLabelKey as specified on series options */
+    sectorLabelKey?: string;
+    /** radiusKey as specified on series options */
+    radiusKey?: string;
 }
-export interface AgBaseSeriesOptions<DatumType, ListenerDatumType = DatumType> {
+export interface AgSeriesListeners<DatumType> {
+    /** The listener to call when a node (marker, column, bar, tile or a pie sector) in the series is clicked. */
+    nodeClick: (params: AgSeriesNodeClickParams<DatumType>) => void;
+}
+export interface AgBaseSeriesOptions<DatumType> {
+    /**
+     * Primary identifier for the series. This is provided as `seriesId` in user callbacks to differentiate multiple
+     * series. Auto-generated ids are subject to future change without warning, if your callbacks need to vary behaviour
+     * by series please supply your own unique `id` value.
+     *
+     * Default: auto-generated value
+     */
+    id?: string;
     /** The data to use when rendering the series. If this is not supplied, data must be set on the chart instead. */
     data?: DatumType[];
     /** Whether or not to display the series. */
@@ -608,7 +662,7 @@ export interface AgBaseSeriesOptions<DatumType, ListenerDatumType = DatumType> {
     /** The cursor to use for hovered area markers. This config is identical to the CSS `cursor` property. */
     cursor?: string;
     /** A map of event names to event listeners. */
-    listeners?: AgBaseSeriesListeners<ListenerDatumType>;
+    listeners?: AgSeriesListeners<DatumType>;
     /** Configuration for series markers and series line highlighting when a marker / data point or a legend item is hovered over. */
     highlightStyle?: AgSeriesHighlightStyle;
 }
@@ -625,6 +679,8 @@ export interface AgSeriesTooltipRendererParams {
     readonly title?: string;
     /** Series primary colour, as selected from the active theme, series options or formatter. */
     readonly color?: CssColor;
+    /** The ID of the series. */
+    readonly seriesId: string;
 }
 export interface AgCartesianSeriesTooltipRendererParams extends AgSeriesTooltipRendererParams {
     /** xKey as specified on series options. */
@@ -691,6 +747,7 @@ export interface AgSeriesMarkerFormatterParams<DatumType> {
     strokeWidth: PixelSize;
     size: number;
     highlighted: boolean;
+    seriesId: string;
 }
 export interface AgCartesianSeriesMarkerFormatterParams<DatumType> extends AgSeriesMarkerFormatterParams<DatumType> {
     xKey: string;
@@ -713,11 +770,15 @@ export interface AgSeriesTooltip {
     /** Whether or not to show tooltips when the series are hovered over. */
     enabled?: boolean;
 }
-export interface AgLineSeriesLabelOptions<DatumType> extends AgChartLabelOptions {
+export interface AgCartesianSeriesLabelFormatterParams {
+    /** The ID of the series. */
+    readonly seriesId: string;
+    /** The value of yKey as specified on series options. */
+    readonly value: number;
+}
+export interface AgCartesianSeriesLabelOptions extends AgChartLabelOptions {
     /** Function used to turn 'yKey' values into text to be displayed by a label. By default the values are simply stringified. */
-    formatter?: (params: {
-        value: DatumType;
-    }) => string;
+    formatter?: (params: AgCartesianSeriesLabelFormatterParams) => string;
 }
 export interface AgLineSeriesTooltip extends AgSeriesTooltip {
     /** Function used to create the content for tooltips. */
@@ -749,9 +810,11 @@ export interface AgLineSeriesOptions<DatumType = any> extends AgBaseSeriesOption
     /** The initial offset of the dashed line in pixels. */
     lineDashOffset?: PixelSize;
     /** Configuration for the labels shown on top of data points. */
-    label?: AgLineSeriesLabelOptions<DatumType>;
+    label?: AgCartesianSeriesLabelOptions;
     /** Series-specific tooltip configuration. */
     tooltip?: AgLineSeriesTooltip;
+    /** A map of event names to event listeners. */
+    listeners?: AgSeriesListeners<DatumType>;
 }
 export interface AgScatterSeriesTooltip extends AgSeriesTooltip {
     /** Function used to create the content for tooltips. */
@@ -801,16 +864,12 @@ export interface AgScatterSeriesOptions<DatumType = any> extends AgBaseSeriesOpt
     strokeOpacity?: Opacity;
     /** Series-specific tooltip configuration.  */
     tooltip?: AgScatterSeriesTooltip;
+    /** A map of event names to event listeners. */
+    listeners?: AgSeriesListeners<DatumType>;
 }
 export interface AgAreaSeriesTooltip extends AgSeriesTooltip {
     renderer?: (params: AgCartesianSeriesTooltipRendererParams) => string | AgTooltipRendererResult;
     format?: string;
-}
-export interface AgAreaSeriesLabelOptions<DatumType> extends AgChartLabelOptions {
-    /** Function used to turn 'yKey' values into text to be displayed by a label. By default the values are simply stringified. */
-    formatter?: (params: {
-        value: DatumType;
-    }) => string;
 }
 /** Configuration for area series. */
 export interface AgAreaSeriesOptions<DatumType = any> extends AgBaseSeriesOptions<DatumType> {
@@ -867,16 +926,12 @@ export interface AgAreaSeriesOptions<DatumType = any> extends AgBaseSeriesOption
     /** Configuration for the shadow used behind the chart series. */
     shadow?: AgDropShadowOptions;
     /** Configuration for the labels shown on top of data points. */
-    label?: AgAreaSeriesLabelOptions<DatumType>;
+    label?: AgCartesianSeriesLabelOptions;
     /** Series-specific tooltip configuration. */
     tooltip?: AgAreaSeriesTooltip;
     stacked?: boolean;
 }
-export interface AgBarSeriesLabelOptions extends AgChartLabelOptions {
-    /** Function used to turn 'yKey' values into text to be displayed by a label. By default the values are simply stringified. */
-    formatter?: (params: {
-        value: number;
-    }) => string;
+export interface AgBarSeriesLabelOptions extends AgCartesianSeriesLabelOptions {
     /** Where to render series labels relative to the segments. */
     placement?: 'inside' | 'outside';
 }
@@ -888,6 +943,7 @@ export interface AgBarSeriesFormatterParams<DatumType> {
     readonly highlighted: boolean;
     readonly xKey: string;
     readonly yKey: string;
+    readonly seriesId: string;
 }
 export interface AgBarSeriesFormat {
     fill?: CssColor;
@@ -963,11 +1019,14 @@ export interface AgBarSeriesOptions<DatumType = any> extends AgBaseSeriesOptions
     tooltip?: AgBarSeriesTooltip;
     /** Function used to return formatting for individual bars/columns, based on the given parameters. If the current bar/column is highlighted, the `highlighted` property will be set to `true`; make sure to check this if you want to differentiate between the highlighted and un-highlighted states. */
     formatter?: (params: AgBarSeriesFormatterParams<DatumType>) => AgBarSeriesFormat;
+    /** A map of event names to event listeners. */
+    listeners?: AgSeriesListeners<DatumType>;
 }
-export interface AgHistogramSeriesLabelOptions<DatumType> extends AgChartLabelOptions {
+export interface AgHistogramSeriesLabelOptions extends AgChartLabelOptions {
     /** Function used to turn 'yKey' values into text to be displayed by a label. By default the values are simply stringified. */
     formatter?: (params: {
-        value: DatumType;
+        value: number;
+        seriesId: string;
     }) => string;
 }
 export interface AgHistogramSeriesTooltip extends AgSeriesTooltip {
@@ -981,7 +1040,7 @@ export interface AgHistogramBinDatum<DatumType> {
     domain: [number, number];
 }
 /** Configuration for histogram series. */
-export interface AgHistogramSeriesOptions<DatumType = any> extends AgBaseSeriesOptions<DatumType, AgHistogramBinDatum<DatumType>> {
+export interface AgHistogramSeriesOptions<DatumType = any> extends AgBaseSeriesOptions<DatumType> {
     type?: 'histogram';
     /** The colour of the fill for the histogram bars. */
     fill?: CssColor;
@@ -1016,9 +1075,11 @@ export interface AgHistogramSeriesOptions<DatumType = any> extends AgBaseSeriesO
     /** Configuration for the shadow used behind the chart series. */
     shadow?: AgDropShadowOptions;
     /** Configuration for the labels shown on bars. */
-    label?: AgHistogramSeriesLabelOptions<DatumType>;
+    label?: AgHistogramSeriesLabelOptions;
     /** Series-specific tooltip configuration. */
     tooltip?: AgHistogramSeriesTooltip;
+    /** A map of event names to event listeners. */
+    listeners?: AgSeriesListeners<DatumType>;
 }
 export interface AgPieSeriesLabelOptions<DatumType> extends AgChartLabelOptions {
     /** Distance in pixels between the callout line and the label text. */
@@ -1049,9 +1110,11 @@ export interface AgPieSeriesFormatterParams<DatumType> {
     readonly angleKey: string;
     readonly radiusKey?: string;
     readonly sectorLabelKey?: string;
+    readonly seriesId: string;
 }
 export interface AgPieSeriesFormat {
     fill?: CssColor;
+    fillOpacity?: Opacity;
     stroke?: CssColor;
     strokeWidth?: PixelSize;
 }
@@ -1099,12 +1162,24 @@ export interface AgPieSeriesOptions<DatumType = any> extends AgBaseSeriesOptions
     type?: 'pie';
     /** Configuration for the series title. */
     title?: AgPieTitleOptions;
-    /** Configuration for the labels used outside of the sectors. */
+    /**
+     * Configuration for the labels used outside of the sectors.
+     *
+     * @deprecated Use series.calloutLabel instead.
+     */
     label?: AgPieSeriesLabelOptions<DatumType>;
+    /** Configuration for the labels used outside of the sectors. */
+    calloutLabel?: AgPieSeriesLabelOptions<DatumType>;
     /** Configuration for the labels used inside the sectors. */
     sectorLabel?: AgPieSeriesSectorLabelOptions<DatumType>;
-    /** Configuration for the callouts used with the labels for the sectors. */
+    /**
+     * Configuration for the callout lines used with the labels for the sectors.
+     *
+     * @deprecated Use series.calloutLine instead.
+     */
     callout?: AgPieSeriesCalloutOptions;
+    /** Configuration for the callout lines used with the labels for the sectors. */
+    calloutLine?: AgPieSeriesCalloutOptions;
     /** The key to use to retrieve angle values from the data. */
     angleKey?: string;
     /** A human-readable description of the angle values. If supplied, this will be passed to the tooltip renderer as one of the parameters. */
@@ -1113,10 +1188,22 @@ export interface AgPieSeriesOptions<DatumType = any> extends AgBaseSeriesOptions
     radiusKey?: string;
     /** A human-readable description of the radius values. If supplied, this will be passed to the tooltip renderer as one of the parameters. */
     radiusName?: string;
-    /** The key to use to retrieve label values from the data. */
+    /**
+     * The key to use to retrieve label values from the data.
+     *
+     * @deprecated Use series.calloutLabelKey or series.sectorLabelKey instead.
+     */
     labelKey?: string;
-    /** A human-readable description of the label values. If supplied, this will be passed to the tooltip renderer as one of the parameters. */
+    /**
+     * A human-readable description of the label values. If supplied, this will be passed to the tooltip renderer as one of the parameters.
+     *
+     * @deprecated Use series.calloutLabelName or series.sectorLabelName instead.
+     */
     labelName?: string;
+    /** The key to use to retrieve label values from the data. */
+    calloutLabelKey?: string;
+    /** A human-readable description of the label values. If supplied, this will be passed to the tooltip renderer as one of the parameters. */
+    calloutLabelName?: string;
     /** The key to use to retrieve sector label values from the data. */
     sectorLabelKey?: string;
     /** A human-readable description of the sector label values. If supplied, this will be passed to the tooltip renderer as one of the parameters. */
@@ -1157,13 +1244,28 @@ export interface AgPieSeriesOptions<DatumType = any> extends AgBaseSeriesOptions
     innerLabels?: AgDoughnutInnerLabel[];
     /** Configuration for the area inside the series, only visible when rendering a doughnut chart by using innerRadiusOffset or innerRadiusRatio */
     innerCircle?: AgDoughnutInnerCircle;
+    /** A formatter function for adjusting the styling of the pie sectors. */
     formatter?: (params: AgPieSeriesFormatterParams<DatumType>) => AgPieSeriesFormat;
+    /** A map of event names to event listeners. */
+    listeners?: AgSeriesListeners<DatumType>;
 }
 export interface AgPieSeriesTooltipRendererParams extends AgPolarSeriesTooltipRendererParams {
-    /** labelKey as specified on series options. */
+    /**
+     * labelKey as specified on series options.
+     *
+     * @deprecated Use series.calloutLabelKey or series.sectorLabelKey instead.
+     */
     labelKey?: string;
-    /** labelName as specified on series options. */
+    /**
+     * labelName as specified on series options.
+     *
+     * @deprecated Use series.calloutLabelName or series.sectorLabelName instead.
+     */
     labelName?: string;
+    /** calloutLabelKey as specified on series options. */
+    calloutLabelKey?: string;
+    /** calloutLabelName as specified on series options. */
+    calloutLabelName?: string;
     /** sectorLabelKey as specified on series options. */
     sectorLabelKey?: string;
     /** sectorLabelName as specified on series options. */
@@ -1172,12 +1274,30 @@ export interface AgPieSeriesTooltipRendererParams extends AgPolarSeriesTooltipRe
 export interface AgPieSeriesLabelFormatterParams<DatumType> {
     /** Datum from the series data array that the label is being rendered for. */
     readonly datum: DatumType;
-    /** labelKey as specified on series options. */
+    /**
+     * labelKey as specified on series options.
+     *
+     * @deprecated Use calloutLabelKey instead.
+     */
     readonly labelKey?: string;
-    /** labelValue as read from series data via the labelKey property. */
+    /**
+     * labelValue as read from series data via the labelKey property.
+     *
+     * @deprecated Use calloutLabelValue instead.
+     */
     readonly labelValue?: string;
-    /** labelName as specified on series options. */
+    /**
+     * labelName as specified on series options.
+     *
+     * @deprecated Use calloutLabelName instead.
+     */
     readonly labelName?: string;
+    /** calloutLabelKey as specified on series options. */
+    readonly calloutLabelKey?: string;
+    /** calloutLabelValue as read from series data via the calloutLabelKey property. */
+    readonly calloutLabelValue?: string;
+    /** calloutLabelName as specified on series options. */
+    readonly calloutLabelName?: string;
     /** sectorLabelKey as specified on series options. */
     readonly sectorLabelKey?: string;
     /** sectorLabelValue as read from series data via the sectorLabelKey property. */
@@ -1202,6 +1322,8 @@ export interface AgPieSeriesLabelFormatterParams<DatumType> {
      * @deprecated Use item.datum instead.
      */
     readonly value?: any;
+    /** The ID of the series. */
+    readonly seriesId: string;
 }
 export interface AgTreemapSeriesLabelOptions extends AgChartLabelOptions {
     /** The amount of the tile's vertical space to reserve for the label. */
@@ -1223,6 +1345,7 @@ export interface AgTreemapSeriesTooltipRendererParams<DatumType> {
     labelKey: string;
     valueKey: string;
     color: string;
+    seriesId: string;
 }
 export interface AgTreemapSeriesTooltip<DatumType> extends AgSeriesTooltip {
     /** Function used to create the content for tooltips. */
@@ -1267,6 +1390,8 @@ export interface AgTreemapSeriesOptions<DatumType = any> extends AgBaseSeriesOpt
     gradient?: boolean;
     /** A callback function for adjusting the styles of a particular treemap tile based on the input parameters */
     formatter?: (params: AgTreemapSeriesFormatterParams<DataValue>) => AgTreemapSeriesFormat;
+    /** A map of event names to event listeners. */
+    listeners?: AgSeriesListeners<DatumType>;
 }
 /** The parameters of the treemap series formatter function */
 export interface AgTreemapSeriesFormatterParams<DataValue = any> {
@@ -1292,6 +1417,8 @@ export interface AgTreemapSeriesFormatterParams<DataValue = any> {
     readonly gradient?: boolean;
     /** `true` if the tile is highlighted by hovering */
     readonly highlighted: boolean;
+    /** The ID of the series. */
+    readonly seriesId: string;
 }
 /** The formatted style of a treemap tile */
 export interface AgTreemapSeriesFormat {

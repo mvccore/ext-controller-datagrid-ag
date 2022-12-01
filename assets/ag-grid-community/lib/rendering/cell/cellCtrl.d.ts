@@ -57,12 +57,11 @@ export declare class CellCtrl extends BeanStub {
     private suppressRefreshCell;
     private customRowDragComp;
     private onCellCompAttachedFuncs;
-    private removeAutoHeightListeners;
     constructor(column: Column, rowNode: RowNode, beans: Beans, rowCtrl: RowCtrl);
     private addFeatures;
     private addTooltipFeature;
     setComp(comp: ICellComp, eGui: HTMLElement, eCellWrapper: HTMLElement | undefined, printLayout: boolean, startEditing: boolean): void;
-    refreshAutoHeight(eCellWrapper: HTMLElement): void;
+    private setupAutoHeight;
     getInstanceId(): string;
     private showValue;
     private setupControlComps;

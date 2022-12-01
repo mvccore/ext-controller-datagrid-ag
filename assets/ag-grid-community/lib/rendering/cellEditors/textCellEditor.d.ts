@@ -7,6 +7,7 @@ import { AgInputTextField } from "../../widgets/agInputTextField";
 */
 export interface ITextCellEditorParams extends ICellEditorParams {
     useFormatter: boolean;
+    maxLength?: number;
 }
 export declare class TextCellEditor extends PopupComponent implements ICellEditorComp {
     private static TEMPLATE;

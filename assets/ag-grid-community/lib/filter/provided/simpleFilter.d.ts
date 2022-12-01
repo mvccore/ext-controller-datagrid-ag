@@ -11,6 +11,21 @@ export declare type JoinOperator = 'AND' | 'OR';
 /** Interface contract for the public aspects of the SimpleFilter implementation(s). */
 export interface ISimpleFilter extends IProvidedFilter, IFloatingFilterParent {
 }
+export interface IFilterPlaceholderFunctionParams {
+    /**
+     * The filter option key
+     */
+    filterOptionKey: ISimpleFilterModelType;
+    /**
+     * The filter option name as localised text
+     */
+    filterOption: string;
+    /**
+     * The default placeholder text
+     */
+    placeholder: string;
+}
+export declare type FilterPlaceholderFunction = (params: IFilterPlaceholderFunctionParams) => string;
 export interface ISimpleFilterParams extends IProvidedFilterParams {
     /**
      * Array of filter options to present to the user.
@@ -36,6 +51,10 @@ export interface ISimpleFilterParams extends IProvidedFilterParams {
      * Default: `false`
      */
     alwaysShowBothConditions?: boolean;
+    /**
+     * Placeholder text for the filter textbox
+     */
+    filterPlaceholder?: FilterPlaceholderFunction | string;
 }
 export declare type ISimpleFilterModelType = 'empty' | 'equals' | 'notEqual' | 'lessThan' | 'lessThanOrEqual' | 'greaterThan' | 'greaterThanOrEqual' | 'inRange' | 'contains' | 'notContains' | 'startsWith' | 'endsWith' | 'blank' | 'notBlank';
 export interface ISimpleFilterModel extends ProvidedFilterModel {
@@ -84,6 +103,7 @@ export declare abstract class SimpleFilter<M extends ISimpleFilterModel, V, E = 
     private allowTwoConditions;
     private alwaysShowBothConditions;
     private defaultJoinOperator;
+    private filterPlaceholder;
     protected optionsFactory: OptionsFactory;
     protected abstract getDefaultFilterOptions(): string[];
     protected abstract createValueTemplate(position: ConditionPosition): string;
@@ -113,6 +133,7 @@ export declare abstract class SimpleFilter<M extends ISimpleFilterModel, V, E = 
     protected getCssIdentifier(): string;
     protected updateUiVisibility(): void;
     afterGuiAttached(params?: IAfterGuiAttachedParams): void;
+    private getPlaceholderText;
     protected resetPlaceholder(): void;
     protected setElementValue(element: E, value: V | null, silent?: boolean): void;
     protected setElementDisplayed(element: E, displayed: boolean): void;

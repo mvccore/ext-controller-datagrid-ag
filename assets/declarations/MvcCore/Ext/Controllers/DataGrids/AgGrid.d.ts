@@ -80,7 +80,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         protected initSubClasses(): this;
         protected initServerConfig(serverConfig: AgGrids.Interfaces.IServerConfig): this;
         protected initTranslator(): this;
-        protected initPageModeSpecifics(): this;
+        protected initPageModeSpecifics(initialData: AgGrids.Interfaces.Ajax.IResponse): this;
         protected initData(initialData: AgGrids.Interfaces.Ajax.IResponse): this;
         protected initAgOptions(): this;
         protected initGrid(): this;

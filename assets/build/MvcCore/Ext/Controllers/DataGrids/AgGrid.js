@@ -38,7 +38,7 @@ var MvcCore;
                             .initTranslator();
                         this.optionsManager.InitElements();
                         this
-                            .initPageModeSpecifics()
+                            .initPageModeSpecifics(initialData)
                             .initData(initialData);
                         document.addEventListener('DOMContentLoaded', function () {
                             _this
@@ -259,7 +259,7 @@ var MvcCore;
                         this.translator = new this.Static.Classes.Tools.Translator(this);
                         return this;
                     };
-                    AgGrid.prototype.initPageModeSpecifics = function () {
+                    AgGrid.prototype.initPageModeSpecifics = function (initialData) {
                         if ((this.pageMode & DataGrids.AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
                             var emSinglePage = new this.Static.Classes.EventsManager.SinglePageMode(this);
                             this.eventsManager = emSinglePage;
@@ -274,7 +274,9 @@ var MvcCore;
                                 .AddCountScalesEvents()
                                 .AddPagingEvents()
                                 .AddUrlChangeEvent();
-                            this.limit = this.serverConfig.count;
+                            this.limit = this.serverConfig.count > 0
+                                ? this.serverConfig.count
+                                : Math.max(initialData.totalCount, this.serverConfig.clientRequestBlockSize);
                         }
                         return this;
                     };

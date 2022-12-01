@@ -408,6 +408,14 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   text-overflow: ellipsis;
 }
 
+.ag-header-cell:not(.ag-header-cell-auto-height) .ag-header-cell-comp-wrapper {
+  height: 100%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
 .ag-header-cell-comp-wrapper {
   width: 100%;
   overflow: hidden;
@@ -1430,9 +1438,10 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
           flex-direction: row-reverse;
   -webkit-box-align: center;
           align-items: center;
+  height: 100%;
   width: 100%;
   overflow: hidden;
-  padding: 5px 0px 5px 0px;
+  padding: 5px 0px;
 }
 
 .ag-right-aligned-header .ag-cell-label-container {
@@ -1964,8 +1973,10 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 }
 
 @media print {
-  .ag-root-wrapper.ag-layout-print,
-.ag-root-wrapper.ag-layout-print .ag-root-wrapper-body,
+  .ag-root-wrapper.ag-layout-print {
+    display: table;
+  }
+  .ag-root-wrapper.ag-layout-print .ag-root-wrapper-body,
 .ag-root-wrapper.ag-layout-print .ag-root,
 .ag-root-wrapper.ag-layout-print .ag-body-viewport,
 .ag-root-wrapper.ag-layout-print .ag-center-cols-container,
@@ -1977,8 +1988,10 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
     overflow: hidden !important;
     display: block !important;
   }
-  .ag-root-wrapper.ag-layout-print .ag-row {
-    page-break-inside: avoid;
+  .ag-root-wrapper.ag-layout-print .ag-row, .ag-root-wrapper.ag-layout-print .ag-cell {
+    -webkit-column-break-inside: avoid;
+       -moz-column-break-inside: avoid;
+            break-inside: avoid;
   }
 }
 .ag-body .ag-body-viewport {

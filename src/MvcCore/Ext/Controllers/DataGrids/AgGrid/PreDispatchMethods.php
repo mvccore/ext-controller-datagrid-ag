@@ -29,9 +29,9 @@ trait PreDispatchMethods {
 			if ($this->view === NULL) {}
 				$this->view = $this->createView(TRUE);
 			$this->view->grid = $this;
-				
+			
 			\MvcCore\Controller::PreDispatch();
-				
+			
 			$this->LoadModel();
 			$this->preDispatchPage();
 			if (!$this->preDispatchTotalCount()) return;
@@ -57,6 +57,13 @@ trait PreDispatchMethods {
 	public function LoadModel () {
 		if ($this->rowClassIsActiveColumnsModel)
 			$this->SetUpRowModelActiveColumns();
+		if (
+			$this->ajaxDataRequest &&
+			$this->clientPageMode === IConstants::CLIENT_PAGE_MODE_MULTI &&
+			$this->limit === 0
+		) {
+			$this->limit = NULL;
+		}
 		parent::LoadModel();
 	}
 	

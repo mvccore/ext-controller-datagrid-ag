@@ -183,14 +183,14 @@ var MvcCore;
                         if (fireChangeEvent === false) {
                             this.internalSelectionChange = true;
                             this.agGridApi.deselectAll();
-                            selectedRowNodes.forEach(function (row) { return row.setSelected(true); });
+                            selectedRowNodes.forEach(function (row) { return row.setSelected(true, true, true); });
                             setTimeout(function () {
                                 _this.internalSelectionChange = false;
                             }, 10);
                         }
                         else if (fireChangeEvent === true) {
                             this.agGridApi.deselectAll();
-                            selectedRowNodes.forEach(function (row) { return row.setSelected(true); });
+                            selectedRowNodes.forEach(function (row) { return row.setSelected(true, true, false); });
                         }
                         return this;
                     };

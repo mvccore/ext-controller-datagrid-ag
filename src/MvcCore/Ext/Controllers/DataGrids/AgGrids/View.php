@@ -101,6 +101,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				$mvcCoreAgGridAssetsDir . "AgGrids/Columns/FilterMenu.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/Columns/FilterMenus/Float.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/Columns/FilterMenus/Int.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/Columns/FilterMenus/Money.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/Columns/FilterMenus/DateTime.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/Columns/FilterMenus/Date.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/Columns/FilterMenus/Time.js",

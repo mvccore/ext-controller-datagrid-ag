@@ -133,13 +133,23 @@ trait InitMethods {
 		/** @var array<string, \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn> $persistentColumns */
 		$persistentColumns = $this->gridPersistentColumnsRead();
 		if (count($persistentColumns) === 0) return;
-		foreach ($this->GetConfigColumns(FALSE) as $configColumn) {
+		$enabledColumnsCnt = 0;
+		$allConfigColumns = $this->GetConfigColumns(FALSE);
+		foreach ($allConfigColumns as $configColumn) {
 			$propName = $configColumn->GetPropName();
 			if (isset($persistentColumns[$propName])) {
 				$persistentColumn = $persistentColumns[$propName];
 				$configColumn->SetColumnIndexUser($persistentColumn->GetColumnIndex());
 				$configColumn->SetWidth($persistentColumn->GetWidth());
-				$configColumn->SetDisabled($persistentColumn->GetDisabled());
+				$configColumn->SetDisabled($disabled = $persistentColumn->GetDisabled());
+				if (!$disabled) $enabledColumnsCnt += 1;
+			}
+		}
+		if ($enabledColumnsCnt === 0 && count($allConfigColumns) > 0) {
+			foreach ($allConfigColumns as $configColumn) {
+				if ($configColumn->GetPropName() === $configColumn->GetHeadingName()) continue;
+				$configColumn->SetDisabled(FALSE);
+				break;
 			}
 		}
 	}
@@ -396,10 +406,23 @@ trait InitMethods {
 			if (!$this->sortingMode) return;
 			$rawSortingItemsStr = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_SORTING], FALSE);
 			if ($rawSortingItemsStr === NULL) return;
-			try {
-				$rawSortingItems = \MvcCore\Tool::JsonDecode($rawSortingItemsStr, JSON_OBJECT_AS_ARRAY);
-			} catch (\Throwable $e) {
-				$rawSortingItems = NULL;
+			$rawSortingItems = [];
+			if (is_array($rawSortingItemsStr)) {
+				foreach ($rawSortingItemsStr as $rawSortingItemStr) {
+					try {
+						$rawSortingItem = \MvcCore\Tool::JsonDecode($rawSortingItemStr, JSON_OBJECT_AS_ARRAY);
+					} catch (\Throwable $e) {
+						$rawSortingItem = NULL;
+					}
+					if ($rawSortingItem !== NULL)
+						$rawSortingItems[] = $rawSortingItem;
+				}
+			} else {
+				try {
+					$rawSortingItems = \MvcCore\Tool::JsonDecode($rawSortingItemsStr, JSON_OBJECT_AS_ARRAY);
+				} catch (\Throwable $e) {
+					$rawSortingItems = NULL;
+				}
 			}
 			if (!is_array($rawSortingItems)) return;
 			$sortValues = [0 => 'DESC', 1 => 'ASC'];

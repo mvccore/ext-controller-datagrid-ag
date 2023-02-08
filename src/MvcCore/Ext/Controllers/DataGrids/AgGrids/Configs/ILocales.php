@@ -38,7 +38,7 @@ interface ILocales {
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_DB2CODE_DATE		= 'Y-m-d';
+	const PARSER_ARG_DB2CODE_DATE		= 'Y-m-d H:i:s.v';
 	
 	/**
 	 * 
@@ -50,26 +50,26 @@ interface ILocales {
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_DB2CODE_TIME		= 'H:i:s';
+	const PARSER_ARG_DB2CODE_TIME		= 'Y-m-d H:i:s.v';
 
 
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_CLIENT_DATE		= 'YYYY-MM-DD';
+	const PARSER_ARG_CLIENT_DATE		= 'YYYY-MM-DDTHH:mm:ssZZ';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_CLIENT_DATE_TIME	= 'YYYY-MM-DD HH:mm:ss.SSS';
+	const PARSER_ARG_CLIENT_DATE_TIME	= 'YYYY-MM-DDTHH:mm:ssZZ';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_CLIENT_TIME		= 'HH:mm:ss';
+	const PARSER_ARG_CLIENT_TIME		= 'YYYY-MM-DDTHH:mm:ssZZ';
 
 	
 	/**

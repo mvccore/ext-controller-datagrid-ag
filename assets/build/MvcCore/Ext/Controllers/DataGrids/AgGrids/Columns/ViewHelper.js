@@ -146,8 +146,8 @@ var MvcCore;
                             ViewHelper.prototype.formatDate = function (params, propName, parserArgs, formatArgs) {
                                 if (parserArgs == null || parserArgs.length === 0)
                                     parserArgs = this.localesConfig.parserArgsDate;
-                                var dateTime = moment(params.data[propName], parserArgs[parserArgs.length - 1]);
-                                dateTime.add(this.serverConfig.timeZoneOffset, 's');
+                                var dateTime = moment.parseZone(params.data[propName], parserArgs[parserArgs.length - 1]);
+                                dateTime.add((dateTime.utcOffset() * 60) + this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
                                     formatArgs = this.localesConfig.formatArgsDate;
                                 return dateTime.format(formatArgs[0]);
@@ -155,8 +155,8 @@ var MvcCore;
                             ViewHelper.prototype.formatDateTime = function (params, propName, parserArgs, formatArgs) {
                                 if (parserArgs == null || parserArgs.length === 0)
                                     parserArgs = this.localesConfig.parserArgsDateTime;
-                                var dateTime = moment(params.data[propName], parserArgs[parserArgs.length - 1]);
-                                dateTime.add(this.serverConfig.timeZoneOffset, 's');
+                                var dateTime = moment.parseZone(params.data[propName], parserArgs[parserArgs.length - 1]);
+                                dateTime.add((dateTime.utcOffset() * 60) + this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
                                     formatArgs = this.localesConfig.formatArgsDateTime;
                                 return dateTime.format(formatArgs[0]);
@@ -164,8 +164,8 @@ var MvcCore;
                             ViewHelper.prototype.formatTime = function (params, propName, parserArgs, formatArgs) {
                                 if (parserArgs == null || parserArgs.length === 0)
                                     parserArgs = this.localesConfig.parserArgsTime;
-                                var dateTime = moment(params.data[propName], parserArgs[parserArgs.length - 1]);
-                                dateTime.add(this.serverConfig.timeZoneOffset, 's');
+                                var dateTime = moment.parseZone(params.data[propName], parserArgs[parserArgs.length - 1]);
+                                dateTime.add((dateTime.utcOffset() * 60) + this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
                                     formatArgs = this.localesConfig.formatArgsTime;
                                 return dateTime.format(formatArgs[0]);

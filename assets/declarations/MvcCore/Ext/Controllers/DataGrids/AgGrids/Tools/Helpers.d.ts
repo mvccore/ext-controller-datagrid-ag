@@ -33,6 +33,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Tools {
         static ConvertMap2Object<TKey, TValue>(map: Map<TKey, TValue>): object;
         static Trim(str: string, charlist: string): string;
         MergeObjectsRecursively(target: any, ...sources: any[]): any;
+        protected normalizeColumnParserArgs(configColumn: Interfaces.IServerConfigs.IColumn): void;
         protected isObject(item: any): boolean;
     }
 }

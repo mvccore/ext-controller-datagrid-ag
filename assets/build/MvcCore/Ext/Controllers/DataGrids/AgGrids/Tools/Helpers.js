@@ -250,6 +250,8 @@ var MvcCore;
                                 serverConfig.ajaxParamsNames = this.Static.ConvertObject2Map(serverConfig.ajaxParamsNames);
                                 serverConfig.filterOperatorPrefixes = this.Static.ConvertObject2Map(serverConfig.filterOperatorPrefixes);
                                 serverConfig.controlsTexts = this.Static.ConvertObject2Map(serverConfig.controlsTexts);
+                                for (var columnName in serverConfig.columns)
+                                    this.normalizeColumnParserArgs(serverConfig.columns[columnName]);
                                 return serverConfig;
                             };
                             Helpers.prototype.GetAllowedOperators = function (columnFilterFlags) {
@@ -474,6 +476,17 @@ var MvcCore;
                                     }
                                 }
                                 return this.MergeObjectsRecursively.apply(this, __spreadArray([target], __read(sources), false));
+                            };
+                            Helpers.prototype.normalizeColumnParserArgs = function (configColumn) {
+                                if (configColumn.parserArgs == null || Array.isArray(configColumn.parserArgs))
+                                    return;
+                                if (typeof configColumn.parserArgs == 'object') {
+                                    var parserArgsObj = configColumn.parserArgs, parserArgsArr = [];
+                                    for (var key in parserArgsObj)
+                                        if (Number.isSafeInteger(parseInt(key, 10)))
+                                            parserArgsArr.push(parserArgsObj[key]);
+                                    configColumn.parserArgs = parserArgsArr;
+                                }
                             };
                             Helpers.prototype.isObject = function (item) {
                                 return (item && typeof item === 'object' && !Array.isArray(item));

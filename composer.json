@@ -24,10 +24,10 @@
 	}],
 	"require": {
 		"php": ">=5.4.0",
-		"mvccore/mvccore": "^5.1.42",
-		"mvccore/ext-controller-datagrid": "^5.1.33",
+		"mvccore/mvccore": "^5.2.9",
+		"mvccore/ext-controller-datagrid": "^5.2.0",
 		"mvccore/ext-tool-locale": "^5.0.2",
-		"mvccore/ext-tool-collections": "^5.0.1"
+		"mvccore/ext-tool-collections": "^5.0.2"
 	},
 	"suggest": {
 		"mvccore/ext-model-db-*": "MvcCore model extension to work with database SQL queries in more comfortable API.",

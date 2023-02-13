@@ -57,19 +57,19 @@ interface ILocales {
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_CLIENT_DATE		= 'YYYY-MM-DDTHH:mm:ssZZ';
+	const PARSER_ARG_CLIENT_DATE		= 'YYYY-MM-DDTHH:mm:ssZ';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_CLIENT_DATE_TIME	= 'YYYY-MM-DDTHH:mm:ssZZ';
+	const PARSER_ARG_CLIENT_DATE_TIME	= 'YYYY-MM-DDTHH:mm:ssZ';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_CLIENT_TIME		= 'YYYY-MM-DDTHH:mm:ssZZ';
+	const PARSER_ARG_CLIENT_TIME		= 'YYYY-MM-DDTHH:mm:ssZ';
 
 	
 	/**

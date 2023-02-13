@@ -35,12 +35,19 @@
 	$gridContClassAttr = count($gridCssClasses) > 0
 		? ' class="'.implode(' ', $gridCssClasses) . '"'
 		: '';
+	$gridContAttrsStrs = [];
+	foreach ($grid->GetContainerAttrs() as $gridContAttrName => $gridContAttrValue):
+		$gridContAttrsStrs[] = $gridContAttrName . '="' . $this->EscapeAttr($gridContAttrValue) . '"';
+	endforeach;
+	$gridContAttrsStr = count($gridContAttrsStrs) > 0
+		? ' ' . implode(' ', $gridContAttrsStrs)
+		: '';
 	$controlsWrapperCssClasses = $renderConf->GetCssClassesControlsWrapper();
 	$controlsWrapperCssClass = count($controlsWrapperCssClasses) > 0
 		? implode(' ', $controlsWrapperCssClasses)
 		: '';
 	$toolClass = $this->controller->GetApplication()->GetToolClass();
-?><div id="<?php echo $gridId; ?>"<?php echo $gridContClassAttr; ?>>
+?><div id="<?php echo $gridId; ?>"<?php echo $gridContClassAttr, $gridContAttrsStr; ?>>
 	<div class="grid-table-component <?php echo $themeCssClass; ?>"></div>
 	<?php if ($renderBottomControls): ?>
 		<div class="<?php echo $controlsWrapperCssClass; ?> grid-controls-bottom"><?php 

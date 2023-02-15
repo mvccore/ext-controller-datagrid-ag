@@ -53,7 +53,7 @@ trait GridRow {
 				if (!$propAllowNulls) continue;
 				$value = NULL;
 			} else {
-				$value = static::parseToTypes(
+				$value = static::ParseToTypes(
 					$dbValue, $propTypes, $propParserArgs
 				);
 			}

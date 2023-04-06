@@ -45,7 +45,8 @@ trait PreDispatchMethods {
 			parent::PreDispatch();
 			if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 			$this->preDispatchLocales();
-			$this->preDispatchAssets();
+			if ($this->viewEnabled)
+				$this->preDispatchAssets();
 		}
 	}
 	

@@ -80,7 +80,19 @@ trait PreDispatchMethods {
 				? $rowFullClassName::GetDefaultPropsFlags()
 				: \MvcCore\IModel::PROPS_INHERIT_PROTECTED
 			);
-		$activeColumns = $this->GetConfigColumns($this->GetEnabledColumnsOnly());
+		$allColumns = $this->GetConfigColumns(FALSE);
+		$enabledOnly = $this->GetEnabledColumnsOnly();
+		$activeColumnsArr = [];
+		foreach ($allColumns->GetArray() as $urlName => $configColumn) {
+			if (
+				!$enabledOnly || ($enabledOnly && (
+					!$configColumn->GetDisabled() || $configColumn->GetAlwaysSend()
+				))
+			) $activeColumnsArr[$urlName] = $configColumn;
+		}
+		$activeColumns = new \MvcCore\Ext\Controllers\DataGrids\Iterators\Columns(
+			$activeColumnsArr
+		);
 		list ($metaData, $sourceCodeNamesMap) = $rowFullClassName::GetMetaData(
 			$rowClassPropsFlags, [\MvcCore\Ext\Models\Db\Model\IConstants::METADATA_BY_CODE]
 		);

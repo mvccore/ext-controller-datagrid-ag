@@ -102,9 +102,9 @@ trait ActionMethods {
 		$configColumns = $this->GetConfigColumns(FALSE);
 		$toolClass = $this->application->GetToolClass();
 		$phpClassNameRegExp = "#^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$#";
-		foreach ($configColumns as $urlName => $configColumn) {
+		foreach ($configColumns as $configColumn) {
 			$viewHelperName = $configColumn->GetViewHelper();
-			if ($viewHelperName === NULL) continue;
+			if ($viewHelperName === NULL || isset($viewHelpers[$viewHelperName])) continue;
 			// @see https://www.php.net/manual/en/language.oop5.basic.php#language.oop5.basic.class
 			if (!preg_match($phpClassNameRegExp, $viewHelperName)) continue;
 			if ($this->view === NULL)
@@ -113,10 +113,9 @@ trait ActionMethods {
 			if (!($viewHelper instanceof AgGrids\Views\IReverseHelper)) continue;
 			$viewHelperNameJson = $toolClass::JsonEncode($viewHelperName);
 			/** @var AgGrids\Views\IReverseHelper $viewHelper */
-			$viewHelpers[] = $viewHelperNameJson . ':' . $viewHelper->GetJsFormatter();
-			
+			$viewHelpers[$viewHelperName] = $viewHelperNameJson . ':' . $viewHelper->GetJsFormatter();
 		}
-		return '{'.implode(',', $viewHelpers).'}';
+		return '{'.implode(',', array_values($viewHelpers)).'}';
 	}
 
 	/**

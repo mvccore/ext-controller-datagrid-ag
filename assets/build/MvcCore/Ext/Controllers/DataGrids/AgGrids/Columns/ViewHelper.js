@@ -37,6 +37,7 @@ var MvcCore;
                                             style: 'currency',
                                             currency: this.localesConfig.currencyCode,
                                             currencySign: 'standard',
+                                            currencyDisplay: 'narrowSymbol',
                                             minimumFractionDigits: this.localesConfig.currencyFractions,
                                             maximumFractionDigits: this.localesConfig.currencyFractions
                                         })]
@@ -78,11 +79,11 @@ var MvcCore;
                                 if (this.formattersInt.has(formatterKey))
                                     return this.formattersInt.get(formatterKey);
                                 var minimumIntegerDigits = 1, useGrouping = true;
-                                if (formatArgs.length > 0)
+                                if (formatArgs != null && formatArgs.length > 0)
                                     minimumIntegerDigits = parseInt(formatArgs[0], 10);
                                 if (minimumIntegerDigits < 1)
                                     minimumIntegerDigits = 1;
-                                if (formatArgs.length > 1)
+                                if (formatArgs != null && formatArgs.length > 1)
                                     useGrouping = !!formatArgs[1];
                                 this.formattersInt.set(formatterKey, new Intl.NumberFormat(this.localeNumeric, {
                                     minimumIntegerDigits: minimumIntegerDigits,
@@ -94,7 +95,7 @@ var MvcCore;
                                 if (this.formattersFloat.has(formatterKey))
                                     return this.formattersFloat.get(formatterKey);
                                 var minimumFractionDigits = this.localesConfig.floatFractions, maximumFractionDigits = this.localesConfig.floatFractions;
-                                if (formatArgs.length > 0) {
+                                if (formatArgs != null && formatArgs.length > 0) {
                                     minimumFractionDigits = parseInt(formatArgs[0], 10);
                                     if (formatArgs.length > 1)
                                         maximumFractionDigits = parseInt(formatArgs[1], 10);
@@ -110,11 +111,14 @@ var MvcCore;
                             ViewHelper.prototype.getMoneyFormater = function (formatterKey, formatArgs) {
                                 if (this.formattersMoney.has(formatterKey))
                                     return this.formattersMoney.get(formatterKey);
-                                var minimumFractionDigits = this.localesConfig.floatFractions, maximumFractionDigits = this.localesConfig.floatFractions;
-                                if (formatArgs.length > 0) {
-                                    minimumFractionDigits = parseInt(formatArgs[0], 10);
-                                    if (formatArgs.length > 1)
+                                var minimumFractionDigits = this.localesConfig.floatFractions, maximumFractionDigits = this.localesConfig.floatFractions, currencyDisplay = 'narrowSymbol';
+                                if (formatArgs != null && formatArgs.length > 0) {
+                                    if (formatArgs[0] != null)
+                                        minimumFractionDigits = parseInt(formatArgs[0], 10);
+                                    if (formatArgs.length > 1 && formatArgs[1] != null)
                                         maximumFractionDigits = parseInt(formatArgs[1], 10);
+                                    if (formatArgs.length > 2 && this.Static.MONEY_DISPLAY_VALUES.has(formatArgs[2]))
+                                        currencyDisplay = formatArgs[2];
                                 }
                                 if (maximumFractionDigits < minimumFractionDigits)
                                     maximumFractionDigits = minimumFractionDigits;
@@ -122,6 +126,7 @@ var MvcCore;
                                     style: 'currency',
                                     currency: this.localesConfig.currencyCode,
                                     currencySign: 'standard',
+                                    currencyDisplay: currencyDisplay,
                                     minimumFractionDigits: minimumFractionDigits,
                                     maximumFractionDigits: maximumFractionDigits
                                 }));
@@ -172,6 +177,9 @@ var MvcCore;
                             };
                             ViewHelper.BOOL_FALSE_VALUES = new Set([
                                 '0', 0, false, 'false', 'False', 'FALSE', 'n', 'N', 'no', 'No', 'NO'
+                            ]);
+                            ViewHelper.MONEY_DISPLAY_VALUES = new Set([
+                                'symbol', 'narrowSymbol', 'code', 'name'
                             ]);
                             return ViewHelper;
                         }());

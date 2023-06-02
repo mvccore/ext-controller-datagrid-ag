@@ -38,7 +38,7 @@ interface ILocales {
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_DB2CODE_DATE		= 'Y-m-d H:i:s.v';
+	const PARSER_ARG_DB2CODE_DATE		= 'Y-m-d';
 	
 	/**
 	 * 
@@ -50,7 +50,7 @@ interface ILocales {
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_DB2CODE_TIME		= 'Y-m-d H:i:s.v';
+	const PARSER_ARG_DB2CODE_TIME		= 'H:i:s.v';
 
 
 	/**

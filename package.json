@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@mvccore/ext-controller-datagrid-ag-js": "5.2.15"
+    "@mvccore/ext-controller-datagrid-ag-js": "5.2.16"
   }
 }

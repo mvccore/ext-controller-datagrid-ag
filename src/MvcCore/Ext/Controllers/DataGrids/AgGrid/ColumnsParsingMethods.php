@@ -13,6 +13,8 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 
+use \MvcCore\Ext\Controllers\DataGrids\Configs\Type as GridType;
+
 /**
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
  */
@@ -36,20 +38,20 @@ trait ColumnsParsingMethods {
 		if ($result !== NULL && $result->GetIsDateTime()) {
 			/** @var \MvcCore\Ext\Controllers\DataGrids\Configs\Column $result */
 			$types = $result->GetTypes();
-			$secondType = 'dateTime';
+			$clientType = GridType::CLIENT_DATETIME;
 			if (count($types) > 1)
-				$secondType = $types[1];
-			if ($secondType === 'date') {
+				$clientType = $types[1];
+			if ($clientType === GridType::CLIENT_DATE) {
 				if ($result->GetParserArgs() === NULL)
 					$result->SetParserArgs($this->configLocales->GetParserArgsDate());
 				if ($result->GetFormatArgs() === NULL)
 					$result->SetFormatArgs($this->configLocales->GetFormatArgsDate());
-			} else if ($secondType === 'dateTime') {
+			} else if ($clientType === GridType::CLIENT_DATETIME) {
 				if ($result->GetParserArgs() === NULL)
 					$result->SetParserArgs($this->configLocales->GetParserArgsDateTime());
 				if ($result->GetFormatArgs() === NULL)
 					$result->SetFormatArgs($this->configLocales->GetFormatArgsDateTime());
-			} else if ($secondType === 'time') {
+			} else if ($clientType === GridType::CLIENT_TIME) {
 				if ($result->GetParserArgs() === NULL)
 					$result->SetParserArgs($this->configLocales->GetParserArgsTime());
 				if ($result->GetFormatArgs() === NULL)

@@ -62,8 +62,15 @@ var MvcCore;
                                 }
                                 if (viewHelper == null) {
                                     var serverType = serverColumnCfg.types[serverColumnCfg.types.length - 1];
-                                    if (this.Static.defaults.has(serverType))
-                                        viewHelper = this.Static.defaults.get(serverType);
+                                    if (serverType.indexOf('?') === 0)
+                                        serverType = serverType.substring(1);
+                                    var backSlashesCount = (serverType.match(/\\/g) || []).length;
+                                    if (serverType.indexOf('\\') === 0 && backSlashesCount === 1)
+                                        serverType = serverType.substring(1);
+                                    serverType = serverType.substring(0, 1).toLowerCase() + serverType.substring(1);
+                                    var serverTypeEnum = serverType;
+                                    if (this.Static.defaults.has(serverTypeEnum))
+                                        viewHelper = this.Static.defaults.get(serverTypeEnum);
                                 }
                                 if (viewHelper != null) {
                                     var propName = serverColumnCfg.propName, parserArgs = serverColumnCfg.parserArgs, formatArgs = serverColumnCfg.formatArgs;

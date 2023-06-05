@@ -99,6 +99,8 @@ trait GridRow {
 			} else if (isset($this->{$propertyName})) {
 				$propValue = $this->{$propertyName};
 			}
+			if ($propValue !== NULL && ($propValue instanceof \DateTime || $propValue instanceof \DateTimeImmutable))
+				$propValue = $propValue->format('c');
 			$result[$propertyName] = $propValue;
 		}
 		return $result;

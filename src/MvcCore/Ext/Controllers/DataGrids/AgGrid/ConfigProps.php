@@ -118,7 +118,7 @@ trait ConfigProps {
 	 * Client document title template.
 	 * @var string|NULL
 	 */
-	protected $clientTitleTemplate			= FALSE;
+	protected $clientTitleTemplate			= NULL;
 	
 	/**
 	 * Custom AJAX request method to load grid rows data.

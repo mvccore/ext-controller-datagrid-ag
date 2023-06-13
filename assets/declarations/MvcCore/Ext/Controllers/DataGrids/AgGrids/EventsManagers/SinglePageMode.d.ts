@@ -3,6 +3,6 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManagers {
         Static: typeof SinglePageMode;
         protected grid: AgGrid;
         constructor(grid: AgGrid);
-        HandleBodyScroll(params: agGrid.BodyScrollEvent<any>): void;
+        HandleBodyScroll(event: agGrid.BodyScrollEvent<any>): void;
     }
 }

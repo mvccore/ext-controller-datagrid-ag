@@ -25,24 +25,34 @@ var MvcCore;
                 (function (AgGrids) {
                     var EventsManagers;
                     (function (EventsManagers) {
-                        var SinglePageMode = /** @class */ (function (_super) {
-                            __extends(SinglePageMode, _super);
-                            function SinglePageMode(grid) {
-                                return _super.call(this, grid) || this;
-                            }
-                            SinglePageMode.prototype.HandleBodyScroll = function (event) {
-                                var dataSource = this.grid.GetDataSource();
-                                if (event.direction === 'vertical')
-                                    dataSource.SetBodyScrolled(event.top > 0);
-                                _super.prototype.HandleBodyScroll.call(this, event);
-                            };
-                            return SinglePageMode;
-                        }(MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManager));
-                        EventsManagers.SinglePageMode = SinglePageMode;
+                        var Events;
+                        (function (Events) {
+                            var GridSizeChange = /** @class */ (function (_super) {
+                                __extends(GridSizeChange, _super);
+                                function GridSizeChange(gridWidth, gridHeight, agEvent) {
+                                    var _this = _super.call(this) || this;
+                                    _this.gridWidth = gridWidth;
+                                    _this.gridHeight = gridHeight;
+                                    _this.agEvent = agEvent;
+                                    return _this;
+                                }
+                                GridSizeChange.prototype.GetGridWidth = function () {
+                                    return this.gridWidth;
+                                };
+                                GridSizeChange.prototype.GetGridHeight = function () {
+                                    return this.gridHeight;
+                                };
+                                GridSizeChange.prototype.GetAgEvent = function () {
+                                    return this.agEvent;
+                                };
+                                return GridSizeChange;
+                            }(Events.Base));
+                            Events.GridSizeChange = GridSizeChange;
+                        })(Events = EventsManagers.Events || (EventsManagers.Events = {}));
                     })(EventsManagers = AgGrids.EventsManagers || (AgGrids.EventsManagers = {}));
                 })(AgGrids = DataGrids.AgGrids || (DataGrids.AgGrids = {}));
             })(DataGrids = Controllers.DataGrids || (Controllers.DataGrids = {}));
         })(Controllers = Ext.Controllers || (Ext.Controllers = {}));
     })(Ext = MvcCore.Ext || (MvcCore.Ext = {}));
 })(MvcCore || (MvcCore = {}));
-//# sourceMappingURL=SinglePageMode.js.map
+//# sourceMappingURL=GridSizeChange.js.map

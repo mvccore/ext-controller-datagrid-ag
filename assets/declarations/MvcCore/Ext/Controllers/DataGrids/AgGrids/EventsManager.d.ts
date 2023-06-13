@@ -9,10 +9,15 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected likeOperatorsAndPrefixes: Map<Enums.Operator, string>;
         protected notLikeOperatorsAndPrefixes: Map<Enums.Operator, string>;
         protected columnsChanges: Map<string, Interfaces.EventArgs.IColumnChange>;
+        protected columnsActualWidths: Map<string, number>;
         protected columnsChangesTimeout: number;
         protected columnsChangesSending: boolean;
         protected automaticSelectionChange: boolean;
+        protected internalColumnMove: boolean;
+        protected gridWidth: number | null;
+        protected gridHeight: number | null;
         constructor(grid: AgGrid, serverConfig?: AgGrids.Interfaces.IServerConfig);
+        HandleBodyScroll(event: agGrid.BodyScrollEvent<any>): void;
         HandleModelUpdated(params: agGrid.ModelUpdatedEvent<any>): void;
         SelectRowByIndex(rowIndex: number, onLoadSelectionCallback?: () => void): this;
         HandleGridReady(event: agGrid.GridReadyEvent<any>): void;

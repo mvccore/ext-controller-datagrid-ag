@@ -85,13 +85,14 @@ var MvcCore;
                                 e.preventDefault();
                                 e.stopPropagation();
                                 var offsetBefore = this.grid.GetOffset();
-                                var continueToNextEvent = this.FireHandlers("beforePageChange", new EventsManagers.Events.PageChange(offsetBefore, offsetAfter, e.target));
+                                var pageChangeEvent = new EventsManagers.Events.PageChange(offsetBefore, offsetAfter, e.target);
+                                var continueToNextEvent = this.FireHandlers("beforePageChange", pageChangeEvent);
                                 if (continueToNextEvent === false)
                                     return;
                                 var dataSource = this.grid.GetDataSource();
                                 this.grid.SetOffset(offsetAfter);
                                 dataSource.Load();
-                                this.FireHandlers("pageChange", new EventsManagers.Events.PageChange(offsetBefore, offsetAfter, e.target));
+                                this.FireHandlers("pageChange", pageChangeEvent);
                             };
                             return MultiplePagesMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManager));

@@ -57,6 +57,9 @@ var MvcCore;
                             if (serverConfig === void 0) { serverConfig = null; }
                             var _this = _super.call(this, grid, serverConfig = grid.GetServerConfig()) || this;
                             _this.automaticSelectionChange = false;
+                            _this.internalColumnMove = false;
+                            _this.gridWidth = null;
+                            _this.gridHeight = null;
                             _this.multiSorting = ((serverConfig.sortingMode & AgGrids.Enums.SortingMode.SORT_MULTIPLE_COLUMNS) != 0);
                             _this.multiFiltering = ((serverConfig.filteringMode & AgGrids.Enums.FilteringMode.MULTIPLE_COLUMNS) != 0);
                             _this.helpers = grid.GetHelpers();
@@ -105,6 +108,9 @@ var MvcCore;
                             _this.columnsChangesSending = false;
                             return _this;
                         }
+                        EventsManager.prototype.HandleBodyScroll = function (event) {
+                            this.FireHandlers("bodyScroll", new AgGrids.EventsManagers.Events.GridBodyScroll(event.left, event.top, event.direction, event));
+                        };
                         EventsManager.prototype.HandleModelUpdated = function (params) {
                             //console.log("onModelUpdated", this.onLoadSelectionIndex)
                             if (this.onLoadSelectionIndex != null) {
@@ -166,11 +172,11 @@ var MvcCore;
                                 return;
                             var userChange = !this.automaticSelectionChange;
                             this.automaticSelectionChange = false;
-                            var gridApi = this.grid.GetGridApi(), selectedRowsBefore = this.grid.GetSelectedRowNodes(), selectedRowsAfter = gridApi.getSelectedNodes();
-                            var continueToNextEvent = this.FireHandlers("beforeSelectionChange", new AgGrids.EventsManagers.Events.SelectionChange(userChange, selectedRowsBefore, selectedRowsAfter));
+                            var gridApi = this.grid.GetGridApi(), selectedRowsBefore = this.grid.GetSelectedRowNodes(), selectedRowsAfter = gridApi.getSelectedNodes(), selectionchangeEvent = new AgGrids.EventsManagers.Events.SelectionChange(userChange, selectedRowsBefore, selectedRowsAfter);
+                            var continueToNextEvent = this.FireHandlers("beforeSelectionChange", selectionchangeEvent);
                             if (continueToNextEvent) {
                                 this.grid.SetSelectedRowNodes(selectedRowsAfter, null);
-                                this.FireHandlers("selectionChange", new AgGrids.EventsManagers.Events.SelectionChange(userChange, selectedRowsBefore, selectedRowsAfter));
+                                this.FireHandlers("selectionChange", selectionchangeEvent);
                             }
                             else {
                                 this.grid.SetSelectedRowNodes(selectedRowsBefore, false);
@@ -179,9 +185,17 @@ var MvcCore;
                         EventsManager.prototype.HandleColumnResized = function (event) {
                             if (event.source !== 'uiColumnDragged' || !event.finished)
                                 return;
+                            var columnId = event.column.getColId(), newWidth = event.column.getActualWidth(), resizeEvent = new AgGrids.EventsManagers.Events.ColumnResize(columnId, newWidth, event);
+                            var continueToNextEvent = this.FireHandlers("beforeColumnResize", resizeEvent);
+                            if (continueToNextEvent === false) {
+                                event.column.setActualWidth(this.columnsActualWidths.get(columnId), "uiColumnResized", false);
+                                event.api.sizeColumnsToFit();
+                                return;
+                            }
+                            this.columnsActualWidths.set(columnId, newWidth);
                             if (this.columnsChangesTimeout)
                                 clearTimeout(this.columnsChangesTimeout);
-                            var columnId = event.column.getColId(), newWidth = event.column.getActualWidth();
+                            newWidth = resizeEvent.GetNewWidth();
                             if (this.columnsChanges.has(columnId)) {
                                 this.columnsChanges.get(columnId).width = newWidth;
                             }
@@ -191,15 +205,33 @@ var MvcCore;
                                 });
                             }
                             this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
+                            this.FireHandlers("columnResize", resizeEvent);
                         };
                         EventsManager.prototype.HandleColumnMoved = function (event) {
+                            if (this.internalColumnMove) {
+                                this.internalColumnMove = false;
+                                return;
+                            }
+                            var columnId = event.column.getColId(), columnConfig = this.grid.GetServerConfig().columns[columnId], moveEvent = new AgGrids.EventsManagers.Events.ColumnMove(columnId, event.toIndex, event);
+                            var continueToNextEvent = this.FireHandlers("beforeColumnMove", moveEvent);
+                            if (continueToNextEvent === false) {
+                                this.internalColumnMove = true;
+                                event.columnApi.moveColumnByIndex(event.toIndex, columnConfig.columnIndexActive);
+                                return;
+                            }
                             if (this.columnsChangesTimeout)
                                 clearTimeout(this.columnsChangesTimeout);
-                            var columnId = event.column.getColId(), columnConfig = this.grid.GetServerConfig().columns[columnId], columnsManager = this.grid.GetOptionsManager().GetColumnManager(), activeColumnsSorted = columnsManager.GetServerColumnsSortedActive(), allColumnsSorted = columnsManager.GetServerColumnsUserSortedAll(), activeIndexOld = columnConfig.columnIndexActive, activeIndexNex = event.toIndex, allIndexOld = columnConfig.columnIndexUser, allIndexNew = allColumnsSorted[activeIndexNex].columnIndexUser;
+                            var columnsManager = this.grid.GetOptionsManager().GetColumnManager(), activeColumnsSorted = columnsManager.GetServerColumnsSortedActive(), allColumnsSorted = columnsManager.GetServerColumnsUserSortedAll(), activeIndexOld = columnConfig.columnIndexActive, activeIndexNext = moveEvent.GetToIndex(), allIndexOld = columnConfig.columnIndexUser, allIndexNew = 0;
+                            if (activeIndexNext < activeIndexOld) {
+                                allIndexNew = allIndexOld - 1;
+                            }
+                            else {
+                                allIndexNew = allIndexOld + 1;
+                            }
                             var _a = __read(allColumnsSorted.splice(allIndexOld, 1), 1), allColumnCfg = _a[0];
                             allColumnsSorted.splice(allIndexNew, 0, allColumnCfg);
                             var _b = __read(activeColumnsSorted.splice(activeIndexOld, 1), 1), activeColumnCfg = _b[0];
-                            activeColumnsSorted.splice(activeIndexNex, 0, activeColumnCfg);
+                            activeColumnsSorted.splice(activeIndexNext, 0, activeColumnCfg);
                             for (var i = 0, l = allColumnsSorted.length; i < l; i++) {
                                 columnConfig = allColumnsSorted[i];
                                 columnConfig.columnIndexUser = i;
@@ -219,6 +251,7 @@ var MvcCore;
                             columnsManager.SetServerColumnsSortedAll(allColumnsSorted);
                             this.grid.GetColumnsVisibilityMenu().RedrawControls();
                             this.columnsChangesTimeout = setTimeout(this.handleColumnChangesSent.bind(this), this.Static.COLUMN_CHANGES_TIMEOUT);
+                            this.FireHandlers("columnMove", moveEvent);
                         };
                         EventsManager.prototype.GetNewFilteringByMenu = function (columnId, filteringItem, clearAllOther) {
                             if (clearAllOther === void 0) { clearAllOther = false; }
@@ -383,23 +416,27 @@ var MvcCore;
                         };
                         EventsManager.prototype.HandleGridSizeChanged = function (viewPort, event) {
                             // get the current grids width
-                            var gridElm = this.grid.GetOptionsManager().GetElements().agGridElement, gridElmParent = gridElm.parentNode;
-                            var gridWidth = gridElmParent.offsetWidth;
+                            var gridElm = this.grid.GetOptionsManager().GetElements().agGridElement, gridElmParent = gridElm.parentNode, gridWidth = gridElmParent.offsetWidth, gridHeight = gridElmParent.offsetHeight, gridSizeChange = this.gridWidth !== gridWidth || this.gridHeight !== gridHeight;
+                            if (!gridSizeChange)
+                                return;
+                            this.gridWidth = gridWidth;
+                            this.gridHeight = gridHeight;
                             // keep track of which columns to hide/show
-                            var columnsToShow = [], columnsToHide = [];
+                            var columnsToShow = [], columnsToHide = [], totalColsWidth = 0, allColumns = event.columnApi.getColumns(), column, columnId;
                             // iterate over all columns (visible or not) and work out
                             // now many columns can fit (based on their minWidth)
-                            var totalColsWidth = 0;
-                            var allColumns = event.columnApi.getColumns();
+                            this.columnsActualWidths = new Map();
                             if (allColumns && allColumns.length > 0) {
                                 for (var i = 0; i < allColumns.length; i++) {
-                                    var column = allColumns[i];
+                                    column = allColumns[i];
+                                    columnId = column.getColId();
+                                    this.columnsActualWidths.set(columnId, column.getActualWidth());
                                     totalColsWidth += column.getMinWidth() || 0;
-                                    if (totalColsWidth > gridWidth) {
-                                        columnsToHide.push(column.getColId());
+                                    if (totalColsWidth > this.gridWidth) {
+                                        columnsToHide.push(columnId);
                                     }
                                     else {
-                                        columnsToShow.push(column.getColId());
+                                        columnsToShow.push(columnId);
                                     }
                                 }
                             }
@@ -409,6 +446,7 @@ var MvcCore;
                             // fill out any available space to ensure there are no gaps
                             event.api.sizeColumnsToFit();
                             this.grid.GetColumnsVisibilityMenu().ResizeControls();
+                            this.FireHandlers("gridSizeChange", new AgGrids.EventsManagers.Events.GridSizeChange(gridWidth, gridHeight, event));
                         };
                         EventsManager.prototype.AddUrlChangeEvent = function () {
                             var _this = this;

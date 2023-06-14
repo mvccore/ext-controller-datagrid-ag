@@ -1,6 +1,8 @@
 .grid{
 	box-sizing:border-box;
 	-webkit-overflow-scrolling:touch;
+	width:100%;
+	height:100%;
 }
 .grid .grid-table-component{
 	display:block;

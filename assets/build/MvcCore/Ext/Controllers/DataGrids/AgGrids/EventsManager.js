@@ -111,11 +111,10 @@ var MvcCore;
                         EventsManager.prototype.HandleBodyScroll = function (event) {
                             this.FireHandlers("bodyScroll", new AgGrids.EventsManagers.Events.GridBodyScroll(event.left, event.top, event.direction, event));
                         };
-                        EventsManager.prototype.HandleModelUpdated = function (params) {
+                        EventsManager.prototype.HandleModelUpdated = function (event) {
                             //console.log("onModelUpdated", this.onLoadSelectionIndex)
                             if (this.onLoadSelectionIndex != null) {
-                                var nextIndex = this.onLoadSelectionIndex;
-                                var nextRow = params.api.getDisplayedRowAtIndex(nextIndex);
+                                var nextIndex = this.onLoadSelectionIndex, nextRow = event.api.getDisplayedRowAtIndex(nextIndex);
                                 this.grid.SetSelectedRowNodes([nextRow], null);
                                 if (nextRow.data == null) {
                                     //console.log("onModelUpdated1", nextIndex, nextRow.data);
@@ -131,6 +130,7 @@ var MvcCore;
                                     this.onLoadSelectionIndex = null;
                                 }
                             }
+                            this.FireHandlers('modelUpdate', new AgGrids.EventsManagers.Events.ModelUpdate(event.newData, event.newPage, event.animate, event.keepRenderedRows, event.keepUndoRedoStack, event));
                         };
                         EventsManager.prototype.SelectRowByIndex = function (rowIndex, onLoadSelectionCallback) {
                             if (onLoadSelectionCallback === void 0) { onLoadSelectionCallback = null; }
@@ -417,6 +417,11 @@ var MvcCore;
                         EventsManager.prototype.HandleGridSizeChanged = function (viewPort, event) {
                             // get the current grids width
                             var gridElm = this.grid.GetOptionsManager().GetElements().agGridElement, gridElmParent = gridElm.parentNode, gridWidth = gridElmParent.offsetWidth, gridHeight = gridElmParent.offsetHeight, gridSizeChange = this.gridWidth !== gridWidth || this.gridHeight !== gridHeight;
+                            /*if (this.gridWidth == null && this.gridHeight == null) {
+                                this.gridWidth = gridWidth;
+                                this.gridHeight = gridHeight;
+                                return;
+                            }*/
                             if (!gridSizeChange)
                                 return;
                             this.gridWidth = gridWidth;

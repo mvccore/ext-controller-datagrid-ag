@@ -20,5 +20,6 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Interfaces {
         "columnResize": Events.ColumnResize;
         "gridSizeChange": Events.GridSizeChange;
         "bodyScroll": Events.GridBodyScroll;
+        "modelUpdate": Events.ModelUpdate;
     }
 }

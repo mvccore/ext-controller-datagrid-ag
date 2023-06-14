@@ -82,6 +82,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/Events/ColumnResize.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/Events/GridSizeChange.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/Events/GridBodyScroll.js",
+				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/Events/ModelUpdate.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/Events/HistoryChange.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/Events/ColumnsVisibilityChange.js",
 				$mvcCoreAgGridAssetsDir . "AgGrids/EventsManagers/Events/CountScaleChange.js",

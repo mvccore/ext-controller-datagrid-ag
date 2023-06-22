@@ -115,7 +115,7 @@ var MvcCore;
                             //console.log("onModelUpdated", this.onLoadSelectionIndex)
                             if (this.onLoadSelectionIndex != null) {
                                 var nextIndex = this.onLoadSelectionIndex, nextRow = event.api.getDisplayedRowAtIndex(nextIndex);
-                                this.grid.SetSelectedRowNodes([nextRow], null);
+                                //this.grid.SetSelectedRowNodes([nextRow], null);
                                 if (nextRow.data == null) {
                                     //console.log("onModelUpdated1", nextIndex, nextRow.data);
                                 }
@@ -131,6 +131,27 @@ var MvcCore;
                                 }
                             }
                             this.FireHandlers('modelUpdate', new AgGrids.EventsManagers.Events.ModelUpdate(event.newData, event.newPage, event.animate, event.keepRenderedRows, event.keepUndoRedoStack, event));
+                        };
+                        EventsManager.prototype.HandleRowDataUpdated = function (event) {
+                            //console.log("onRowDataUpdated", this.onLoadSelectionIndex)
+                            if (this.onLoadSelectionIndex != null) {
+                                var nextIndex = this.onLoadSelectionIndex, nextRow = event.api.getDisplayedRowAtIndex(nextIndex);
+                                //this.grid.SetSelectedRowNodes([nextRow], null);
+                                if (nextRow.data == null) {
+                                    //console.log("onModelUpdated1", nextIndex, nextRow.data);
+                                }
+                                else {
+                                    //console.log("onModelUpdated2", nextIndex, nextRow.data);
+                                    this.automaticSelectionChange = true;
+                                    nextRow.setSelected(true);
+                                    if (this.onLoadSelectionCallback) {
+                                        this.onLoadSelectionCallback();
+                                        this.onLoadSelectionCallback = null;
+                                    }
+                                    this.onLoadSelectionIndex = null;
+                                }
+                            }
+                            this.FireHandlers('rowDataUpdate', new AgGrids.EventsManagers.Events.RowDataUpdate(event));
                         };
                         EventsManager.prototype.SelectRowByIndex = function (rowIndex, onLoadSelectionCallback) {
                             if (onLoadSelectionCallback === void 0) { onLoadSelectionCallback = null; }
@@ -462,9 +483,17 @@ var MvcCore;
                             return this;
                         };
                         EventsManager.prototype.HandleExecChange = function (offset, sorting, filtering) {
-                            if (offset === void 0) { offset = 0; }
+                            if (offset === void 0) { offset = null; }
+                            if (sorting === void 0) { sorting = null; }
+                            if (filtering === void 0) { filtering = null; }
                             var dataSource = this.grid.GetDataSource(), sortingBefore = this.grid.GetSorting(), sortingAfter, filteringBefore = this.grid.GetFiltering(), filteringAfter;
-                            if (sorting === false) {
+                            if (offset === false) {
+                                offset = 0;
+                            }
+                            else if (offset == null) {
+                                offset = this.grid.GetOffset();
+                            }
+                            if (sorting == false) {
                                 sortingAfter = [];
                             }
                             else if (sorting == null) {

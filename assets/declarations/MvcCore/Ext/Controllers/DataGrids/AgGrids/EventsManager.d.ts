@@ -19,6 +19,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         constructor(grid: AgGrid, serverConfig?: AgGrids.Interfaces.IServerConfig);
         HandleBodyScroll(event: agGrid.BodyScrollEvent<any>): void;
         HandleModelUpdated(event: agGrid.ModelUpdatedEvent<any>): void;
+        HandleRowDataUpdated(event: agGrid.RowDataUpdatedEvent<any>): void;
         SelectRowByIndex(rowIndex: number, onLoadSelectionCallback?: () => void): this;
         HandleGridReady(event: agGrid.GridReadyEvent<any>): void;
         HandleSelectionChange(event: agGrid.SelectionChangedEvent<any>): void;
@@ -32,7 +33,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         HandleSortChange(sortingBefore: AgGrids.Types.SortItem[], sortingAfter: AgGrids.Types.SortItem[]): void;
         HandleGridSizeChanged(viewPort: boolean, event: agGrid.ViewportChangedEvent<any> | agGrid.GridSizeChangedEvent<any>): void;
         AddUrlChangeEvent(): this;
-        HandleExecChange(offset?: number, sorting?: Types.SortItem[] | false, filtering?: Map<string, Map<Enums.Operator, string[]>> | false): void;
+        HandleExecChange(offset?: number | false | null, sorting?: Types.SortItem[] | false | null, filtering?: Map<string, Map<Enums.Operator, string[]>> | false | null): void;
         HandleUrlChange(e: PopStateEvent): void;
         HandleResponseLoaded(response: AgGrids.Interfaces.Ajax.IResponse, selectFirstRow?: boolean): void;
         protected firefiltering(filteringBefore: Map<string, Map<Enums.Operator, string[]>>, filteringAfter: Map<string, Map<Enums.Operator, string[]>>): this;

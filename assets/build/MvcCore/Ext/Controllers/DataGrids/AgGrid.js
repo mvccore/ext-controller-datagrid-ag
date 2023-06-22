@@ -238,6 +238,9 @@ var MvcCore;
                         return this;
                     };
                     AgGrid.prototype.ExecChange = function (offset, sorting, filtering) {
+                        if (offset === void 0) { offset = null; }
+                        if (sorting === void 0) { sorting = null; }
+                        if (filtering === void 0) { filtering = null; }
                         this.eventsManager.HandleExecChange(offset, sorting, filtering);
                         return this;
                     };

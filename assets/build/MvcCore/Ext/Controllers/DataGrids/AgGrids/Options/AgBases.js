@@ -76,6 +76,7 @@ var MvcCore;
                                 this.agOptions.onGridSizeChanged = this.eventsManager.HandleGridSizeChanged.bind(this.eventsManager, false);
                                 this.agOptions.onSelectionChanged = this.eventsManager.HandleSelectionChange.bind(this.eventsManager);
                                 this.agOptions.onModelUpdated = this.eventsManager.HandleModelUpdated.bind(this.eventsManager);
+                                this.agOptions.onRowDataUpdated = this.eventsManager.HandleRowDataUpdated.bind(this.eventsManager);
                                 this.agOptions.onBodyScroll = this.eventsManager.HandleBodyScroll.bind(this.eventsManager);
                                 /*if ((this.grid.GetPageMode() & AgGrids.Enums.ClientPageMode.CLIENT_PAGE_MODE_SINGLE) != 0) {
                                     var eventsManagerSpm = this.eventsManager as AgGrids.EventsManagers.SinglePageMode;

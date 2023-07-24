@@ -161,8 +161,7 @@ var MvcCore;
                             SinglePageMode.prototype.resolveByAjaxRequest = function (params) {
                                 var _this = this;
                                 //console.log("resolveByAjaxRequest");
-                                var agGridApi = this.optionsManager.GetAgOptions().api;
-                                agGridApi.showLoadingOverlay();
+                                this.optionsManager.GetAgOptions().api.showLoadingOverlay();
                                 var _a = __read(this.getReqUrlMethodAndType(), 3), reqDataUrl = _a[0], reqMethod = _a[1], reqType = _a[2];
                                 var reqData = this.helpers.RetypeRequestMaps2Objects({
                                     offset: params.startRow,
@@ -170,41 +169,47 @@ var MvcCore;
                                     sorting: this.grid.GetSorting(),
                                     filtering: this.grid.GetFiltering(),
                                 });
-                                Ajax.load({
+                                this.AjaxLoad(reqDataUrl, reqMethod, Object.assign({}, reqData), reqType, function (rawResponse) {
+                                    _this.handleResponse(reqData, params, rawResponse);
+                                });
+                                /*Ajax.load(<Ajax.LoadConfig>{
                                     url: reqDataUrl,
                                     method: reqMethod,
                                     data: Object.assign({}, reqData),
                                     type: reqType,
-                                    success: function (rawResponse) {
-                                        agGridApi.hideOverlay();
-                                        var response = _this.helpers.RetypeRawServerResponse(rawResponse);
-                                        if (response.controls != null) {
-                                            _this.optionsManager.InitBottomControls();
-                                            _this.handleResponseControls(response);
-                                        }
-                                        var serverCfg = _this.grid.GetServerConfig();
-                                        if (serverCfg.page > 1) {
-                                            _this.pageLoadedState++;
-                                        }
-                                        else if (serverCfg.page === 1) {
-                                            _this.pageLoadedState = 4;
-                                        }
-                                        var cacheKey = _this.cache.Key(reqData);
-                                        if (_this.changeUrlSwitches.has(cacheKey) && _this.changeUrlSwitches.get(cacheKey)) {
-                                            _this.changeUrlSwitches.delete(cacheKey);
-                                        }
-                                        else {
-                                            if (_this.pageLoadedState > 3) {
-                                                reqData.path = response.path;
-                                                _this.BrowserHistoryPush(reqData, response.url, response.page, response.count);
-                                                _this.grid.GetColumnsVisibilityMenu().UpdateFormAction(response.path);
-                                            }
-                                        }
-                                        var selectFirstRow = !_this.scrolled && _this.pageLoadedState > 3;
-                                        params.successCallback(response.data, response.totalCount);
-                                        _this.grid.GetEvents().HandleResponseLoaded(response, selectFirstRow);
+                                    success: (rawResponse: AgGrids.Interfaces.Ajax.IResponse) => {
+                                        this.handleResponse(reqData, params, rawResponse);
                                     }
-                                });
+                                });*/
+                            };
+                            SinglePageMode.prototype.handleResponse = function (reqData, params, rawResponse) {
+                                this.optionsManager.GetAgOptions().api.hideOverlay();
+                                var response = this.helpers.RetypeRawServerResponse(rawResponse);
+                                if (response.controls != null) {
+                                    this.optionsManager.InitBottomControls();
+                                    this.handleResponseControls(response);
+                                }
+                                var serverCfg = this.grid.GetServerConfig();
+                                if (serverCfg.page > 1) {
+                                    this.pageLoadedState++;
+                                }
+                                else if (serverCfg.page === 1) {
+                                    this.pageLoadedState = 4;
+                                }
+                                var cacheKey = this.cache.Key(reqData);
+                                if (this.changeUrlSwitches.has(cacheKey) && this.changeUrlSwitches.get(cacheKey)) {
+                                    this.changeUrlSwitches.delete(cacheKey);
+                                }
+                                else {
+                                    if (this.pageLoadedState > 3) {
+                                        reqData.path = response.path;
+                                        this.BrowserHistoryPush(reqData, response.url, response.page, response.count);
+                                        this.grid.GetColumnsVisibilityMenu().UpdateFormAction(response.path);
+                                    }
+                                }
+                                var selectFirstRow = !this.scrolled && this.pageLoadedState > 3;
+                                params.successCallback(response.data, response.totalCount);
+                                this.grid.GetEvents().HandleResponseLoaded(response, selectFirstRow);
                             };
                             return SinglePageMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSource));

@@ -106,6 +106,7 @@ var MvcCore;
                             _this.handlers = new Map();
                             _this.columnsChanges = new Map();
                             _this.columnsChangesSending = false;
+                            _this.docTitleChange = serverConfig.clientTitleTemplate != null;
                             return _this;
                         }
                         EventsManager.prototype.HandleBodyScroll = function (event) {
@@ -560,6 +561,8 @@ var MvcCore;
                                 e.stopPropagation();
                                 return;
                             }
+                            if (this.docTitleChange)
+                                document.title = reqDataRaw.title;
                             if (offsetChange) {
                                 var pagingAnchorsMaps = this.grid.GetOptionsManager().GetElements().pagingAnchorsMaps;
                                 var offsetPagingAnchor = pagingAnchorsMaps.has(offsetAfter)

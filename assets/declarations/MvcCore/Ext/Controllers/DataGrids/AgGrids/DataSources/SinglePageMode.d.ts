@@ -20,5 +20,6 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSources {
         protected possibleToResolveByInitData(params: agGrid.IGetRowsParams, totalCount: number): boolean;
         protected resolveByInitData(params: agGrid.IGetRowsParams, totalCount: number): void;
         protected resolveByAjaxRequest(params: agGrid.IGetRowsParams): void;
+        protected handleResponse(reqData: Interfaces.Ajax.IReqRawObj, params: agGrid.IGetRowsParams, rawResponse: AgGrids.Interfaces.Ajax.IResponse): void;
     }
 }

@@ -16,6 +16,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected internalColumnMove: boolean;
         protected gridWidth: number | null;
         protected gridHeight: number | null;
+        protected docTitleChange: boolean;
         constructor(grid: AgGrid, serverConfig?: AgGrids.Interfaces.IServerConfig);
         HandleBodyScroll(event: agGrid.BodyScrollEvent<any>): void;
         HandleModelUpdated(event: agGrid.ModelUpdatedEvent<any>): void;

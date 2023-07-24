@@ -59,8 +59,9 @@ var MvcCore;
                         DataSource.prototype.BrowserHistoryReplace = function (stateData, url, page, count) {
                             if (this.serverConfig.clientChangeHistory) {
                                 var title = this.docTitleChange
-                                    ? this.completeDocumentTitle(stateData, page, count)
+                                    ? this.CompleteDocumentTitle(stateData, page, count)
                                     : document.title;
+                                stateData.title = title;
                                 history.replaceState(stateData, title, url);
                                 this.SetLastHistory([stateData, url, page, count]);
                                 if (this.docTitleChange)
@@ -71,8 +72,9 @@ var MvcCore;
                         DataSource.prototype.BrowserHistoryPush = function (stateData, url, page, count) {
                             if (this.serverConfig.clientChangeHistory) {
                                 var title = this.docTitleChange
-                                    ? this.completeDocumentTitle(stateData, page, count)
+                                    ? this.CompleteDocumentTitle(stateData, page, count)
                                     : document.title;
+                                stateData.title = title;
                                 history.pushState(stateData, title, url);
                                 this.SetLastHistory([stateData, url, page, count]);
                                 if (this.docTitleChange)
@@ -80,7 +82,16 @@ var MvcCore;
                             }
                             return this;
                         };
-                        DataSource.prototype.completeDocumentTitle = function (stateData, page, count) {
+                        DataSource.prototype.AjaxLoad = function (url, method, data, type, success) {
+                            Ajax.load({
+                                url: url,
+                                method: method,
+                                data: data,
+                                type: type,
+                                success: success
+                            });
+                        };
+                        DataSource.prototype.CompleteDocumentTitle = function (stateData, page, count) {
                             var controlsTexts = this.serverConfig.controlsTexts, docTitleReplacements = [
                                 controlsTexts.get(AgGrids.Enums.ControlText.TITLE_PAGE)
                                     .replace('{0}', page.toString()),

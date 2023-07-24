@@ -18,7 +18,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         GetLastHistory(): [Interfaces.Ajax.IReqRawObj, string, number, number];
         BrowserHistoryReplace(stateData: Interfaces.Ajax.IReqRawObj, url: string, page: number, count: number): this;
         BrowserHistoryPush(stateData: Interfaces.Ajax.IReqRawObj, url: string, page: number, count: number): this;
-        protected completeDocumentTitle(stateData: Interfaces.Ajax.IReqRawObj, page: number, count: number): string;
+        AjaxLoad(url: string, method: string, data: Interfaces.Ajax.IReqRawObj, type: string, success: (rawResponse: AgGrids.Interfaces.Ajax.IResponse) => void): void;
+        CompleteDocumentTitle(stateData: Interfaces.Ajax.IReqRawObj, page: number, count: number): string;
         protected completeDocumentTitleSorting(sorting: Types.SortItem[], docTitleReplacements: string[]): this;
         protected completeDocumentTitleFiltering(stateDataFiltering: any, docTitleReplacements: string[]): this;
         protected completeDocumentTitleFilteringItem(columnUrlName: string, filteringItem: any): Map<Enums.FilterControlType, string[]>;

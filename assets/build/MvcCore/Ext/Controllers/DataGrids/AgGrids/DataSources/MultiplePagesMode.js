@@ -75,6 +75,7 @@ var MvcCore;
                                 return this.ExecRequest(reqData, true);
                             };
                             MultiplePagesMode.prototype.ExecRequest = function (reqData, changeUrl) {
+                                var _this = this;
                                 if (changeUrl === void 0) { changeUrl = true; }
                                 var agGridApi = this.optionsManager.GetAgOptions().api;
                                 agGridApi.showLoadingOverlay();
@@ -84,13 +85,16 @@ var MvcCore;
                                     this.handleResponse(reqData, changeUrl, cacheKey, true, this.cache.Get(cacheKey));
                                 }
                                 else {
-                                    Ajax.load({
+                                    this.AjaxLoad(reqDataUrl, reqMethod, reqData, reqType, function (rawResponse) {
+                                        _this.handleResponse(reqData, changeUrl, cacheKey, false, rawResponse);
+                                    });
+                                    /*Ajax.load(<Ajax.LoadConfig>{
                                         url: reqDataUrl,
                                         method: reqMethod,
                                         data: reqData,
                                         type: reqType,
                                         success: this.handleResponse.bind(this, reqData, changeUrl, cacheKey, false)
-                                    });
+                                    });*/
                                 }
                                 return this;
                             };

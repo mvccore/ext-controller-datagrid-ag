@@ -63,9 +63,10 @@ var MvcCore;
                                 return this;
                             };
                             SortHeader.prototype.initElements = function () {
-                                var sels = this.Static.SELECTORS, cont = document.createElement('div'), innerCode = [];
+                                var _a;
+                                var sels = this.Static.SELECTORS, cont = document.createElement('div'), columnServerConfig = this.params.grid.GetServerConfig().columns[this.columnId], displayName = this.params.displayName, title = (_a = columnServerConfig.title) !== null && _a !== void 0 ? _a : displayName, innerCode = [];
                                 var innerCodes = {
-                                    label: "<div class=\"".concat(sels.LABEL_CLS, "\">").concat(this.params.displayName, "</div>"),
+                                    label: "<div class=\"".concat(sels.LABEL_CLS, "\" title=\"").concat(title, "\">").concat(displayName, "</div>"),
                                     sequence: "<div class=\"".concat(sels.ORDER_CLS, "\"></div>"),
                                     direction: "<div class=\"".concat(sels.DIRECTION_CLS, "\"></div>"),
                                     remove: "<div class=\"".concat(sels.REMOVE_CLS, "\"></div>"),

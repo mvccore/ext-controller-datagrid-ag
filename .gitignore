@@ -64,3 +64,4 @@ composer.dev.*
 package-lock.json
 node_modules
 *.js.map
+ext-controller-datagrid-ag-js

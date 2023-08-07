@@ -3,8 +3,8 @@
  * @author	Tom Flidr | tomflidr(at)gmail(dot)com
  * @url		https://github.com/tomFlidr/ajax.js
  * @licence	https://tomflidr.github.io/ajax.js/LICENSE.md
- * @version	1.0.13
- * @date	2023-01-18
+ * @version	1.0.14
+ * @date	2023-08-07
  * @example
  *
  *    var xhr = Ajax.load(<Ajax.cfg.Load>{
@@ -555,18 +555,22 @@
 					encoder = w['encodeURIComponent'];
 				for (var key in data) {
 					item = data[key];
-					itemType = this._typeOf(item);
-					if (itemType == 'Object') {
-						dataStr = encoder(w['JSON']['stringify'](item));
-						dataArr.push(key + '=' + dataStr);
-					} else if (itemType == 'Array') {
-						for (var i = 0, l = item['length']; i < l; i++) {
-							dataStr = encoder(w['JSON']['stringify'](item[i]));	
-							dataArr.push(key + '[]=' + dataStr);
-						}
+					if (item == null) {
+						dataArr.push(key + '=');
 					} else {
-						dataStr = encoder(item.toString());
-						dataArr.push(key + '=' + dataStr);
+						itemType = this._typeOf(item);
+						if (itemType == 'Object') {
+							dataStr = encoder(w['JSON']['stringify'](item));
+							dataArr.push(key + '=' + dataStr);
+						} else if (itemType == 'Array') {
+							for (var i = 0, l = item['length']; i < l; i++) {
+								dataStr = encoder(w['JSON']['stringify'](item[i]));	
+								dataArr.push(key + '[]=' + dataStr);
+							}
+						} else {
+							dataStr = encoder(String(item));
+							dataArr.push(key + '=' + dataStr);
+						}
 					}
 				}
 				return dataArr.join('&');

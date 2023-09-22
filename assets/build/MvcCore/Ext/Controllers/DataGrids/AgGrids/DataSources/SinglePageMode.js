@@ -47,7 +47,6 @@ var MvcCore;
                                 var _this = _super.call(this, grid) || this;
                                 /** If you know up front how many rows are in the dataset, set it here. Otherwise leave blank. */
                                 _this.rowCount = undefined;
-                                _this.autoSelectFirstRow = false;
                                 _this.scrolled = false;
                                 _this.pageLoadedState = 0;
                                 _this.initDataCache = _this.grid.GetServerConfig().clientMaxRowsInCache > 0;
@@ -57,8 +56,10 @@ var MvcCore;
                                 _this.BrowserHistoryReplace(_this.pageReqData, location.href, _this.initialData.page, _this.initialData.count);
                                 //this.pageReqData = null;
                                 _this.changeUrlSwitches = new Map();
+                                _this.autoSelectFirstRow = false;
                                 return _this;
                             }
+                            //specialCase: boolean;
                             SinglePageMode.prototype.SetBodyScrolled = function (scrolled) {
                                 this.scrolled = scrolled;
                                 return this;
@@ -142,17 +143,17 @@ var MvcCore;
                                         var scrollOffset = (serverCfg.page - 1) * this.grid.GetLimit();
                                         //console.log("scrolling top", scrollOffset);
                                         this.optionsManager.GetAgOptions().api.ensureIndexVisible(scrollOffset, "top");
-                                        this.specialCase = true;
+                                        //this.specialCase = true;
                                         this.grid.GetEvents().SelectRowByIndex(scrollOffset, function () {
                                             setTimeout(function () {
-                                                _this.autoSelectFirstRow = true;
+                                                _this.autoSelectFirstRow = _this.eventsManager.GetAutoSelectFirstRow();
                                             }, 1000);
                                         });
                                     }
                                     else {
                                         this.grid.GetEvents().SelectRowByIndex(0, function () {
                                             setTimeout(function () {
-                                                _this.autoSelectFirstRow = true;
+                                                _this.autoSelectFirstRow = _this.eventsManager.GetAutoSelectFirstRow();
                                             }, 1000);
                                         });
                                     }

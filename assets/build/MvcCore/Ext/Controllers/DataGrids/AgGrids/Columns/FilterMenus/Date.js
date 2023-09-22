@@ -33,11 +33,12 @@ var MvcCore;
                                     return _super !== null && _super.apply(this, arguments) || this;
                                 }
                                 Date.prototype.initParserAndFormatArgs = function () {
+                                    var _a, _b;
                                     this.parserArgs = this.serverColumnCfg.parserArgs;
                                     this.formatArgs = this.serverColumnCfg.formatArgs;
-                                    if (this.parserArgs == null || this.parserArgs.length === 0)
+                                    if (this.parserArgs == null || ((_a = this.parserArgs) === null || _a === void 0 ? void 0 : _a.length) === 0)
                                         this.parserArgs = this.serverConfig.locales.parserArgsDate;
-                                    if (this.formatArgs == null || this.formatArgs.length === 0)
+                                    if (this.formatArgs == null || ((_b = this.formatArgs) === null || _b === void 0 ? void 0 : _b.length) === 0)
                                         this.formatArgs = this.serverConfig.locales.formatArgsDate;
                                 };
                                 Date.VALUE_TYPE = 'date';

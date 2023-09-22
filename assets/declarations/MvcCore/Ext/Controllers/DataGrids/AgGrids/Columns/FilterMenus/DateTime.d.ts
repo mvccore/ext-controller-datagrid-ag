@@ -3,8 +3,8 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns.FilterMenus 
         static VALUE_TYPE: string;
         Static: typeof DateTime;
         protected timeZoneOffset: number;
-        protected parserArgs: string[];
-        protected formatArgs: string[];
+        protected parserArgs: string[] | null;
+        protected formatArgs: string[] | null;
         protected serverConfig: Interfaces.IServerConfig;
         init(agParams: Interfaces.FilterMenus.IParams<any>): void;
         protected initParserAndFormatArgs(): void;

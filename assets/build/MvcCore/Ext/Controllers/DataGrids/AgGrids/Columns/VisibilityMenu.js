@@ -175,11 +175,28 @@ var MvcCore;
                                 this.formClick = true;
                             };
                             VisibilityMenu.prototype.handleFormSubmit = function (e) {
+                                var e_3, _a;
                                 var continueToBrowserActions = this.grid.GetEvents().FireHandlers("beforeColumnsVisibilityChange", new AgGrids.EventsManagers.Events.ColumnsVisibilityChange(this.elms.form));
                                 if (continueToBrowserActions === false) {
                                     e.cancelBubble = true;
                                     e.preventDefault();
                                     e.stopPropagation();
+                                }
+                                else {
+                                    try {
+                                        // remove all disabled attribute from checkbox inputs
+                                        for (var _b = __values(this.elms.inputs.values()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                                            var input = _c.value;
+                                            input.disabled = false;
+                                        }
+                                    }
+                                    catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                                    finally {
+                                        try {
+                                            if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                                        }
+                                        finally { if (e_3) throw e_3.error; }
+                                    }
                                 }
                             };
                             VisibilityMenu.prototype.initElements = function () {
@@ -224,35 +241,38 @@ var MvcCore;
                                 return this;
                             };
                             VisibilityMenu.prototype.initFormControls = function () {
-                                var e_3, _a;
-                                var _b;
-                                var columnCfg, inputId, idColumn, sels = this.Static.SELECTORS, baseId = sels.INPUT_ID_BASE, labelCls = sels.MENU_CTRL_CLS, label, text, span, checkbox;
+                                var e_4, _a;
+                                var columnCfgs = this.grid.GetOptionsManager().GetColumnManager().GetServerColumnsSortedAll();
                                 this.elms.inputs = new Map();
                                 try {
-                                    for (var _c = __values(this.grid.GetOptionsManager().GetColumnManager().GetServerColumnsSortedAll()), _d = _c.next(); !_d.done; _d = _c.next()) {
-                                        var columnCfg = _d.value;
-                                        idColumn = columnCfg.urlName;
-                                        text = (_b = columnCfg.title) !== null && _b !== void 0 ? _b : columnCfg.headingName;
-                                        if (text === idColumn)
+                                    for (var columnCfgs_1 = __values(columnCfgs), columnCfgs_1_1 = columnCfgs_1.next(); !columnCfgs_1_1.done; columnCfgs_1_1 = columnCfgs_1.next()) {
+                                        var columnCfg = columnCfgs_1_1.value;
+                                        var rowElm = this.initFormControl(columnCfg);
+                                        if (rowElm == null)
                                             continue;
-                                        inputId = baseId + idColumn;
-                                        label = this.createElm('label', [labelCls], null, { for: inputId });
-                                        checkbox = this.createElm('input', [], null, { id: inputId, name: idColumn, type: 'checkbox' });
-                                        checkbox.checked = !columnCfg.disabled;
-                                        span = this.createElm('span', [], text);
-                                        this.elms.inputs.set(idColumn, label.appendChild(checkbox));
-                                        label.appendChild(span);
-                                        this.elms.controls.appendChild(label);
+                                        this.elms.controls.appendChild(rowElm);
                                     }
                                 }
-                                catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                                catch (e_4_1) { e_4 = { error: e_4_1 }; }
                                 finally {
                                     try {
-                                        if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+                                        if (columnCfgs_1_1 && !columnCfgs_1_1.done && (_a = columnCfgs_1.return)) _a.call(columnCfgs_1);
                                     }
-                                    finally { if (e_3) throw e_3.error; }
+                                    finally { if (e_4) throw e_4.error; }
                                 }
                                 return this;
+                            };
+                            VisibilityMenu.prototype.initFormControl = function (columnCfg) {
+                                var _a;
+                                var sels = this.Static.SELECTORS, baseId = sels.INPUT_ID_BASE, labelCls = sels.MENU_CTRL_CLS, idColumn = columnCfg.urlName, text = (_a = columnCfg.title) !== null && _a !== void 0 ? _a : columnCfg.headingName;
+                                if (text === idColumn)
+                                    return null;
+                                var inputId = baseId + idColumn, label = this.createElm('label', [labelCls], null, { for: inputId }), checkbox = this.createElm('input', [], null, { id: inputId, name: idColumn, type: 'checkbox' });
+                                checkbox.checked = !columnCfg.disabled;
+                                var span = this.createElm('span', [], text);
+                                this.elms.inputs.set(idColumn, label.appendChild(checkbox));
+                                label.appendChild(span);
+                                return label;
                             };
                             VisibilityMenu.prototype.initFormEvents = function () {
                                 this.elms.btnCancel.addEventListener('click', this.handleCancel.bind(this));

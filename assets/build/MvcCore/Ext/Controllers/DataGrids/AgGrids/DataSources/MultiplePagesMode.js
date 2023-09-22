@@ -112,10 +112,11 @@ var MvcCore;
                                 agGridApi.setRowData(response.data);
                                 agGridApi.hideOverlay();
                                 if (cached) {
-                                    this.grid.GetEvents().SelectRowByIndex(0);
+                                    if (this.autoSelectFirstRow)
+                                        this.grid.GetEvents().SelectRowByIndex(0);
                                 }
                                 else {
-                                    this.grid.GetEvents().HandleResponseLoaded(response, true);
+                                    this.grid.GetEvents().HandleResponseLoaded(response, this.autoSelectFirstRow);
                                 }
                                 if (response.controls != null) {
                                     this.optionsManager.InitBottomControls();

@@ -1,4 +1,5 @@
 declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
+    import IColumn = MvcCore.Ext.Controllers.DataGrids.AgGrids.Interfaces.IServerConfigs.IColumn;
     class VisibilityMenu {
         static SELECTORS: {
             GRID_TOP_PLACE_BEFORE_SEL: string;
@@ -45,6 +46,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Columns {
         protected initElements(): this;
         protected initFormElements(): this;
         protected initFormControls(): this;
+        protected initFormControl(columnCfg: IColumn): HTMLElement | null;
         protected initFormEvents(): this;
         protected createElm<T>(elmName: string, clsNames?: string[], innerHTML?: string | null, props?: any): T;
         protected createBtn(text: string, className: string, submit: boolean): HTMLButtonElement;

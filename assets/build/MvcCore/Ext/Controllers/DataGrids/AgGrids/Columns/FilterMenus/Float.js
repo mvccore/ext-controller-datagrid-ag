@@ -33,10 +33,11 @@ var MvcCore;
                                     return _super !== null && _super.apply(this, arguments) || this;
                                 }
                                 Float.prototype.init = function (agParams) {
+                                    var _a;
                                     _super.prototype.init.call(this, agParams);
                                     this.parserArgs = this.serverColumnCfg.parserArgs;
                                     this.formatArgs = this.serverColumnCfg.formatArgs;
-                                    var fractionsCount = this.formatArgs.length > 0
+                                    var fractionsCount = ((_a = this.formatArgs) === null || _a === void 0 ? void 0 : _a.length) > 0
                                         ? Number(this.formatArgs[0])
                                         : this.grid.GetServerConfig().locales.floatFractions;
                                     var stepItems = ['0.'];

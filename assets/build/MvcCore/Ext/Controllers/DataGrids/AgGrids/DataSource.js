@@ -48,6 +48,7 @@ var MvcCore;
                             this.serverConfig = grid.GetServerConfig();
                             this.docTitleChange = this.serverConfig.clientTitleTemplate != null;
                             this.docTitlePattern = "<".concat(this.serverConfig.gridUrlParamName, ">");
+                            this.autoSelectFirstRow = this.eventsManager.GetAutoSelectFirstRow();
                         }
                         DataSource.prototype.SetLastHistory = function (lastHistory) {
                             this.lastHistory = lastHistory;

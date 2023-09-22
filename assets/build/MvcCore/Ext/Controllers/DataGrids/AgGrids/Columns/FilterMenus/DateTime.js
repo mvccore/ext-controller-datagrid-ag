@@ -39,11 +39,12 @@ var MvcCore;
                                     this.initParserAndFormatArgs();
                                 };
                                 DateTime.prototype.initParserAndFormatArgs = function () {
+                                    var _a, _b;
                                     this.parserArgs = this.serverColumnCfg.parserArgs;
                                     this.formatArgs = this.serverColumnCfg.formatArgs;
-                                    if (this.parserArgs == null || this.parserArgs.length === 0)
+                                    if (this.parserArgs == null || ((_a = this.parserArgs) === null || _a === void 0 ? void 0 : _a.length) === 0)
                                         this.parserArgs = this.serverConfig.locales.parserArgsDateTime;
-                                    if (this.formatArgs == null || this.formatArgs.length === 0)
+                                    if (this.formatArgs == null || ((_b = this.formatArgs) === null || _b === void 0 ? void 0 : _b.length) === 0)
                                         this.formatArgs = this.serverConfig.locales.formatArgsDateTime;
                                 };
                                 DateTime.prototype.changeValueInputType = function (index, currentControlType) {
@@ -57,6 +58,7 @@ var MvcCore;
                                     return this;
                                 };
                                 DateTime.prototype.setValueInput = function (valueInput, value, currentControlType) {
+                                    var _a;
                                     if (this.timeZoneOffset !== 0 &&
                                         this.valueIsValid(value) &&
                                         (this.isControlTypeForCompleteValue(currentControlType) ||
@@ -64,12 +66,13 @@ var MvcCore;
                                             (currentControlType & AgGrids.Enums.FilterControlType.NOT_STARTS_WITH) != 0)) {
                                         var dateTime = moment(value, this.parserArgs[this.parserArgs.length - 1]);
                                         dateTime.add(this.timeZoneOffset, 's');
-                                        value = dateTime.format(this.formatArgs[0]);
+                                        value = dateTime.format((_a = this.formatArgs[0]) !== null && _a !== void 0 ? _a : null);
                                     }
                                     valueInput.value = value;
                                     return this;
                                 };
                                 DateTime.prototype.getValueInput = function (valueInput, currentControlType) {
+                                    var _a;
                                     var value = valueInput.value;
                                     if (this.timeZoneOffset !== 0 &&
                                         this.valueIsValid(value) &&
@@ -78,7 +81,7 @@ var MvcCore;
                                             value = value.replace(/T|Z/g, ' ');
                                         var dateTime = moment(value, this.parserArgs[this.parserArgs.length - 1]);
                                         dateTime.add(-(this.timeZoneOffset), 's');
-                                        value = dateTime.format(this.formatArgs[0]);
+                                        value = dateTime.format((_a = this.formatArgs[0]) !== null && _a !== void 0 ? _a : null);
                                     }
                                     return value;
                                 };

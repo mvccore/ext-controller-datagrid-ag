@@ -74,7 +74,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids {
         GetFilterMenus(): Map<string, AgGrids.Columns.FilterMenu>;
         SetColumnsVisibilityMenu(columnsVisibilityMenu: AgGrids.Columns.VisibilityMenu): this;
         GetColumnsVisibilityMenu(): AgGrids.Columns.VisibilityMenu;
-        AddEventListener<TEventName extends keyof AgGrids.Interfaces.IHandlersMap>(eventName: TEventName, handler: (a: AgGrids.Interfaces.IHandlersMap[TEventName]) => void, useTryCatch?: boolean): this;
+        AddEventListener<TEventName extends keyof AgGrids.Interfaces.IHandlersMap>(eventName: TEventName, handler: (e: AgGrids.Interfaces.IHandlersMap[TEventName]) => void, useTryCatch?: boolean): this;
         RemoveEventListener<TEventName extends keyof AgGrids.Interfaces.IHandlersMap>(eventName: TEventName, handler: (e: AgGrids.Interfaces.IHandlersMap[TEventName]) => void): this;
         ExecChange(offset?: number | false | null, sorting?: AgGrids.Types.SortItem[] | false | null, filtering?: Map<string, Map<AgGrids.Enums.Operator, string[]>> | false | null): this;
         GetDocumentTitle(): string;

@@ -9,8 +9,6 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.DataSources {
         protected changeUrlSwitches: Map<string, boolean>;
         protected initLocationHref: string;
         protected scrolled: boolean;
-        protected autoSelectFirstRow: boolean;
-        specialCase: boolean;
         SetBodyScrolled(scrolled: boolean): this;
         constructor(grid: AgGrid);
         protected initPageReqDataAndCache(): void;

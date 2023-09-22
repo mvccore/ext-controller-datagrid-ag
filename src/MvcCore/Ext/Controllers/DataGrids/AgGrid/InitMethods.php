@@ -41,8 +41,10 @@ trait InitMethods {
 			);
 		}
 		$backtraceItems = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-		if (count($backtraceItems) === 2)
-			$this->creationPlaceImprint = hash('crc32b', serialize($backtraceItems[1]));
+		if (count($backtraceItems) === 2) {
+			$creationPlace = array_merge(['controller' => get_class($controller)], $backtraceItems[1]);
+			$this->creationPlaceImprint = hash('crc32b', serialize($creationPlace));
+		}
 		$controller->AddChildController($this, $childControllerIndex);
 	}
 

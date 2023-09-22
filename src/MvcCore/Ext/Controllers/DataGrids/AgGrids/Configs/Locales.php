@@ -81,6 +81,15 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	 */
 	#[JsonSerialize]
 	protected $currencyFractions		= self::FRACTIONS_DEFAULT_CURRENCY;
+
+	/**
+	 * Currency float fraction digits to round for money columns, 2 by default.
+	 * This settings is used for client javascript `Intl` currency formater.
+	 * @var int|NULL
+	 * @jsonSerialize
+	 */
+	#[JsonSerialize]
+	protected $currencyRoundIncrement= self::CURRENCY_ROUNDING_INCREMENT_DEFAULT;
 	
 	/**
 	 * Standard float fractions length for float columns, 2 by default.
@@ -295,6 +304,23 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	 */
 	public function SetCurrencyFractions ($currencyFractions) {
 		$this->currencyFractions = $currencyFractions;
+		return $this;
+	}
+
+	/**
+	 * @inheritDocs
+	 * @return int|NULL
+	 */
+	public function GetCurrencyRoundIncrement () {
+		return $this->currencyRoundIncrement;
+	}
+	/**
+	 * @inheritDocs
+	 * @param  int|NULL $currencyRoundIncrement
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
+	 */
+	public function SetCurrencyRoundIncrement ($currencyRoundIncrement) {
+		$this->currencyRoundIncrement = $currencyRoundIncrement;
 		return $this;
 	}
 	

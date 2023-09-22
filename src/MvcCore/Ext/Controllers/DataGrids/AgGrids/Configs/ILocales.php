@@ -19,95 +19,101 @@ interface ILocales {
 	 * 
 	 * @var string
 	 */
-	const SYSTEM_LOCALE_SEPARATOR		= '-';
+	const SYSTEM_LOCALE_SEPARATOR				= '-';
 
 	/**
 	 * 
 	 * @var int
 	 */
-	const FRACTIONS_DEFAULT_FLOAT		= 2;
+	const FRACTIONS_DEFAULT_FLOAT				= 2;
 	
 	/**
 	 * 
 	 * @var int
 	 */
-	const FRACTIONS_DEFAULT_CURRENCY	= 2;
+	const FRACTIONS_DEFAULT_CURRENCY			= 2;
+	
+	/**
+	 * 
+	 * @var int
+	 */
+	const CURRENCY_ROUNDING_INCREMENT_DEFAULT	= 1;
 
 
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_DB2CODE_DATE		= 'Y-m-d';
+	const PARSER_ARG_DB2CODE_DATE				= 'Y-m-d';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_DB2CODE_DATE_TIME	= 'Y-m-d H:i:s.v';
+	const PARSER_ARG_DB2CODE_DATE_TIME			= 'Y-m-d H:i:s.v';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_DB2CODE_TIME		= 'H:i:s.v';
+	const PARSER_ARG_DB2CODE_TIME				= 'H:i:s.v';
 
 
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_CLIENT_DATE		= 'YYYY-MM-DDTHH:mm:ssZ';
+	const PARSER_ARG_CLIENT_DATE				= 'YYYY-MM-DDTHH:mm:ssZ';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_CLIENT_DATE_TIME	= 'YYYY-MM-DDTHH:mm:ssZ';
+	const PARSER_ARG_CLIENT_DATE_TIME			= 'YYYY-MM-DDTHH:mm:ssZ';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const PARSER_ARG_CLIENT_TIME		= 'YYYY-MM-DDTHH:mm:ssZ';
+	const PARSER_ARG_CLIENT_TIME				= 'YYYY-MM-DDTHH:mm:ssZ';
 
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const FORMAT_ARG_CLIENT_DATE		= 'YYYY-MM-DD';
+	const FORMAT_ARG_CLIENT_DATE				= 'YYYY-MM-DD';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const FORMAT_ARG_CLIENT_DATE_TIME	= 'YYYY-MM-DD HH:mm';
+	const FORMAT_ARG_CLIENT_DATE_TIME			= 'YYYY-MM-DD HH:mm';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const FORMAT_ARG_CLIENT_TIME		= 'HH:mm:ss';
+	const FORMAT_ARG_CLIENT_TIME				= 'HH:mm:ss';
 
 
 	/**
 	 * 
 	 * @var string
 	 */
-	const FORMAT_ARG_DBLIKE_DATE		= 'yyyy-MM-dd';
+	const FORMAT_ARG_DBLIKE_DATE				= 'yyyy-MM-dd';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const FORMAT_ARG_DBLIKE_DATE_TIME	= 'yyyy-MM-dd HH:mm';
+	const FORMAT_ARG_DBLIKE_DATE_TIME			= 'yyyy-MM-dd HH:mm';
 	
 	/**
 	 * 
 	 * @var string
 	 */
-	const FORMAT_ARG_DBLIKE_TIME		= 'HH:mm';
+	const FORMAT_ARG_DBLIKE_TIME				= 'HH:mm';
 
 
 	/**
@@ -193,6 +199,19 @@ interface ILocales {
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencyFractions ($currencyFractions);
+
+	/**
+	 * 
+	 * @return int|NULL
+	 */
+	public function GetCurrencyRoundIncrement ();
+
+	/**
+	 * 
+	 * @param  int|NULL $currencyRoundIncrement
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
+	 */
+	public function SetCurrencyRoundIncrement ($currencyRoundIncrement);
 	
 	/**
 	 * 

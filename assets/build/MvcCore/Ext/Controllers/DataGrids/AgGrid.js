@@ -289,6 +289,7 @@ var MvcCore;
                             var emSinglePage = new this.Static.Classes.EventsManager.SinglePageMode(this);
                             this.eventsManager = emSinglePage;
                             emSinglePage
+                                .AddRefreshEvent()
                                 .AddUrlChangeEvent();
                             this.limit = this.serverConfig.clientRequestBlockSize;
                         }
@@ -298,6 +299,7 @@ var MvcCore;
                             emMultiplePages
                                 .AddCountScalesEvents()
                                 .AddPagingEvents()
+                                .AddRefreshEvent()
                                 .AddUrlChangeEvent();
                             this.limit = this.serverConfig.count;
                         }

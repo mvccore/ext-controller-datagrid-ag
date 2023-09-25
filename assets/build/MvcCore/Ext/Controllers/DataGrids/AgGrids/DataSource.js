@@ -50,6 +50,9 @@ var MvcCore;
                             this.docTitlePattern = "<".concat(this.serverConfig.gridUrlParamName, ">");
                             this.autoSelectFirstRow = this.eventsManager.GetAutoSelectFirstRow();
                         }
+                        DataSource.prototype.GetCache = function () {
+                            return this.cache;
+                        };
                         DataSource.prototype.SetLastHistory = function (lastHistory) {
                             this.lastHistory = lastHistory;
                             return this;

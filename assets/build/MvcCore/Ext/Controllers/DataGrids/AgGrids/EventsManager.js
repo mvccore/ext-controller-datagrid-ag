@@ -475,6 +475,14 @@ var MvcCore;
                             this.grid.GetColumnsVisibilityMenu().ResizeControls();
                             this.FireHandlers("gridSizeChange", new AgGrids.EventsManagers.Events.GridSizeChange(gridWidth, gridHeight, event));
                         };
+                        EventsManager.prototype.AddRefreshEvent = function () {
+                            var _this = this;
+                            if (!this.grid.GetServerConfig().renderConfig.renderControlRefresh)
+                                return this;
+                            var optsMgr = this.grid.GetOptionsManager(), refreshAnchor = optsMgr.GetElements().refreshAnchor, loadingCls = optsMgr.Static.SELECTORS.BOTTOM_CONTROLS.REFRESH_ANCHOR_LOADING_CLS;
+                            refreshAnchor.addEventListener('click', function (e) { _this.handleRefreshClick(refreshAnchor, loadingCls, e); });
+                            return this;
+                        };
                         EventsManager.prototype.AddUrlChangeEvent = function () {
                             var _this = this;
                             window.addEventListener('popstate', function (e) {
@@ -684,6 +692,23 @@ var MvcCore;
                             }
                             this.FireHandlers("filterChange", new AgGrids.EventsManagers.Events.FilterChange(filteringBefore, filteringAfter));
                             return this;
+                        };
+                        EventsManager.prototype.handleRefreshClick = function (refreshAnchor, loadingCls, e) {
+                            e.cancelBubble = true;
+                            e.preventDefault();
+                            e.stopPropagation();
+                            var cssClasses = refreshAnchor.className.replace(/\s+/g, ' ').split(' ');
+                            if (cssClasses.indexOf(loadingCls) !== -1)
+                                return false;
+                            cssClasses.push(loadingCls);
+                            refreshAnchor.className = cssClasses.join(' ');
+                            return true;
+                        };
+                        EventsManager.prototype.handleRefreshResponse = function () {
+                            var optsMgr = this.grid.GetOptionsManager(), refreshAnchor = optsMgr.GetElements().refreshAnchor, loadingCls = optsMgr.Static.SELECTORS.BOTTOM_CONTROLS.REFRESH_ANCHOR_LOADING_CLS, cssClasses = refreshAnchor.className.replace(/\s+/g, ' ').split(' '), cssClassIndex = cssClasses.indexOf(loadingCls);
+                            if (cssClassIndex !== -1)
+                                cssClasses.splice(cssClassIndex, 1);
+                            refreshAnchor.className = cssClasses.join(' ');
                         };
                         EventsManager.prototype.handleColumnChangesSent = function () {
                             if (this.columnsChangesSending)

@@ -33,11 +33,14 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         GetNewSorting(columnId: string, direction: AgGrids.Types.SortDirNullable): AgGrids.Types.SortItem[];
         HandleSortChange(sortingBefore: AgGrids.Types.SortItem[], sortingAfter: AgGrids.Types.SortItem[]): void;
         HandleGridSizeChanged(viewPort: boolean, event: agGrid.ViewportChangedEvent<any> | agGrid.GridSizeChangedEvent<any>): void;
+        AddRefreshEvent(): this;
         AddUrlChangeEvent(): this;
         HandleExecChange(offset?: number | false | null, sorting?: Types.SortItem[] | false | null, filtering?: Map<string, Map<Enums.Operator, string[]>> | false | null): void;
         HandleUrlChange(e: PopStateEvent): void;
         HandleResponseLoaded(response: AgGrids.Interfaces.Ajax.IResponse, selectFirstRow?: boolean): void;
         protected firefiltering(filteringBefore: Map<string, Map<Enums.Operator, string[]>>, filteringAfter: Map<string, Map<Enums.Operator, string[]>>): this;
+        protected handleRefreshClick(refreshAnchor: HTMLAnchorElement, loadingCls: string, e: MouseEvent): boolean;
+        protected handleRefreshResponse(): void;
         protected handleColumnChangesSent(): void;
         protected handleColumnChangesResponse(): void;
         protected handleUrlChangeSortsFilters(reqData: Interfaces.Ajax.IRequest): this;

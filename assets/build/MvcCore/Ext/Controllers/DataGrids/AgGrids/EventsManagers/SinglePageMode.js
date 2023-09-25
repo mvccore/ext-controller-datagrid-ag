@@ -28,13 +28,36 @@ var MvcCore;
                         var SinglePageMode = /** @class */ (function (_super) {
                             __extends(SinglePageMode, _super);
                             function SinglePageMode(grid) {
-                                return _super.call(this, grid) || this;
+                                var _this = _super.call(this, grid) || this;
+                                _this.refreshOffsets = [];
+                                return _this;
                             }
                             SinglePageMode.prototype.HandleBodyScroll = function (event) {
                                 var dataSource = this.grid.GetDataSource();
                                 if (event.direction === 'vertical')
                                     dataSource.SetBodyScrolled(event.top > 0);
                                 _super.prototype.HandleBodyScroll.call(this, event);
+                            };
+                            SinglePageMode.prototype.HandleResponseLoaded = function (response, selectFirstRow) {
+                                if (selectFirstRow === void 0) { selectFirstRow = false; }
+                                _super.prototype.HandleResponseLoaded.call(this, response, selectFirstRow);
+                                if (this.refreshOffsets.length > 0) {
+                                    var offsetIndex = this.refreshOffsets.indexOf(response.offset);
+                                    if (offsetIndex !== -1)
+                                        this.refreshOffsets.splice(offsetIndex, 1);
+                                    if (this.refreshOffsets.length === 0)
+                                        this.handleRefreshResponse();
+                                }
+                            };
+                            SinglePageMode.prototype.handleRefreshClick = function (refreshAnchor, loadingCls, e) {
+                                var exec = _super.prototype.handleRefreshClick.call(this, refreshAnchor, loadingCls, e);
+                                if (!exec)
+                                    return false;
+                                var api = this.grid.GetOptionsManager().GetAgOptions().api, limit = this.grid.GetLimit(), firstRowIndex = api.getFirstDisplayedRow(), lastRowIndex = api.getLastDisplayedRow(), start = Math.floor(firstRowIndex / limit) * limit, end = Math.ceil(lastRowIndex / limit) * limit;
+                                for (var i = start, l = end; i < l; i += limit)
+                                    this.refreshOffsets.push(i);
+                                this.grid.GetOptionsManager().GetAgOptions().api.purgeInfiniteCache();
+                                return true;
                             };
                             return SinglePageMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManager));

@@ -15,6 +15,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids {
         protected autoSelectFirstRow: boolean;
         constructor(grid: AgGrid);
         abstract ExecRequest(reqData: Interfaces.Ajax.IReqRawObj, changeUrl: boolean): this;
+        GetCache(): DataSources.Cache;
         SetLastHistory(lastHistory: [Interfaces.Ajax.IReqRawObj, string, number, number]): this;
         GetLastHistory(): [Interfaces.Ajax.IReqRawObj, string, number, number];
         BrowserHistoryReplace(stateData: Interfaces.Ajax.IReqRawObj, url: string, page: number, count: number): this;

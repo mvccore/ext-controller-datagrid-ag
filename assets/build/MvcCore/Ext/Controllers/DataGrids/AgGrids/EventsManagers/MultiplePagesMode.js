@@ -72,6 +72,22 @@ var MvcCore;
                                 this.pagingHandlers = new Map();
                                 return this;
                             };
+                            MultiplePagesMode.prototype.handleRefreshClick = function (refreshAnchor, loadingCls, e) {
+                                var exec = _super.prototype.handleRefreshClick.call(this, refreshAnchor, loadingCls, e);
+                                if (!exec)
+                                    return false;
+                                this.handleRefreshResponseCallback = this.handleRefreshResponse.bind(this, refreshAnchor, loadingCls);
+                                var dataSourceCache = this.grid.GetDataSource().GetCache();
+                                dataSourceCache.SetEnabled(false);
+                                this.AddEventListener('modelUpdate', this.handleRefreshResponseCallback);
+                                this.HandleExecChange();
+                                dataSourceCache.SetEnabled(true);
+                                return true;
+                            };
+                            MultiplePagesMode.prototype.handleRefreshResponse = function () {
+                                _super.prototype.handleRefreshResponse.call(this);
+                                this.RemoveEventListener('modelUpdate', this.handleRefreshResponseCallback);
+                            };
                             MultiplePagesMode.prototype.handleCountScalesClick = function (countAfter, e) {
                                 var continueToBrowserActions = this.FireHandlers("beforeCountScaleChange", new EventsManagers.Events.CountScaleChange(this.grid.GetServerConfig().count, countAfter, e.target));
                                 if (continueToBrowserActions === false) {

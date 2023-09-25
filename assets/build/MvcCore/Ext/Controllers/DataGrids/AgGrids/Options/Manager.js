@@ -83,6 +83,7 @@ var MvcCore;
                                 this.elements.statusControl = bottomControlsElement.querySelector(bcSels.STATUS_SEL);
                                 this
                                     .InitBottomControlsCountScales()
+                                    .InitBottomControlsRefresh()
                                     .InitBottomControlsPaging();
                                 return this;
                             };
@@ -92,10 +93,23 @@ var MvcCore;
                                     return this;
                                 this.elements.countScalesControl = bottomControlsElement.querySelector(bcSels.COUNT_SCALES_SEL);
                                 if (this.elements.countScalesControl != null) {
-                                    var countScalesAnchors = this.elements.countScalesControl.querySelectorAll(this.Static.SELECTORS.BOTTOM_CONTROLS.COUNT_SCALES_ANCHOR_SEL);
+                                    var countScalesAnchors = this.elements.countScalesControl.querySelectorAll(bcSels.COUNT_SCALES_ANCHOR_SEL);
                                     this.elements.countScalesAnchors = (countScalesAnchors.length > 0)
                                         ? [].slice.apply(countScalesAnchors)
                                         : [];
+                                }
+                                return this;
+                            };
+                            Manager.prototype.InitBottomControlsRefresh = function () {
+                                if (!this.grid.GetServerConfig().renderConfig.renderControlRefresh ||
+                                    this.elements.refreshControl != null)
+                                    return this;
+                                var bcSels = this.Static.SELECTORS.BOTTOM_CONTROLS, bottomControlsElement = this.elements.bottomControlsElement;
+                                if (bottomControlsElement == null)
+                                    return this;
+                                this.elements.refreshControl = bottomControlsElement.querySelector(bcSels.REFRESH_SEL);
+                                if (this.elements.refreshControl != null) {
+                                    this.elements.refreshAnchor = this.elements.refreshControl.querySelector(bcSels.REFRESH_ANCHOR_SEL);
                                 }
                                 return this;
                             };
@@ -106,7 +120,7 @@ var MvcCore;
                                     return this;
                                 this.elements.pagingControl = bottomControlsElement.querySelector(bcSels.PAGING_SEL);
                                 if (this.elements.pagingControl != null) {
-                                    var paginationAnchors = this.elements.pagingControl.querySelectorAll(this.Static.SELECTORS.BOTTOM_CONTROLS.PAGING_ANCHOR_SEL);
+                                    var paginationAnchors = this.elements.pagingControl.querySelectorAll(bcSels.PAGING_ANCHOR_SEL);
                                     if (paginationAnchors.length > 0) {
                                         this.elements.pagingAnchors = [].slice.apply(paginationAnchors);
                                         var paginationAnchorsMaps = new Map(), pagingAnchorOffset;
@@ -212,9 +226,12 @@ var MvcCore;
                                 BOTTOM_CONTROLS: {
                                     CONT_SEL: '.grid-controls-bottom',
                                     COUNT_SCALES_SEL: '.grid-control-count-scales',
+                                    REFRESH_SEL: '.grid-control-refresh',
                                     STATUS_SEL: '.grid-control-status',
                                     PAGING_SEL: '.grid-control-paging',
                                     COUNT_SCALES_ANCHOR_SEL: '.grid-count a',
+                                    REFRESH_ANCHOR_SEL: '.grid-control-refresh a',
+                                    REFRESH_ANCHOR_LOADING_CLS: 'grid-refresh-link-loading',
                                     PAGING_ANCHOR_SEL: '.grid-page a',
                                 }
                             };

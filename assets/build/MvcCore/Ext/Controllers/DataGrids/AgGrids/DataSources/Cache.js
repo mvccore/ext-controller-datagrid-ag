@@ -24,8 +24,6 @@ var MvcCore;
                                 return this;
                             };
                             Cache.prototype.Key = function (obj) {
-                                if (!this.enabled)
-                                    return '';
                                 return MD5(JSON.stringify(obj));
                             };
                             Cache.prototype.Has = function (key) {

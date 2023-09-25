@@ -44,9 +44,11 @@ var MvcCore;
                             };
                             Cache.prototype.removeOldestRecord = function () {
                                 var oldestKey = this.keys.shift();
-                                var dataCount = this.store.get(oldestKey).dataCount;
-                                this.store.delete(oldestKey);
-                                this.rowsCount -= dataCount;
+                                if (this.store.has(oldestKey)) {
+                                    var dataCount = this.store.get(oldestKey).dataCount;
+                                    this.store.delete(oldestKey);
+                                    this.rowsCount -= dataCount;
+                                }
                                 return this;
                             };
                             return Cache;

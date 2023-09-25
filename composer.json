@@ -26,7 +26,7 @@
 		"php": ">=5.4.0",
 		"mvccore/mvccore": "^5.2.16",
 		"mvccore/ext-model-db": "^5.2.10",
-		"mvccore/ext-controller-datagrid": "^5.2.5",
+		"mvccore/ext-controller-datagrid": "^5.2.7",
 		"mvccore/ext-tool-locale": "^5.0.2",
 		"mvccore/ext-tool-collections": "^5.0.2"
 	},

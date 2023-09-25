@@ -1,0 +1,15 @@
+<?php
+	/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\View $this */
+	/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrid $grid */
+	/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering $renderConf */
+	$renderConf = $this->GetConfigRendering();
+	$cssClassesControl = $renderConf->GetCssClassesControlRefresh();
+	$cssClassesButton = implode(' ', $renderConf->GetCssClassesControlRefreshButton());
+?><span<?php
+	if (count($cssClassesControl) > 0)
+		echo ' class="' . implode(' ', $cssClassesControl) . '"';
+?>><a href="#" class="<?php
+	echo $cssClassesButton;
+?>"><span><b><?php
+	echo $this->EscapeHtml($grid->GetControlText('refresh'));
+?></b></span></a></span>

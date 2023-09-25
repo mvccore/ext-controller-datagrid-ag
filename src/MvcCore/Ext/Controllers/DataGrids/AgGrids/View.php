@@ -20,9 +20,24 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 	const ASSETS_BUNDLE_DEFAULT_NAME_CSS = 'agGrid';
 
 	/**
+	 * AgGrid assets directory by AgGrid main class location, initialized ondemand.
 	 * @var string|NULL
 	 */
 	protected static $gridAssetsDir = NULL;
+
+	/**
+	 * Render datagrid refresh control.
+	 * @return string
+	 */
+	public function RenderGridControlRefresh () {
+		if (!$this->configRendering->GetRenderControlRefresh()) 
+			return '';
+		ob_start();
+		echo $this->renderGridTemplate(
+			$this->configRendering->GetTemplateControlRefresh(), 'Controls', 'refresh'
+		);
+		return ob_get_clean();
+	}
 
 	/**
 	 * Get custom internal templates full path base.
@@ -36,6 +51,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 	}
 	
 	/**
+	 * Get JS assets group for MvcCore Assets view helper to render JS assets in datagrid PreDispatch() method.
 	 * @return \stdClass[]
 	 */
 	public function GetGridAssetsGroupsJs () {
@@ -48,7 +64,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 			'notMin'	=> TRUE,
 			'paths'		=> [
 				$gridAssetsDir . "/ag-grid-community/ag-grid-community.min.noStyle.js",
-				//$gridAssetsDir . "/ag-grid-community/ag-grid-community.noStyle.js",
+				//$gridAssetsDir . "/ag-grid-community/ag-grid-community.noStyle.js", // dev
 				$gridAssetsDir . "/moment/moment.min.js",
 				$gridAssetsDir . "/ajax-min/ajax.min.js",
 			],
@@ -158,6 +174,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 	}
 
 	/**
+	 * Get CSS assets group for MvcCore Assets view helper to render CSS assets in datagrid PreDispatch() method.
 	 * @return \stdClass[]
 	 */
 	public function GetGridAssetsGroupsCss () {
@@ -194,6 +211,10 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 		];
 	}
 
+	/**
+	 * Initialize AgGrid assets directory by AgGrid main class location.
+	 * @return string
+	 */
 	protected static function getAssetsDir () {
 		if (static::$gridAssetsDir != NULL)
 			return static::$gridAssetsDir;

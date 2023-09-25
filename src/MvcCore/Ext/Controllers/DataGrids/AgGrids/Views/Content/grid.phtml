@@ -6,17 +6,20 @@
 	$themeCssClass = $renderConf->GetTheme();
 	$gridCssClasses = $grid->GetCssClasses();
 	$gridCssClasses[] = $themeCssClass;
-	$renderBottomControls = (
-		$renderConf->GetRenderControlStatus() || 
-		$renderConf->GetRenderControlPaging() || 
-		$renderConf->GetRenderControlCountScales()
-	);
+	$bottomControlsRenderedFlag = array_reduce([
+		$renderConf->GetRenderControlCountScales() ? 1 : 0,
+		$renderConf->GetRenderControlRefresh() ? 2 : 0,
+		$renderConf->GetRenderControlStatus() ? 4 : 0,
+		$renderConf->GetRenderControlPaging() ? 8 : 0
+	], fn ($flags, $flag) => $flags |= $flag);
+	$bottomControlsRenderedCssClass = 'grid-bottom-controls-' . $bottomControlsRenderedFlag;
+	$renderBottomControls = $bottomControlsRenderedFlag > 0;
 	$renderTableHead = $renderConf->GetRenderTableHead();
 	$renderTableHeadSorting = $renderTableHead && $renderConf->GetRenderTableHeadSorting();
 	$renderTableHeadFiltering = $renderTableHead && $renderConf->GetRenderTableHeadFiltering();
 	
 	$gridCssClasses[] = $renderBottomControls 
-		? 'grid-with-bottom-controls' 
+		? 'grid-with-bottom-controls ' . $bottomControlsRenderedCssClass 
 		: 'grid-no-bottom-controls';
 	$gridCssClasses[] = $renderTableHead 
 		? 'grid-with-table-head' 
@@ -52,6 +55,7 @@
 	<?php if ($renderBottomControls): ?>
 		<div class="<?php echo $controlsWrapperCssClass; ?> grid-controls-bottom"><?php 
 			echo $this->RenderGridControlCountScales();
+			echo $this->RenderGridControlRefresh();
 			echo $this->RenderGridControlStatus();
 			echo $this->RenderGridControlPaging();
 		?></div>

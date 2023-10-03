@@ -43,13 +43,16 @@ trait InitMethods {
 		$backtraceItems = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 		if (count($backtraceItems) === 2) {
 			$creationPlace = array_merge(['controller' => get_class($controller)], $backtraceItems[1]);
-			$this->creationPlaceImprint = hash('crc32b', serialize($creationPlace));
+			$creationPlaceStr = function_exists('igbinary_serialize')
+				? igbinary_serialize($creationPlace)
+				: serialize($creationPlace);
+			$this->creationPlaceImprint = hash('crc32b', $creationPlaceStr);
 		}
 		$controller->AddChildController($this, $childControllerIndex);
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return void
 	 */
 	public function Init () {
@@ -101,7 +104,7 @@ trait InitMethods {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \InvalidArgumentException
 	 * @return void
 	 */
@@ -218,10 +221,11 @@ trait InitMethods {
 						static::sortRecursive($reqParams);
 						$reqParamsCount = 0;
 						// check if all data url params are contained and with the same values as in current request:
+						$serializeFn = function_exists('igbinary_serialize') ? 'igbinary_serialize' : 'serialize';
 						foreach ($dataUrlParsedParams as $dataUrlParsedParamName => $dataUrlParsedParamValues) {
 							if (
 								isset($reqParams[$dataUrlParsedParamName]) &&
-								serialize($reqParams[$dataUrlParsedParamName]) === serialize($dataUrlParsedParamValues)
+								call_user_func($serializeFn, $reqParams[$dataUrlParsedParamName]) === call_user_func($serializeFn, $dataUrlParsedParamValues)
 							) $reqParamsCount++;
 						}
 						$this->ajaxDataRequest = $dataUrlParsedParamsCount === $reqParamsCount;

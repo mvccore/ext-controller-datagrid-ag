@@ -20,13 +20,13 @@ extends		\MvcCore\Ext\Controllers\DataGrids\Configs\Rendering
 implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @var bool
 	 */
 	protected $renderFilterForm					= FALSE;
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @var \string[]
 	 */
 	protected $cssClassesContentTable			= ['grid-content'];
@@ -93,7 +93,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  string $theme
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -104,7 +104,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return string|NULL
 	 */
 	public function GetTheme () {
@@ -113,7 +113,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL $handlerAssets 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -124,7 +124,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL
 	 */
 	public function GetHandlerAssets () {
@@ -133,7 +133,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  string|NULL $tableHeadFilteringTitle
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -144,7 +144,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return string|NULL
 	 */
 	public function GetTableHeadFilteringTitle () {
@@ -153,7 +153,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  int $renderControlRefresh
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -164,7 +164,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return int
 	 */
 	public function GetRenderControlRefresh () {
@@ -173,7 +173,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param string|\string[] $cssClasses
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -186,7 +186,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param string|\string[] $cssClasses
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -200,7 +200,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]
 	 */
 	public function GetCssClassesControlRefresh () {
@@ -209,7 +209,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  string|\string[] $cssClasses
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -222,7 +222,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  string|\string[] $cssClasses
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -236,7 +236,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]
 	 */
 	public function GetCssClassesControlRefreshButton () {
@@ -245,7 +245,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  string $templateControlRefresh
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
@@ -256,7 +256,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return string
 	 */
 	public function GetTemplateControlRefresh () {
@@ -268,7 +268,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	#region NOT IMPLEMENTED METHODS FROM PARENT CLASS
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 * @param  int $type
 	 */
@@ -278,7 +278,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 * @param  int $gridColumnsCount
 	 */
@@ -288,7 +288,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 */
 	public function GetGridColumnsCount () {
@@ -297,7 +297,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 * @param  bool $renderFilterForm
 	 */
@@ -307,7 +307,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 */
 	public function GetRenderFilterForm () {
@@ -316,7 +316,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 * @param  string|\string[] $cssClasses
 	 */
@@ -326,7 +326,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 * @param  string|\string[] $cssClasses
 	 */
@@ -336,7 +336,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 */
 	public function GetCssClassesContentTable () {
@@ -345,7 +345,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 * @param  string $templateTableHead
 	 */
@@ -355,7 +355,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 */
 	public function GetTemplateTableHead () {
@@ -364,7 +364,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 * @param  string $templateTableBody
 	 */
@@ -374,7 +374,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 */
 	public function GetTemplateTableBody () {
@@ -383,7 +383,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 * @param  string $templateGridBody
 	 */
@@ -393,7 +393,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 */
 	public function GetTemplateGridBody () {
@@ -402,7 +402,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 * @param  string $templateControlSorting
 	 */
@@ -412,7 +412,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 */
 	public function GetTemplateControlSorting () {
@@ -421,7 +421,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 * @param  string $templateFilterForm
 	 */
@@ -431,7 +431,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @throws \Exception
 	 */
 	public function GetTemplateFilterForm () {

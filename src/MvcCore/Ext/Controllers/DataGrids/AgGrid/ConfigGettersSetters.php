@@ -451,7 +451,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \int[] $countScales
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */

@@ -27,7 +27,7 @@ trait GridRow {
 	protected static $activeColumns = NULL;
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param array $jsonProperties 
 	 */
 	public static function SetActiveColumns (array $activeColumns) {
@@ -35,7 +35,7 @@ trait GridRow {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  array $data       Raw data from database (row) or from form fields.
 	 * @param  int   $propsFlags All properties flags are available.
 	 * @throws \InvalidArgumentException
@@ -70,7 +70,7 @@ trait GridRow {
 
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  int $propsFlags
 	 * @return array<string, mixed>
 	 */

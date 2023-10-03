@@ -71,7 +71,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return string|NULL
 	 */
 	public function GetPropName () {
@@ -79,7 +79,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  string|NULL $propName
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
@@ -89,7 +89,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return int|NULL
 	 */
 	public function GetColumnIndex () {
@@ -97,7 +97,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  int|NULL $columnIndex
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
@@ -107,7 +107,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return string|int|float|NULL
 	 */
 	public function GetWidth () {
@@ -115,7 +115,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  string|int|float|NULL $width
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
@@ -125,7 +125,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return bool|NULL
 	 */
 	public function GetDisabled () {
@@ -133,7 +133,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  bool|NULL $disabled
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */

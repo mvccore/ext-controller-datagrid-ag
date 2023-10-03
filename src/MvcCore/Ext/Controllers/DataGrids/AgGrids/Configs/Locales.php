@@ -176,7 +176,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  bool $asString
 	 * @return \string[]|NULL
 	 */
@@ -186,7 +186,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 			: $this->locale;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[]|NULL $locale
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -199,7 +199,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  bool $asString
 	 * @return \string[]|NULL
 	 */
@@ -209,7 +209,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 			: $this->localeNumeric;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[]|NULL $localeNumeric
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -219,7 +219,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]|NULL
 	 */
 	public function GetLocaleMoney ($asString = FALSE) {
@@ -228,7 +228,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 			: $this->localeMoney;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[]|NULL $localeMoney
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -238,7 +238,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]|NULL
 	 */
 	public function GetLocaleDateTime ($asString = FALSE) {
@@ -247,7 +247,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 			: $this->localeDateTime;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[]|NULL $localeDateTime
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -257,14 +257,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return string|NULL
 	 */
 	public function GetCurrencyCode () {
 		return $this->currencyCode;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  string|NULL $currencyCode 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -274,14 +274,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return string|NULL
 	 */
 	public function GetCurrencySign () {
 		return $this->currencySign;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  string|NULL $currencyCode 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -291,14 +291,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return int|NULL
 	 */
 	public function GetCurrencyFractions () {
 		return $this->currencyFractions;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  int|NULL $currencyFractions 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -308,14 +308,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return int|NULL
 	 */
 	public function GetCurrencyRoundIncrement () {
 		return $this->currencyRoundIncrement;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  int|NULL $currencyRoundIncrement
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -325,14 +325,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return int|NULL
 	 */
 	public function GetFloatFractions () {
 		return $this->floatFractions;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  int|NULL $floatFractions 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -342,14 +342,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]
 	 */
 	public function GetParserArgsDate () {
 		return $this->parserArgsDate;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[] $parserArgsDate 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -359,14 +359,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]
 	 */
 	public function GetParserArgsDateTime () {
 		return $this->parserArgsDateTime;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[] $parserArgsDateTime 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -376,14 +376,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]
 	 */
 	public function GetParserArgsTime () {
 		return $this->parserArgsTime;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[] $parserArgsTime 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -393,14 +393,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]
 	 */
 	public function GetFormatArgsDate () {
 		return $this->formatArgsDate;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[] $formatArgsDate 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -410,14 +410,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]
 	 */
 	public function GetFormatArgsDateTime () {
 		return $this->formatArgsDateTime;
 	}
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[] $formatArgsDateTime 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
@@ -427,7 +427,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]
 	 */
 	public function GetFormatArgsTime () {
@@ -435,7 +435,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[] $formatArgsTime 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */

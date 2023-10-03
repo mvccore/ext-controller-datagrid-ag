@@ -19,7 +19,7 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 trait InternalGettersSetters {
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \MvcCore\Request
 	 */
 	public function GetGridRequest () {
@@ -40,7 +40,7 @@ trait InternalGettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return int
 	 */
 	public function GetTimeZoneOffsetSeconds () {
@@ -54,7 +54,7 @@ trait InternalGettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return string
 	 */
 	public function GetAjaxGridPathAndUrl () {
@@ -128,7 +128,7 @@ trait InternalGettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return [string, int][]
 	 */
 	public function GetAjaxSorting () {
@@ -143,7 +143,7 @@ trait InternalGettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return array<string, array<string, \string[]>>
 	 */
 	public function GetAjaxFiltering () {
@@ -158,7 +158,7 @@ trait InternalGettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return array|[string, \string[]]
 	 */
 	public function GetGridCacheKeyAndTags () {

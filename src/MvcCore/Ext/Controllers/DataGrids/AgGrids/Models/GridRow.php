@@ -28,6 +28,14 @@ trait GridRow {
 	
 	/**
 	 * @inheritDoc
+	 * @return array|NULL
+	 */
+	public static function GetActiveColumns () {
+		return self::$activeColumns;
+	}
+	
+	/**
+	 * @inheritDoc
 	 * @param array $jsonProperties 
 	 */
 	public static function SetActiveColumns (array $activeColumns) {

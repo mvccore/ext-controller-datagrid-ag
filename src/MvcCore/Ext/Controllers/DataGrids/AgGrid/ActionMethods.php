@@ -150,7 +150,17 @@ trait ActionMethods {
 			$this->PreDispatch();
 		if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
 		list($gridPath, $gridUrl) = $this->GetAjaxGridPathAndUrl();
-		$response = (object) [
+		$response = $this->actionDataCompleteResponse($gridPath, $gridUrl);
+		$response = $this->actionDataCompleteResponseControls($response, $gridPath);
+		$this->actionDataSendResponse($response);
+	}
+
+	/**
+	 * Return base response data `\stdClass`.
+	 * @return \stdClass
+	 */
+	protected function actionDataCompleteResponse ($gridPath, $gridUrl) {
+		return (object) [
 			'totalCount'	=> $this->totalCount,
 			'offset'		=> $this->offset,
 			'limit'			=> $this->limit,
@@ -164,6 +174,15 @@ trait ActionMethods {
 			'controls'		=> NULL,
 			'data'			=> $this->pageData,
 		];
+	}
+	
+	/**
+	 * Complete response data controls.
+	 * @param  \stdClass $response 
+	 * @param  string $gridPath 
+	 * @return \stdClass
+	 */
+	protected function actionDataCompleteResponseControls ($response, $gridPath) {
 		$renderConf = $this->GetConfigRendering();
 		$renderBottomControls = (
 			$renderConf->GetRenderControlCountScales() ||
@@ -184,6 +203,15 @@ trait ActionMethods {
 			if ($renderConf->GetRenderControlPaging())
 				$response->controls->paging			= $this->view->RenderGridControlPaging();
 		}
+		return $response;
+	}
+	
+	/**
+	 * Serialize response data to core response object to send it later.
+	 * @param  \stdClass $response 
+	 * @return void
+	 */
+	protected function actionDataSendResponse ($response) {
 		$callbackParamName = $this->ajaxParamsNames[self::AJAX_PARAM_CALLBACK];
 		if ($this->request->HasParam($callbackParamName)) {
 			$this->JsonpResponse($response);

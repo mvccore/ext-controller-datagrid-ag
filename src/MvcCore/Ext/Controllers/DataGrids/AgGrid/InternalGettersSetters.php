@@ -55,7 +55,7 @@ trait InternalGettersSetters {
 
 	/**
 	 * @inheritDoc
-	 * @return string
+	 * @return \string[]
 	 */
 	public function GetAjaxGridPathAndUrl () {
 		// page and count

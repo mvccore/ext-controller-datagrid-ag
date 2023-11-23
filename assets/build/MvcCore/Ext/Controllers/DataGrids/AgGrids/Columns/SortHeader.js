@@ -26,8 +26,9 @@ var MvcCore;
                                 return this.elms.cont;
                             };
                             SortHeader.prototype.SetSequence = function (sequence) {
+                                var _a;
                                 this.sequence = sequence;
-                                if (this.params.renderSequence) {
+                                if ((_a = this.params) === null || _a === void 0 ? void 0 : _a.renderSequence) {
                                     this.elms.sequence.innerHTML = (sequence == null
                                         ? ''
                                         : Number(this.sequence + 1).toString());
@@ -227,14 +228,17 @@ var MvcCore;
                                 return this;
                             };
                             SortHeader.prototype.setSortInactive = function () {
+                                var _a;
                                 this.sequence = null;
-                                if (this.params.renderSequence)
+                                if ((_a = this.params) === null || _a === void 0 ? void 0 : _a.renderSequence)
                                     this.elms.sequence.innerHTML = '';
                                 var sels = this.Static.SELECTORS;
                                 this.elms.cont.className = this.contBaseClass;
                                 var parentCont = this.elms.cont.parentNode;
-                                var className = ' ' + parentCont.className + ' ';
-                                parentCont.className = className.replace(this.contActiveClsRegExp, ' ');
+                                if (parentCont != null) {
+                                    var className = ' ' + parentCont.className + ' ';
+                                    parentCont.className = className.replace(this.contActiveClsRegExp, ' ');
+                                }
                                 return this;
                             };
                             SortHeader.SELECTORS = {

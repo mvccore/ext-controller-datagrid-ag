@@ -144,11 +144,7 @@ trait ActionMethods {
 	 */
 	public function ActionData () {
 		if (!$this->ajaxDataRequest) return;
-		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_INITIALIZED) 
-			$this->Init();
-		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) 
-			$this->PreDispatch();
-		if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
+		$this->DispatchStateCheck(\MvcCore\IController::DISPATCH_STATE_RENDERED);
 		list($gridPath, $gridUrl) = $this->GetAjaxGridPathAndUrl();
 		$response = $this->actionDataCompleteResponse($gridPath, $gridUrl);
 		$response = $this->actionDataCompleteResponseControls($response, $gridPath);

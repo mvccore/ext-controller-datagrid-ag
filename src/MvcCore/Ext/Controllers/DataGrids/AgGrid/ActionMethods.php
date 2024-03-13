@@ -144,10 +144,16 @@ trait ActionMethods {
 	 */
 	public function ActionData () {
 		if (!$this->ajaxDataRequest) return;
-		$this->DispatchStateCheck(\MvcCore\IController::DISPATCH_STATE_RENDERED);
+
+		if (!$this->DispatchStateCheck(\MvcCore\IController::DISPATCH_STATE_ACTION_EXECUTED))
+			return;
+		
 		list($gridPath, $gridUrl) = $this->GetAjaxGridPathAndUrl();
 		$response = $this->actionDataCompleteResponse($gridPath, $gridUrl);
 		$response = $this->actionDataCompleteResponseControls($response, $gridPath);
+		
+		$this->dispatchMoveState(static::DISPATCH_STATE_ACTION_EXECUTED);
+
 		$this->actionDataSendResponse($response);
 	}
 
@@ -208,11 +214,16 @@ trait ActionMethods {
 	 * @return void
 	 */
 	protected function actionDataSendResponse ($response) {
-		$callbackParamName = $this->ajaxParamsNames[self::AJAX_PARAM_CALLBACK];
-		if ($this->request->HasParam($callbackParamName)) {
-			$this->JsonpResponse($response);
+		if ($this->request->HasParam('debug')) {
+			$this->HtmlResponse('<pre>'.\MvcCore\Tool::JsonEncode($response, JSON_PRETTY_PRINT).'<pre>');
+			
 		} else {
-			$this->JsonResponse($response);
+			$callbackParamName = $this->ajaxParamsNames[self::AJAX_PARAM_CALLBACK];
+			if ($this->request->HasParam($callbackParamName)) {
+				$this->JsonpResponse($response);
+			} else {
+				$this->JsonResponse($response);
+			}
 		}
 	}
 

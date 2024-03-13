@@ -56,9 +56,8 @@ trait InitMethods {
 	 * @return void
 	 */
 	public function Init () {
-		if (!$this->DispatchStateCheck(static::DISPATCH_STATE_INITIALIZED)) 
-			return;
-		
+		if ($this->dispatchState >= self::DISPATCH_STATE_INITIALIZED) return;
+
 		$this->GetConfigRendering();
 		
 		$this->initConfigRenderingByClientPageMode();

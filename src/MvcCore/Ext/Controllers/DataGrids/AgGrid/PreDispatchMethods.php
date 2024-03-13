@@ -26,6 +26,8 @@ trait PreDispatchMethods {
 	 */
 	public function PreDispatch () {
 		if ($this->ajaxDataRequest) {
+			$this->ajax = TRUE;
+			$this->viewEnabled = TRUE;
 			if ($this->view === NULL) {}
 				$this->view = $this->createView(TRUE);
 			$this->view->grid = $this;
@@ -33,6 +35,7 @@ trait PreDispatchMethods {
 			\MvcCore\Controller::PreDispatch();
 			
 			$this->LoadModel();
+
 			$this->preDispatchPage();
 			if (!$this->preDispatchTotalCount()) return;
 			$this->preDispatchTranslations();

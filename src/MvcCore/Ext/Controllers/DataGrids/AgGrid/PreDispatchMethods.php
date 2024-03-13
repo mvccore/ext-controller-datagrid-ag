@@ -41,9 +41,10 @@ trait PreDispatchMethods {
 			$this->preDispatchPaging();
 			$this->preDispatchCountScales();
 		} else {
-			if ($this->dispatchState >= \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
+			if (!$this->DispatchStateCheck(static::DISPATCH_STATE_PRE_DISPATCHED)) 
+				return;
 			parent::PreDispatch();
-			if ($this->dispatchState > \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) return;
+			if ($this->dispatchState > static::DISPATCH_STATE_PRE_DISPATCHED) return;
 			$this->preDispatchLocales();
 			if ($this->viewEnabled)
 				$this->preDispatchAssets();

@@ -42,13 +42,12 @@ implements	IConstantsAg {
 	 * @internal
 	 * @var array
 	 */
-	protected static $gridActions = [
-		IConstantsBase::GRID_ACTION_FILTER_TABLE	=> 'ActionTableFilter',
-		IConstantsBase::GRID_ACTION_FILTER_FORM		=> 'ActionFormFilter',
-		IConstantsBase::GRID_ACTION_DEFAULT			=> 'ActionDefault',
-		IConstantsAg::GRID_ACTION_DATA				=> 'ActionData',
-		IConstantsAg::GRID_ACTION_COLUMNS_STATES	=> 'ActionColumnsStates',
-		IConstantsAg::GRID_ACTION_COLUMNS_CHANGES	=> 'ActionColumnsChanges',
+	protected static $gridInitActions = [
+		IConstantsBase::GRID_ACTION_FILTER_TABLE	=> 'TableFilterInit',
+		IConstantsBase::GRID_ACTION_FILTER_FORM		=> 'FormFilterInit',
+		IConstantsBase::GRID_ACTION_DEFAULT			=> 'DefaultInit',
+		IConstantsAg::GRID_ACTION_COLUMNS_STATES	=> 'ColumnsStatesInit',
+		IConstantsAg::GRID_ACTION_COLUMNS_CHANGES	=> 'ColumnsChangesInit',
 	];
 	
 }

@@ -21,42 +21,12 @@ use \MvcCore\Ext\Controllers\DataGrids\AgGrid\IConstants;
 trait InitMethods {
 
 	/**
-	 * Create `\MvcCore\Ext\Controllers\DataGrids\AgGrid` instance.
-	 * @param  \MvcCore\Controller|NULL $controller
-	 * @param  string|int|NULL          $childControllerIndex Automatic name for this instance used in view.
-	 * @return void
-	 */
-	public function __construct ($controller = NULL, $childControllerIndex = NULL) {
-		/** @var \MvcCore\Controller $controller */
-		if (is_string($this->countScales)) 
-			$this->countScales = array_map('intval', explode(',', (string) $this->countScales));
-		if ($controller === NULL) {
-			$controller = \MvcCore\Ext\Form::GetCallerControllerInstance();
-			if ($controller === NULL) 
-				$controller = \MvcCore\Application::GetInstance()->GetController();
-			if ($controller === NULL) throw new \InvalidArgumentException(
-				'['.get_class($this).'] There was not possible to determinate caller controller, '
-				.'where is datagrid instance created. Provide `$controller` instance explicitly '
-				.'by first `\MvcCore\Ext\Controllers\DataGrid::__construct($controller);` argument.'
-			);
-		}
-		$backtraceItems = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-		if (count($backtraceItems) === 2) {
-			$creationPlace = array_merge(['controller' => get_class($controller)], $backtraceItems[1]);
-			$creationPlaceStr = function_exists('igbinary_serialize')
-				? igbinary_serialize($creationPlace)
-				: serialize($creationPlace);
-			$this->creationPlaceImprint = hash('crc32b', $creationPlaceStr);
-		}
-		$controller->AddChildController($this, $childControllerIndex);
-	}
-
-	/**
 	 * @inheritDoc
 	 * @return void
 	 */
 	public function Init () {
-		if ($this->dispatchState >= self::DISPATCH_STATE_INITIALIZED) return;
+		if ($this->dispatchState >= self::DISPATCH_STATE_INITIALIZED) 
+			return;
 
 		$this->GetConfigRendering();
 		
@@ -71,7 +41,7 @@ trait InitMethods {
 
 		$this->initPersistentColumnsData();
 
-		$this->initGridAction();
+		$this->initGridActions();
 		
 		$this->GetRoute();
 		$this->GetUrlParams();
@@ -100,7 +70,8 @@ trait InitMethods {
 
 		$this->GetTimeZoneOffset();
 		
-		call_user_func([$this, $this->gridAction]);
+		if ($this->gridInitAction !== NULL)
+			call_user_func([$this, $this->gridInitAction]);
 	}
 	
 	/**
@@ -163,15 +134,20 @@ trait InitMethods {
 	 * Complete internal action method name.
 	 * @return void
 	 */
-	protected function initGridAction () {
-		$gridActionParam = $this->request->GetParam(static::URL_PARAM_ACTION, '-_a-zA-Z', static::$gridActionDefaultKey, 'string');
-		if (!isset(static::$gridActions[$gridActionParam])) 
-			$gridActionParam = static::$gridActionDefaultKey;
-		$this->gridAction = static::$gridActions[$gridActionParam];
-		$this->initDataUrlAndAjaxDataRequest($gridActionParam);
+	protected function initGridActions () {
+		$gridActionParam = $this->request->GetParam(static::URL_PARAM_ACTION, '-_a-zA-Z', static::$gridInitActionDefaultKey, 'string');
+		if ($this->gridInitAction === NULL) {
+			if (!isset(static::$gridInitActions[$gridActionParam])) 
+				$gridActionParam = static::$gridInitActionDefaultKey;
+			$this->gridInitAction = static::$gridInitActions[$gridActionParam];
+		}
+		if ($this->ajaxDataRequest === NULL) {
+			$this->initDataUrlAndAjaxDataRequest($gridActionParam);
+		}
 	}
 
 	/**
+	 * Determinate ajax data request by requested url.
 	 * @param  string $gridActionParam 
 	 * @return void
 	 */
@@ -182,11 +158,12 @@ trait InitMethods {
 		} else {
 			if (!(mb_strpos($this->urlData, 'http://') === 0 || mb_strpos($this->urlData, 'https://') === 0))
 				$this->urlData = $this->request->GetDomainUrl() . $this->urlData;
-			$dataUrlParsed = (object) \MvcCore\Tool::ParseUrl($this->urlData);
+			$toolClass = $this->application->GetToolClass();
+			$dataUrlParsed = (object) $toolClass::ParseUrl($this->urlData);
 			$this->ajaxDataRequest = (
-				$dataUrlParsed->path === $this->request->GetPath() &&
 				$dataUrlParsed->scheme . ':' === $this->request->GetScheme() &&
-				$dataUrlParsed->host === $this->request->GetHostName()
+				$dataUrlParsed->host === $this->request->GetHostName() &&
+				$dataUrlParsed->path === $this->request->GetBasePath() . $this->request->GetPath()
 			);
 			if ($this->ajaxDataRequest && isset($dataUrlParsed->query)) {
 				// complete and sort dataurl params:
@@ -385,7 +362,7 @@ trait InitMethods {
 		/** @var \MvcCore\Controller $this */
 		$processCanonicalRedirect = FALSE;
 		if (!$this->ajaxDataRequest) {
-			$defaultAction = $this->gridAction === static::$gridActions[static::$gridActionDefaultKey];
+			$defaultAction = $this->gridInitAction === static::$gridInitActions[static::$gridInitActionDefaultKey];
 			$processCanonicalRedirect = $defaultAction && $this->router->GetAutoCanonizeRequests();
 		}
 

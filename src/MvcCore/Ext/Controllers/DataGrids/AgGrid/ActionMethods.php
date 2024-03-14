@@ -28,7 +28,7 @@ trait ActionMethods {
 	 * @template
 	 * @return void
 	 */
-	public function ActionDefault () {
+	public function DefaultInit () {
 		$this->writeChangedColumnsConfigsExecute();
 		$this->initDevClientRowModelDefinition();
 	}
@@ -53,7 +53,7 @@ trait ActionMethods {
 	}
 
 	/**
-	 * 
+	 * Complete page grid config for json serialization in response body.
 	 * @return array
 	 */
 	public function GetClientServerConfig () {
@@ -94,7 +94,7 @@ trait ActionMethods {
 	}
 
 	/**
-	 * 
+	 * Serialize client site view helper functions from server view helpers.
 	 * @return string
 	 */
 	public function GetClientHelpersJson () {
@@ -119,8 +119,8 @@ trait ActionMethods {
 	}
 
 	/**
-	 * 
-	 * @return array
+	 * Complete page initial grid data for json serialization in response body.
+	 * @return array<string,mixed>
 	 */
 	public function GetClientInitData () {
 		return [
@@ -139,29 +139,31 @@ trait ActionMethods {
 	}
 
 	/**
-	 * 
+	 * Grid data request init action method to extend, 
+	 * executed after grid `Init()` method automatically.
 	 * @return void
 	 */
-	public function ActionData () {
-		if (!$this->ajaxDataRequest) return;
+	public function DataInit () {
+	}
 
+	/**
+	 * Data request action method, executed after grid `PreDispatch()` method automatically.
+	 * @return void
+	 */
+	public function DataAction () {
 		if (!$this->DispatchStateCheck(\MvcCore\IController::DISPATCH_STATE_ACTION_EXECUTED))
 			return;
-		
 		list($gridPath, $gridUrl) = $this->GetAjaxGridPathAndUrl();
-		$response = $this->actionDataCompleteResponse($gridPath, $gridUrl);
-		$response = $this->actionDataCompleteResponseControls($response, $gridPath);
-		
+		$response = $this->dataActionGetResponse($gridPath, $gridUrl);
 		$this->dispatchMoveState(static::DISPATCH_STATE_ACTION_EXECUTED);
-
-		$this->actionDataSendResponse($response);
+		$this->dataActionSendResponse($response);
 	}
 
 	/**
 	 * Return base response data `\stdClass`.
 	 * @return \stdClass
 	 */
-	protected function actionDataCompleteResponse ($gridPath, $gridUrl) {
+	protected function dataActionGetResponse ($gridPath, $gridUrl) {
 		return (object) [
 			'totalCount'	=> $this->totalCount,
 			'offset'		=> $this->offset,
@@ -173,18 +175,18 @@ trait ActionMethods {
 			'page'			=> $this->page,
 			'count'			=> $this->count,
 			'dataCount'		=> count($this->pageData),
-			'controls'		=> NULL,
+			'controls'		=> $this->dataActionGetControls($gridPath),
 			'data'			=> $this->pageData,
 		];
 	}
 	
 	/**
 	 * Complete response data controls.
-	 * @param  \stdClass $response 
 	 * @param  string $gridPath 
-	 * @return \stdClass
+	 * @return \stdClass|NULL
 	 */
-	protected function actionDataCompleteResponseControls ($response, $gridPath) {
+	protected function dataActionGetControls ($gridPath) {
+		$controls = NULL;
 		$renderConf = $this->GetConfigRendering();
 		$renderBottomControls = (
 			$renderConf->GetRenderControlCountScales() ||
@@ -192,20 +194,20 @@ trait ActionMethods {
 			$renderConf->GetRenderControlPaging()
 		);
 		if ($renderBottomControls) {
-			$response->controls = (object) [
+			$controls = (object) [
 				'countScales'	=> NULL,
 				'status'		=> NULL,
 				'paging'		=> NULL,
 			];
 			$this->reinitGridRequestAndUrlParams($gridPath);
 			if ($renderConf->GetRenderControlCountScales())
-				$response->controls->countScales	= $this->view->RenderGridControlCountScales();
+				$controls->countScales	= $this->view->RenderGridControlCountScales();
 			if ($renderConf->GetRenderControlStatus())
-				$response->controls->status			= $this->view->RenderGridControlStatus();
+				$controls->status		= $this->view->RenderGridControlStatus();
 			if ($renderConf->GetRenderControlPaging())
-				$response->controls->paging			= $this->view->RenderGridControlPaging();
+				$controls->paging		= $this->view->RenderGridControlPaging();
 		}
-		return $response;
+		return $controls;
 	}
 	
 	/**
@@ -213,10 +215,10 @@ trait ActionMethods {
 	 * @param  \stdClass $response 
 	 * @return void
 	 */
-	protected function actionDataSendResponse ($response) {
-		if ($this->request->HasParam('debug')) {
-			$this->HtmlResponse('<pre>'.\MvcCore\Tool::JsonEncode($response, JSON_PRETTY_PRINT).'<pre>');
-			
+	protected function dataActionSendResponse ($response) {
+		if ($this->request->HasParam(static::URL_PARAM_DEBUG)) {
+			$toolsClass = $this->application->GetToolClass();
+			$this->HtmlResponse('<pre>'.$toolsClass::JsonEncode($response, JSON_PRETTY_PRINT).'<pre>');
 		} else {
 			$callbackParamName = $this->ajaxParamsNames[self::AJAX_PARAM_CALLBACK];
 			if ($this->request->HasParam($callbackParamName)) {
@@ -252,13 +254,14 @@ trait ActionMethods {
 	}
 
 	/**
-	 * 
+	 * Grid column states request init action method to extend, 
+	 * executed after grid `Init()` method automatically.
 	 * @return void
 	 */
-	public function ActionColumnsStates () {
+	public function ColumnsStatesInit () {
 		$columnsUrlNamesRaw = $this->request->GetParams(FALSE, [], \MvcCore\IRequest::PARAM_TYPE_INPUT);
 		
-		$persistentColumns = $this->actionColumnsStatesAssemble($columnsUrlNamesRaw);
+		$persistentColumns = $this->columnsStatesActionAssemble($columnsUrlNamesRaw);
 		$this->gridPersistentColumnsWrite($persistentColumns);
 
 		$gridParam = rtrim($this->gridRequest->GetPath(), '/');
@@ -275,7 +278,7 @@ trait ActionMethods {
 	 * @param  array $postParams 
 	 * @return array<string, PersistentColumn>
 	 */
-	protected function actionColumnsStatesAssemble (array $postParams) {
+	protected function columnsStatesActionAssemble (array $postParams) {
 		$persistentColumns = [];
 		foreach ($this->GetConfigColumns(FALSE) as $urlName => $configColumn) {
 			$disabled = !isset($postParams[$urlName]);
@@ -296,10 +299,11 @@ trait ActionMethods {
 	}
 
 	/**
-	 * 
+	 * Grid column changes request init action method to extend, 
+	 * executed after grid `Init()` method automatically.
 	 * @return void
 	 */
-	public function ActionColumnsChanges () {
+	public function ColumnsChangesInit () {
 		$changesJson = $this->request->GetParam(self::AJAX_PARAM_COLUMNS_CHANGES, FALSE);
 		$toolClass = $this->application->GetToolClass();
 		try {
@@ -416,7 +420,8 @@ trait ActionMethods {
 	}
 
 	/**
-	 * 
+	 * Get grid columns pestore if persisten store 
+	 * is not configured with database.
 	 * @return \MvcCore\Session
 	 */
 	protected function getGridSessionNamespace () {

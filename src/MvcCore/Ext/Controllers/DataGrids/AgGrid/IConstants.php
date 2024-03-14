@@ -28,14 +28,13 @@ interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
 	 * Default grid action name.
 	 * @var string
 	 */
-	const GRID_ACTION_COLUMNS_STATES	= 'ActionColumnsStates';
+	const GRID_ACTION_COLUMNS_STATES	= 'columns-states';
 
 	/**
 	 * Default grid action name.
 	 * @var string
 	 */
-	const GRID_ACTION_COLUMNS_CHANGES	= 'ActionColumnsChanges';
-
+	const GRID_ACTION_COLUMNS_CHANGES	= 'columns-changes';
 
 	/**
 	 * Client side rendered with only data for current page.

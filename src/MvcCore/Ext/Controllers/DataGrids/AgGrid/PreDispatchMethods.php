@@ -25,17 +25,16 @@ trait PreDispatchMethods {
 	 * @return void
 	 */
 	public function PreDispatch () {
+		if (!$this->DispatchStateCheck(static::DISPATCH_STATE_PRE_DISPATCHED)) 
+			return;
 		if ($this->ajaxDataRequest) {
 			$this->ajax = TRUE;
 			$this->viewEnabled = TRUE;
 			if ($this->view === NULL) {}
 				$this->view = $this->createView(TRUE);
 			$this->view->grid = $this;
-			
 			\MvcCore\Controller::PreDispatch();
-			
 			$this->LoadModel();
-
 			$this->preDispatchPage();
 			if (!$this->preDispatchTotalCount()) return;
 			$this->preDispatchTranslations();
@@ -43,9 +42,8 @@ trait PreDispatchMethods {
 				$this->configRendering->SetRenderControlPaging(\MvcCore\Ext\Controllers\IDataGrid::CONTROL_DISPLAY_NEVER);
 			$this->preDispatchPaging();
 			$this->preDispatchCountScales();
+			$this->DataAction();
 		} else {
-			if (!$this->DispatchStateCheck(static::DISPATCH_STATE_PRE_DISPATCHED)) 
-				return;
 			parent::PreDispatch();
 			if ($this->dispatchState > static::DISPATCH_STATE_PRE_DISPATCHED) return;
 			$this->preDispatchLocales();

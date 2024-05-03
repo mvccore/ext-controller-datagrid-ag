@@ -264,13 +264,23 @@ trait ActionMethods {
 		$persistentColumns = $this->columnsStatesActionAssemble($columnsUrlNamesRaw);
 		$this->gridPersistentColumnsWrite($persistentColumns);
 
-		$gridParam = rtrim($this->gridRequest->GetPath(), '/');
-		$controllerClass = get_parent_class(get_parent_class(__CLASS__));
-		$redirectUrl = $controllerClass::Url($this->appRouteName, [
-			static::URL_PARAM_GRID		=> $gridParam,
-			static::URL_PARAM_ACTION	=> NULL,
-		]);
-		self::Redirect($redirectUrl, \MvcCore\IResponse::SEE_OTHER);
+		if ($this->IsAjax()) {
+			$this->JsonResponse([
+				'success'	=> TRUE
+			]);
+		} else {
+			$gridParam = rtrim($this->gridRequest->GetPath(), '/');
+			$controllerClass = get_parent_class(get_parent_class(__CLASS__));
+			$redirectUrl = $controllerClass::Url($this->appRouteName, [
+				static::URL_PARAM_GRID		=> $gridParam,
+				static::URL_PARAM_ACTION	=> NULL,
+			]);
+			self::Redirect(
+				$redirectUrl, 
+				\MvcCore\IResponse::SEE_OTHER,
+				'AgGrid column states processed.'
+			);
+		}
 	}
 
 	/**
@@ -334,10 +344,24 @@ trait ActionMethods {
 			}
 			$this->gridPersistentColumnsWrite($persistentColumns);
 		}
-		
-		$this->JsonResponse([
-			'success'	=> $parseSuccess
-		]);
+
+		if ($this->IsAjax()) {
+			$this->JsonResponse([
+				'success'	=> $parseSuccess
+			]);
+		} else {
+			$gridParam = rtrim($this->gridRequest->GetPath(), '/');
+			$controllerClass = get_parent_class(get_parent_class(__CLASS__));
+			$redirectUrl = $controllerClass::Url($this->appRouteName, [
+				static::URL_PARAM_GRID		=> $gridParam,
+				static::URL_PARAM_ACTION	=> NULL,
+			]);
+			self::Redirect(
+				$redirectUrl, 
+				\MvcCore\IResponse::SEE_OTHER, 
+				'AgGrid column changes processed.'
+			);
+		}
 	}
 
 	/**

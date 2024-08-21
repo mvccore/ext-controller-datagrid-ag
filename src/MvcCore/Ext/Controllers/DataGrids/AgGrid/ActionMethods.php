@@ -30,7 +30,6 @@ trait ActionMethods {
 	 */
 	public function DefaultInit () {
 		$this->writeChangedColumnsConfigsExecute();
-		$this->initDevClientRowModelDefinition();
 	}
 
 	/**
@@ -263,7 +262,7 @@ trait ActionMethods {
 		
 		$persistentColumns = $this->columnsStatesActionAssemble($columnsUrlNamesRaw);
 		$this->gridPersistentColumnsWrite($persistentColumns);
-
+		
 		if ($this->IsAjax()) {
 			$this->JsonResponse([
 				'success'	=> TRUE
@@ -321,7 +320,6 @@ trait ActionMethods {
 		} catch (\Throwable $e) {
 			$changesRaw = [];
 		}
-		
 		$parseSuccess = count($changesRaw) > 0;
 		if ($parseSuccess) {
 			$persistentColumns = [];

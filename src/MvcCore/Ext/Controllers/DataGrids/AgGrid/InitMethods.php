@@ -25,9 +25,9 @@ trait InitMethods {
 	 * @return void
 	 */
 	public function Init () {
-		if ($this->dispatchState >= self::DISPATCH_STATE_INITIALIZED) 
+		if ($this->dispatchState >= static::DISPATCH_STATE_INITIALIZED) 
 			return;
-
+		
 		$this->GetConfigRendering();
 		
 		$this->initConfigRenderingByClientPageMode();
@@ -137,9 +137,10 @@ trait InitMethods {
 	protected function initGridActions () {
 		$gridActionParam = $this->request->GetParam(static::URL_PARAM_ACTION, '-_a-zA-Z', static::$gridInitActionDefaultKey, 'string');
 		if ($this->gridInitAction === NULL) {
-			if (!isset(static::$gridInitActions[$gridActionParam])) 
-				$gridActionParam = static::$gridInitActionDefaultKey;
-			$this->gridInitAction = static::$gridInitActions[$gridActionParam];
+			$gridActionParamKey = $gridActionParam;
+			if (!isset(static::$gridInitActions[$gridActionParamKey])) 
+				$gridActionParamKey = static::$gridInitActionDefaultKey;
+			$this->gridInitAction = static::$gridInitActions[$gridActionParamKey];
 		}
 		if ($this->ajaxDataRequest === NULL) {
 			$this->initDataUrlAndAjaxDataRequest($gridActionParam);

@@ -700,6 +700,7 @@ var MvcCore;
                             var cssClasses = refreshAnchor.className.replace(/\s+/g, ' ').split(' ');
                             if (cssClasses.indexOf(loadingCls) !== -1)
                                 return false;
+                            this.FireHandlers("beforeRefresh", new AgGrids.EventsManagers.Events.Base());
                             cssClasses.push(loadingCls);
                             refreshAnchor.className = cssClasses.join(' ');
                             return true;
@@ -709,6 +710,7 @@ var MvcCore;
                             if (cssClassIndex !== -1)
                                 cssClasses.splice(cssClassIndex, 1);
                             refreshAnchor.className = cssClasses.join(' ');
+                            this.FireHandlers("refresh", new AgGrids.EventsManagers.Events.Base());
                         };
                         EventsManager.prototype.handleColumnChangesSent = function () {
                             if (this.columnsChangesSending)

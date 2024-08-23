@@ -36,8 +36,8 @@ var MvcCore;
                                     ['default', new Intl.NumberFormat(this.localeMoney, {
                                             style: 'currency',
                                             currency: this.localesConfig.currencyCode,
-                                            currencySign: 'standard',
-                                            currencyDisplay: 'narrowSymbol',
+                                            currencySign: 'standard', // 'accounting'
+                                            currencyDisplay: 'narrowSymbol', // 'symbol', 'narrowSymbol', 'code', 'name'
                                             minimumFractionDigits: this.localesConfig.currencyFractions,
                                             maximumFractionDigits: this.localesConfig.currencyFractions,
                                             roundingIncrement: this.localesConfig.currencyRoundIncrement
@@ -131,8 +131,8 @@ var MvcCore;
                                 this.formattersMoney.set(formatterKey, new Intl.NumberFormat(this.localeMoney, {
                                     style: 'currency',
                                     currency: this.localesConfig.currencyCode,
-                                    currencySign: 'standard',
-                                    currencyDisplay: currencyDisplay,
+                                    currencySign: 'standard', // 'accounting'
+                                    currencyDisplay: currencyDisplay, // 'symbol', 'narrowSymbol', 'code', 'name'
                                     minimumFractionDigits: currencyFractions,
                                     maximumFractionDigits: currencyFractions,
                                     roundingIncrement: roundIncrement

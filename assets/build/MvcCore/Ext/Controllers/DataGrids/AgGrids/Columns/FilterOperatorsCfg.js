@@ -113,57 +113,57 @@ var MvcCore;
                                 [AgGrids.Enums.ServerType.TIME, stringAndDateFilteringModeOrder]
                             ]);
                             FilterOperatorsCfg.CONTROL_TYPES_OPERATORS = new Map([
-                                [AgGrids.Enums.FilterControlType.EQUAL, AgGrids.Enums.Operator.EQUAL],
-                                [AgGrids.Enums.FilterControlType.NOT_EQUAL, AgGrids.Enums.Operator.NOT_EQUAL],
-                                [AgGrids.Enums.FilterControlType.IS_NULL, AgGrids.Enums.Operator.EQUAL],
-                                [AgGrids.Enums.FilterControlType.IS_NOT_NULL, AgGrids.Enums.Operator.NOT_EQUAL],
-                                [AgGrids.Enums.FilterControlType.LOWER, AgGrids.Enums.Operator.LOWER],
-                                [AgGrids.Enums.FilterControlType.GREATER, AgGrids.Enums.Operator.GREATER],
-                                [AgGrids.Enums.FilterControlType.LOWER_EQUAL, AgGrids.Enums.Operator.LOWER_EQUAL],
-                                [AgGrids.Enums.FilterControlType.GREATER_EQUAL, AgGrids.Enums.Operator.GREATER_EQUAL],
-                                [AgGrids.Enums.FilterControlType.CONTAINS, AgGrids.Enums.Operator.LIKE],
-                                [AgGrids.Enums.FilterControlType.NOT_CONTAINS, AgGrids.Enums.Operator.NOT_LIKE],
-                                [AgGrids.Enums.FilterControlType.STARTS_WITH, AgGrids.Enums.Operator.LIKE],
-                                [AgGrids.Enums.FilterControlType.ENDS_WITH, AgGrids.Enums.Operator.LIKE],
-                                [AgGrids.Enums.FilterControlType.NOT_STARTS_WITH, AgGrids.Enums.Operator.NOT_LIKE],
-                                [AgGrids.Enums.FilterControlType.NOT_ENDS_WITH, AgGrids.Enums.Operator.NOT_LIKE],
-                                [AgGrids.Enums.FilterControlType.IS_TRUE, AgGrids.Enums.Operator.EQUAL],
+                                [AgGrids.Enums.FilterControlType.EQUAL, AgGrids.Enums.Operator.EQUAL], // column = value
+                                [AgGrids.Enums.FilterControlType.NOT_EQUAL, AgGrids.Enums.Operator.NOT_EQUAL], // column != value
+                                [AgGrids.Enums.FilterControlType.IS_NULL, AgGrids.Enums.Operator.EQUAL], // column IS NULL
+                                [AgGrids.Enums.FilterControlType.IS_NOT_NULL, AgGrids.Enums.Operator.NOT_EQUAL], // column IS NOT NULL
+                                [AgGrids.Enums.FilterControlType.LOWER, AgGrids.Enums.Operator.LOWER], // column < value
+                                [AgGrids.Enums.FilterControlType.GREATER, AgGrids.Enums.Operator.GREATER], // column > value
+                                [AgGrids.Enums.FilterControlType.LOWER_EQUAL, AgGrids.Enums.Operator.LOWER_EQUAL], // column <= value
+                                [AgGrids.Enums.FilterControlType.GREATER_EQUAL, AgGrids.Enums.Operator.GREATER_EQUAL], // column >= value
+                                [AgGrids.Enums.FilterControlType.CONTAINS, AgGrids.Enums.Operator.LIKE], // column LIKE %value%
+                                [AgGrids.Enums.FilterControlType.NOT_CONTAINS, AgGrids.Enums.Operator.NOT_LIKE], // column NOT LIKE %value%
+                                [AgGrids.Enums.FilterControlType.STARTS_WITH, AgGrids.Enums.Operator.LIKE], // column LIKE value%
+                                [AgGrids.Enums.FilterControlType.ENDS_WITH, AgGrids.Enums.Operator.LIKE], // column LIKE %value
+                                [AgGrids.Enums.FilterControlType.NOT_STARTS_WITH, AgGrids.Enums.Operator.NOT_LIKE], // column NOT LIKE value%
+                                [AgGrids.Enums.FilterControlType.NOT_ENDS_WITH, AgGrids.Enums.Operator.NOT_LIKE], // column NOT LIKE %value
+                                [AgGrids.Enums.FilterControlType.IS_TRUE, AgGrids.Enums.Operator.EQUAL], // column = 1
                                 [AgGrids.Enums.FilterControlType.IS_FALSE, AgGrids.Enums.Operator.EQUAL], // column = 0
                             ]);
                             FilterOperatorsCfg.CONTROL_TYPES_TEXTS = new Map([
-                                [AgGrids.Enums.FilterControlType.EQUAL, 'equals'],
-                                [AgGrids.Enums.FilterControlType.NOT_EQUAL, 'notEqual'],
-                                [AgGrids.Enums.FilterControlType.IS_NULL, 'blank'],
-                                [AgGrids.Enums.FilterControlType.IS_NOT_NULL, 'notBlank'],
-                                [AgGrids.Enums.FilterControlType.LOWER, 'lessThan'],
-                                [AgGrids.Enums.FilterControlType.GREATER, 'greaterThan'],
-                                [AgGrids.Enums.FilterControlType.LOWER_EQUAL, 'lessThanOrEqual'],
-                                [AgGrids.Enums.FilterControlType.GREATER_EQUAL, 'greaterThanOrEqual'],
-                                [AgGrids.Enums.FilterControlType.CONTAINS, 'contains'],
-                                [AgGrids.Enums.FilterControlType.NOT_CONTAINS, 'notContains'],
-                                [AgGrids.Enums.FilterControlType.STARTS_WITH, 'startsWith'],
-                                [AgGrids.Enums.FilterControlType.ENDS_WITH, 'endsWith'],
-                                [AgGrids.Enums.FilterControlType.NOT_STARTS_WITH, 'notStartsWith'],
-                                [AgGrids.Enums.FilterControlType.NOT_ENDS_WITH, 'notEndsWith'],
-                                [AgGrids.Enums.FilterControlType.IS_TRUE, 'yes'],
+                                [AgGrids.Enums.FilterControlType.EQUAL, 'equals'], // column = value
+                                [AgGrids.Enums.FilterControlType.NOT_EQUAL, 'notEqual'], // column != value
+                                [AgGrids.Enums.FilterControlType.IS_NULL, 'blank'], // column IS NULL
+                                [AgGrids.Enums.FilterControlType.IS_NOT_NULL, 'notBlank'], // column IS NOT NULL
+                                [AgGrids.Enums.FilterControlType.LOWER, 'lessThan'], // column < value
+                                [AgGrids.Enums.FilterControlType.GREATER, 'greaterThan'], // column > value
+                                [AgGrids.Enums.FilterControlType.LOWER_EQUAL, 'lessThanOrEqual'], // column <= value
+                                [AgGrids.Enums.FilterControlType.GREATER_EQUAL, 'greaterThanOrEqual'], // column >= value
+                                [AgGrids.Enums.FilterControlType.CONTAINS, 'contains'], // column LIKE %value%
+                                [AgGrids.Enums.FilterControlType.NOT_CONTAINS, 'notContains'], // column NOT LIKE %value%
+                                [AgGrids.Enums.FilterControlType.STARTS_WITH, 'startsWith'], // column LIKE value%
+                                [AgGrids.Enums.FilterControlType.ENDS_WITH, 'endsWith'], // column LIKE %value
+                                [AgGrids.Enums.FilterControlType.NOT_STARTS_WITH, 'notStartsWith'], // column NOT LIKE value%
+                                [AgGrids.Enums.FilterControlType.NOT_ENDS_WITH, 'notEndsWith'], // column NOT LIKE %value
+                                [AgGrids.Enums.FilterControlType.IS_TRUE, 'yes'], // column = 1
                                 [AgGrids.Enums.FilterControlType.IS_FALSE, 'no'], // column = 0
                             ]);
                             FilterOperatorsCfg.CONTROL_TYPES_VALUE_PATTERNS = new Map([
-                                [AgGrids.Enums.FilterControlType.EQUAL, '<value>'],
-                                [AgGrids.Enums.FilterControlType.NOT_EQUAL, '<value>'],
-                                [AgGrids.Enums.FilterControlType.IS_NULL, 'null'],
-                                [AgGrids.Enums.FilterControlType.IS_NOT_NULL, 'null'],
-                                [AgGrids.Enums.FilterControlType.LOWER, '<value>'],
-                                [AgGrids.Enums.FilterControlType.GREATER, '<value>'],
-                                [AgGrids.Enums.FilterControlType.LOWER_EQUAL, '<value>'],
-                                [AgGrids.Enums.FilterControlType.GREATER_EQUAL, '<value>'],
-                                [AgGrids.Enums.FilterControlType.CONTAINS, '%<value>%'],
-                                [AgGrids.Enums.FilterControlType.NOT_CONTAINS, '%<value>%'],
-                                [AgGrids.Enums.FilterControlType.STARTS_WITH, '<value>%'],
-                                [AgGrids.Enums.FilterControlType.ENDS_WITH, '%<value>'],
-                                [AgGrids.Enums.FilterControlType.NOT_STARTS_WITH, '<value>%'],
-                                [AgGrids.Enums.FilterControlType.NOT_ENDS_WITH, '%<value>'],
-                                [AgGrids.Enums.FilterControlType.IS_TRUE, '1'],
+                                [AgGrids.Enums.FilterControlType.EQUAL, '<value>'], // column = value
+                                [AgGrids.Enums.FilterControlType.NOT_EQUAL, '<value>'], // column != value
+                                [AgGrids.Enums.FilterControlType.IS_NULL, 'null'], // column IS NULL
+                                [AgGrids.Enums.FilterControlType.IS_NOT_NULL, 'null'], // column IS NOT NULL
+                                [AgGrids.Enums.FilterControlType.LOWER, '<value>'], // column < value
+                                [AgGrids.Enums.FilterControlType.GREATER, '<value>'], // column > value
+                                [AgGrids.Enums.FilterControlType.LOWER_EQUAL, '<value>'], // column <= value
+                                [AgGrids.Enums.FilterControlType.GREATER_EQUAL, '<value>'], // column >= value
+                                [AgGrids.Enums.FilterControlType.CONTAINS, '%<value>%'], // column LIKE %value%
+                                [AgGrids.Enums.FilterControlType.NOT_CONTAINS, '%<value>%'], // column NOT LIKE %value%
+                                [AgGrids.Enums.FilterControlType.STARTS_WITH, '<value>%'], // column LIKE value%
+                                [AgGrids.Enums.FilterControlType.ENDS_WITH, '%<value>'], // column LIKE %value
+                                [AgGrids.Enums.FilterControlType.NOT_STARTS_WITH, '<value>%'], // column NOT LIKE value%
+                                [AgGrids.Enums.FilterControlType.NOT_ENDS_WITH, '%<value>'], // column NOT LIKE %value
+                                [AgGrids.Enums.FilterControlType.IS_TRUE, '1'], // column = 1
                                 [AgGrids.Enums.FilterControlType.IS_FALSE, '0'], // column = 0
                             ]);
                             return FilterOperatorsCfg;

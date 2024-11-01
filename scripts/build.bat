@@ -4,11 +4,11 @@
 	@rmdir .\assets\build /s /q
 )
 
-call npm update --dev
+call npm update --include=dev
 @timeout 1
 
 @cd .\node_modules\@mvccore\ext-controller-datagrid-ag-js
-call npm update --dev
+call npm update --include=dev
 @timeout 1
 
 @if exist ..\..\..\assets\build (

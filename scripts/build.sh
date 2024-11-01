@@ -2,11 +2,11 @@ cd ..
 
 rm -r ./assets/build
 
-npm update --dev
+npm update --include=dev
 sleep 1
 
 cd ./node_modules/@mvccore/ext-controller-datagrid-ag-js
-npm update --dev
+npm update --include=dev
 sleep 1
 
 rm -r ../../../assets/build

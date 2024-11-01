@@ -21,7 +21,7 @@ use \MvcCore\Ext\Controllers\IDataGrid;
 trait ConfigGettersSetters {
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  string $id 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -32,7 +32,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return string|NULL
 	 */
 	public function GetId () {
@@ -40,7 +40,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering $configRendering
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -61,7 +61,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
 	#[\ReturnTypeWillChange]
@@ -73,7 +73,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales $configRendering
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -84,9 +84,10 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
+	#[\ReturnTypeWillChange]
 	public function GetConfigLocales () {
 		if ($this->configLocales === NULL) {
 			$this->configLocales = new \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales;
@@ -95,7 +96,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  string $jsClassFullName 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -105,7 +106,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return string
 	 */
 	public function GetJsClassFullName () {
@@ -113,7 +114,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  bool $enabledColumnsOnly 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -124,7 +125,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return bool
 	 */
 	public function GetEnabledColumnsOnly () {
@@ -132,7 +133,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  int $rowSelection 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -143,7 +144,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return int
 	 */
 	public function GetRowSelection () {
@@ -151,7 +152,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  \DateInterval $timeZoneOffset 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -162,7 +163,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return \DateInterval|NULL
 	 */
 	public function GetTimeZoneOffset () {
@@ -173,7 +174,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  bool $clientCache 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -184,7 +185,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return bool
 	 */
 	public function GetClientCache () {
@@ -192,7 +193,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  int $clientPageMode 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -203,7 +204,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return int|NULL
 	 */
 	public function GetClientPageMode () {
@@ -211,7 +212,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  int $clientRequestBlockSize 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -222,7 +223,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return int|NULL
 	 */
 	public function GetClientRequestBlockSize () {
@@ -230,7 +231,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  int $clientRowBuffer 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -241,7 +242,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return int|NULL
 	 */
 	public function GetClientRowBuffer () {
@@ -249,7 +250,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  int|NULL $clientMaxRowsInCache 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -260,7 +261,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return int|NULL
 	 */
 	public function GetClientMaxRowsInCache () {
@@ -268,7 +269,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  bool $clientChangeHistory 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -279,7 +280,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return bool
 	 */
 	public function GetClientChangeHistory () {
@@ -287,7 +288,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  string|NULL $clientTitleTemplate
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -298,7 +299,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return string|NULL
 	 */
 	public function GetClientTitleTemplate () {
@@ -306,7 +307,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  int $dataRequestMethod 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -317,7 +318,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return int
 	 */
 	public function GetDataRequestMethod () {
@@ -325,7 +326,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  string $urlData 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -336,7 +337,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return string|NULL
 	 */
 	public function GetUrlData () {
@@ -344,7 +345,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  string $urlColumnsStates
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -354,7 +355,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return string
 	 */
 	public function GetUrlColumnsStates () {
@@ -370,7 +371,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  string $urlColumnsChanges
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -380,7 +381,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return string
 	 */
 	public function GetUrlColumnsChanges () {
@@ -396,7 +397,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsRead|callable $handlerColumnsRead 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -406,7 +407,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsRead|callable
 	 */
 	public function GetHandlerColumnsRead () {
@@ -414,7 +415,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsWrite|callable $handlerColumnsRead 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -424,7 +425,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerColumnsWrite|callable
 	 */
 	public function GetHandlerColumnsWrite () {
@@ -432,7 +433,7 @@ trait ConfigGettersSetters {
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 * @param  array<string, string> $ajaxParamsNames 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -443,7 +444,7 @@ trait ConfigGettersSetters {
 	}
 
 	/**
-	 * 
+	 * @inheritDoc
 	 * @return array<string, string>
 	 */
 	public function GetAjaxParamsNames () {

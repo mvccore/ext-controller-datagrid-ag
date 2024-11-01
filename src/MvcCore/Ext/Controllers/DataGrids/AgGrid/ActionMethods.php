@@ -24,7 +24,7 @@ use \MvcCore\Ext\Controllers\DataGrids\Configs\JsonSerialize;
 trait ActionMethods {
 	
 	/**
-	 * Internal default action for datagrid content rendering.
+	 * @inheritDoc
 	 * @template
 	 * @return void
 	 */
@@ -52,7 +52,7 @@ trait ActionMethods {
 	}
 
 	/**
-	 * Complete page grid config for json serialization in response body.
+	 * @inheritDoc
 	 * @return array
 	 */
 	public function GetClientServerConfig () {
@@ -93,7 +93,7 @@ trait ActionMethods {
 	}
 
 	/**
-	 * Serialize client site view helper functions from server view helpers.
+	 * @inheritDoc
 	 * @return string
 	 */
 	public function GetClientHelpersJson () {
@@ -118,7 +118,7 @@ trait ActionMethods {
 	}
 
 	/**
-	 * Complete page initial grid data for json serialization in response body.
+	 * @inheritDoc
 	 * @return array<string,mixed>
 	 */
 	public function GetClientInitData () {
@@ -138,15 +138,14 @@ trait ActionMethods {
 	}
 
 	/**
-	 * Grid data request init action method to extend, 
-	 * executed after grid `Init()` method automatically.
+	 * @inheritDoc
 	 * @return void
 	 */
 	public function DataInit () {
 	}
 
 	/**
-	 * Data request action method, executed after grid `PreDispatch()` method automatically.
+	 * @inheritDoc
 	 * @return void
 	 */
 	public function DataAction () {
@@ -229,7 +228,7 @@ trait ActionMethods {
 	}
 
 	/**
-	 * Write current user columns configurations.
+	 * @inheritDoc
 	 * @return void
 	 */
 	public function WriteColumnsConfigs () {
@@ -253,8 +252,7 @@ trait ActionMethods {
 	}
 
 	/**
-	 * Grid column states request init action method to extend, 
-	 * executed after grid `Init()` method automatically.
+	 * @inheritDoc
 	 * @return void
 	 */
 	public function ColumnsStatesInit () {
@@ -308,8 +306,7 @@ trait ActionMethods {
 	}
 
 	/**
-	 * Grid column changes request init action method to extend, 
-	 * executed after grid `Init()` method automatically.
+	 * @inheritDoc
 	 * @return void
 	 */
 	public function ColumnsChangesInit () {

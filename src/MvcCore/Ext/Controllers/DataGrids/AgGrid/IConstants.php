@@ -16,7 +16,7 @@ namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 /**
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
  */
-interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
+interface IConstants {
 	
 	/**
 	 * Grid action name for ajax data.
@@ -86,7 +86,6 @@ interface IConstants extends \MvcCore\Ext\Controllers\DataGrid\IConstants {
 	 * Maximum rows in items per page to choose multiple pages mode.
 	 * @var int
 	 */
-	//const CLIENT_PAGE_MODE_MULTI_MAX_ROWS	= 5000;
 	const CLIENT_PAGE_MODE_MULTI_MAX_ROWS	= 1000;
 	
 

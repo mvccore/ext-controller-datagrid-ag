@@ -18,7 +18,7 @@ use \MvcCore\Ext\Controllers\DataGrid\IConstants as IConstantsBase,
 
 class		AgGrid
 extends		\MvcCore\Ext\Controllers\DataGrid
-implements	IConstantsAg {
+implements	\MvcCore\Ext\Controllers\DataGrids\IAgGrid {
 	
 	use \MvcCore\Ext\Controllers\DataGrids\AgGrid\InternalProps,
 		\MvcCore\Ext\Controllers\DataGrids\AgGrid\InternalGettersSetters,
@@ -34,7 +34,7 @@ implements	IConstantsAg {
 	 * Comparison by PHP function version_compare();
 	 * @see http://php.net/manual/en/function.version-compare.php
 	 */
-	const VERSION = '5.2.33';
+	const VERSION = '5.2.34';
 	
 	/**
 	 * Internal datagrid actions.

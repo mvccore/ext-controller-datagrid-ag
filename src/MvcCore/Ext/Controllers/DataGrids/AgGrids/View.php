@@ -18,6 +18,16 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 	const ASSETS_BUNDLE_DEFAULT_NAME_JS = 'agGrid';
 
 	const ASSETS_BUNDLE_DEFAULT_NAME_CSS = 'agGrid';
+	
+	/**
+	 * Grid view types to package view scripts paths.
+	 * @var array<int,string>
+	 */
+	protected static $viewTypes2AppPaths= [
+		self::VIEW_TYPE_GRID_CONTENT	=> '~/MvcCore/Ext/Controllers/DataGrids/AgGrids/Views/Content',
+		self::VIEW_TYPE_GRID_CONTROL	=> '~/MvcCore/Ext/Controllers/DataGrids/AgGrids/Views/Controls',
+		//self::VIEW_TYPE_GRID_FORM		=> '~/MvcCore/Ext/Controllers/DataGrids/AgGrids/Views/Form',
+	];
 
 	/**
 	 * AgGrid assets directory by AgGrid main class location, initialized ondemand.
@@ -32,24 +42,13 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 	public function RenderGridControlRefresh () {
 		if (!$this->configRendering->GetRenderControlRefresh()) 
 			return '';
-		ob_start();
-		echo $this->renderGridTemplate(
-			$this->configRendering->GetTemplateControlRefresh(), 'Controls', 'refresh'
+		return $this->renderGridTemplate(
+			self::VIEW_TYPE_GRID_CONTROL, 
+			$this->configRendering->GetTemplateControlRefresh(), 
+			'refresh'
 		);
-		return ob_get_clean();
 	}
 
-	/**
-	 * Get custom internal templates full path base.
-	 * @internal
-	 * @return string
-	 */
-	public function GetGridScriptsFullPathBase () {
-		if ($this->gridScriptsFullPathBase === NULL)
-			$this->gridScriptsFullPathBase = str_replace('\\', '/', __DIR__) . '/Views';
-		return $this->gridScriptsFullPathBase;
-	}
-	
 	/**
 	 * Get JS assets group for MvcCore Assets view helper to render JS assets in datagrid PreDispatch() method.
 	 * @return \stdClass[]
@@ -224,4 +223,19 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 			str_replace('\\', '/', __DIR__) . $parentDirsPath . '/assets'
 		);
 	}
+	
+	/**
+	 * Return composer package root dir by currently rendered class.
+	 * Use internal static cache to speed up this method for multiple calls.
+	 * @return string
+	 */
+	protected static function getGridScriptsFullPathBase () {
+		$viewClassFullName = get_called_class();
+		if (isset(static::$gridScriptsFullPathBases[$viewClassFullName]))
+			return static::$gridScriptsFullPathBases[$viewClassFullName];
+		$type = new \ReflectionClass($viewClassFullName);
+		$gridScriptsFullPathBase = str_replace('\\', '/', dirname($type->getFileName(), 6));
+		return static::$gridScriptsFullPathBases[$viewClassFullName] = $gridScriptsFullPathBase;
+	}
+
 }

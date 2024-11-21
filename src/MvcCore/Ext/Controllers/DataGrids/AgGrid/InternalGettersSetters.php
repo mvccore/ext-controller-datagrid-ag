@@ -113,9 +113,7 @@ trait InternalGettersSetters {
 		list ($gridParam) = $this->route->Url(
 			$this->gridRequest,
 			$gridParams,
-			$this->urlParams,
-			$this->queryStringParamsSepatator,
-			FALSE
+			$this->urlParams
 		);
 		$gridParam = rtrim(rawurldecode($gridParam), '/');
 		$urlParams = [static::URL_PARAM_GRID => $gridParam];

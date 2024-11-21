@@ -46,7 +46,6 @@ trait InitMethods {
 		$this->GetRoute();
 		$this->GetUrlParams();
 		
-		$this->initQsParamsSeparator();
 		$this->initCountScales();
 
 		if ($this->ajaxDataRequest) {
@@ -264,8 +263,6 @@ trait InitMethods {
 	}
 
 	/**
-	 * Initialize internal property `$this->queryStringParamsSepatator`
-	 * to be able to build internal grid URL strings.
 	 * Check valid values from URL for page and items par page.
 	 * If some value is invalid, redirect to default value.
 	 * @return bool

@@ -186,6 +186,9 @@ var MvcCore;
                             }
                             return this;
                         };
+                        EventsManager.prototype.GetMultiSorting = function () {
+                            return this.multiSorting;
+                        };
                         EventsManager.prototype.HandleGridReady = function (event) {
                             this.FireHandlers("gridReady", new AgGrids.EventsManagers.Events.Base());
                         };
@@ -480,7 +483,8 @@ var MvcCore;
                             if (!this.grid.GetServerConfig().renderConfig.renderControlRefresh)
                                 return this;
                             var optsMgr = this.grid.GetOptionsManager(), refreshAnchor = optsMgr.GetElements().refreshAnchor, loadingCls = optsMgr.Static.SELECTORS.BOTTOM_CONTROLS.REFRESH_ANCHOR_LOADING_CLS;
-                            refreshAnchor.addEventListener('click', function (e) { _this.handleRefreshClick(refreshAnchor, loadingCls, e); });
+                            if (refreshAnchor != null)
+                                refreshAnchor.addEventListener('click', function (e) { _this.handleRefreshClick(refreshAnchor, loadingCls, e); });
                             return this;
                         };
                         EventsManager.prototype.AddUrlChangeEvent = function () {
@@ -722,6 +726,14 @@ var MvcCore;
                                 data: { changes: plainObj },
                                 type: 'json',
                                 method: 'POST',
+                                headers: {
+                                    /**
+                                     * Do not send AJAX header determination
+                                     * to act wtih this request on server more
+                                     * like with form POST submit case.
+                                     */
+                                    'X-Requested-With': null
+                                },
                                 success: this.handleColumnChangesResponse.bind(this),
                                 error: this.handleColumnChangesResponse.bind(this)
                             });

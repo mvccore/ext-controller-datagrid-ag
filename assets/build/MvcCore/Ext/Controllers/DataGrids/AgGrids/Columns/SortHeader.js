@@ -1,3 +1,19 @@
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 var MvcCore;
 (function (MvcCore) {
     var Ext;
@@ -158,6 +174,10 @@ var MvcCore;
                                 if (continueToNextEvent === false)
                                     return;
                                 this.grid.GetColumnsVisibilityMenu().Hide();
+                                if (!eventsManager.GetMultiSorting() && sortingBefore.length > 0) {
+                                    var _a = __read(sortingBefore[0], 1), columnIdBefore = _a[0];
+                                    this.grid.GetSortHeaders().get(columnIdBefore).SetDirection(null);
+                                }
                                 if (this.params.renderRemove) {
                                     this.setSortActive();
                                 }
@@ -232,7 +252,6 @@ var MvcCore;
                                 this.sequence = null;
                                 if ((_a = this.params) === null || _a === void 0 ? void 0 : _a.renderSequence)
                                     this.elms.sequence.innerHTML = '';
-                                var sels = this.Static.SELECTORS;
                                 this.elms.cont.className = this.contBaseClass;
                                 var parentCont = this.elms.cont.parentNode;
                                 if (parentCont != null) {

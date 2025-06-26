@@ -252,6 +252,10 @@ var MvcCore;
                                 serverConfig.controlsTexts = this.Static.ConvertObject2Map(serverConfig.controlsTexts);
                                 for (var columnName in serverConfig.columns)
                                     this.normalizeColumnParserArgs(serverConfig.columns[columnName]);
+                                var ampRe = /&amp;/g;
+                                serverConfig.urlData = serverConfig.urlData.replace(ampRe, '&');
+                                serverConfig.urlColumnsChanges = serverConfig.urlColumnsChanges.replace(ampRe, '&');
+                                serverConfig.urlColumnsStates = serverConfig.urlColumnsStates.replace(ampRe, '&');
                                 return serverConfig;
                             };
                             Helpers.prototype.GetAllowedOperators = function (columnFilterFlags) {

@@ -1,0 +1,115 @@
+/* colors */
+.grid.grid-type-table.ag-theme-fresh{
+	--grid-color-link-border-active: #0078d7;
+	--grid-color-link-bg-active: #e5f1fb;
+	--grid-color-passive-bg: #fff;
+	--grid-color-passive-badge: #ccc;
+	--grid-color-passive-front: #000;
+	--grid-color-active-bg: #333;
+	--grid-color-active-badge: #666;
+	--grid-color-active-front: #fff;
+	--grid-color-disabled-bg: #f0f0f0;
+}
+.ag-theme-fresh{
+	--ag-selected-row-background-color:var(--grid-color-active-bg);
+}
+
+/* common */
+.ag-theme-fresh .ag-header-cell, 
+.ag-theme-fresh .ag-header-group-cell {
+	padding-left:0 !important;
+	padding-right:0 !important;
+}
+.ag-theme-fresh .ag-ltr .ag-floating-filter-button {
+    margin-left:5px !important;
+}
+.ag-theme-fresh .ag-icon {
+    margin:1px 1px 2px -5px !important;
+}
+.ag-theme-fresh input[class^=ag-]:not([type]), 
+.ag-theme-fresh input[class^=ag-][type=text], 
+.ag-theme-fresh input[class^=ag-][type=number], 
+.ag-theme-fresh input[class^=ag-][type=tel], 
+.ag-theme-fresh input[class^=ag-][type=date], 
+.ag-theme-fresh input[class^=ag-][type=datetime-local], 
+.ag-theme-fresh textarea[class^=ag-]{
+	line-height:18px !important;
+	padding:2px 10px !important;
+	height:24px;
+}
+.ag-header-group-cell-label,
+.ag-header-cell-label {
+	padding-left:10px;
+}
+
+.ag-popup.ag-theme-fresh .ag-tooltip{
+	background:#fff;
+}
+
+/* header */
+.ag-theme-fresh .ag-root .sort-header-active {
+	background:var(--grid-color-active-bg);
+	color:var(--grid-color-active-front);
+}
+.ag-theme-fresh .ag-root .sort-header-active div.sort-header .label {
+	color:var(--grid-color-active-front);
+}
+.ag-theme-fresh .ag-row.ag-row-selected{
+	color:var(--grid-color-active-front);
+}
+.ag-theme-fresh .ag-root .filter-header input.filter-input{
+	outline:0;
+}
+.ag-theme-fresh .ag-root .filter-header input.filter-input::selection{
+	background:var(--grid-color-active-front);
+	color:var(--grid-color-active-bg);
+}
+
+.ag-theme-fresh .columns-menu-controls label.columns-menu-control input[type=checkbox]{
+	accent-color:var(--grid-color-active-bg);
+}
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link {
+	margin-top: 3px !important;
+}
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading {
+	border-color: var(--grid-color-active-bg) !important;
+	background: var(--grid-color-active-bg) !important;
+	cursor: default;
+}
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading > span{
+	outline-color:var(--grid-color-active-bg);
+}
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading > span > b{
+	color:var(--grid-color-active-front) !important;
+}
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link > span > b{
+	
+}
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link.grid-refresh-link-loading > span > b::before{
+	color:var(--grid-color-active-front) !important;
+}
+
+/* buttons - events */
+.ag-theme-fresh .grid-controls-bottom .button:focus{
+	border:2px solid var(--grid-color-link-border-active) !important;
+}
+.ag-theme-fresh .grid-controls-bottom .button:focus span{
+	outline:1px dotted #000;
+}
+
+.ag-theme-fresh .grid-controls-bottom .button:hover{
+	border:2px solid var(--grid-color-link-border-active) !important;
+	background-color:var(--grid-color-link-bg-active) !important;
+}
+.ag-theme-fresh .grid-controls-bottom .button:hover span{
+	outline:1px solid var(--grid-color-link-bg-active);
+}
+
+.ag-theme-fresh .grid-controls-bottom .button:focus:hover,
+.ag-theme-fresh .grid-controls-bottom .button:focus:active{
+	border:1px solid var(--grid-color-link-border-active);
+}
+.ag-theme-fresh .grid-controls-bottom .button:focus:hover span,
+.ag-theme-fresh .grid-controls-bottom .button:focus:active span{
+	outline:1px dotted #000;
+}

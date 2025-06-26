@@ -85,6 +85,11 @@
 .grid.grid-with-bottom-controls .grid-controls-bottom .grid-page-space{
 	vertical-align:top;
 }
+.grid.grid-with-bottom-controls .grid-controls-bottom a.grid-button,
+.grid.grid-with-bottom-controls .grid-controls-bottom > table tbody tr td > span {
+	margin: 2px 0 0 0;
+}
+
 .grid.grid-with-bottom-controls .grid-controls-bottom .grid-page-space > span{
 	display:inline-block;
 	line-height:28px;
@@ -95,10 +100,9 @@
 .grid.grid-with-bottom-controls .grid-controls-bottom .grid-count-current > span,
 .grid.grid-with-bottom-controls .grid-controls-bottom .grid-page-current > span{
 	display:inline-block;
-	margin:2px 0 0 0;
 	min-width:18px;
 	text-align:center;
-	line-height:24px;
+	line-height:28px;
 	height:26px;
 	font-size:12px;
 	padding:0 4px;
@@ -113,3 +117,46 @@
 }
 .grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading > span{outline-color:#333;}
 .grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading > span > b{color:#fff !important;}
+
+/* buttons */
+.grid.grid-with-bottom-controls .grid-controls-bottom .grid-button,
+.grid.grid-with-bottom-controls .grid-controls-bottom .grid-button span{
+	display:inline-block;
+	border-radius:0;
+	cursor:pointer;
+	text-decoration:none;
+}
+.grid.grid-with-bottom-controls .grid-controls-bottom .grid-button{
+	border:2px solid #adadad !important;
+	background-color:#e1e1e1 !important;
+	padding:0;
+}
+.grid.grid-with-bottom-controls .grid-controls-bottom a.grid-button{
+	height:22px;
+	text-decoration:none;
+}
+.grid.grid-with-bottom-controls .grid-controls-bottom .grid-button span{
+	border:1px solid transparent;
+	outline:1px solid #e1e1e1;
+	padding:0px;
+	width:auto;
+	min-width:18px;
+	display:block;
+}
+.grid.grid-with-bottom-controls .grid-controls-bottom .grid-button span b{
+	display:flex;
+	flex-direction:row;
+	flex-wrap:wrap;
+	justify-content:center;
+	align-items:center;
+	text-align:center;
+	font-size:9pt;
+	color:#000 !important;
+	text-decoration:none;
+	height:17px;
+	white-space:nowrap;
+	padding-left:3px;
+    padding-right:3px;
+	line-height:22px;
+	padding-bottom:3px;
+}

@@ -13,7 +13,8 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 
-use \MvcCore\Ext\Controllers\DataGrids\AgGrid\IConstants;
+use \MvcCore\Ext\Controllers\DataGrid\IConstants as GridConsts;
+use \MvcCore\Ext\Controllers\DataGrids\AgGrid\IConstants as AgGridConsts;
 
 /**
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
@@ -91,11 +92,11 @@ trait InitMethods {
 	 * @return void
 	 */
 	protected function initConfigRenderingByClientPageMode () {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+		if ($this->clientPageMode === AgGridConsts::CLIENT_PAGE_MODE_SINGLE) {
 			$this->configRendering
-				->SetRenderControlSorting(IConstants::CONTROL_DISPLAY_NEVER)
-				->SetRenderControlCountScales(IConstants::CONTROL_DISPLAY_NEVER)
-				->SetRenderControlPaging(IConstants::CONTROL_DISPLAY_NEVER)
+				->SetRenderControlSorting(GridConsts::CONTROL_DISPLAY_NEVER)
+				->SetRenderControlCountScales(GridConsts::CONTROL_DISPLAY_NEVER)
+				->SetRenderControlPaging(GridConsts::CONTROL_DISPLAY_NEVER)
 				->SetRenderControlPagingPrevAndNext(FALSE)
 				->SetRenderControlPagingFirstAndLast(FALSE);
 		}
@@ -140,6 +141,7 @@ trait InitMethods {
 			if (!isset(static::$gridInitActions[$gridActionParamKey])) 
 				$gridActionParamKey = static::$gridInitActionDefaultKey;
 			$this->gridInitAction = static::$gridInitActions[$gridActionParamKey];
+
 		}
 		if ($this->ajaxDataRequest === NULL) {
 			$this->initDataUrlAndAjaxDataRequest($gridActionParam);
@@ -176,7 +178,8 @@ trait InitMethods {
 					// complete and sort only rewrite and get request params:
 					$reqParams = $this->request->GetParams(
 						FALSE, [], 
-						\MvcCore\IRequest::PARAM_TYPE_URL_REWRITE | \MvcCore\IRequest::PARAM_TYPE_QUERY_STRING
+						\MvcCore\Request\IConstants::PARAM_TYPE_URL_REWRITE | 
+						\MvcCore\Request\IConstants::PARAM_TYPE_QUERY_STRING
 					);
 					unset(
 						$reqParams['path'],
@@ -221,12 +224,12 @@ trait InitMethods {
 		if ($this->clientPageMode !== NULL) return;
 		if (
 			$this->count === 0 || 
-			$this->count > IConstants::CLIENT_PAGE_MODE_MULTI_MAX_ROWS || 
-			$this->itemsPerPage > IConstants::CLIENT_PAGE_MODE_MULTI_MAX_ROWS
+			$this->count > AgGridConsts::CLIENT_PAGE_MODE_MULTI_MAX_ROWS || 
+			$this->itemsPerPage > AgGridConsts::CLIENT_PAGE_MODE_MULTI_MAX_ROWS
 		) {
-			$this->clientPageMode = IConstants::CLIENT_PAGE_MODE_SINGLE;
+			$this->clientPageMode = AgGridConsts::CLIENT_PAGE_MODE_SINGLE;
 		} else {
-			$this->clientPageMode = IConstants::CLIENT_PAGE_MODE_MULTI;
+			$this->clientPageMode = AgGridConsts::CLIENT_PAGE_MODE_MULTI;
 		}
 	}
 	
@@ -235,9 +238,9 @@ trait InitMethods {
 	 */
 	protected function initRequestBlockSize () {
 		if ($this->clientRequestBlockSize !== NULL) return;
-		$this->clientRequestBlockSize = $this->clientPageMode === IConstants::CLIENT_PAGE_MODE_MULTI
+		$this->clientRequestBlockSize = $this->clientPageMode === AgGridConsts::CLIENT_PAGE_MODE_MULTI
 			? $this->itemsPerPage
-			: IConstants::CLIENT_JS_REQUEST_BLOCK_SIZE;
+			: AgGridConsts::CLIENT_JS_REQUEST_BLOCK_SIZE;
 	}
 	
 	/**
@@ -245,9 +248,9 @@ trait InitMethods {
 	 */
 	protected function initClientRowBuffer () {
 		if ($this->clientRowBuffer !== NULL) return;
-		$this->clientRowBuffer = $this->clientPageMode === IConstants::CLIENT_PAGE_MODE_MULTI
-			? IConstants::CLIENT_JS_BUFFER_PAGE_MODE_MULTI
-			: IConstants::CLIENT_JS_BUFFER_PAGE_MODE_SINGLE;
+		$this->clientRowBuffer = $this->clientPageMode === AgGridConsts::CLIENT_PAGE_MODE_MULTI
+			? AgGridConsts::CLIENT_JS_BUFFER_PAGE_MODE_MULTI
+			: AgGridConsts::CLIENT_JS_BUFFER_PAGE_MODE_SINGLE;
 	}
 
 	/**
@@ -256,7 +259,7 @@ trait InitMethods {
 	protected function initClientCache () {
 		if ($this->clientCache) {
 			if ($this->clientMaxRowsInCache === NULL)
-				$this->clientMaxRowsInCache = IConstants::CLIENT_JS_MAX_ROWS_IN_CACHE;
+				$this->clientMaxRowsInCache = AgGridConsts::CLIENT_JS_MAX_ROWS_IN_CACHE;
 		} else {
 			$this->clientMaxRowsInCache = 0;
 		}
@@ -268,7 +271,7 @@ trait InitMethods {
 	 * @return bool
 	 */
 	protected function initUrlParams () {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+		if ($this->clientPageMode === AgGridConsts::CLIENT_PAGE_MODE_SINGLE) {
 			if (!$this->initUrlParamPage())		return FALSE;
 			if (!$this->initUrlParamCount())	return FALSE;
 			return TRUE;
@@ -286,7 +289,7 @@ trait InitMethods {
 	 * @return bool
 	 */
 	protected function initUrlParamCount () {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+		if ($this->clientPageMode === AgGridConsts::CLIENT_PAGE_MODE_SINGLE) {
 			if (!isset($this->urlParams[static::URL_PARAM_COUNT])) {
 				// if there is no count param in url - use items per page as default count
 				$this->count = $this->GetItemsPerPage();
@@ -299,7 +302,7 @@ trait InitMethods {
 					/** @var \MvcCore\Controller $this */
 					$this::Redirect(
 						$redirectUrl, 
-						\MvcCore\IResponse::SEE_OTHER, 
+						\MvcCore\Response\IConstants::SEE_OTHER, 
 						'Grid count is not the same as items per page.'
 					);
 					return FALSE;
@@ -317,8 +320,8 @@ trait InitMethods {
 	protected function initAjaxParams () {
 		$this->clientPageMode = $this->GetParam(
 			$this->ajaxParamsNames[self::AJAX_PARAM_MODE], 
-			implode('-', [IConstants::CLIENT_PAGE_MODE_MULTI, IConstants::CLIENT_PAGE_MODE_SINGLE]), 
-			IConstants::CLIENT_PAGE_MODE_MULTI, 
+			implode('-', [AgGridConsts::CLIENT_PAGE_MODE_MULTI, AgGridConsts::CLIENT_PAGE_MODE_SINGLE]), 
+			AgGridConsts::CLIENT_PAGE_MODE_MULTI, 
 			'int'
 		);
 		$this->offset = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_OFFSET], '0-9', 0, 'int');
@@ -343,7 +346,7 @@ trait InitMethods {
 	 * @return void
 	 */
 	protected function initOffsetLimit() {
-		if ($this->clientPageMode === IConstants::CLIENT_PAGE_MODE_SINGLE) {
+		if ($this->clientPageMode === AgGridConsts::CLIENT_PAGE_MODE_SINGLE) {
 			$this->offset = 0;
 			$this->limit = $this->clientRowBuffer * 2;
 		} else {

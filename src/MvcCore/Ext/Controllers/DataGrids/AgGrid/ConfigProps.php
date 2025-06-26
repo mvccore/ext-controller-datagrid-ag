@@ -34,7 +34,7 @@ trait ConfigProps {
 	 * This object is created automatically by default if not provided.
 	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering|NULL
 	 */
-	protected $configRendering				= NULL;
+	//protected $configRendering				= NULL;
 
 	/**
 	 * Localization properties configuration object.

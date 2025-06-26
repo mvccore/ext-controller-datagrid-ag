@@ -24,10 +24,9 @@ interface IRendering extends \MvcCore\Ext\Controllers\DataGrids\Configs\IRenderi
 		THEME_ALPINE_DARK	= 'ag-theme-alpine-dark',
 		THEME_BALHAM		= 'ag-theme-balham',
 		THEME_BALHAM_DARK	= 'ag-theme-balham-dark',
-		THEME_BASE			= 'ag-theme-base',
 		THEME_BLUE			= 'ag-theme-blue',
 		THEME_BOOTSTRAP		= 'ag-theme-bootstrap',
-		THEME_CLASSIC		= 'ag-theme-classic',
+		//THEME_CLASSIC		= 'ag-theme-classic',
 		THEME_DARK			= 'ag-theme-dark',
 		THEME_FRESH			= 'ag-theme-fresh',
 		THEME_MATERIAL		= 'ag-theme-material';

@@ -45,7 +45,7 @@ trait ConfigGettersSetters {
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
 	#[\ReturnTypeWillChange]
-	public function SetConfigRendering (/*\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering*/ $configRendering) {
+	public function SetConfigRendering (\MvcCore\Ext\Controllers\DataGrids\Configs\IRendering /*\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering*/ $configRendering) {
 		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering $configRendering */
 		if (!($configRendering instanceof \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering)) {
 			$namespace = "\\MvcCore\\Ext\\Controllers\\DataGrids\\AgGrids\\Configs\\";

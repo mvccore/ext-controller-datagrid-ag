@@ -6,12 +6,15 @@
 	$themeCssClass = $renderConf->GetTheme();
 	$gridCssClasses = $grid->GetCssClasses();
 	$gridCssClasses[] = $themeCssClass;
-	$bottomControlsRenderedFlag = array_reduce([
+	$bottomControlsRenderedFlag;
+	array_reduce([
 		$renderConf->GetRenderControlCountScales() ? 1 : 0,
 		$renderConf->GetRenderControlRefresh() ? 2 : 0,
 		$renderConf->GetRenderControlStatus() ? 4 : 0,
 		$renderConf->GetRenderControlPaging() ? 8 : 0
-	], fn ($flags, $flag) => $flags |= $flag);
+	], function ($all, $flag) use (& $bottomControlsRenderedFlag) {
+		$bottomControlsRenderedFlag |= $flag;
+	});
 	$bottomControlsRenderedCssClass = 'grid-bottom-controls-' . $bottomControlsRenderedFlag;
 	$renderBottomControls = $bottomControlsRenderedFlag > 0;
 	$renderTableHead = $renderConf->GetRenderTableHead();

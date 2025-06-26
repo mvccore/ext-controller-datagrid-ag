@@ -13,6 +13,8 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrids;
 
+use \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering as RenderingConsts;
+
 class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 
 	const ASSETS_BUNDLE_DEFAULT_NAME_JS = 'agGrid';
@@ -185,15 +187,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 			$agGridBaseStyle .= '.min';
 			$agGridThemeStyle .= '.min';
 		}
-		return [
-			(object) [
-				'media'		=> 'all',
-				'notMin'	=> TRUE,
-				'paths'		=> [
-					$gridAssetsDir . "/ag-grid-community/styles/{$agGridBaseStyle}.css",
-					$gridAssetsDir . "/ag-grid-community/styles/{$agGridThemeStyle}.css",
-				],
-			],
+		$cssGroups = [
 			(object) [
 				'media'		=> 'all',
 				'notMin'	=> FALSE,
@@ -204,10 +198,19 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 					$gridAssetsDir . "/custom-styles/filter-header.css",
 					$gridAssetsDir . "/custom-styles/filter-menu.css",
 					$gridAssetsDir . "/custom-styles/visibility-menu.css",
-					$gridAssetsDir . "/custom-styles/{$agGridCustomStyle}.css",
+					$gridAssetsDir . "/custom-styles/themes/{$agGridCustomStyle}.css",
+				],
+			],
+			(object) [
+				'media'		=> 'all',
+				'notMin'	=> TRUE,
+				'paths'		=> [
+					$gridAssetsDir . "/ag-grid-community/styles/{$agGridBaseStyle}.css",
+					$gridAssetsDir . "/ag-grid-community/styles/{$agGridThemeStyle}.css",
 				],
 			],
 		];
+		return $cssGroups;
 	}
 
 	/**
@@ -234,7 +237,9 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 		if (isset(static::$gridScriptsFullPathBases[$viewClassFullName]))
 			return static::$gridScriptsFullPathBases[$viewClassFullName];
 		$type = new \ReflectionClass($viewClassFullName);
-		$gridScriptsFullPathBase = str_replace('\\', '/', dirname($type->getFileName(), 6));
+		//$gridScriptsFullPathBase = dirname($type->getFileName(), 6);
+		$gridScriptsFullPathBase = \MvcCore\Tool::RealPathVirtual($type->getFileName() . '/../../../../../..'); /// compatible code
+		$gridScriptsFullPathBase = str_replace('\\', '/', $gridScriptsFullPathBase);
 		return static::$gridScriptsFullPathBases[$viewClassFullName] = $gridScriptsFullPathBase;
 	}
 

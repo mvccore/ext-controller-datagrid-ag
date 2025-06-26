@@ -70,6 +70,7 @@ trait ActionMethods {
 			'clientPageMode'		=> $this->GetClientPageMode(),
 			'urlData'				=> $this->GetUrlData(),
 			'urlColumnsChanges'		=> $this->GetUrlColumnsChanges(),
+			'urlColumnsStates'		=> $this->GetUrlColumnsStates(),
 			'gridUrlParamName'		=> static::URL_PARAM_GRID,
 			'gridActionParamName'	=> static::URL_PARAM_ACTION,
 			'gridActionColumnStates'=> static::GRID_ACTION_COLUMNS_STATES,

@@ -13,9 +13,9 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrids\Views;
 
-trait ReverseHelper {
+trait TReverseHelper {
 
-	use \MvcCore\Ext\Controllers\DataGrids\Views\ReverseHelper;
+	use \MvcCore\Ext\Controllers\DataGrids\Views\TReverseHelper;
 
 	/**
 	 * Get valid javascript function as string to format cell value.

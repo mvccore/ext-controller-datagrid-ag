@@ -76,7 +76,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	 * @var \string[]
 	 */
 	#[JsonSerialize]
-	protected $cssClassesControlRefreshButton	= ['grid-refresh-link'];
+	protected $cssClassesControlRefreshButton	= ['grid-refresh-link', 'grid-button'];
 	
 	/**
 	 * Custom datagrid refresh control template (only AgGrid datagrid type).

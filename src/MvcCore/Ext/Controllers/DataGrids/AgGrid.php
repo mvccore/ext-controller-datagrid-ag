@@ -17,7 +17,7 @@ use \MvcCore\Ext\Controllers\DataGrid\IConstants as IConstantsBase,
 	\MvcCore\Ext\Controllers\DataGrids\AgGrid\IConstants as IConstantsAg;
 
 class		AgGrid
-extends		\MvcCore\Ext\Controllers\DataGrid
+extends		\MvcCore\Ext\Controllers\DataGrid 
 implements	\MvcCore\Ext\Controllers\DataGrids\IAgGrid {
 	
 	use \MvcCore\Ext\Controllers\DataGrids\AgGrid\InternalProps,
@@ -34,7 +34,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\IAgGrid {
 	 * Comparison by PHP function version_compare();
 	 * @see http://php.net/manual/en/function.version-compare.php
 	 */
-	const VERSION = '5.3.1';
+	const VERSION = '5.3.2';
 	
 	/**
 	 * Internal datagrid actions.
@@ -49,5 +49,21 @@ implements	\MvcCore\Ext\Controllers\DataGrids\IAgGrid {
 		IConstantsAg::GRID_ACTION_COLUMNS_STATES	=> 'ColumnsStatesInit',
 		IConstantsAg::GRID_ACTION_COLUMNS_CHANGES	=> 'ColumnsChangesInit',
 	];
+
+	/**
+	 * Row model class full name, not required, 
+	 * if `NULL`, grid model class is used.
+	 * @var string|NULL
+	 */
+	protected $rowClass = IConstantsBase::ROW_MODEL_CLASS_DEFAULT;
+
+	/**
+	 * Configuration object for datagrid parts, style and controls rendering.
+	 * You can easily configure datagrid component parts, style 
+	 * and controls by providing this object custom instance.
+	 * This object is created automatically by default if not provided.
+	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering|NULL
+	 */
+	protected $configRendering				= NULL;
 	
 }

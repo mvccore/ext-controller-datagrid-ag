@@ -169,10 +169,16 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 			$this->localeDateTime = [$localeDateTime->lang, $localeDateTime->locale];
 		}
 		$localeData = (object) localeconv();
-		if ($this->currencyCode === NULL)
-			$this->currencyCode = utf8_encode($localeData->int_curr_symbol);
-		if ($this->currencySign === NULL)
-			$this->currencySign = utf8_encode($localeData->currency_symbol);
+		if ($this->currencyCode === NULL) {
+			if ($localeData->int_curr_symbol === '')
+				$localeData->int_curr_symbol = 'USD';
+			$this->currencyCode = $this->utf8Encode($localeData->int_curr_symbol);
+		}
+		if ($this->currencySign === NULL) {
+			if ($localeData->currency_symbol === '')
+				$localeData->currency_symbol = '$';
+			$this->currencySign = $this->utf8Encode($localeData->currency_symbol);
+		}
 	}
 	
 	/**
@@ -451,5 +457,18 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize () {
 		return JsonSerialize::Serialize($this, \ReflectionProperty::IS_PROTECTED);
+	}
+
+	/**
+	 * PHP function `utf8_encode()`.
+	 * @param  string $str 
+	 * @return string
+	 */
+	protected function utf8Encode ($str) {
+		if (PHP_VERSION_ID < 80200) {
+			return utf8_decode($str);
+		} else {
+			return mb_convert_encoding($str, 'UTF-8', 'ISO-8859-1');
+		}
 	}
 }

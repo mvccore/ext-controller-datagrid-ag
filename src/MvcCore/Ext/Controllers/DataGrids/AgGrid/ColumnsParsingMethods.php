@@ -41,21 +41,22 @@ trait ColumnsParsingMethods {
 			$clientType = GridType::CLIENT_DATETIME;
 			if (count($types) > 1)
 				$clientType = $types[1];
+			$configLocales = $this->GetConfigLocales();
 			if ($clientType === GridType::CLIENT_DATE) {
 				if ($result->GetParserArgs() === NULL)
-					$result->SetParserArgs($this->configLocales->GetParserArgsDate());
+					$result->SetParserArgs($configLocales->GetParserArgsDate());
 				if ($result->GetFormatArgs() === NULL)
-					$result->SetFormatArgs($this->configLocales->GetFormatArgsDate());
+					$result->SetFormatArgs($configLocales->GetFormatArgsDate());
 			} else if ($clientType === GridType::CLIENT_DATETIME) {
 				if ($result->GetParserArgs() === NULL)
-					$result->SetParserArgs($this->configLocales->GetParserArgsDateTime());
+					$result->SetParserArgs($configLocales->GetParserArgsDateTime());
 				if ($result->GetFormatArgs() === NULL)
-					$result->SetFormatArgs($this->configLocales->GetFormatArgsDateTime());
+					$result->SetFormatArgs($configLocales->GetFormatArgsDateTime());
 			} else if ($clientType === GridType::CLIENT_TIME) {
 				if ($result->GetParserArgs() === NULL)
-					$result->SetParserArgs($this->configLocales->GetParserArgsTime());
+					$result->SetParserArgs($configLocales->GetParserArgsTime());
 				if ($result->GetFormatArgs() === NULL)
-					$result->SetFormatArgs($this->configLocales->GetFormatArgsTime());
+					$result->SetFormatArgs($configLocales->GetFormatArgsTime());
 			}
 		}
 		return $result;

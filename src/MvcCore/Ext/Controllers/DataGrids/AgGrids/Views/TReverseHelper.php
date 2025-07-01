@@ -22,12 +22,12 @@ trait TReverseHelper {
 	 * Example:
 	 * ```
 	 * function (params, propName, parserArgs, formatArgs) {
-	 *     return params.data[propName] ? "Yes" : "No";
+	 *     return this.escape(params.data[propName] ? "Yes" : "No");
 	 * }
 	 * ```
 	 * @return string
 	 */
 	public function GetJsFormatter (): string {
-		return 'function (params, propName, parserArgs, formatArgs) { return params.data[propName]; }';
+		return 'function (params, propName, parserArgs, formatArgs) { return this.escape(params.data[propName]); }';
 	}
 }

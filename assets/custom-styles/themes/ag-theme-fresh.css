@@ -90,26 +90,26 @@
 }
 
 /* buttons - events */
-.ag-theme-fresh .grid-controls-bottom .button:focus{
+.ag-theme-fresh .grid-controls-bottom .grid-button:focus{
 	border:2px solid var(--grid-color-link-border-active) !important;
 }
-.ag-theme-fresh .grid-controls-bottom .button:focus span{
+.ag-theme-fresh .grid-controls-bottom .grid-button:focus span{
 	outline:1px dotted #000;
 }
 
-.ag-theme-fresh .grid-controls-bottom .button:hover{
+.ag-theme-fresh .grid-controls-bottom .grid-button:hover{
 	border:2px solid var(--grid-color-link-border-active) !important;
 	background-color:var(--grid-color-link-bg-active) !important;
 }
-.ag-theme-fresh .grid-controls-bottom .button:hover span{
+.ag-theme-fresh .grid-controls-bottom .grid-button:hover span{
 	outline:1px solid var(--grid-color-link-bg-active);
 }
 
-.ag-theme-fresh .grid-controls-bottom .button:focus:hover,
-.ag-theme-fresh .grid-controls-bottom .button:focus:active{
+.ag-theme-fresh .grid-controls-bottom .grid-button:focus:hover,
+.ag-theme-fresh .grid-controls-bottom .grid-button:focus:active{
 	border:1px solid var(--grid-color-link-border-active);
 }
-.ag-theme-fresh .grid-controls-bottom .button:focus:hover span,
-.ag-theme-fresh .grid-controls-bottom .button:focus:active span{
+.ag-theme-fresh .grid-controls-bottom .grid-button:focus:hover span,
+.ag-theme-fresh .grid-controls-bottom .grid-button:focus:active span{
 	outline:1px dotted #000;
 }

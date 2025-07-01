@@ -75,11 +75,15 @@ var MvcCore;
                                 }
                                 if (viewHelper != null) {
                                     var propName = serverColumnCfg.propName, parserArgs = serverColumnCfg.parserArgs, formatArgs = serverColumnCfg.formatArgs;
-                                    agColumnCfg.valueFormatter = function (params) {
+                                    agColumnCfg.cellRenderer = function (params) {
                                         if (params.data == null || params.data[propName] == null)
                                             return '';
                                         return viewHelper.call(_this, params, propName, parserArgs, formatArgs);
                                     };
+                                    /*agColumnCfg.valueFormatter = (params: agGrid.ValueFormatterParams<any, any>): string => {
+                                        if (params.data == null || params.data[propName] == null) return '';
+                                        return viewHelper.call(this, params, propName, parserArgs, formatArgs);
+                                    };*/
                                 }
                                 return this;
                             };
@@ -141,19 +145,19 @@ var MvcCore;
                             };
                             ViewHelper.prototype.formatBool = function (params, propName, parserArgs, formatArgs) {
                                 var boolFalse = this.Static.BOOL_FALSE_VALUES.has(params.data[propName]);
-                                return this.translator.Translate(boolFalse ? 'no' : 'yes');
+                                return this.escape(this.translator.Translate(boolFalse ? 'no' : 'yes'));
                             };
                             ViewHelper.prototype.formatInt = function (params, propName, parserArgs, formatArgs) {
                                 var formatterKey = formatArgs == null ? 'default' : formatArgs.join('|');
-                                return this.getIntFormater(formatterKey, formatArgs).format(params.data[propName]);
+                                return this.escape(this.getIntFormater(formatterKey, formatArgs).format(params.data[propName]));
                             };
                             ViewHelper.prototype.formatFloat = function (params, propName, parserArgs, formatArgs) {
                                 var formatterKey = formatArgs == null ? 'default' : formatArgs.join('|');
-                                return this.getFloatFormater(formatterKey, formatArgs).format(params.data[propName]);
+                                return this.escape(this.getFloatFormater(formatterKey, formatArgs).format(params.data[propName]));
                             };
                             ViewHelper.prototype.formatMoney = function (params, propName, parserArgs, formatArgs) {
                                 var formatterKey = formatArgs == null ? 'default' : formatArgs.join('|');
-                                return this.getMoneyFormater(formatterKey, formatArgs).format(params.data[propName]);
+                                return this.escape(this.getMoneyFormater(formatterKey, formatArgs).format(params.data[propName]));
                             };
                             ViewHelper.prototype.formatDate = function (params, propName, parserArgs, formatArgs) {
                                 if (parserArgs == null || parserArgs.length === 0)
@@ -162,7 +166,7 @@ var MvcCore;
                                 dateTime.add((dateTime.utcOffset() * 60) + this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
                                     formatArgs = this.localesConfig.formatArgsDate;
-                                return dateTime.format(formatArgs[0]);
+                                return this.escape(dateTime.format(formatArgs[0]));
                             };
                             ViewHelper.prototype.formatDateTime = function (params, propName, parserArgs, formatArgs) {
                                 if (parserArgs == null || parserArgs.length === 0)
@@ -171,7 +175,7 @@ var MvcCore;
                                 dateTime.add((dateTime.utcOffset() * 60) + this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
                                     formatArgs = this.localesConfig.formatArgsDateTime;
-                                return dateTime.format(formatArgs[0]);
+                                return this.escape(dateTime.format(formatArgs[0]));
                             };
                             ViewHelper.prototype.formatTime = function (params, propName, parserArgs, formatArgs) {
                                 if (parserArgs == null || parserArgs.length === 0)
@@ -180,7 +184,16 @@ var MvcCore;
                                 dateTime.add((dateTime.utcOffset() * 60) + this.serverConfig.timeZoneOffset, 's');
                                 if (formatArgs == null || formatArgs.length === 0)
                                     formatArgs = this.localesConfig.formatArgsTime;
-                                return dateTime.format(formatArgs[0]);
+                                return this.escape(dateTime.format(formatArgs[0]));
+                            };
+                            ViewHelper.prototype.escape = function (text) {
+                                if (text == null)
+                                    return '';
+                                return text.replace(/&/g, '&amp;')
+                                    .replace(/</g, '&lt;')
+                                    .replace(/>/g, '&gt;')
+                                    .replace(/"/g, '&quot;')
+                                    .replace(/'/g, '&#039;');
                             };
                             ViewHelper.BOOL_FALSE_VALUES = new Set([
                                 '0', 0, false, 'false', 'False', 'FALSE', 'n', 'N', 'no', 'No', 'NO'

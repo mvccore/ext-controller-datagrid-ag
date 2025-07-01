@@ -47,7 +47,7 @@ trait TGridRow {
 	 * @param  array $data       Raw data from database (row) or from form fields.
 	 * @param  int   $propsFlags All properties flags are available.
 	 * @throws \InvalidArgumentException
-	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Models\GridRow Current `$this` context.
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Models\TGridRow Current `$this` context.
 	 */
 	public function SetValues ($data = [], $propsFlags = 0) {
 		foreach ($data as $dbKey => $dbValue) {

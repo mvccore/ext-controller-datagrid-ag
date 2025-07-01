@@ -56,41 +56,44 @@ trait ActionMethods {
 	 * @return array
 	 */
 	public function GetClientServerConfig () {
-		$gridId = $this->GetId();
-		return [
-			'version'				=> static::VERSION,
-			'contElementSelector'	=> '#' . $gridId,
-			'renderConfig'			=> JsonSerialize::Serialize($this->GetConfigRendering()),
-			'columns'				=> $this->GetConfigColumns(FALSE),
-			'locales'				=> JsonSerialize::Serialize($this->GetConfigLocales()),
-			'urlSegments'			=> JsonSerialize::Serialize($this->GetConfigUrlSegments()),
-			'filterOperatorPrefixes'=> $this->GetFilterOperatorPrefixes(),
-			'ajaxParamsNames'		=> $this->GetAjaxParamsNames(),
-			'id'					=> $gridId,
-			'clientPageMode'		=> $this->GetClientPageMode(),
-			'urlData'				=> $this->GetUrlData(),
-			'urlColumnsChanges'		=> $this->GetUrlColumnsChanges(),
-			'urlColumnsStates'		=> $this->GetUrlColumnsStates(),
-			'gridUrlParamName'		=> static::URL_PARAM_GRID,
-			'gridActionParamName'	=> static::URL_PARAM_ACTION,
-			'gridActionColumnStates'=> static::GRID_ACTION_COLUMNS_STATES,
-			'ignoreDisabledColumns'	=> $this->GetIgnoreDisabledColumns(),
-			'dataRequestMethod'		=> $this->GetDataRequestMethod(),
-			'rowSelection'			=> $this->GetRowSelection(),
-			'itemsPerPage'			=> $this->GetItemsPerPage(),
-			'page'					=> $this->GetPage(),
-			'count'					=> $this->GetCount(),
-			'sortingMode'			=> $this->GetSortingMode(),
-			'filteringMode'			=> $this->GetFilteringMode(),
-			'controlsTexts'			=> $this->GetControlsTexts(),
-			'timeZoneOffset'		=> $this->GetTimeZoneOffsetSeconds(),
-			'clientChangeHistory'	=> $this->GetClientChangeHistory(),
-			'clientTitleTemplate'	=> $this->GetClientTitleTemplate(),
-			'clientRequestBlockSize'=> $this->GetClientRequestBlockSize(),
-			'clientRowBuffer'		=> $this->GetClientRowBuffer(),
-			'clientMaxRowsInCache'	=> $this->GetClientMaxRowsInCache(),
-			'clientRowBufferMax'	=> static::CLIENT_JS_BUFFER_MAX_SIZE,
-		];
+		if ($this->clientServerConfig === NULL) {
+			$gridId = $this->GetId();
+			$this->clientServerConfig = [
+				'version'				=> static::VERSION,
+				'contElementSelector'	=> '#' . $gridId,
+				'renderConfig'			=> JsonSerialize::Serialize($this->GetConfigRendering()),
+				'columns'				=> $this->GetConfigColumns(FALSE),
+				'locales'				=> JsonSerialize::Serialize($this->GetConfigLocales()),
+				'urlSegments'			=> JsonSerialize::Serialize($this->GetConfigUrlSegments()),
+				'filterOperatorPrefixes'=> $this->GetFilterOperatorPrefixes(),
+				'ajaxParamsNames'		=> $this->GetAjaxParamsNames(),
+				'id'					=> $gridId,
+				'clientPageMode'		=> $this->GetClientPageMode(),
+				'urlData'				=> $this->GetUrlData(),
+				'urlColumnsChanges'		=> $this->GetUrlColumnsChanges(),
+				'urlColumnsStates'		=> $this->GetUrlColumnsStates(),
+				'gridUrlParamName'		=> static::URL_PARAM_GRID,
+				'gridActionParamName'	=> static::URL_PARAM_ACTION,
+				'gridActionColumnStates'=> static::GRID_ACTION_COLUMNS_STATES,
+				'ignoreDisabledColumns'	=> $this->GetIgnoreDisabledColumns(),
+				'dataRequestMethod'		=> $this->GetDataRequestMethod(),
+				'rowSelection'			=> $this->GetRowSelection(),
+				'itemsPerPage'			=> $this->GetItemsPerPage(),
+				'page'					=> $this->GetPage(),
+				'count'					=> $this->GetCount(),
+				'sortingMode'			=> $this->GetSortingMode(),
+				'filteringMode'			=> $this->GetFilteringMode(),
+				'controlsTexts'			=> $this->GetControlsTexts(),
+				'timeZoneOffset'		=> $this->GetTimeZoneOffsetSeconds(),
+				'clientChangeHistory'	=> $this->GetClientChangeHistory(),
+				'clientTitleTemplate'	=> $this->GetClientTitleTemplate(),
+				'clientRequestBlockSize'=> $this->GetClientRequestBlockSize(),
+				'clientRowBuffer'		=> $this->GetClientRowBuffer(),
+				'clientMaxRowsInCache'	=> $this->GetClientMaxRowsInCache(),
+				'clientRowBufferMax'	=> static::CLIENT_JS_BUFFER_MAX_SIZE,
+			];
+		}
+		return $this->clientServerConfig;
 	}
 
 	/**
@@ -123,19 +126,23 @@ trait ActionMethods {
 	 * @return array<string,mixed>
 	 */
 	public function GetClientInitData () {
-		return [
-			'totalCount'		=> $this->GetTotalCount(),
-			'offset'			=> $this->GetOffset(),
-			'limit'				=> $this->GetLimit(),
-			'sorting'			=> $this->GetAjaxSorting(),
-			'filtering'			=> $this->GetAjaxFiltering(),
-			'url'				=> $this->GetRequest()->GetFullUrl(),
-			'path'				=> $this->GetGridRequest()->GetPath(),
-			'page'				=> $this->GetPage(),
-			'count'				=> $this->GetCount(),
-			'dataCount'			=> count($this->GetPageData()),
-			'data'				=> $this->GetPageData()
-		];
+		if ($this->clientInitData === NULL) {
+			$pageData = $this->GetPageData();
+			$this->clientInitData = [
+				'totalCount'		=> $this->GetTotalCount(),
+				'offset'			=> $this->GetOffset(),
+				'limit'				=> $this->GetLimit(),
+				'sorting'			=> $this->GetAjaxSorting(),
+				'filtering'			=> $this->GetAjaxFiltering(),
+				'url'				=> $this->GetRequest()->GetFullUrl(),
+				'path'				=> $this->GetGridRequest()->GetPath(),
+				'page'				=> $this->GetPage(),
+				'count'				=> $this->GetCount(),
+				'dataCount'			=> count($pageData),
+				'data'				=> $pageData,
+			];
+		}
+		return $this->clientInitData;
 	}
 
 	/**
@@ -163,6 +170,7 @@ trait ActionMethods {
 	 * @return \stdClass
 	 */
 	protected function dataActionGetResponse ($gridPath, $gridUrl) {
+		$pageData = $this->GetPageData();
 		return (object) [
 			'totalCount'	=> $this->totalCount,
 			'offset'		=> $this->offset,
@@ -173,9 +181,9 @@ trait ActionMethods {
 			'path'			=> $gridPath,
 			'page'			=> $this->page,
 			'count'			=> $this->count,
-			'dataCount'		=> count($this->pageData),
+			'dataCount'		=> count($pageData),
 			'controls'		=> $this->dataActionGetControls($gridPath),
-			'data'			=> $this->pageData,
+			'data'			=> $pageData,
 		];
 	}
 	
@@ -399,7 +407,10 @@ trait ActionMethods {
 					$idUser,
 					new PersistentColumns($persistentColumns)
 				);
-			} catch (\Throwable $e) {}
+			} catch (\Throwable $e) {
+				if ($this->environment->IsDevelopment())
+					throw $e;
+			}
 		} else {
 			// session
 			$sessionNamespace = $this->getGridSessionNamespace();
@@ -425,6 +436,8 @@ trait ActionMethods {
 					$idUser
 				);
 			} catch (\Throwable $e) {
+				if ($this->environment->IsDevelopment())
+					throw $e;
 			}
 		} else {
 			// session

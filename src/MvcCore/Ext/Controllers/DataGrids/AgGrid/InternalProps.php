@@ -47,4 +47,20 @@ trait InternalProps {
 	 */
 	protected $rowClassIsActiveColumnsModel = FALSE;
 
+	/**
+	 * Grid data array serialized to client script into 
+	 * `MvcCore.Ext.Controllers.DataGrids.AgGrid` constructor  
+	 * as first argument with server configuration.
+	 * @var array<string,mixed>|NULL
+	 */
+	protected $clientServerConfig			= NULL;
+
+	/**
+	 * Grid data array serialized to client script into 
+	 * `MvcCore.Ext.Controllers.DataGrids.AgGrid` constructor 
+	 * as second argument with initial data.
+	 * @var array<string,mixed>|NULL
+	 */
+	protected $clientInitData				= NULL;
+
 }

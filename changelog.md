@@ -1,15 +1,6 @@
-### Changed
-- Interface refactoring.
-
-### Updated
-- Updated JS code,
-- CSS code refactoring for multiple themes,
-- Traits renaming with `T` at the beginning.
+### Added
+- Possible to render grid cell content with view helper with excaped plain string rendering or with HTML rendering with escaping.
+- Created client server config and client initial data collections as local grid properties to extend them.
 
 ### Fixed
-- PHP <= 8.0 compatible in template,
-- PHP 8.4 compatible in locale config,
-- Columns parsing initialization.
-
-### Added
-- CSS class for bottom butons.
+- v5.3.3

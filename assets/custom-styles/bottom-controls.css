@@ -97,8 +97,8 @@
 	font-size:8px;
 	padding:0 1px;
 }
-.grid.grid-with-bottom-controls .grid-controls-bottom .grid-count-current > span,
-.grid.grid-with-bottom-controls .grid-controls-bottom .grid-page-current > span{
+.grid.grid-with-bottom-controls .grid-controls-bottom .grid-count-current > span.grid-count-current,
+.grid.grid-with-bottom-controls .grid-controls-bottom .grid-page-current > span.grid-page-current{
 	display:inline-block;
 	min-width:18px;
 	text-align:center;
@@ -110,13 +110,13 @@
 	background:#333;
 }
 
-.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading{
+.grid-with-bottom-controls .grid-control-refresh a.grid-button.grid-refresh-link-loading{
 	border-color:#333 !important;
 	background:#333 !important;
 	cursor:default;
 }
-.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading > span{outline-color:#333;}
-.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading > span > b{color:#fff !important;}
+.grid-with-bottom-controls .grid-control-refresh a.grid-button.grid-refresh-link-loading > span{outline-color:#333;}
+.grid-with-bottom-controls .grid-control-refresh a.grid-button.grid-refresh-link-loading > span > b{color:#fff !important;}
 
 /* buttons */
 .grid.grid-with-bottom-controls .grid-controls-bottom .grid-button,

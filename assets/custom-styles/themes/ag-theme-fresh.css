@@ -68,24 +68,24 @@
 .ag-theme-fresh .columns-menu-controls label.columns-menu-control input[type=checkbox]{
 	accent-color:var(--grid-color-active-bg);
 }
-.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link {
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-button.grid-refresh-link {
 	margin-top: 3px !important;
 }
-.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading {
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-button.grid-refresh-link-loading {
 	border-color: var(--grid-color-active-bg) !important;
 	background: var(--grid-color-active-bg) !important;
 	cursor: default;
 }
-.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading > span{
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-button.grid-refresh-link-loading > span{
 	outline-color:var(--grid-color-active-bg);
 }
-.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link-loading > span > b{
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-button.grid-refresh-link-loading > span > b{
 	color:var(--grid-color-active-front) !important;
 }
-.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link > span > b{
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-button.grid-refresh-link > span > b{
 	
 }
-.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-refresh-link.grid-refresh-link-loading > span > b::before{
+.ag-theme-fresh.grid-with-bottom-controls .grid-control-refresh a.grid-button.grid-refresh-link.grid-refresh-link-loading > span > b::before{
 	color:var(--grid-color-active-front) !important;
 }
 

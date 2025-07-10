@@ -1,6 +1,4 @@
-### Added
-- Possible to render grid cell content with view helper with excaped plain string rendering or with HTML rendering with escaping.
-- Created client server config and client initial data collections as local grid properties to extend them.
-
 ### Fixed
-- v5.3.3
+- JS filtering menu reseting with empty filters,
+- JS custom view helper escaping when value is not a string,
+- More CSS specific selectors to style bottom controls.

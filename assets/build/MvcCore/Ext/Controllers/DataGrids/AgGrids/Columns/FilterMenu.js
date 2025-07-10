@@ -216,7 +216,10 @@ var MvcCore;
                                 return this;
                             };
                             FilterMenu.prototype.destroySection = function (index, sectionElms) {
-                                var sectionElms = this.elms.sections[index], sectionHandlers = this.sectionHandlers[index];
+                                var sectionElms = this.elms.sections[index];
+                                if (this.sectionHandlers[index] == null)
+                                    return this;
+                                var sectionHandlers = this.sectionHandlers[index];
                                 if (sectionHandlers.handleTypeChange != null)
                                     sectionElms.typeSelect.removeEventListener('change', sectionHandlers.handleTypeChange);
                                 if (sectionHandlers.handleValueChange != null)

@@ -726,14 +726,14 @@ var MvcCore;
                                 data: { changes: plainObj },
                                 type: 'json',
                                 method: 'POST',
-                                headers: {
-                                    /**
-                                     * Do not send AJAX header determination
-                                     * to act wtih this request on server more
-                                     * like with form POST submit case.
-                                     */
-                                    'X-Requested-With': null
-                                },
+                                //headers: {
+                                /**
+                                 * Do not send AJAX header determination
+                                 * to act with this request on server more
+                                 * like with form POST submit case.
+                                 */
+                                //'X-Requested-With': null
+                                //},
                                 success: this.handleColumnChangesResponse.bind(this),
                                 error: this.handleColumnChangesResponse.bind(this)
                             });

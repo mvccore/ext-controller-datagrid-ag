@@ -157,7 +157,7 @@ trait ActionMethods {
 	 * @return void
 	 */
 	public function DataAction () {
-		if (!$this->DispatchStateCheck(\MvcCore\IController::DISPATCH_STATE_ACTION_EXECUTED))
+		if (!$this->DispatchStateCheck(\MvcCore\Controller\IConstants::DISPATCH_STATE_ACTION_EXECUTED))
 			return;
 		list($gridPath, $gridUrl) = $this->GetAjaxGridPathAndUrl();
 		$response = $this->dataActionGetResponse($gridPath, $gridUrl);
@@ -265,7 +265,7 @@ trait ActionMethods {
 	 * @return void
 	 */
 	public function ColumnsStatesInit () {
-		$columnsUrlNamesRaw = $this->request->GetParams(FALSE, [], \MvcCore\IRequest::PARAM_TYPE_INPUT);
+		$columnsUrlNamesRaw = $this->request->GetParams(FALSE, [], \MvcCore\Request\IConstants::PARAM_TYPE_INPUT);
 		
 		$persistentColumns = $this->columnsStatesActionAssemble($columnsUrlNamesRaw);
 		$this->gridPersistentColumnsWrite($persistentColumns);
@@ -283,7 +283,7 @@ trait ActionMethods {
 			]);
 			self::Redirect(
 				$redirectUrl, 
-				\MvcCore\IResponse::SEE_OTHER,
+				\MvcCore\Response\IConstants::SEE_OTHER,
 				'AgGrid column states processed.'
 			);
 		}
@@ -362,7 +362,7 @@ trait ActionMethods {
 			]);
 			self::Redirect(
 				$redirectUrl, 
-				\MvcCore\IResponse::SEE_OTHER, 
+				\MvcCore\Response\IConstants::SEE_OTHER, 
 				'AgGrid column changes processed.'
 			);
 		}

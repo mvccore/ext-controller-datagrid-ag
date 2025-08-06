@@ -14,8 +14,13 @@
 namespace MvcCore\Ext\Controllers\DataGrids;
 
 interface	IAgGrid
-extends		\MvcCore\Ext\Controllers\IDataGrid,
+extends		\MvcCore\Ext\Controllers\DataGrid\IConstants,
+			\MvcCore\Ext\Controllers\DataGrid\IConfigGettersSetters,
+			\MvcCore\Ext\Controllers\DataGrid\IColumnsParsingMethods,
+			\MvcCore\Ext\Controllers\DataGrid\IInternalGettersSetters,
+			\MvcCore\Ext\Controllers\DataGrid\IActionMethods,
 			\MvcCore\Ext\Controllers\DataGrids\AgGrid\IConstants,
 			\MvcCore\Ext\Controllers\DataGrids\AgGrid\IConfigGettersSetters,
+			\MvcCore\Ext\Controllers\DataGrids\AgGrid\IInitMethods,
 			\MvcCore\Ext\Controllers\DataGrids\AgGrid\IActionMethods {
 }

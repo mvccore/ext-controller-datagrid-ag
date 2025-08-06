@@ -121,7 +121,11 @@ trait InternalGettersSetters {
 			$urlParams[static::URL_PARAM_ACTION] = NULL;
 		/** @var \MvcCore\Controller $parentOfParentClass */
 		$parentOfParentClass = get_parent_class(get_parent_class(__CLASS__));
-		$url = $parentOfParentClass::Url($this->appRouteName, $urlParams);
+		
+		//$url = $parentOfParentClass::Url($this->appRouteName, $urlParams);
+		$parentOfParentUrl = new \ReflectionMethod($parentOfParentClass, 'Url');
+		$url = $parentOfParentUrl->invokeArgs($this, [$this->appRouteName, $urlParams]);
+
 		return [$gridParam, $url];
 	}
 

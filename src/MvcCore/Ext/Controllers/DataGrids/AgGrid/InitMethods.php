@@ -13,10 +13,17 @@
 
 namespace MvcCore\Ext\Controllers\DataGrids\AgGrid;
 
-use \MvcCore\Ext\Controllers\DataGrid\IConstants as GridConsts;
-use \MvcCore\Ext\Controllers\DataGrids\AgGrid\IConstants as AgGridConsts;
+use \MvcCore\Ext\Controllers\DataGrid\IConstants as GridConsts,
+	\MvcCore\Ext\Controllers\DataGrids\AgGrid\IConstants as AgGridConsts,
+	\MvcCore\Ext\Controllers\DataGrids\Configs\Column as ConfigColumn,
+	\MvcCore\Ext\Controllers\DataGrids\Configs\IColumn as IConfigColumn,
+	\MvcCore\Ext\Controllers\DataGrids\Views\IReverseHelper;
 
 /**
+ * @phpstan-type Filtering array<string, array<string, array<mixed>>>
+ * @phpstan-type OperatorAndValues array<string, array<string>>
+ * @phpstan-type AllowedOperators array<string, object{"operator":string,"multiple":boolean,"regex":?string}>
+ * 
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
  */
 trait InitMethods {
@@ -33,7 +40,9 @@ trait InitMethods {
 		
 		$this->initConfigRenderingByClientPageMode();
 		
-		\MvcCore\Controller::Init();
+		// \MvcCore\Controller::Init();
+		$baseCtrlInit = new \ReflectionMethod('\MvcCore\Controller', 'Init');
+		$baseCtrlInit->invokeArgs($this, []);
 		
 		$this->initModelClasses();
 		$this->GetConfigUrlSegments();
@@ -385,7 +394,7 @@ trait InitMethods {
 	 *    column names as keys and sorting directions `ASC | DESC` as values.
 	 * @return void
 	 */
-	protected function initSorting () {
+	/*protected function initSortingOld () {
 		if ($this->ajaxDataRequest) {
 			if (!$this->sortingMode) return;
 			$rawSortingItemsStr = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_SORTING], FALSE);
@@ -452,14 +461,124 @@ trait InitMethods {
 		} else {
 			parent::initSorting();
 		}
-	}
+	}*/
 	
+	/**
+	 * If client row model is single page and request is ajax:
+	 *    Verify and complete sorting from AJAX params as array of databse
+	 *    column names as keys and sorting directions `ASC | DESC` as values.
+	 * If client row model is for multiple pages:
+	 *    Parse, verify and complete sorting from URL as array of databse
+	 *    column names as keys and sorting directions `ASC | DESC` as values.
+	 * @return void
+	 */
+	protected function initSorting () {
+		if (!$this->ajaxDataRequest) {
+			parent::initSorting();
+		} else {
+			if (!$this->sortingMode) return;
+			$rawSortingStr = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_SORTING], FALSE);
+			if ($rawSortingStr === NULL) return;
+			$rawSorting = [];
+			if (is_array($rawSortingStr)) {
+				foreach ($rawSortingStr as $rawSortingItem) {
+					try {
+						$rawSortingItem = \MvcCore\Tool::JsonDecode($rawSortingItem, JSON_OBJECT_AS_ARRAY);
+					} catch (\Throwable $e) {
+						$rawSortingItem = NULL;
+					}
+					if ($rawSortingItem !== NULL)
+						$rawSorting[] = $rawSortingItem;
+				}
+			} else {
+				try {
+					$rawSorting = \MvcCore\Tool::JsonDecode($rawSortingStr, JSON_OBJECT_AS_ARRAY);
+				} catch (\Throwable $e) {
+					$rawSorting = NULL;
+				}
+			}
+			if (!is_array($rawSorting)) return;
+			$invalidValueFound = FALSE;
+			$currentClassType = new \ReflectionClass(__CLASS__);
+			$currentParseSorting = $currentClassType->getMethod('ParseSorting');
+			$this->sorting = $currentParseSorting->invokeArgs($this, [$rawSorting, & $invalidValueFound]);
+			//$this->sorting = $this->ParseSorting($rawSorting, $invalidValueFound);
+		}
+	}
+
+	/**
+	 * Parse, check and filter all sorting columns and directions.
+	 * Remove what is not allowed and normalize values.
+	 * @param  array<array{"0":string,"1":int}> $rawSorting 
+	 * @param  bool                             $invalidValueFound 
+	 * @return array<string,bool|string|null>
+	 */
+	public function ParseSorting ($rawSorting, &$invalidValueFound = FALSE) {
+		$sorting = [];
+		/** @var array<int,string> $sortValues */
+		$sortValues = [0 => 'DESC', 1 => 'ASC'];
+		$multiSorting = ($this->sortingMode & static::SORT_MULTIPLE_COLUMNS) != 0;
+
+		foreach ($rawSorting as $rawColumnUrlNameAndDirection) {
+			if (
+				!is_array($rawColumnUrlNameAndDirection) || (
+					is_array($rawColumnUrlNameAndDirection) &&
+					count($rawColumnUrlNameAndDirection) != 2
+				)
+			) {
+				$invalidValueFound = TRUE;
+				continue;
+			}
+			list($rawColumnUrlName, $rawDirection) = $rawColumnUrlNameAndDirection;
+			$direction = isset($sortValues[$rawDirection]) 
+				? $sortValues[$rawDirection]
+				: 'ASC';
+			$rawColumnUrlName = $this->removeUnknownChars($rawColumnUrlName);
+			if ($rawColumnUrlName === NULL || !isset($this->configColumns[$rawColumnUrlName])) {
+				$invalidValueFound = TRUE;
+				continue;
+			}
+			/** @var IConfigColumn $configColumn */
+			$configColumn = $this->configColumns[$rawColumnUrlName];
+			if ($configColumn->GetDisabled()) {
+				if ($this->ignoreDisabledColumns) {
+					$this->enableColumn($configColumn);
+				} else {
+					$invalidValueFound = TRUE;
+					continue;
+				}
+			}
+			$columnSortCfg = $configColumn->GetSort();
+			if ($columnSortCfg === FALSE || $columnSortCfg === NULL) {
+				$invalidValueFound = TRUE;
+				continue;
+			}
+			$sorting[$configColumn->GetDbColumnName()] = $direction;
+			if (!$multiSorting) break;
+		}
+
+		// if there is no sorting, complete default sorting from columns configuration
+		if (count($sorting) === 0) {
+			foreach ($this->configColumns as $configColumn) {
+				/** @var IConfigColumn $configColumn */
+				$configColumnSort = $configColumn->GetSort();
+				if (is_string($configColumnSort)) {
+					$dbColumnName = $configColumn->GetDbColumnName();
+					$sorting[$dbColumnName] = $configColumnSort;
+					if (!$multiSorting) break;
+				}
+			}
+		}
+
+		return $sorting;
+	}
+
 	/**
 	 * Parse filtering from URL as array of databse column names as keys 
 	 * and values as array of raw filtering values.
 	 * @return bool
 	 */
-	protected function initFiltering () {
+	/*protected function initFilteringOld () {
 		if (!$this->ajaxDataRequest) {
 			return parent::initFiltering();
 		} else {
@@ -577,6 +696,227 @@ trait InitMethods {
 			$this->filtering = $filtering;
 			return TRUE;
 		}
+	}*/
+	
+	/**
+	 * Parse filtering from URL as array of databse column names as keys 
+	 * and values as array of raw filtering values.
+	 * @return bool
+	 */
+	protected function initFiltering () {
+		if (!$this->ajaxDataRequest) return parent::initFiltering();
+		if (!$this->filteringMode) return TRUE;
+
+		$rawFilteringStr = $this->GetParam($this->ajaxParamsNames[self::AJAX_PARAM_FILTERING], FALSE);
+		if ($rawFilteringStr === NULL) return TRUE;
+
+		try {
+			$rawFiltering = \MvcCore\Tool::JsonDecode($rawFilteringStr, JSON_OBJECT_AS_ARRAY);
+		} catch (\Throwable $e) {
+			$rawFiltering = NULL;
+		}
+		if (!is_array($rawFiltering)) return TRUE; // if it is not an array - ignore all filtering
+
+		// set up new initial filtering:
+		$invalidValueFound = FALSE;
+		$currentClassType = new \ReflectionClass(__CLASS__);
+		$currentParseFiltering = $currentClassType->getMethod('ParseFiltering');
+		$this->filtering = $currentParseFiltering->invokeArgs($this, [$rawFiltering, & $invalidValueFound]);
+		//$this->filtering = $this->ParseFiltering($rawFilteringItems, $invalidFilterValue);
+		// if (!$invalidValueFound) return FALSE; // do not redirect ajax requests, just unset invalid filter values and continue
+
+		return TRUE;
+	}
+
+	/**
+	 * Check and filter all filtering columns, operators and values.
+	 * Remove what is not allowed, unformat values back to system values.
+	 * @param  Filtering $rawFiltering 
+	 * @param  bool      $invalidValueFound
+	 * @return Filtering
+	 */
+	public function ParseFiltering ($rawFiltering, & $invalidValueFound = FALSE) {
+		$filtering = [];
+
+		$filteringColumns = $this->getFilteringColumns();
+		$multiFiltering = ($this->filteringMode & static::FILTER_MULTIPLE_COLUMNS) != 0;
+		$urlFilterOperators = $this->configUrlSegments->GetUrlFilterOperators();
+
+		foreach ($rawFiltering as $rawColumnUrlName => $rawOperatorAndValues) {
+			$rawColumnUrlName = $this->removeUnknownChars($rawColumnUrlName);
+			if ($rawColumnUrlName === NULL || !isset($this->configColumns[$rawColumnUrlName])) continue;
+
+			// check if column exists
+			/** @var ConfigColumn $configColumn */
+			$configColumn = $this->configColumns[$rawColumnUrlName];
+			$columnPropName = $configColumn->GetPropName();
+
+			// check if column support filtering
+			if (!isset($filteringColumns[$columnPropName])) {
+				if ($this->ignoreDisabledColumns) {
+					if ($configColumn->GetDisabled())
+						$this->enableColumn($configColumn);
+				} else {
+					continue;
+				}
+			} else {
+				if ($configColumn->GetDisabled())
+					$this->enableColumn($configColumn);
+			}
+
+			$this->parseFilteringOperatorsAndValues(
+				$filtering, $invalidValueFound, $configColumn, 
+				$rawOperatorAndValues, $urlFilterOperators, $multiFiltering
+			);
+
+			if (!$multiFiltering) break;
+		}
+
+		return $filtering;
+	}
+
+	/**
+	 * Check and filter all filtering column operators and values.
+	 * Remove what is not allowed, unformat values back to system values.
+	 * @param  Filtering             $filtering
+	 * @param  bool                  $invalidValueFound
+	 * @param  ConfigColumn          $configColumn 
+	 * @param  OperatorAndValues     $rawOperatorAndValues 
+	 * @param  array<string, string> $urlFilterOperators
+	 * @param  bool                  $multiFiltering 
+	 * @return void
+	 */
+	protected function parseFilteringOperatorsAndValues(
+		array &$filtering,
+		&$invalidValueFound,
+		IConfigColumn $configColumn,
+		array $rawOperatorAndValues,
+		array $urlFilterOperators,
+		$multiFiltering
+	): void {
+		$viewHelperName = $configColumn->GetViewHelper();
+		/** @var ?\MvcCore\Ext\Controllers\DataGrids\Views\IReverseHelper $viewHelper */
+		list($useViewHelper, $viewHelper) = $this->getFilteringViewHelper($viewHelperName);
+		
+		$columnPropName = $configColumn->GetPropName();
+		$columnDbName = $configColumn->GetDbColumnName();
+		$columnFilter = $configColumn->GetFilter();
+		
+		// check if column has allowed parsed operator
+		$allowedOperators = is_integer($columnFilter)
+			? $this->columnsAllowedOperators[$columnPropName]
+			: $this->defaultAllowedOperators;
+
+		$columnAllowNullFilter = (
+			is_int($columnFilter) && ($columnFilter & self::FILTER_ALLOW_NULL) != 0
+		);
+
+		foreach ($rawOperatorAndValues as $rawOperator => $rawValues) {
+			if (!isset($urlFilterOperators[$rawOperator])) continue;
+
+			$urlOperator = $urlFilterOperators[$rawOperator];
+			if (!isset($allowedOperators[$urlOperator])) continue;
+
+			$operatorCfg = $allowedOperators[$urlOperator];
+			$operator = $operatorCfg->operator;
+			$multiple = $operatorCfg->multiple;
+			$regex = $operatorCfg->regex;
+
+			if (!$multiple && count($rawValues) > 1)
+				$rawValues = [$rawValues[0]];
+
+			$operatorValues = $this->parseFilteringValues(
+				$rawValues, $invalidValueFound, $configColumn, $useViewHelper, 
+				$viewHelper, $regex, $columnAllowNullFilter
+			);
+
+			if (count($operatorValues) === 0) continue;
+
+			// set up filtering value
+			if (!isset($filtering[$columnDbName]))
+				$filtering[$columnDbName] = [];
+			$filtering[$columnDbName][$operator] = $operatorValues;
+
+			if (!$multiFiltering) break;
+		}
+	}
+
+	/**
+	 * Parse filtering values under operator.
+	 * Remove what is not allowed, unformat values back to system values.
+	 * @param  array<mixed>    $rawValues 
+	 * @param  bool            $invalidValueFound
+	 * @param  ConfigColumn    $configColumn 
+	 * @param  bool            $useViewHelper 
+	 * @param  ?IReverseHelper $viewHelper 
+	 * @param  ?string         $regex 
+	 * @param  bool            $columnAllowNullFilter 
+	 * @return array<mixed>
+	 */
+	protected function parseFilteringValues(
+		array $rawValues, 
+		&$invalidValueFound, 
+		IConfigColumn $configColumn, 
+		$useViewHelper, 
+		$viewHelper, 
+		$regex, 
+		$columnAllowNullFilter
+	) {
+		$operatorValues = [];
+		foreach ($rawValues as $rawValue) {
+			$rawValue = $this->removeUnknownChars($rawValue);
+			if ($rawValue === NULL) continue;
+
+			$rawValue = ltrim($rawValue, '!<=>');
+			if ($rawValue === '') continue;
+
+			if ($useViewHelper) {
+				$rawValue = call_user_func_array(
+					[$viewHelper, 'Unformat'],
+					array_merge([$rawValue], $configColumn->GetFormatArgs() ?: [])
+				);
+				if ($rawValue === NULL) continue;
+			}
+
+			$rawValueToCheckType = $rawValue;
+
+			// complete possible operator prefixes from submitted value
+			$containsPercentage = $this->CheckFilterValueForSpecialLikeChar($rawValue, '%');
+			$containsUnderScore = $this->CheckFilterValueForSpecialLikeChar($rawValue, '_');
+			if (($containsPercentage & 1) !== 0)
+				$rawValueToCheckType = str_replace('%', '', $rawValueToCheckType);
+			if (($containsUnderScore & 1) !== 0)
+				$rawValueToCheckType = str_replace('_', '', $rawValueToCheckType);
+			
+			//  check if operator configuration allowes submitted value form
+			if ($regex !== NULL && !preg_match($regex, $rawValue)) continue;
+			
+			// check value by configured types
+			$columnTypes = $configColumn->GetTypes();
+			if (strtolower($rawValue) === static::NULL_STRING_VALUE) {
+				if ($columnAllowNullFilter) {
+					$operatorValues[] = static::NULL_STRING_VALUE;
+				} else {
+					$invalidValueFound = TRUE;
+				}
+			} else if (is_array($columnTypes) && count($columnTypes) > 0) {
+				$typeValidationSuccess = FALSE;
+				foreach ($columnTypes as $columnType) {
+					if ($this->validateRawFilterValueByType($rawValueToCheckType, $columnType)) {
+						$typeValidationSuccess = TRUE;
+						break;
+					}
+				}
+				if (!$typeValidationSuccess) {
+					$invalidValueFound = TRUE;
+					continue;
+				}
+				$operatorValues[] = $rawValue;
+			} else {
+				$operatorValues[] = $rawValue;
+			}
+		}
+		return $operatorValues;
 	}
 
 	/**

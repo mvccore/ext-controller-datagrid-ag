@@ -33,7 +33,11 @@ trait PreDispatchMethods {
 			if ($this->view === NULL) {}
 				$this->view = $this->createView(TRUE);
 			$this->view->grid = $this;
-			\MvcCore\Controller::PreDispatch();
+			
+			//\MvcCore\Controller::PreDispatch();
+			$baseCtrlPreDispatch = new \ReflectionMethod('\MvcCore\Controller', 'PreDispatch');
+			$baseCtrlPreDispatch->invokeArgs($this, []);
+
 			$this->LoadModel();
 			$this->preDispatchPage();
 			if (!$this->preDispatchTotalCount()) return;

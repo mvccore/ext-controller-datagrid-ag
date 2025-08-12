@@ -18,6 +18,7 @@ var MvcCore;
                                 this.optionsManager = grid.GetOptionsManager();
                                 this.eventsManager = grid.GetEvents();
                                 this.helpers = grid.GetHelpers();
+                                this.getRowId = null;
                             }
                             AgBases.prototype.SetAgOptions = function (options) {
                                 this.agOptions = options;
@@ -26,14 +27,21 @@ var MvcCore;
                             AgBases.prototype.GetAgOptions = function () {
                                 return this.agOptions;
                             };
+                            AgBases.prototype.GetRowId = function (data) {
+                                if (this.getRowId == null)
+                                    throw new Error("There is no id column configured. Use primary key or unique key attribute.");
+                                return this.getRowId(data);
+                            };
                             AgBases.prototype.Init = function () {
                                 this
+                                    .initRowIdComplation()
                                     .initBases()
                                     .initRowSelection()
                                     .initEvents();
                                 return this;
                             };
                             AgBases.prototype.initBases = function () {
+                                var _this = this;
                                 this.agOptions = {
                                     //debug: true,
                                     suppressMenuHide: true,
@@ -43,8 +51,14 @@ var MvcCore;
                                     suppressColumnVirtualisation: true,
                                     debounceVerticalScrollbar: true,
                                     alwaysShowVerticalScroll: true,
-                                    suppressCellFocus: true,
+                                    suppressCellFocus: true
                                 };
+                                if (this.getRowId != null) {
+                                    this.agOptions.getRowId = function (params) {
+                                        ///@ts-ignore
+                                        return _this.getRowId(params.data);
+                                    };
+                                }
                                 if (this.helpers.IsChromeBrowser())
                                     this.agOptions.suppressAnimationFrame = true;
                                 this.agOptions.localeText = this.grid.GetTranslator().GetStore();
@@ -65,6 +79,30 @@ var MvcCore;
                                     if ((rowSel & AgGrids.Enums.RowSelection.ROW_SELECTION_NOT_DESELECT) != 0) {
                                         this.agOptions.suppressRowDeselection = true;
                                     }
+                                }
+                                return this;
+                            };
+                            AgBases.prototype.initRowIdComplation = function () {
+                                var serverConfig = this.grid.GetServerConfig(), columns = serverConfig.columns, column, columnIdsSeparator = serverConfig.columnIdsSeparator, idColsPropNames = [];
+                                for (var columnName in columns) {
+                                    column = columns[columnName];
+                                    if (!column.idColumn)
+                                        continue;
+                                    idColsPropNames.push(column.propName);
+                                }
+                                if (idColsPropNames.length > 0) {
+                                    this.getRowId = function (data) {
+                                        var idColPropName, idColsValue, idColsValues = [];
+                                        for (var i = 0, l = idColsPropNames.length; i < l; i++) {
+                                            idColPropName = idColsPropNames[i];
+                                            idColsValue = data[idColPropName];
+                                            idColsValue = idColsValue == null
+                                                ? ''
+                                                : String(idColsValue);
+                                            idColsValues.push(idColsValue);
+                                        }
+                                        return idColsValues.join(columnIdsSeparator);
+                                    };
                                 }
                                 return this;
                             };

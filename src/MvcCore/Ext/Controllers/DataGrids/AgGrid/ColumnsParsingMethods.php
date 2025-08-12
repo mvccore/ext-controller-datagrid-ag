@@ -17,16 +17,17 @@ use \MvcCore\Ext\Controllers\DataGrids\Configs\Type as GridType;
 
 /**
  * @mixin \MvcCore\Ext\Controllers\DataGrids\AgGrid
+ * @phpstan-type ColumnMeta object{"dbColumnName":string,"allowNulls":bool,"types":array<string>,"parserArgs":array<mixed>,"formatArgs":array<mixed>,"primaryKey":bool,"uniqueKey":array<string>}
  */
 trait ColumnsParsingMethods {
 	
 	/**
 	 * Complete datagrid column config instance or `NULL`.
-	 * @param  \ReflectionProperty  $prop
-	 * @param  int                  $index
-	 * @param  array                $modelMetaData
-	 * @param  bool                 $attrsAnotations
-	 * @param  string|\MvcCore\Tool $toolClass
+	 * @param  \ReflectionProperty   $prop
+	 * @param  int                   $index
+	 * @param  array<int,ColumnMeta> $modelMetaData
+	 * @param  bool                  $attrsAnotations
+	 * @param  string|\MvcCore\Tool  $toolClass
 	 * @return \MvcCore\Ext\Controllers\DataGrids\Configs\Column|NULL
 	 */
 	protected function parseConfigColumn (

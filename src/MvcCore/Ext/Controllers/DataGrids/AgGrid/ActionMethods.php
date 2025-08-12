@@ -63,6 +63,7 @@ trait ActionMethods {
 				'contElementSelector'	=> '#' . $gridId,
 				'renderConfig'			=> JsonSerialize::Serialize($this->GetConfigRendering()),
 				'columns'				=> $this->GetConfigColumns(FALSE),
+				'columnIdsSeparator'	=> static::CLIENT_COLUMN_IDS_SEPARATOR,
 				'locales'				=> JsonSerialize::Serialize($this->GetConfigLocales()),
 				'urlSegments'			=> JsonSerialize::Serialize($this->GetConfigUrlSegments()),
 				'filterOperatorPrefixes'=> $this->GetFilterOperatorPrefixes(),

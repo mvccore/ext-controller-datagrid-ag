@@ -174,6 +174,12 @@ interface IConstants {
 	 */
 	const AJAX_PARAM_COLUMNS_CHANGES		= 'changes';
 
+	/**
+	 * Client script id columns values separator.
+	 * @var string
+	 */
+	const CLIENT_COLUMN_IDS_SEPARATOR		= '|';
+
 	
 	/**
 	 * Ajax data request method to get data by 

@@ -1,5 +1,3 @@
 ### New
-- New parsing for filtering and sorting.
-
-### Fixed
-- Commented back `X-Requested-With` header in column change request.
+- Automatic row id computation by server configuration.
+- Method `agGrid.UpdateRows(rowData: any[]): this` to update rows in both datasource types.

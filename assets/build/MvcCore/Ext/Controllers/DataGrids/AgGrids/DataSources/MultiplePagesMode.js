@@ -98,6 +98,14 @@ var MvcCore;
                                 }
                                 return this;
                             };
+                            MultiplePagesMode.prototype.UpdateRows = function (rowsData) {
+                                if (this.cache.GetEnabled())
+                                    this.cache.Update(rowsData);
+                                this.grid.GetGridApi().applyTransaction({
+                                    update: rowsData
+                                });
+                                return this;
+                            };
                             MultiplePagesMode.prototype.handleResponse = function (reqData, changeUrl, cacheKey, cached, rawResponse) {
                                 var response;
                                 if (cached) {

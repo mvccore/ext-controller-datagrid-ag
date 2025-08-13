@@ -89,6 +89,7 @@ trait ActionMethods {
 				'clientChangeHistory'	=> $this->GetClientChangeHistory(),
 				'clientTitleTemplate'	=> $this->GetClientTitleTemplate(),
 				'clientRequestBlockSize'=> $this->GetClientRequestBlockSize(),
+				'clientCache'			=> $this->clientCache,
 				'clientRowBuffer'		=> $this->GetClientRowBuffer(),
 				'clientMaxRowsInCache'	=> $this->GetClientMaxRowsInCache(),
 				'clientRowBufferMax'	=> static::CLIENT_JS_BUFFER_MAX_SIZE,

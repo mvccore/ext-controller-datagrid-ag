@@ -27,6 +27,9 @@ var MvcCore;
                             AgBases.prototype.GetAgOptions = function () {
                                 return this.agOptions;
                             };
+                            AgBases.prototype.GetRowsIniquelyIdentified = function () {
+                                return this.getRowId != null;
+                            };
                             AgBases.prototype.GetRowId = function (data) {
                                 if (this.getRowId == null)
                                     throw new Error("There is no id column configured. Use primary key or unique key attribute.");
@@ -90,7 +93,16 @@ var MvcCore;
                                         continue;
                                     idColsPropNames.push(column.propName);
                                 }
-                                if (idColsPropNames.length > 0) {
+                                if (idColsPropNames.length === 1) {
+                                    var idColPropName = idColsPropNames[0];
+                                    this.getRowId = function (data) {
+                                        var idColsValue = data[idColPropName];
+                                        return idColsValue == null
+                                            ? ''
+                                            : String(idColsValue);
+                                    };
+                                }
+                                else if (idColsPropNames.length > 1) {
                                     this.getRowId = function (data) {
                                         var idColPropName, idColsValue, idColsValues = [];
                                         for (var i = 0, l = idColsPropNames.length; i < l; i++) {

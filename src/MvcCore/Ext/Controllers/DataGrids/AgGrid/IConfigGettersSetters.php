@@ -233,8 +233,9 @@ interface IConfigGettersSetters {
 	/**
 	 * Maximum number of rows in client browser cache.
 	 * This configuration is used if client cache is 
-	 * enabled by `$grid->SetclientCache(TRUE);`.
-	 * Default value is `NULL` for unlimited cache.
+	 * enabled by `$grid->SetClientCache(TRUE);`.
+	 * Default value is `10 000` by constant 
+	 * `AgGrid::CLIENT_JS_MAX_ROWS_IN_CACHE`.
 	 * @param  int|NULL $clientMaxRowsInCache 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
@@ -243,8 +244,9 @@ interface IConfigGettersSetters {
 	/**
 	 * Maximum number of rows in client browser cache.
 	 * This configuration is used if client cache is 
-	 * enabled by `$grid->SetclientCache(TRUE);`.
-	 * Default value is `NULL` for unlimited cache.
+	 * enabled by `$grid->SetClientCache(TRUE);`.
+	 * Default value is `10 000` by constant 
+	 * `AgGrid::CLIENT_JS_MAX_ROWS_IN_CACHE`.
 	 * @return int|NULL
 	 */
 	public function GetClientMaxRowsInCache ();

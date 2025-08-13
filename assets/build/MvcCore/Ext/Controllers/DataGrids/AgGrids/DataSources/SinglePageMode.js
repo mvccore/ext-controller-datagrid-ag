@@ -49,7 +49,7 @@ var MvcCore;
                                 _this.rowCount = undefined;
                                 _this.scrolled = false;
                                 _this.pageLoadedState = 0;
-                                _this.initDataCache = _this.grid.GetServerConfig().clientMaxRowsInCache > 0;
+                                _this.initDataCache = _this.grid.GetServerConfig().clientCache;
                                 _this.requestCounter = 0;
                                 _this.initLocationHref = location.href;
                                 _this.initPageReqDataAndCache();
@@ -64,10 +64,19 @@ var MvcCore;
                                 this.scrolled = scrolled;
                                 return this;
                             };
+                            SinglePageMode.prototype.UpdateRows = function (rowsData) {
+                                if (this.cache.GetEnabled())
+                                    this.cache.Update(rowsData);
+                                this.grid.GetGridApi().refreshInfiniteCache();
+                                return this;
+                            };
                             SinglePageMode.prototype.initPageReqDataAndCache = function () {
                                 _super.prototype.initPageReqDataAndCache.call(this);
                                 this.cache.SetEnabled(true);
-                                this.cache.Add(this.cache.Key(this.pageReqData), {});
+                                this.cache.Add(this.cache.Key(this.pageReqData), {
+                                    data: this.initialData.data,
+                                    dataCount: this.initialData.data.length
+                                });
                             };
                             /** Callback the grid calls that you implement to fetch rows from the server. */
                             SinglePageMode.prototype.getRows = function (params) {
@@ -198,6 +207,7 @@ var MvcCore;
                                     this.pageLoadedState = 4;
                                 }
                                 var cacheKey = this.cache.Key(reqData);
+                                this.cache.Add(cacheKey, response);
                                 if (this.changeUrlSwitches.has(cacheKey) && this.changeUrlSwitches.get(cacheKey)) {
                                     this.changeUrlSwitches.delete(cacheKey);
                                 }

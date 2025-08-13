@@ -266,6 +266,10 @@ var MvcCore;
                         var _a = __read(this.dataSource.GetLastHistory(), 4), stateData = _a[0], page = _a[2], count = _a[3];
                         return this.dataSource.CompleteDocumentTitle(stateData, page, count);
                     };
+                    AgGrid.prototype.UpdateRows = function (rowsData) {
+                        this.dataSource.UpdateRows(rowsData);
+                        return this;
+                    };
                     AgGrid.prototype.initSubClasses = function () {
                         var _a, _b;
                         var extendedClasses = this.Static.Classes, origClasses = AgGrid.Classes, helpersType = (_b = (_a = extendedClasses === null || extendedClasses === void 0 ? void 0 : extendedClasses.Tools) === null || _a === void 0 ? void 0 : _a.Helpers) !== null && _b !== void 0 ? _b : origClasses.Tools.Helpers;

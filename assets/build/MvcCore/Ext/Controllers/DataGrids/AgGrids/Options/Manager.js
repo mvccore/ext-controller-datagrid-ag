@@ -192,7 +192,7 @@ var MvcCore;
                                 // how many pages to store in cache. default is undefined, which allows an infinite sized cache,
                                 // pages are never purged. this should be set for large data to stop your browser from getting
                                 // full of data
-                                if (serverConfig.clientMaxRowsInCache > 0) {
+                                if (serverConfig.clientCache && serverConfig.clientMaxRowsInCache > 0) {
                                     this.agOptions.maxBlocksInCache = Math.round(serverConfig.clientMaxRowsInCache / serverConfig.clientRequestBlockSize);
                                 }
                                 else {

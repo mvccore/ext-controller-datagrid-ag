@@ -266,12 +266,8 @@ trait InitMethods {
 	 * @return void
 	 */
 	protected function initClientCache () {
-		if ($this->clientCache) {
-			if ($this->clientMaxRowsInCache === NULL)
-				$this->clientMaxRowsInCache = AgGridConsts::CLIENT_JS_MAX_ROWS_IN_CACHE;
-		} else {
-			$this->clientMaxRowsInCache = 0;
-		}
+		if ($this->clientCache && $this->clientMaxRowsInCache === NULL)
+			$this->clientMaxRowsInCache = AgGridConsts::CLIENT_JS_MAX_ROWS_IN_CACHE;
 	}
 
 	/**

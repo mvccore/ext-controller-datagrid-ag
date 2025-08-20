@@ -6,6 +6,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Interfaces {
         columns: {
             [columnUrlName: string]: IServerConfigs.IColumn;
         };
+        columnIdsSeparator: string;
         locales: IServerConfigs.ILocales;
         urlSegments: IServerConfigs.IUrlSegment;
         filterOperatorPrefixes: Map<Enums.Operator, string>;
@@ -14,6 +15,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Interfaces {
         clientPageMode: Enums.ClientPageMode;
         urlData: string;
         urlColumnsChanges: string;
+        urlColumnsStates: string;
         gridUrlParamName: string;
         gridActionParamName: string;
         gridActionColumnStates: string;
@@ -30,6 +32,7 @@ declare namespace MvcCore.Ext.Controllers.DataGrids.AgGrids.Interfaces {
         clientChangeHistory: boolean;
         clientTitleTemplate?: string;
         clientRequestBlockSize: number;
+        clientCache: boolean;
         clientRowBuffer: number;
         clientMaxRowsInCache: number;
         clientRowBufferMax: number;

@@ -3,8 +3,8 @@
  * @author	Tom Flidr | tomflidr(at)gmail(dot)com
  * @url		https://github.com/tomFlidr/ajax.js
  * @licence	https://tomflidr.github.io/ajax.js/LICENSE.md
- * @version	1.0.15
- * @date	2024-10-29
+ * @version	1.0.16
+ * @date	2024-12-16
  * @example
  *
  *    var xhr = Ajax.load(<Ajax.cfg.Load>{
@@ -238,6 +238,8 @@
 			_processRequest: function (method) {
 				var scope = this;
 				scope.oldIe = !!d.all;
+				if (scope.url.indexOf('&amp;') !== -1)
+					scope.url = scope.url.replace(/\&amp;/g, '&');
 				if (scope.type == jsonpStr) {
 					return scope._processScriptRequest();
 				} else {
@@ -265,8 +267,6 @@
 				Ajax[scope.callbackName] = function (data) {
 					scope._handlerScriptRequestSuccess(data);
 				};
-				if (scope.url.indexOf('&amp;') !== -1)
-					scope.url = scope.url.replace(/\&amp;/g, '&');
 				scope._completeUriAndGetParams(getStr, !0);
 				scriptElm[setAttributeStr]('src', scope.url);
 				scope._callBeforeHandlers();

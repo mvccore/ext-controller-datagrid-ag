@@ -40,33 +40,33 @@ interface IRendering extends \MvcCore\Ext\Controllers\DataGrids\Configs\IRenderi
 
 	/**
 	 * Get AgGrid theme name.
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetTheme ();
 	
 	/**
 	 * Set custom handler to assign all AgGrid assets response output.
-	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL $assetsHandler 
+	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|null $assetsHandler 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
 	public function SetHandlerAssets ($handlerAssets);
 
 	/**
 	 * Get custom handler to assign all AgGrid assets response output.
-	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|null
 	 */
 	public function GetHandlerAssets ();
 
 	/**
 	 * Set table head filtering html title attribute.
-	 * @param  string|NULL $tableHeadFilteringTitle
+	 * @param  ?string $tableHeadFilteringTitle
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
 	public function SetTableHeadFilteringTitle ($tableHeadFilteringTitle);
 
 	/**
 	 * Get table head filtering html title attribute.
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetTableHeadFilteringTitle ();
 

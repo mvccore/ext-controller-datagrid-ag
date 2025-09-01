@@ -22,13 +22,13 @@ trait TGridRow {
 
 	/**
 	 * Cache for local instance properties to serialize in JSON data.
-	 * @var array<string, bool>|NULL
+	 * @var ?array<string, bool>
 	 */
 	protected static $activeColumns = NULL;
 	
 	/**
 	 * @inheritDoc
-	 * @return array|NULL
+	 * @return ?array
 	 */
 	public static function GetActiveColumns () {
 		return self::$activeColumns;

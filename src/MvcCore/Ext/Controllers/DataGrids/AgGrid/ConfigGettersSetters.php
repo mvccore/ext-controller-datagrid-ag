@@ -33,7 +33,7 @@ trait ConfigGettersSetters {
 
 	/**
 	 * @inheritDoc
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetId () {
 		return $this->id;
@@ -164,7 +164,7 @@ trait ConfigGettersSetters {
 
 	/**
 	 * @inheritDoc
-	 * @return \DateInterval|NULL
+	 * @return ?\DateInterval
 	 */
 	public function GetTimeZoneOffset () {
 		if ($this->timeZoneOffset === NULL) {
@@ -205,7 +205,7 @@ trait ConfigGettersSetters {
 
 	/**
 	 * @inheritDoc
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetClientPageMode () {
 		return $this->clientPageMode;
@@ -224,7 +224,7 @@ trait ConfigGettersSetters {
 
 	/**
 	 * @inheritDoc
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetClientRequestBlockSize () {
 		return $this->clientRequestBlockSize;
@@ -243,7 +243,7 @@ trait ConfigGettersSetters {
 
 	/**
 	 * @inheritDoc
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetClientRowBuffer () {
 		return $this->clientRowBuffer;
@@ -251,7 +251,7 @@ trait ConfigGettersSetters {
 	
 	/**
 	 * @inheritDoc
-	 * @param  int|NULL $clientMaxRowsInCache 
+	 * @param  ?int $clientMaxRowsInCache 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
 	public function SetClientMaxRowsInCache ($clientMaxRowsInCache) {
@@ -262,7 +262,7 @@ trait ConfigGettersSetters {
 
 	/**
 	 * @inheritDoc
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetClientMaxRowsInCache () {
 		return $this->clientMaxRowsInCache;
@@ -289,7 +289,7 @@ trait ConfigGettersSetters {
 	
 	/**
 	 * @inheritDoc
-	 * @param  string|NULL $clientTitleTemplate
+	 * @param  ?string $clientTitleTemplate
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
 	public function SetClientTitleTemplate ($clientTitleTemplate) {
@@ -300,7 +300,7 @@ trait ConfigGettersSetters {
 
 	/**
 	 * @inheritDoc
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetClientTitleTemplate () {
 		return $this->clientTitleTemplate;
@@ -338,7 +338,7 @@ trait ConfigGettersSetters {
 
 	/**
 	 * @inheritDoc
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetUrlData () {
 		return $this->urlData;

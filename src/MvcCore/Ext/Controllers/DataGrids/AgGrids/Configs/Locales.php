@@ -22,7 +22,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * Global localization settings - for numeric, money and datetime columns.
 	 * First item is lowercase language code, second item is uppercase country code.
-	 * @var \string[]|NULL
+	 * @var ?\string[]
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
@@ -31,7 +31,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * Localization settings for numeric columns (integers and floats).
 	 * First item is lowercase language code, second item is uppercase country code.
-	 * @var \string[]|NULL
+	 * @var ?\string[]
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
@@ -40,7 +40,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * Localization settings for money columns.
 	 * First item is lowercase language code, second item is uppercase country code.
-	 * @var \string[]|NULL
+	 * @var ?\string[]
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
@@ -49,7 +49,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * Localization settings for datetime columns.
 	 * First item is lowercase language code, second item is uppercase country code.
-	 * @var \string[]|NULL
+	 * @var ?\string[]
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
@@ -58,7 +58,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * Currency code for money columns, three uppercase letters.
 	 * This settings is used for client javascript `Intl` currency formater.
-	 * @var string|NULL
+	 * @var ?string
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
@@ -67,7 +67,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * Currency sign for money columns, not used by default.
 	 * This settings is prepared for any extended money formatter.
-	 * @var string|NULL
+	 * @var ?string
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
@@ -76,7 +76,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * Currency float fractions length for money columns, 2 by default.
 	 * This settings is used for client javascript `Intl` currency formater.
-	 * @var int|NULL
+	 * @var ?int
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
@@ -85,7 +85,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * Currency float fraction digits to round for money columns, 2 by default.
 	 * This settings is used for client javascript `Intl` currency formater.
-	 * @var int|NULL
+	 * @var ?int
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
@@ -94,7 +94,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * Standard float fractions length for float columns, 2 by default.
 	 * This settings is used for client javascript `Intl` float formater.
-	 * @var int|NULL
+	 * @var ?int
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
@@ -184,7 +184,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * @inheritDoc
 	 * @param  bool $asString
-	 * @return \string[]|NULL
+	 * @return ?\string[]
 	 */
 	public function GetLocale ($asString = FALSE) {
 		return $asString && $this->locale !== NULL
@@ -193,7 +193,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	/**
 	 * @inheritDoc
-	 * @param  \string[]|NULL $locale
+	 * @param  ?\string[] $locale
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetLocale ($locale) {
@@ -207,7 +207,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	/**
 	 * @inheritDoc
 	 * @param  bool $asString
-	 * @return \string[]|NULL
+	 * @return ?\string[]
 	 */
 	public function GetLocaleNumeric ($asString = FALSE) {
 		return $asString && $this->localeNumeric !== NULL
@@ -216,7 +216,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	/**
 	 * @inheritDoc
-	 * @param  \string[]|NULL $localeNumeric
+	 * @param  ?\string[] $localeNumeric
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetLocaleNumeric ($localeNumeric) {
@@ -226,7 +226,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 
 	/**
 	 * @inheritDoc
-	 * @return \string[]|NULL
+	 * @return ?\string[]
 	 */
 	public function GetLocaleMoney ($asString = FALSE) {
 		return $asString && $this->localeMoney !== NULL
@@ -235,7 +235,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	/**
 	 * @inheritDoc
-	 * @param  \string[]|NULL $localeMoney
+	 * @param  ?\string[] $localeMoney
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetLocaleMoney ($localeMoney) {
@@ -245,7 +245,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	
 	/**
 	 * @inheritDoc
-	 * @return \string[]|NULL
+	 * @return ?\string[]
 	 */
 	public function GetLocaleDateTime ($asString = FALSE) {
 		return $asString && $this->localeDateTime !== NULL
@@ -254,7 +254,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	}
 	/**
 	 * @inheritDoc
-	 * @param  \string[]|NULL $localeDateTime
+	 * @param  ?\string[] $localeDateTime
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetLocaleDateTime ($localeDateTime) {
@@ -264,14 +264,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	
 	/**
 	 * @inheritDoc
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetCurrencyCode () {
 		return $this->currencyCode;
 	}
 	/**
 	 * @inheritDoc
-	 * @param  string|NULL $currencyCode 
+	 * @param  ?string $currencyCode 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencyCode ($currencyCode) {
@@ -281,14 +281,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	
 	/**
 	 * @inheritDoc
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetCurrencySign () {
 		return $this->currencySign;
 	}
 	/**
 	 * @inheritDoc
-	 * @param  string|NULL $currencyCode 
+	 * @param  ?string $currencyCode 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencySign ($currencySign) {
@@ -298,14 +298,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 
 	/**
 	 * @inheritDoc
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetCurrencyFractions () {
 		return $this->currencyFractions;
 	}
 	/**
 	 * @inheritDoc
-	 * @param  int|NULL $currencyFractions 
+	 * @param  ?int $currencyFractions 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencyFractions ($currencyFractions) {
@@ -315,14 +315,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 
 	/**
 	 * @inheritDoc
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetCurrencyRoundIncrement () {
 		return $this->currencyRoundIncrement;
 	}
 	/**
 	 * @inheritDoc
-	 * @param  int|NULL $currencyRoundIncrement
+	 * @param  ?int $currencyRoundIncrement
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencyRoundIncrement ($currencyRoundIncrement) {
@@ -332,14 +332,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\ILocales,
 	
 	/**
 	 * @inheritDoc
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetFloatFractions () {
 		return $this->floatFractions;
 	}
 	/**
 	 * @inheritDoc
-	 * @param  int|NULL $floatFractions 
+	 * @param  ?int $floatFractions 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetFloatFractions ($floatFractions) {

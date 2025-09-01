@@ -192,7 +192,7 @@ trait ActionMethods {
 	/**
 	 * Complete response data controls.
 	 * @param  string $gridPath 
-	 * @return \stdClass|NULL
+	 * @return ?\stdClass
 	 */
 	protected function dataActionGetControls ($gridPath) {
 		$controls = NULL;

@@ -21,14 +21,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	
 	/**
 	 * Model PHP code propery name.
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	protected $propName = NULL;
 
 	/**
 	 * Datagrid column index, starting with `0`, optional.
 	 * @jsonSerialize
-	 * @var int|NULL
+	 * @var ?int
 	 */
 	#[JsonSerialize]
 	protected $columnIndex = NULL;
@@ -39,15 +39,15 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	 * or string including `px` or `%` units.
 	 * Width is used only for table grid type.
 	 * @jsonSerialize
-	 * @var string|int|float|NULL
+	 * @var string|int|float|null
 	 */
 	#[JsonSerialize]
 	protected $width = NULL;
 	
 	/**
-	 * `TRUE` for disabled column, `FALSE|NULL` for enabled column (enabled by default).
+	 * `TRUE` for disabled column, `FALSE|null` for enabled column (enabled by default).
 	 * @jsonSerialize
-	 * @var bool|NULL
+	 * @var ?bool
 	 */
 	#[JsonSerialize]
 	protected $disabled = NULL;
@@ -55,13 +55,13 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 
 	/**
 	 * Create datagrid column config item.
-	 * @param string|NULL           $propName     Data grid model property name.
-	 * @param int|NULL              $columnIndex  Datagrid column index, starting with `0`.
-	 * @param string|int|float|NULL $width        Column initial or current width, it can be defined 
+	 * @param ?string               $propName     Data grid model property name.
+	 * @param ?int                  $columnIndex  Datagrid column index, starting with `0`.
+	 * @param string|int|float|null $width        Column initial or current width, it can be defined 
 	 *                                            as integer for pixel value, float for flex value
 	 *                                            or string including `px` or `%` units.
 	 *                                            Width is used only for table grid type.
-	 * @param bool|NULL             $disabled     Force column disable (enabled by default).
+	 * @param ?bool                 $disabled     Force column disable (enabled by default).
 	 */
 	public function __construct ($propName, $columnIndex, $width, $disabled) {
 		$this->propName		= $propName;
@@ -72,7 +72,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 
 	/**
 	 * @inheritDoc
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetPropName () {
 		return $this->propName;
@@ -80,7 +80,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 
 	/**
 	 * @inheritDoc
-	 * @param  string|NULL $propName
+	 * @param  ?string $propName
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
 	public function SetPropName ($propName) {
@@ -90,7 +90,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 	
 	/**
 	 * @inheritDoc
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetColumnIndex () {
 		return $this->columnIndex;
@@ -98,7 +98,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 
 	/**
 	 * @inheritDoc
-	 * @param  int|NULL $columnIndex
+	 * @param  ?int $columnIndex
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
 	public function SetColumnIndex ($columnIndex) {
@@ -108,7 +108,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 
 	/**
 	 * @inheritDoc
-	 * @return string|int|float|NULL
+	 * @return string|int|float|null
 	 */
 	public function GetWidth () {
 		return $this->width;
@@ -116,7 +116,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 
 	/**
 	 * @inheritDoc
-	 * @param  string|int|float|NULL $width
+	 * @param  string|int|float|null $width
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
 	public function SetWidth ($width) {
@@ -126,7 +126,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 
 	/**
 	 * @inheritDoc
-	 * @return bool|NULL
+	 * @return ?bool
 	 */
 	public function GetDisabled () {
 		return $this->disabled;
@@ -134,7 +134,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IPersistentColumn,
 
 	/**
 	 * @inheritDoc
-	 * @param  bool|NULL $disabled
+	 * @param  ?bool $disabled
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
 	public function SetDisabled ($disabled) {

@@ -33,7 +33,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 
 	/**
 	 * AgGrid theme name.
-	 * @var string|NULL
+	 * @var ?string
 	 * @jsonSerialize
 	 */
 	#[JsonSerialize]
@@ -41,14 +41,14 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	
 	/**
 	 * Custom handler to assign all AgGrid assets response output.
-	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL
+	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|null
 	 */
 	protected $handlerAssets					= NULL;
 
 	/**
 	 * Table head filtering html title attribute.
 	 * @jsonSerialize
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	#[JsonSerialize]
 	protected $tableHeadFilteringTitle			= NULL;
@@ -81,7 +81,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	/**
 	 * Custom datagrid refresh control template (only AgGrid datagrid type).
 	 * Relative from `/App/Views/Scripts` without file extension.
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	protected $templateControlRefresh			= NULL;
 
@@ -105,7 +105,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 
 	/**
 	 * @inheritDoc
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetTheme () {
 		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering $this */
@@ -114,7 +114,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	
 	/**
 	 * @inheritDoc
-	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL $handlerAssets 
+	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|null $handlerAssets 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
 	public function SetHandlerAssets ($handlerAssets) {
@@ -125,7 +125,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 
 	/**
 	 * @inheritDoc
-	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|NULL
+	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\IHandlerAssets|callable|null
 	 */
 	public function GetHandlerAssets () {
 		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering $this */
@@ -134,7 +134,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 	
 	/**
 	 * @inheritDoc
-	 * @param  string|NULL $tableHeadFilteringTitle
+	 * @param  ?string $tableHeadFilteringTitle
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
 	public function SetTableHeadFilteringTitle ($tableHeadFilteringTitle) {
@@ -145,7 +145,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\IRendering {
 
 	/**
 	 * @inheritDoc
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetTableHeadFilteringTitle () {
 		/** @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering $this */

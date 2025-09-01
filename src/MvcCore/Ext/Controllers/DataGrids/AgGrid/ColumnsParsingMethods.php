@@ -28,7 +28,7 @@ trait ColumnsParsingMethods {
 	 * @param  array<int,ColumnMeta> $modelMetaData
 	 * @param  bool                  $attrsAnotations
 	 * @param  string|\MvcCore\Tool  $toolClass
-	 * @return \MvcCore\Ext\Controllers\DataGrids\Configs\Column|NULL
+	 * @return ?\MvcCore\Ext\Controllers\DataGrids\Configs\Column
 	 */
 	protected function parseConfigColumn (
 		\ReflectionProperty $prop, $index, $modelMetaData, $attrsAnotations, $toolClass

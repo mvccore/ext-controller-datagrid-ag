@@ -17,26 +17,26 @@ interface IPersistentColumn {
 	
 	/**
 	 * Get data grid model property name.
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetPropName ();
 
 	/**
 	 * Set data grid model property name.
-	 * @param  string|NULL $propName
+	 * @param  ?string $propName
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
 	public function SetPropName ($propName);
 
 	/**
 	 * Get datagrid column index, starting with `0`, optional.
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetColumnIndex ();
 
 	/**
 	 * Set datagrid column index, starting with `0`, optional.
-	 * @param  int|NULL $columnIndex
+	 * @param  ?int $columnIndex
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
 	public function SetColumnIndex ($columnIndex);
@@ -46,7 +46,7 @@ interface IPersistentColumn {
 	 * as integer for pixel value, float for flex value
 	 * or string including `px` or `%` units.
 	 * Width is used only for table grid type.
-	 * @return string|int|float|NULL
+	 * @return string|int|float|null
 	 */
 	public function GetWidth ();
 
@@ -55,20 +55,20 @@ interface IPersistentColumn {
 	 * as integer for pixel value, float for flex value
 	 * or string including pixels or percentage value.
 	 * Width is used only for table grid type.
-	 * @param  string|int|float|NULL $width
+	 * @param  string|int|float|null $width
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
 	public function SetWidth ($width);
 	
 	/**
-	 * Get `TRUE` for disabled column, `FALSE|NULL` for enabled column (enabled by default).
-	 * @return bool|NULL
+	 * Get `TRUE` for disabled column, `FALSE|null` for enabled column (enabled by default).
+	 * @return ?bool
 	 */
 	public function GetDisabled ();
 
 	/**
-	 * Set `TRUE` for disabled column, `FALSE|NULL` for enabled column (enabled by default).
-	 * @param  bool|NULL $disabled
+	 * Set `TRUE` for disabled column, `FALSE|null` for enabled column (enabled by default).
+	 * @param  ?bool $disabled
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\PersistentColumn
 	 */
 	public function SetDisabled ($disabled);

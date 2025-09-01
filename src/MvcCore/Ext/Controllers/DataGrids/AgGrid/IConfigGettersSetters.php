@@ -18,7 +18,7 @@ interface IConfigGettersSetters {
 	/**
 	 * Datagrid unique id, used to cache parsed columns configuration
 	 * and to identificate grid element on current page.
-	 * @param  string|NULL $id 
+	 * @param  ?string $id 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
 	public function SetId ($id);
@@ -26,7 +26,7 @@ interface IConfigGettersSetters {
 	/**
 	 * Datagrid unique id, used to cache parsed columns configuration
 	 * and to identificate grid element on current page.
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetId ();
 	
@@ -152,7 +152,7 @@ interface IConfigGettersSetters {
 
 	/**
 	 * User time zone offset.
-	 * @return \DateInterval|NULL
+	 * @return ?\DateInterval
 	 */
 	public function GetTimeZoneOffset ();
 	
@@ -192,7 +192,7 @@ interface IConfigGettersSetters {
 	 * If you do not configure this property, page mode will be mixed,
 	 * for pages with scale higher than `0` will be used `CLIENT_PAGE_MODE_MULTI`
 	 * and for scale `0` (all items) will be used `CLIENT_PAGE_MODE_SINGLE`.
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetClientPageMode ();
 	
@@ -207,7 +207,7 @@ interface IConfigGettersSetters {
 	/**
 	 * How many rows for each block in the store, i.e. how many 
 	 * rows returned from the server at a time in AJAX response. Default: 100.
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetClientRequestBlockSize ();
 	
@@ -226,7 +226,7 @@ interface IConfigGettersSetters {
 	 * outside the viewable area the grid renders. Having a buffer 
 	 * means the grid will have rows ready to show as the user 
 	 * slowly scrolls vertically. Default: 10.
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetClientRowBuffer ();
 	
@@ -236,7 +236,7 @@ interface IConfigGettersSetters {
 	 * enabled by `$grid->SetClientCache(TRUE);`.
 	 * Default value is `10 000` by constant 
 	 * `AgGrid::CLIENT_JS_MAX_ROWS_IN_CACHE`.
-	 * @param  int|NULL $clientMaxRowsInCache 
+	 * @param  ?int $clientMaxRowsInCache 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
 	public function SetClientMaxRowsInCache ($clientMaxRowsInCache);
@@ -247,7 +247,7 @@ interface IConfigGettersSetters {
 	 * enabled by `$grid->SetClientCache(TRUE);`.
 	 * Default value is `10 000` by constant 
 	 * `AgGrid::CLIENT_JS_MAX_ROWS_IN_CACHE`.
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetClientMaxRowsInCache ();
 
@@ -284,7 +284,7 @@ interface IConfigGettersSetters {
 	 * If grid has configured constant `self::URL_PARAM_GRID` to something
 	 * else then `<grid>`, then also this placeholder will be different
 	 * by value of this constant.
-	 * @param  string|NULL $clientTitleTemplate
+	 * @param  ?string $clientTitleTemplate
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrid
 	 */
 	public function SetClientTitleTemplate ($clientTitleTemplate);
@@ -307,7 +307,7 @@ interface IConfigGettersSetters {
 	 * If grid has configured constant `self::URL_PARAM_GRID` to something
 	 * else then `<grid>`, then also this placeholder will be different
 	 * by value of this constant.
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetClientTitleTemplate ();
 	
@@ -397,7 +397,7 @@ interface IConfigGettersSetters {
 	 * }
 	 * ```
 	 * Everything else will be handled by grid itself.
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetUrlData ();
 	

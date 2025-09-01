@@ -33,7 +33,7 @@ class View extends \MvcCore\Ext\Controllers\DataGrids\View {
 
 	/**
 	 * AgGrid assets directory by AgGrid main class location, initialized ondemand.
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	protected static $gridAssetsDir = NULL;
 

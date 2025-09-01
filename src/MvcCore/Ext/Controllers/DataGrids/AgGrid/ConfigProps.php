@@ -23,7 +23,7 @@ trait ConfigProps {
 	/**
 	 * Datagrid unique id, used to cache parsed columns configuration
 	 * and to identificate grid element on current page.
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	protected $id							= NULL;
 
@@ -32,13 +32,13 @@ trait ConfigProps {
 	 * You can easily configure datagrid component parts, style 
 	 * and controls by providing this object custom instance.
 	 * This object is created automatically by default if not provided.
-	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering|NULL
+	 * @var ?\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
 	//protected $configRendering				= NULL;
 
 	/**
 	 * Localization properties configuration object.
-	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales|NULL
+	 * @var ?\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	protected $configLocales				= NULL;
 
@@ -82,7 +82,7 @@ trait ConfigProps {
 
 	/**
 	 * User time zone offset.
-	 * @var \DateInterval|NULL
+	 * @var ?\DateInterval
 	 */
 	protected $timeZoneOffset				= NULL;
 
@@ -101,14 +101,14 @@ trait ConfigProps {
 	 * If you do not configure this property, page mode will be mixed,
 	 * for pages with scale higher than `0` will be used `CLIENT_PAGE_MODE_MULTI`
 	 * and for scale `0` (all items) will be used `CLIENT_PAGE_MODE_SINGLE`.
-	 * @var int|NULL
+	 * @var ?int
 	 */
 	protected $clientPageMode				= NULL;
 	
 	/**
 	 * How many rows for each block in the store, i.e. how many 
 	 * rows returned from the server at a time in AJAX response. Default: 100.
-	 * @var int|NULL
+	 * @var ?int
 	 */
 	protected $clientRequestBlockSize		= NULL;
 	
@@ -117,7 +117,7 @@ trait ConfigProps {
 	 * outside the viewable area the grid renders. Having a buffer 
 	 * means the grid will have rows ready to show as the user 
 	 * slowly scrolls vertically. Default: 10.
-	 * @var int|NULL
+	 * @var ?int
 	 */
 	protected $clientRowBuffer				= NULL;
 	
@@ -127,7 +127,7 @@ trait ConfigProps {
 	 * enabled by `$grid->SetClientCache(TRUE);`.
 	 * Default value is `10 000` by constant 
 	 * `AgGrid::CLIENT_JS_MAX_ROWS_IN_CACHE`.
-	 * @var int|NULL
+	 * @var ?int
 	 */
 	protected $clientMaxRowsInCache			= NULL;
 	
@@ -156,7 +156,7 @@ trait ConfigProps {
 	 * If grid has configured constant `self::URL_PARAM_GRID` to something
 	 * else then `<grid>`, then also this placeholder will be different
 	 * by value of this constant.
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	protected $clientTitleTemplate			= NULL;
 	
@@ -200,7 +200,7 @@ trait ConfigProps {
 	 * }
 	 * ```
 	 * Everything else will be handled by grid itself.
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	protected $urlData						= NULL;
 	
@@ -232,7 +232,7 @@ trait ConfigProps {
 	 * }
 	 * ```
 	 * Everything else will be handled by grid itself.
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	protected $urlColumnsStates				= NULL;
 	
@@ -264,7 +264,7 @@ trait ConfigProps {
 	 * }
 	 * ```
 	 * Everything else will be handled by grid itself.
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	protected $urlColumnsChanges			= NULL;
 

@@ -19,7 +19,7 @@ interface IGridRow extends \MvcCore\Ext\Controllers\DataGrids\Models\IGridRow {
 	 * Get metadata collection to set up database values 
 	 * inside current row class more faster in in `SetValues()` method
 	 * or serialize data more faster in method `$row->jsonSerialize()`.
-	 * @return array|NULL
+	 * @return ?array
 	 */
 	public static function GetActiveColumns ();
 	

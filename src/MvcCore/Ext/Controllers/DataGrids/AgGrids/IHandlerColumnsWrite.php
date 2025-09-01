@@ -17,8 +17,8 @@ interface IHandlerColumnsWrite {
 	
 	/**
 	 * Custom handler to write user column configurations into any place.
-	 * @param  string   $idGrid 
-	 * @param  int|NULL $idUser 
+	 * @param  string $idGrid 
+	 * @param  ?int   $idUser 
 	 * @param  \MvcCore\Ext\Controllers\DataGrids\AgGrids\Iterators\PersistentColumns $persistentColumns 
 	 * @return void
 	 */

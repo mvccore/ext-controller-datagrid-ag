@@ -53,7 +53,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\IAgGrid {
 	/**
 	 * Row model class full name, not required, 
 	 * if `NULL`, grid model class is used.
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	protected $rowClass = IConstantsBase::ROW_MODEL_CLASS_DEFAULT;
 
@@ -62,7 +62,7 @@ implements	\MvcCore\Ext\Controllers\DataGrids\IAgGrid {
 	 * You can easily configure datagrid component parts, style 
 	 * and controls by providing this object custom instance.
 	 * This object is created automatically by default if not provided.
-	 * @var \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering|NULL
+	 * @var ?\MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Rendering
 	 */
 	protected $configRendering				= NULL;
 	

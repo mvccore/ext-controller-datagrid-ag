@@ -30,7 +30,7 @@ trait InternalProps {
 	 * If `TRUE`, client row model is configured to single page 
 	 * continuous ajax loading and request is targeted to data action.
 	 * @internal
-	 * @var bool|NULL
+	 * @var ?bool
 	 */
 	protected $ajaxDataRequest				= NULL;
 
@@ -51,7 +51,7 @@ trait InternalProps {
 	 * Grid data array serialized to client script into 
 	 * `MvcCore.Ext.Controllers.DataGrids.AgGrid` constructor  
 	 * as first argument with server configuration.
-	 * @var array<string,mixed>|NULL
+	 * @var ?array<string,mixed>
 	 */
 	protected $clientServerConfig			= NULL;
 
@@ -59,7 +59,7 @@ trait InternalProps {
 	 * Grid data array serialized to client script into 
 	 * `MvcCore.Ext.Controllers.DataGrids.AgGrid` constructor 
 	 * as second argument with initial data.
-	 * @var array<string,mixed>|NULL
+	 * @var ?array<string,mixed>
 	 */
 	protected $clientInitData				= NULL;
 

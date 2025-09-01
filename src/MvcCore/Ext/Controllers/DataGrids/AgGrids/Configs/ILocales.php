@@ -124,104 +124,104 @@ interface ILocales {
 
 	/**
 	 * 
-	 * @return \string[]|NULL
+	 * @return ?\string[]
 	 */
 	public function GetLocaleNumeric ();
 
 	/**
 	 * 
-	 * @param  \string[]|NULL $localeNumeric
+	 * @param  ?\string[] $localeNumeric
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetLocaleNumeric ($localeNumeric);
 
 	/**
 	 * 
-	 * @return \string[]|NULL
+	 * @return ?\string[]
 	 */
 	public function GetLocaleMoney ();
 
 	/**
 	 * 
-	 * @param  \string[]|NULL $localeMoney
+	 * @param  ?\string[] $localeMoney
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetLocaleMoney ($localeMoney);
 	
 	/**
 	 * 
-	 * @return \string[]|NULL
+	 * @return ?\string[]
 	 */
 	public function GetLocaleDateTime ();
 
 	/**
 	 * 
-	 * @param  \string[]|NULL $localeDateTime
+	 * @param  ?\string[] $localeDateTime
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetLocaleDateTime ($localeDateTime);
 	
 	/**
 	 * 
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetCurrencyCode ();
 
 	/**
 	 * 
-	 * @param  string|NULL $currencyCode 
+	 * @param  ?string $currencyCode 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencyCode ($currencyCode);
 	
 	/**
 	 * 
-	 * @return string|NULL
+	 * @return ?string
 	 */
 	public function GetCurrencySign ();
 
 	/**
 	 * 
-	 * @param  string|NULL $currencyCode 
+	 * @param  ?string $currencyCode 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencySign ($currencySign);
 
 	/**
 	 * 
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetCurrencyFractions ();
 
 	/**
 	 * 
-	 * @param  int|NULL $currencyFractions 
+	 * @param  ?int $currencyFractions 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencyFractions ($currencyFractions);
 
 	/**
 	 * 
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetCurrencyRoundIncrement ();
 
 	/**
 	 * 
-	 * @param  int|NULL $currencyRoundIncrement
+	 * @param  ?int $currencyRoundIncrement
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetCurrencyRoundIncrement ($currencyRoundIncrement);
 	
 	/**
 	 * 
-	 * @return int|NULL
+	 * @return ?int
 	 */
 	public function GetFloatFractions ();
 
 	/**
 	 * 
-	 * @param  int|NULL $floatFractions 
+	 * @param  ?int $floatFractions 
 	 * @return \MvcCore\Ext\Controllers\DataGrids\AgGrids\Configs\Locales
 	 */
 	public function SetFloatFractions ($floatFractions);

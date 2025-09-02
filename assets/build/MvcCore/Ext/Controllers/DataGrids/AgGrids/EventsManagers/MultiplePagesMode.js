@@ -77,12 +77,25 @@ var MvcCore;
                                 if (!exec)
                                     return false;
                                 this.handleRefreshResponseCallback = this.handleRefreshResponse.bind(this, refreshAnchor, loadingCls);
-                                var dataSourceCache = this.grid.GetDataSource().GetCache();
-                                dataSourceCache.SetEnabled(false);
+                                var cache = this.grid.GetDataSource().GetCache();
+                                if (cache.GetEnabled())
+                                    cache.Purge();
                                 this.AddEventListener('modelUpdate', this.handleRefreshResponseCallback);
                                 this.HandleExecChange();
-                                dataSourceCache.SetEnabled(true);
                                 return true;
+                            };
+                            MultiplePagesMode.prototype.ExecuteRefresh = function () {
+                                var _this = this;
+                                this.FireHandlers("beforeRefresh", new EventsManagers.Events.Base());
+                                this.handleRefreshResponseCallback = function (e) {
+                                    _this.FireHandlers("refresh", new EventsManagers.Events.Base());
+                                };
+                                var cache = this.grid.GetDataSource().GetCache();
+                                if (cache.GetEnabled())
+                                    cache.Purge();
+                                this.AddEventListener('modelUpdate', this.handleRefreshResponseCallback);
+                                this.HandleExecChange();
+                                return this;
                             };
                             MultiplePagesMode.prototype.handleRefreshResponse = function () {
                                 _super.prototype.handleRefreshResponse.call(this);

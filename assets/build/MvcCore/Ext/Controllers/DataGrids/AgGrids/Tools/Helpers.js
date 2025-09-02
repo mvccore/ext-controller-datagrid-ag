@@ -467,9 +467,9 @@ var MvcCore;
                                 if (!sources.length)
                                     return target;
                                 var source = sources.shift();
-                                if (this.isObject(target) && this.isObject(source)) {
+                                if (this.isObjectAndNotArray(target) && this.isObjectAndNotArray(source)) {
                                     for (var key in source) {
-                                        if (this.isObject(source[key])) {
+                                        if (this.isObjectAndNotArray(source[key])) {
                                             if (!target[key])
                                                 Object.assign(target, (_a = {}, _a[key] = {}, _a));
                                             this.MergeObjectsRecursively(target[key], source[key]);
@@ -492,8 +492,16 @@ var MvcCore;
                                     configColumn.parserArgs = parserArgsArr;
                                 }
                             };
-                            Helpers.prototype.isObject = function (item) {
-                                return (item && typeof item === 'object' && !Array.isArray(item));
+                            Helpers.prototype.isObjectAndNotArray = function (item) {
+                                return this.isObject(item) && !this.isArray(item);
+                            };
+                            Helpers.prototype.isObject = function (obj) {
+                                return obj != null && typeof (obj) == 'object';
+                            };
+                            Helpers.prototype.isArray = function (obj) {
+                                if (Array.isArray != null)
+                                    return Array.isArray(obj);
+                                return Object.prototype.toString.apply(obj).match(/^\[object ([a-zA-Z0-9]*)Array\]$/g) != null;
                             };
                             return Helpers;
                         }());

@@ -270,6 +270,10 @@ var MvcCore;
                         this.dataSource.UpdateRows(rowsData);
                         return this;
                     };
+                    AgGrid.prototype.Refresh = function () {
+                        this.eventsManager.ExecuteRefresh();
+                        return this;
+                    };
                     AgGrid.prototype.initSubClasses = function () {
                         var _a, _b;
                         var extendedClasses = this.Static.Classes, origClasses = AgGrid.Classes, helpersType = (_b = (_a = extendedClasses === null || extendedClasses === void 0 ? void 0 : extendedClasses.Tools) === null || _a === void 0 ? void 0 : _a.Helpers) !== null && _b !== void 0 ? _b : origClasses.Tools.Helpers;

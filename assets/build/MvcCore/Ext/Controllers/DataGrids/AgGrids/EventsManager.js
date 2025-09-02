@@ -484,7 +484,7 @@ var MvcCore;
                                 return this;
                             var optsMgr = this.grid.GetOptionsManager(), refreshAnchor = optsMgr.GetElements().refreshAnchor, loadingCls = optsMgr.Static.SELECTORS.BOTTOM_CONTROLS.REFRESH_ANCHOR_LOADING_CLS;
                             if (refreshAnchor != null)
-                                refreshAnchor.addEventListener('click', function (e) { _this.handleRefreshClick(refreshAnchor, loadingCls, e); });
+                                refreshAnchor.addEventListener('click', function (e) { return _this.handleRefreshClick(refreshAnchor, loadingCls, e); });
                             return this;
                         };
                         EventsManager.prototype.AddUrlChangeEvent = function () {
@@ -677,6 +677,9 @@ var MvcCore;
                             }
                             if (selectFirstRow)
                                 this.SelectRowByIndex(0);
+                        };
+                        EventsManager.prototype.ExecuteRefresh = function () {
+                            return this;
                         };
                         EventsManager.prototype.firefiltering = function (filteringBefore, filteringAfter) {
                             this.grid

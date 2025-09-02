@@ -1,3 +1,19 @@
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 var MvcCore;
 (function (MvcCore) {
     var Ext;
@@ -13,18 +29,34 @@ var MvcCore;
                         var Cache = /** @class */ (function () {
                             function Cache(grid) {
                                 var _a;
+                                this.helpers = grid.GetHelpers();
                                 var serverConfig = grid.GetServerConfig();
                                 this.enabled = serverConfig.clientCache;
                                 this.maxRows = (_a = serverConfig.clientMaxRowsInCache) !== null && _a !== void 0 ? _a : 0;
                                 this.store = new Map();
                                 this.agBaseOptions = grid.GetOptionsManager().GetAgBases();
+                                this.cacheBlockSize = this.agBaseOptions.GetAgOptions().cacheBlockSize;
                                 this.rowsIniquelyIdentified = this.agBaseOptions.GetRowsIniquelyIdentified();
-                                if (this.rowsIniquelyIdentified)
-                                    this.rows = new Map();
-                                this.keys = [];
+                                if (this.rowsIniquelyIdentified) {
+                                    this.rowIds2StoreIds = new Map();
+                                    this.storeIds2Keys = new Map();
+                                }
+                                this.storeIdsCounter = 0;
+                                this.reqDataKeys = [];
                                 this.rowsCount = 0;
                             }
                             ;
+                            Cache.prototype.Purge = function () {
+                                this.store = new Map();
+                                if (this.rowsIniquelyIdentified) {
+                                    this.rowIds2StoreIds = new Map();
+                                    this.storeIds2Keys = new Map();
+                                    this.storeIdsCounter = 0;
+                                }
+                                this.reqDataKeys = [];
+                                this.rowsCount = 0;
+                                return this;
+                            };
                             Cache.prototype.GetEnabled = function () {
                                 return this.enabled;
                             };
@@ -32,55 +64,57 @@ var MvcCore;
                                 this.enabled = enabled;
                                 return this;
                             };
-                            Cache.prototype.Key = function (obj) {
-                                return MD5(JSON.stringify(obj));
+                            Cache.prototype.Key = function (reqData) {
+                                return MD5(JSON.stringify(reqData));
                             };
-                            Cache.prototype.Has = function (key) {
+                            Cache.prototype.Has = function (reqDataKey) {
                                 if (!this.enabled)
                                     return false;
-                                return this.store.has(key);
+                                return this.store.has(reqDataKey);
                             };
-                            Cache.prototype.Get = function (key) {
-                                var response = this.store.get(key);
-                                if (this.rowsIniquelyIdentified) {
-                                    // replace ids with real records
-                                    var rowId, data = [];
-                                    for (var i = 0, l = response.data.length; i < l; i++) {
-                                        rowId = response.data[i];
-                                        data.push(this.rows.get(rowId));
-                                    }
-                                    response.data = data;
-                                }
+                            Cache.prototype.Get = function (reqDataKey) {
+                                var _a = __read(this.store.get(reqDataKey), 2), response = _a[1];
                                 return response;
                             };
-                            Cache.prototype.Add = function (key, response) {
+                            Cache.prototype.Add = function (reqDataKey, response) {
                                 if (!this.enabled)
                                     return this;
+                                var storeId = this.storeIdsCounter++;
                                 if (this.rowsIniquelyIdentified) {
-                                    // replace real records with ids
-                                    var row, rowId, data = [];
+                                    this.storeIds2Keys.set(storeId, reqDataKey);
+                                    var row, rowId;
                                     for (var i = 0, l = response.data.length; i < l; i++) {
                                         row = response.data[i];
                                         rowId = this.agBaseOptions.GetRowId(row);
-                                        data.push(rowId);
-                                        this.rows.set(rowId, row);
+                                        this.rowIds2StoreIds.set(rowId, [storeId, i]);
                                     }
-                                    response.data = data;
                                 }
-                                this.store.set(key, response);
-                                this.keys.push(key);
+                                this.store.set(reqDataKey, [storeId, response]);
+                                this.reqDataKeys.push(reqDataKey);
                                 this.rowsCount += response.dataCount;
-                                while (this.rowsCount > this.maxRows && this.maxRows > 0)
+                                while (this.rowsCount + this.cacheBlockSize >= this.maxRows && this.maxRows > 0)
                                     this.removeOldestRecord();
                                 return this;
                             };
                             Cache.prototype.Update = function (rowsData) {
+                                var _a, _b;
                                 if (this.rowsIniquelyIdentified) {
-                                    var newRow, oldRow, rowId;
+                                    var newRow, oldRow, rowId, storeId, index, storeKey, response;
                                     for (var i = 0, l = rowsData.length; i < l; i++) {
                                         newRow = rowsData[i];
                                         rowId = this.agBaseOptions.GetRowId(newRow);
-                                        oldRow = this.rows.get(rowId);
+                                        if (!this.rowIds2StoreIds.has(rowId))
+                                            continue;
+                                        _a = __read(this.rowIds2StoreIds.get(rowId), 2), storeId = _a[0], index = _a[1];
+                                        if (!this.storeIds2Keys.has(storeId))
+                                            continue;
+                                        storeKey = this.storeIds2Keys.get(storeId);
+                                        if (!this.store.has(storeKey))
+                                            continue;
+                                        _b = __read(this.store.get(storeKey), 2), response = _b[1];
+                                        if (index >= response.data.length)
+                                            continue;
+                                        oldRow = response.data[index];
                                         if (oldRow != null)
                                             Object.assign(oldRow, newRow);
                                     }
@@ -88,18 +122,21 @@ var MvcCore;
                                 return this;
                             };
                             Cache.prototype.removeOldestRecord = function () {
-                                var oldestKey = this.keys.shift();
+                                var oldestKey = this.reqDataKeys.shift();
                                 if (this.store.has(oldestKey)) {
+                                    var _a = __read(this.store.get(oldestKey), 2), storeId = _a[0], response = _a[1];
                                     if (this.rowsIniquelyIdentified) {
-                                        // remove real row records
-                                        var storeRecord = this.store.get(oldestKey), rowId;
-                                        for (var i = 0, l = storeRecord.data.length; i < l; i++) {
-                                            rowId = storeRecord.data[i];
-                                            if (this.rows.has(rowId))
-                                                this.rows.delete(rowId);
+                                        if (this.storeIds2Keys.has(storeId))
+                                            this.storeIds2Keys.delete(storeId);
+                                        var rowId, row;
+                                        for (var i = 0, l = response.data.length; i < l; i++) {
+                                            row = response.data[i];
+                                            rowId = this.agBaseOptions.GetRowId(row);
+                                            if (this.rowIds2StoreIds.has(rowId))
+                                                this.rowIds2StoreIds.delete(rowId);
                                         }
                                     }
-                                    var dataCount = this.store.get(oldestKey).dataCount;
+                                    var dataCount = response.dataCount;
                                     this.store.delete(oldestKey);
                                     this.rowsCount -= dataCount;
                                 }

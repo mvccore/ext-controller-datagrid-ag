@@ -30,6 +30,7 @@ var MvcCore;
                             function SinglePageMode(grid) {
                                 var _this = _super.call(this, grid) || this;
                                 _this.refreshOffsets = [];
+                                _this.refresh = false;
                                 return _this;
                             }
                             SinglePageMode.prototype.HandleBodyScroll = function (event) {
@@ -41,7 +42,11 @@ var MvcCore;
                             SinglePageMode.prototype.HandleResponseLoaded = function (response, selectFirstRow) {
                                 if (selectFirstRow === void 0) { selectFirstRow = false; }
                                 _super.prototype.HandleResponseLoaded.call(this, response, selectFirstRow);
-                                if (this.refreshOffsets.length > 0) {
+                                if (this.refresh) {
+                                    this.refresh = false;
+                                    this.FireHandlers("refresh", new EventsManagers.Events.Base());
+                                }
+                                else if (this.refreshOffsets.length > 0) {
                                     var offsetIndex = this.refreshOffsets.indexOf(response.offset);
                                     if (offsetIndex !== -1)
                                         this.refreshOffsets.splice(offsetIndex, 1);
@@ -65,8 +70,21 @@ var MvcCore;
                                     for (var i = start, l = end; i < l; i += limit)
                                         this.refreshOffsets.push(i);
                                 }
+                                var cache = this.grid.GetDataSource().GetCache();
+                                if (cache.GetEnabled())
+                                    cache.Purge();
                                 this.grid.GetOptionsManager().GetAgOptions().api.purgeInfiniteCache();
                                 return true;
+                            };
+                            SinglePageMode.prototype.ExecuteRefresh = function () {
+                                this.refresh = true;
+                                this.refreshOffsets = [];
+                                this.FireHandlers("beforeRefresh", new EventsManagers.Events.Base());
+                                var cache = this.grid.GetDataSource().GetCache();
+                                if (cache.GetEnabled())
+                                    cache.Purge();
+                                this.grid.GetOptionsManager().GetAgOptions().api.purgeInfiniteCache();
+                                return this;
                             };
                             return SinglePageMode;
                         }(MvcCore.Ext.Controllers.DataGrids.AgGrids.EventsManager));

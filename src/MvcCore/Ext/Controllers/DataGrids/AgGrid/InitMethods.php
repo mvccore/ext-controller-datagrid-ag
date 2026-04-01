@@ -791,8 +791,12 @@ trait InitMethods {
 		$multiFiltering
 	): void {
 		$viewHelperName = $configColumn->GetViewHelper();
-		/** @var ?\MvcCore\Ext\Controllers\DataGrids\Views\IReverseHelper $viewHelper */
-		list($useViewHelper, $viewHelper) = $this->getFilteringViewHelper($viewHelperName);
+		$viewHelper = NULL;
+		$useViewHelper = FALSE;
+		if ($viewHelperName !== NULL) {
+			/** @var ?\MvcCore\Ext\Controllers\DataGrids\Views\IReverseHelper $viewHelper */
+			list($useViewHelper, $viewHelper) = $this->getFilteringViewHelper($viewHelperName);
+		}
 		
 		$columnPropName = $configColumn->GetPropName();
 		$columnDbName = $configColumn->GetDbColumnName();

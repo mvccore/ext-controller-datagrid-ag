@@ -1,6 +1,3 @@
-### New
-- Refactoring in helpers - recognizing variables types,
-- new datagrid public function `agGrid.Refresh()` to refresh data from script.
-
 ### Fixed
-- Client cache refactoring to fix broken rows after client row updating.
+- PHP 8.5 compatibility - Deprecated method `ReflectionProperty::setAccessible()`,
+- calling to load view helper when no view helper defined.
